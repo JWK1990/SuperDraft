@@ -245,12 +245,28 @@ for (var i = 1; i < searchTableRows.length; i++) {
 
 
 
+
 // WEBSOCKETS FUNCTIONS.
 
 var socket = io.connect('/');
 
-// WebSockets draft() function below. Need to use the output to built the Drafted Players table.
+var pageLoad = function(){
+  socket.emit("pageLoad", {draftID: draftID});
+};
 
+socket.on("pageLoaded", function(data){
+  highlightSearch(data.loadData.results);
+  highlightOtb(data.loadData.otbCoach.toUpperCase())
+  highlightBidder(data.loadData.otbBidder.toUpperCase())
+
+});
+
+pageLoad();
+
+
+
+
+// WebSockets draft() function below. Need to use the output to built the Drafted Players table.
 var draft = function(){
 
   socket.emit('draft', { draftID: draftID });
@@ -272,24 +288,22 @@ highlightSearch(data.dbData.results);
   function addRow(){
     var table = document.getElementById("myTeamTable");
 
-    var rowCount;
-    var row;
+     var row = table.insertRow(1);
+     var index = data.dbData.pickCounter -1;
 
-    for (var i = 1; i < data.dbData.results.length; i++) {
-      row = table.insertRow(0);
+     console.log(index);
 
-      row.insertCell(0).innerHTML = data.dbData.results[i].team;
-      row.insertCell(1).innerHTML = data.dbData.results[i].position;
-      row.insertCell(2).innerHTML = data.dbData.results[i].name;
-      row.insertCell(3).innerHTML = data.dbData.results[i].price;
-    }
+      row.insertCell(0).innerHTML = data.dbData.results[index].team;
+      row.insertCell(1).innerHTML = data.dbData.results[index].position;
+      row.insertCell(2).innerHTML = data.dbData.results[index].name;
+      row.insertCell(3).innerHTML = data.dbData.results[index].price;
+  };
 
     // Code to change all team names back to black in the Budgets pane.
     for (var i = 1; i < budgetsTableRows.length; i++) {
     budgetsTableRows[i].style.color = "black";
    }
 
-  };
 
   addRow();
 

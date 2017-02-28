@@ -307,7 +307,8 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 .myTeamPane table{
   width: 100%;
   height: auto;
-  text-align: middle;
+  font-size: 1vmin;
+  text-align: left;
   vertical-align: middle;
 }
 
