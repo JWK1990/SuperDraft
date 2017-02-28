@@ -1,0 +1,339 @@
+/*General*/
+body, html {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+* {
+  margin-top: 0;
+}
+
+/* Element styling */
+
+/* Below we use viewport sizing to scale the font size based on the size of the browser window.*/
+h1{
+  font-size: 5vmin;
+  margin: 0px;
+}
+
+h2 {
+  font-size: 3vmin;
+  margin: 0;
+}
+
+h3 {
+  font-size: 2vmin;
+  margin: 0;
+}
+h4 {
+  font-size: 1.5vmin;
+  margin: 0;
+}
+
+
+/* Class styling */
+
+.container{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.otbPane{
+  width: 20%;
+  height: 22%;
+  float: left;
+  border-collapse: collapse;
+  background-color: #1f281f;
+}
+
+.otbTextHolder{
+  width: 100%;
+  height: 25%;
+  overflow: hidden;
+  vertical-align: top;
+  margin: 3px;
+}
+
+.otbText{
+    text-indent: 5px;
+    text-align:left;
+    margin: 0px;
+    color: white;
+}
+
+
+/* Sets the max width and height of the container and cuts off any overflow outside this container-*/
+.otbImgHolder{
+  width: 100%;
+  height: 40%;
+  overflow: hidden;
+}
+
+/* Says that the max width and height of the image can be 100% of the width and height of the container. 
+The margin top increases the gap between the top of the container and the top of the image. 
+As any overflow of the container is cut off, this crops out the bottom of the image outside of the container*/
+.otbImgHolder img{
+  max-width: 130%;
+  max-height: 130%;
+  transform: translateX(-8%);
+  float: left;
+}
+
+.otbImgHolder h1{
+  color: white;
+  margin-top: 1.2vmin; 
+  font-size: 6vmin;
+}
+
+.otbBiddingHolder{
+  width:100%;
+  height:35%;
+}
+
+.otbBiddingHolder input{
+  border: solid 1px black;
+  border-radius: 5px;
+  width: 25%;
+  height: 23%;
+  float: left;
+  margin-left: 0.5vmin;
+  margin-top: 0.5vmin;
+  font-size: 3vmin;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.otbBiddingHolder button{
+  border: solid 1px blue;
+  border-radius: 5px;
+  width: 60%;
+  height: 25%;
+  float:right;
+  margin-top: 0.5vmin;
+  margin-right: 1vmin;
+  font-size: 1vmin;
+  background-color: blue;
+  color: white;
+}
+
+.selectedPlayerPane{
+  width: 60%;
+  height: 22%;
+  float: left;
+  border-collapse: collapse;
+  background-color: brown;
+}
+
+.selectedPlayerPane #topSPP{
+  background: url(http://cdn.newsapi.com.au/image/v1/2bb6933f2c8305f8b700bf7eb3ac0010?width=1024);
+  background-size: cover;
+  background-repeat: no-repeat;
+  /*background-position takes 2 percentages, 1 for the % moved on the x axis and 1 for the % moved on the y axis.*/
+  background-position: 50% 65%;
+  width: 100%;
+  height: 50%;
+}
+
+.selectedPlayerPane #topSPP img{
+  max-height: 100%;
+  max-width: 100%;
+  float: left;
+  margin-left: 2vmin;
+}
+
+.selectedPlayerPane #topSPP #selectedName{
+  color: white;
+  text-align: left;
+}
+
+.selectedPlayerPane #topSPP #selectedPosition{
+  margin-top: -1vmin;
+  color: white;
+  text-align: left;
+}
+
+.selectedPlayerPane #topSPP #addToQueue{
+  float: left;
+  height: 30%;
+  width: 30%;
+  background-color: yellow;
+  font-size: 1vmin;
+}
+
+.selectedPlayerPane #bottomSPP{
+  color: blue;
+  background-color: white;
+  width: 100%;
+  height: 50%;
+}
+
+.selectedPlayerPane #bottomSPP table{
+  width: 100%;
+  height: 100%;
+  font-size:2.2vmin;
+  border-collapse: collapse;
+}
+
+.selectedPlayerPane #bottomSPP table th{
+  border: solid black 1.5px;
+}
+
+.selectedPlayerPane #bottomSPP table td{
+  border: solid grey 1px;
+}
+
+.clockPane{
+  width: 80%;
+  height: 5%;
+  float:left;
+  border-collapse: collapse;
+}
+
+.clockPane #clock{
+  width:25%;
+  height: 100%;
+  background-color: #1f281f;
+  float:left;
+}
+
+.clockPane #clock #demo{
+  color: white;
+  padding:0.75vmin;
+  font-size: 3vmin;
+  vertical-align: middle;
+}
+
+.clockPane #searchButtons{
+  background-color: pink;
+  float: left;
+  width: 75%;
+  height: 100%;
+}
+
+.clockPane #searchButtons #searchButton{
+  width: 25%;
+  height: 100%;
+  float: left;
+  background-color: grey;
+  border: solid 0.5px black;
+  color: white;
+  font-size: 1.7vmin;
+}
+
+.budgetsPane{
+  width: 20%;
+  height: 71%;
+  float: left;
+  background-color: blue;
+  border-collapse: collapse;
+  overflow: hidden;
+}
+
+
+.budgetsPane table{
+  width: 100%;
+  height: 93%;
+  font-size: 1.5vmin;
+  text-align:left;
+}
+
+.playerSearchPane{
+  width: 60%;
+  height: 71%;
+  float: left;
+  background-color: green;
+  border-collapse: collapse;
+  overflow: hidden;
+}
+
+.playerSearchPane table{
+  width: 100%;
+  font-size: 2.2vmin;
+  border-collapse: collapse;
+}
+
+.playerSearchPane table th {
+  background-color: grey;
+}
+
+.playerSearchPane table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.playerSearchPane table td {
+  border-collapse: collapse;
+  border-bottom: solid black 1px;
+  border-left: solid grey 1px;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.playerSearchPane #filter{ 
+  padding: 0.5vmin;
+  padding-left: 1vmin;
+  float: left;
+  background-color: yellow;
+  width: 100%;
+  text-align: left;
+}
+
+.playerSearchPane #filter #playerSearch{
+  width: 25vmin;
+  height: 2vmin;
+  font-size: 1.5vmin;
+  margin-right: 2vmin;
+}
+
+.playerSearchPane #filter #positionSearch{
+  width: 6vmin;
+  height: 100%;
+  margin-right: 2vmin;
+}
+
+.myTeamPane{
+  width: 20%;
+  height: 98%;
+  position: relative;
+  float: right;
+  background-color: pink;
+  border-collapse: collapse;
+}
+
+.myTeamPane table{
+  width: 100%;
+  height: auto;
+  text-align: middle;
+  vertical-align: middle;
+}
+
+.myTeamPane tr{
+  vertical-align: middle;
+}
+
+.draftedPlayersPane{
+  width: 20%;
+  height: 25%;
+  position: relative;
+  float: right;
+  background-color: orange;
+  border-collapse:collapse;
+  overflow: hidden;
+}
+
+.draftedPlayersPane table{
+  width: 100%;
+}
+
+.bottomPane{
+  width: 100%;
+  height: 2%;
+  border-collapse: collapse;
+  background-color: yellow;
+}
+
+/* ID styling */

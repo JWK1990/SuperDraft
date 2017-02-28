@@ -1,0 +1,159 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		title SuperDraft
+		link(rel='stylesheet', href='/stylesheets/draftStyle.css')
+		script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
+		script(src='/js/jquery.countdown.js')
+		script(src='/socket.io/socket.io.js')
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js')
+	body
+		.container
+
+			.otbPane
+				.otbTextHolder
+					h2#otbName.otbText #{drafts[0].otbPlayer}
+					h4#otbTeamPos.otbText #{drafts[0].otbPos} - #{players.filter(function(el){return el.name === drafts[0].otbPlayer})[0].ave16}
+				.otbImgHolder
+					img#otbPic(src="./images/TBA.png", alt='TBA', title='TBA')
+					h1#currentBid $#{drafts[0].otbBid}
+				dev.otbBiddingHolder
+					input#bidValue(type='number', name='otbBidValue', value=1)
+					button#placeBid(onclick="bid()") Place Bid
+			.selectedPlayerPane
+				#topSPP
+					img#selectedPic(src="./images/TBA.png", alt='On The Block', title='On The Block')
+					h1#selectedName PLAYER NAME
+					h3#selectedPosition POSITION
+					button#addToQueue(onclick='addToBlock()') ADD TO QUEUE
+				#bottomSPP
+					table
+						tr
+							th Season
+							th Average
+							th Games
+							th Disp
+							th Goals
+							th Std Dev
+						tr
+							td 2016
+							td 95
+							td 20
+							td 17
+							td 20
+							td 6.54
+						tr
+							td Career
+							td 91
+							td 270
+							td 22
+							td 121
+							td 5.32
+			.myTeamPane
+				h3 Drafted Players
+				select#myTeamFilter(onchange="updateMyTeam()")
+					option(value="ALL") All
+					option(value='TPP@gmail.com') TPP
+					option(value='SMB@gmail.com') SMB
+					option(value='MMR@gmail.com') MMR
+					option(value='SMB@gmail.com') SMB
+					option(value='J@gmail.com') J
+					option(value='TL@gmail.com') TL
+					option(value='TS@gmail.com') TS
+					option(value='5318008@gmail.com') 5318008
+					option(value='KA@gmail.com') KA
+					option(value='TOL@gmail.com') TOL
+
+				select#myTeamPosFilter(onchange="updateMyTeam()")
+					option(value="ALL") All
+					option(value="DEF") DEF
+					option(value="MID") MID
+					option(value="FWD") FWD
+					option(value="RUC") RUC
+
+				table#myTeamTable
+					tr
+						th Team
+						th Position
+						th Player
+						th Price
+						each result in results
+								tr
+									td= result.team
+									td= result.position
+									td= result.name
+									td= result.price
+
+
+			.clockPane
+				#clock
+					div#demo
+				#searchButtons
+					button#searchButton
+						| PLAYERS
+					button#searchButton
+						| TEAMS
+					button#searchButton
+						| RESULTS
+					button#searchButton
+						| STANDINGS
+			.budgetsPane
+				h3#draftID #{drafts[0]._id}
+				h3#currentUser #{currentUser}
+				table#budgetsTable
+					tr
+						th Team
+						th Max Bid
+						th Roster
+						each coach in coaches
+								tr
+									td= coach.email
+									td= "$" + coach.budget
+									td= coach.numOfPlayers + "/22"
+
+
+			.playerSearchPane
+				#filter
+					select#positionSearch(onchange='updateSearch()')
+						option(value='All') All
+						option(value='DEF') DEF
+						option(value='MID') MID
+						option(value='RUC') RUC
+						option(value='FWD') FWD
+					input#playerSearch(type='text', onkeyup='updateSearch()', placeholder='Search for players...')
+					label
+						input#watchlistSearch(type='checkbox', onchange='updateSearch()')
+						|  Watchlist
+				table#searchTable
+					thead
+						tr
+							th Rank
+							th Name
+							th Position
+							th Ave (2016)
+							th Team
+							th Price (2015)
+							th Watchlist
+						tbody
+							each result in players
+								tr
+									td= result.rank
+									td= result.name
+									td= result.position
+									td= result.ave16
+									td= result.team
+									td= "$" + result.draftPrice16
+									td
+										input#watchlistCheckbox(type='checkbox')
+
+
+
+			.bottomPane
+				button#next(onclick="draft()") Next
+
+
+		script(src='/js/playerData.js')
+		script(src='/js/playerLookup.js')
+
+	footer

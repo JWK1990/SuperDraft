@@ -1,0 +1,24 @@
+extends layout
+
+block content
+
+	.main.container
+		.row
+			.col-md-8.col-md-offset-2
+				h1.display-4.m-b-2 My Drafts
+					table.table
+						tr
+							th League Name
+							th Draft Year
+							th # Of Coaches
+							th Draft Code
+							th Admin
+							th
+							each result in results
+								tr
+									td= result.leagueName
+									td= result.draftYear
+									td= result.numOfCoaches
+									td= result._id
+									td= result.admin
+									td.btn.btn-info-outline.btn-lg.m-t-1(onclick="window.open('/draft' + '?draft=58ae6165c8b79c1b93f1d092')")= result._id

@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  .main.container
+    .row
+      .col-md-6.col-md-offset-3
+        h1.display-4.m-b-2 Create A Draft
+
+        // register form
+        form(method='POST' action='/create')
+          div.form-group
+            label(for='leagueName') League Name:
+            input#name.form-control(type='text', placeholder='e.g. WAFL' name='leagueName')
+          div.form-group
+            label(for='draftYear') Draft Year:
+            input#name.form-control(type='text', placeholder='e.g. 2017' name='draftYear')
+          div.form-group
+            label(for='numOfCoaches') # of Coaches:
+            input#name.form-control(type='text', placeholder='e.g. 10' name='numOfCoaches')
+          div.form-group
+            label(for='coachEmails') Coach Emails:
+            input#email.form-control(type='email', placeholder='Coach #1' name='coach1')
+            input#email.form-control(type='email', placeholder='Coach #2' name='coach2')
+            input#email.form-control(type='email', placeholder='Coach #3' name='coach3')
+            input#email.form-control(type='email', placeholder='Coach #4' name='coach4')
+            input#email.form-control(type='email', placeholder='Coach #5' name='coach5')
+            input#email.form-control(type='email', placeholder='Coach #6' name='coach6')
+            input#email.form-control(type='email', placeholder='Coach #7' name='coach7')
+            input#email.form-control(type='email', placeholder='Coach #8' name='coach8')
+            input#email.form-control(type='email', placeholder='Coach #9' name='coach9')
+            input#email.form-control(type='email', placeholder='Coach #10' name='coach10')
+          button.btn.btn-primary(type='submit') Create Draft
