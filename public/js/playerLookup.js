@@ -196,6 +196,8 @@ function highlightBidder(data){
   }
 }; // Close highlightBidder() function.
 
+
+// Define highlightOtb() function to underline the coach currently on the block and disable Add To Queue for others.
 function highlightOtb(data){
   for (var i = 1; i < budgetsTableRows.length; i++) {
     var td = budgetsTableRows[i].getElementsByTagName("td")[0];
@@ -221,7 +223,7 @@ function highlightOtb(data){
 }; // Close highlightOtb() function.
 
 
-
+// Define highlightSearch() function to grey out players once they have been drafted.
 function highlightSearch(data){
 var pluck = _.pluck(data, "name");
 console.log(pluck);
@@ -239,10 +241,7 @@ for (var i = 1; i < searchTableRows.length; i++) {
       }
     } 
   };
-
 }; // Close highlightSearch() function.
-
-
 
 
 
@@ -264,11 +263,7 @@ socket.on('playerDrafted', function(data) {
   otbTeamPos.innerHTML = "-";
   otbPic.src = "./images/TBA.png";
 
-
 highlightSearch(data.dbData.results);
-
-
-
 
 // Call highlightOtb() function to under the on the block coach.
   highlightOtb(data.dbData.otbCoach.toUpperCase());
@@ -355,9 +350,6 @@ socket.on('otbUpdate', function(data) {
 
   startCountdown(otbEndTime);
 });
-
-
-
 
 
 
