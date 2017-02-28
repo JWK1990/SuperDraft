@@ -244,6 +244,17 @@ for (var i = 1; i < searchTableRows.length; i++) {
 }; // Close highlightSearch() function.
 
 
+  function lockBid(data, currentUser){
+  var placeBidButton = document.getElementById("placeBid");
+
+  if(data === currentUser){
+    placeBidButton.disabled = true;
+    placeBidButton.style.background = "grey";
+  } else{
+    placeBidButton.disabled = false;
+    placeBidButton.style.background = "blue";
+  }
+};
 
 
 // WEBSOCKETS FUNCTIONS.
@@ -261,7 +272,9 @@ socket.on("pageLoaded", function(data){
 
 });
 
+
 pageLoad();
+
 
 
 
@@ -289,7 +302,7 @@ highlightSearch(data.dbData.results);
     var table = document.getElementById("myTeamTable");
 
      var row = table.insertRow(1);
-     var index = data.dbData.pickCounter -1;
+     var index = data.dbData.results.length -1;
 
      console.log(index);
 
@@ -338,6 +351,8 @@ socket.on('bidUpdate', function(data) {
    startCountdown(otbEndTime);
   };
 
+  lockBid(data.bidData.otbBidder, currentUser);
+
 });
 
 
@@ -363,6 +378,9 @@ socket.on('otbUpdate', function(data) {
   highlightBidder(data.updatedOtbData.otbBidder.toUpperCase());
 
   startCountdown(otbEndTime);
+
+  lockBid(data.updatedOtbData.otbBidder, currentUser);
+
 });
 
 
