@@ -13,11 +13,11 @@ html(lang='en')
 
 			.otbPane
 				.otbTextHolder
-					h2#otbName.otbText #{drafts[0].otbPlayer}
-					h4#otbTeamPos.otbText #{drafts[0].otbPos} - #{players.filter(function(el){return el.name === drafts[0].otbPlayer})[0].ave16}
+					h2#otbName.otbText "-"
+					h4#otbTeamPos.otbText "-"
 				.otbImgHolder
 					img#otbPic(src="./images/TBA.png", alt='TBA', title='TBA')
-					h1#currentBid $#{drafts[0].otbBid}
+					h1#currentBid "-"
 				dev.otbBiddingHolder
 					input#bidValue(type='number', name='otbBidValue', value=1)
 					button#placeBid(onclick="bid()") Place Bid
