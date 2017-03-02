@@ -28,9 +28,6 @@ console.log(players.length);
 */
 
 
-// Disable the next button on page load.
-document.getElementById("next").disabled = true;
-
 $("#bidForm").submit(function(e){
   e.preventDefault();
 });
@@ -58,7 +55,7 @@ var draftID = document.getElementById("draftID").innerHTML;
 var otbPlayerID;
 var otbPos;
 var currentOtbCoach;
-var currentUser;
+var currentUser = document.getElementById("currentUser").innerHTML;
 var otbAverage;
 
 // Bidding variables.
@@ -66,6 +63,8 @@ var currentBid = document.getElementById("currentBid");
 var otbEndTime;
 var biddingTeam;
 var otbBidValue;
+var maxBid;
+var playerCount;
 
 // Budgets Pane variables.
 var budgetsTable = document.getElementById("budgetsTable");
@@ -187,7 +186,7 @@ function highlightBidder(data){
     var td = budgetsTableRows[i].getElementsByTagName("td")[0];
 
     if (td) {
-    if (td.innerHTML.toUpperCase() === data) {
+    if (td.innerHTML === data) {
       budgetsTableRows[i].style.color = "pink";
     } else {
         budgetsTableRows[i].style.color = "black";
@@ -203,7 +202,7 @@ function highlightOtb(data){
     var td = budgetsTableRows[i].getElementsByTagName("td")[0];
 
     if (td) {
-      if (td.innerHTML.toUpperCase() === data) {
+      if (td.innerHTML === data) {
         budgetsTableRows[i].style.textDecoration = "underline";
       } else {
         budgetsTableRows[i].style.textDecoration = "none";
@@ -211,7 +210,6 @@ function highlightOtb(data){
     } 
   };
   currentOtbCoach = data;
-  currentUser = document.getElementById("currentUser").innerHTML.toUpperCase();
 
     if(currentOtbCoach === currentUser){
       document.getElementById("addToQueue").disabled = false;
@@ -244,45 +242,71 @@ for (var i = 1; i < searchTableRows.length; i++) {
 }; // Close highlightSearch() function.
 
 
-  function lockBid(data, currentUser){
-  var placeBidButton = document.getElementById("placeBid");
+// Define lockBid() function to stop the leading bidder from placing a bid.
+function lockBid(data, currentUser){
+var placeBidButton = document.getElementById("placeBid");
 
-  if(data === currentUser){
-    placeBidButton.disabled = true;
-    placeBidButton.style.background = "grey";
-  } else{
-    placeBidButton.disabled = false;
-    placeBidButton.style.background = "blue";
-  }
+if(data === currentUser){
+  placeBidButton.disabled = true;
+  placeBidButton.style.background = "grey";
+} else{
+  placeBidButton.disabled = false;
+  placeBidButton.style.background = "blue";
+}
+}; // Close lockBid() function.
+
+
+// Code for addRow() function used to add the newly drafted player to the Drafted Players list.
+function addRow(data){
+  var table = document.getElementById("myTeamTable");
+
+   var row = table.insertRow(1);
+   var index = data.length -1;
+
+   console.log(index);
+
+    row.insertCell(0).innerHTML = data[index].team;
+    row.insertCell(1).innerHTML = data[index].position;
+    row.insertCell(2).innerHTML = data[index].name;
+    row.insertCell(3).innerHTML = data[index].price;
 };
+
+
+function updateBudgets(data){
+  for (var i = 1; i < budgetsTableRows.length; i++) {
+    console.log(data[i-1].budget)
+    budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML = data[i-1].budget
+    budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML = data[i-1].numOfPlayers + "/22"
+  }
+
+}; // Close updateBudgets() function.
+
 
 
 // WEBSOCKETS FUNCTIONS.
 
 var socket = io.connect('/');
 
+// WebSockets pageLoad() function used to set up the page properly on page load.
 var pageLoad = function(){
   socket.emit("pageLoad", {draftID: draftID});
 };
 
 socket.on("pageLoaded", function(data){
   highlightSearch(data.loadData.results);
-  highlightOtb(data.loadData.otbCoach.toUpperCase())
-  highlightBidder(data.loadData.otbBidder.toUpperCase())
+  highlightOtb(data.loadData.otbCoach)
+  highlightBidder(data.loadData.otbBidder)
 
-});
+}); // Close socket.on() function.
 
 
 pageLoad();
 
 
 
-
-
-// WebSockets draft() function below. Need to use the output to built the Drafted Players table.
+// WebSockets draft() function below used to draft a player once bidding is complete.
 var draft = function(){
-
-  socket.emit('draft', { draftID: draftID });
+  socket.emit('draft', { draftID: draftID, biddingTeam: biddingTeam, price: currentBid.innerHTML });
 };
 
 socket.on('playerDrafted', function(data) {
@@ -292,49 +316,43 @@ socket.on('playerDrafted', function(data) {
   otbTeamPos.innerHTML = "-";
   otbPic.src = "./images/TBA.png";
 
-highlightSearch(data.dbData.results);
+  highlightSearch(data.dbData.results);
 
-// Call highlightOtb() function to under the on the block coach.
-  highlightOtb(data.dbData.otbCoach.toUpperCase());
+  // Call highlightOtb() function to under the on the block coach.
+  highlightOtb(data.dbData.otbCoach);
 
-  // Code to add the newly drafted player to the Drafted Players list.
-  function addRow(){
-    var table = document.getElementById("myTeamTable");
-
-     var row = table.insertRow(1);
-     var index = data.dbData.results.length -1;
-
-     console.log(index);
-
-      row.insertCell(0).innerHTML = data.dbData.results[index].team;
-      row.insertCell(1).innerHTML = data.dbData.results[index].position;
-      row.insertCell(2).innerHTML = data.dbData.results[index].name;
-      row.insertCell(3).innerHTML = data.dbData.results[index].price;
-  };
-
-    // Code to change all team names back to black in the Budgets pane.
-    for (var i = 1; i < budgetsTableRows.length; i++) {
+  // Code to change all team names back to black in the Budgets pane.
+  for (var i = 1; i < budgetsTableRows.length; i++) {
     budgetsTableRows[i].style.color = "black";
-   }
+  }
 
+  // Call addRow() to update the Drafted Players list.
+  addRow(data.dbData.results);
+  // Call updateBudgets() to update the Budgets pane.
+  updateBudgets(data.dbData.coaches);
 
-  addRow();
+  console.log(data.dbData.coaches);
 
 }); // Close socket.on() function.
 
 
-// WebSockets bid() function. Need to add an error function for bids under the otb bid price.
-
+// WebSockets bid() function used to log a bid. Need to add an error function for bids under the otb bid price.
 var bid = function(){
 
   otbBidValue = document.getElementById("bidValue").value;
-  currentUser = document.getElementById("currentUser").innerHTML.toUpperCase();
 
-  socket.emit('bid', { draftID: draftID, bidValue: otbBidValue, currentUser: currentUser });
-};
+// If statements to send an alert if the bid value is greater than the current users max bid or if their team is full.
+  if(otbBidValue <= maxBid && playerCount < 22){
+    socket.emit('bid', { draftID: draftID, bidValue: otbBidValue, currentUser: currentUser });
+} else if(playerCount >= 22){
+    alert("Your team is full!");
+} else {
+    alert("That bid is above your max bid!");
+}
+
+}; // Close bid() function.
 
 socket.on('bidUpdate', function(data) {
-  currentUser = document.getElementById("currentUser").innerHTML.toUpperCase();
 
   console.log('New Bid Data:', data.bidData.otbBid);
   currentBid.innerHTML = "$" + data.bidData.otbBid;
@@ -345,7 +363,7 @@ socket.on('bidUpdate', function(data) {
   console.log(biddingTeam);
   console.log(otbEndTime);
 
-  highlightBidder(data.bidData.otbBidder.toUpperCase());
+  highlightBidder(data.bidData.otbBidder);
 
   if (distance < 10000 && distance > 0){
    startCountdown(otbEndTime);
@@ -353,13 +371,11 @@ socket.on('bidUpdate', function(data) {
 
   lockBid(data.bidData.otbBidder, currentUser);
 
-});
+}); // Close socket.on() function.
 
 
 // Websockets addToBlock() function.
 var addToBlock = function(){
-
-currentUser = document.getElementById("currentUser").innerHTML.toUpperCase();
 
   socket.emit('addToBlock', { draftID: draftID, player: otbPlayerID, position: otbPos, average: otbAverage, currentUser: currentUser});
 };
@@ -375,13 +391,22 @@ socket.on('otbUpdate', function(data) {
   // Updates the default bid value to be $2 as it starts at $1.
   document.getElementById("bidValue").value = data.updatedOtbData.otbBid + 1;
 
-  highlightBidder(data.updatedOtbData.otbBidder.toUpperCase());
+  highlightBidder(data.updatedOtbData.otbBidder);
 
   startCountdown(otbEndTime);
 
   lockBid(data.updatedOtbData.otbBidder, currentUser);
 
-});
+  // Set the maxBid variable to the current users Max Bid as per the Budgets pane.
+  maxBid = data.updatedOtbData.coaches.filter(function(e){
+    return (e.email==currentUser);
+  })[0].budget;
+
+  playerCount = data.updatedOtbData.coaches.filter(function(e){
+    return (e.email==currentUser);
+  })[0].numOfPlayers;
+
+}); // Close socket.on("otbUpdate") function.
 
 
 

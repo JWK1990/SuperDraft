@@ -119,6 +119,8 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   font-size: 1vmin;
   background-color: blue;
   color: white;
+  cursor: pointer;
+  cursor: hand;
 }
 
 .selectedPlayerPane{
@@ -130,7 +132,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 }
 
 .selectedPlayerPane #topSPP{
-  background: url(http://cdn.newsapi.com.au/image/v1/2bb6933f2c8305f8b700bf7eb3ac0010?width=1024);
+  background: url('../images/bg.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   /*background-position takes 2 percentages, 1 for the % moved on the x axis and 1 for the % moved on the y axis.*/
@@ -302,13 +304,14 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   float: right;
   background-color: pink;
   border-collapse: collapse;
+  overflow: hidden;
 }
 
 .myTeamPane table{
   width: 100%;
   height: auto;
   font-size: 1vmin;
-  text-align: left;
+  text-align: middle;
   vertical-align: middle;
 }
 
@@ -322,12 +325,15 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   position: relative;
   float: right;
   background-color: orange;
-  border-collapse:collapse;
+  border-collapse: collapse;
   overflow: hidden;
 }
 
 .draftedPlayersPane table{
   width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
 }
 
 .bottomPane{

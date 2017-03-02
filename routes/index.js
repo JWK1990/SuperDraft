@@ -264,7 +264,7 @@ router.put("/draftData/:dID/coaches", function(req, res, next){
 
 		// The newPlayer variable defines the player details to be added to the relevant coaches players array below.
 		var newPlayer = {name: data.otbPlayer, position: data.otbPos, price: data.otbBid};
-		var newResult = {name:data.otbPlayer, position: data.otbPos, price: data.otbBid, team: data.otbBidder};
+		var newResult = {name: data.otbPlayer, position: data.otbPos, price: data.otbBid, team: data.otbBidder};
 
 		data.results.push(newResult);
 
