@@ -48,6 +48,9 @@ var watchlistFilter = document.getElementById("watchlistSearch");
 watchlistFilter.checked = false;
 var watchlistCheckboxes = searchTable.getElementsByTagName("input");
 watchlistCheckboxes.checked = false;
+var hideDrafted = document.getElementById("hideDrafted");
+hideDrafted.checked = false;
+
 var playerData;
 var sppRank = document.getElementById("rank");
 var sppAve = document.getElementById("ave");
@@ -105,18 +108,28 @@ function updateSearch() {
     var td2 = searchTableRows[i].getElementsByTagName("td")[2];
     var td3 = searchTableRows[i].getElementsByTagName("td")[6];
     var watchlistChecked = td3.getElementsByTagName("input")[0].checked;
+    var drafted = Boolean(searchTableRows[i].style.textDecoration === "line-through");
+
+
+    
+
+
+
+
 
     if (td) {
-      if (td.innerHTML.toUpperCase().indexOf(filter) > -1 && position === "ALL" && watchlistFilter.checked === false) {
+      var nameCheck = Boolean(td.innerHTML.toUpperCase().indexOf(filter) > -1);
+      var posCheck = Boolean(position === "ALL" || td2.innerHTML.toUpperCase().indexOf(position) > -1);
+
+      if (nameCheck && posCheck && watchlistFilter.checked === false && hideDrafted.checked === false) {
         searchTableRows[i].style.display = "";
-      } else if (td.innerHTML.toUpperCase().indexOf(filter) > -1 && td2.innerHTML.toUpperCase().indexOf(position) > -1 && watchlistFilter.checked === false){
+      } else if (nameCheck && posCheck && watchlistFilter.checked === false && hideDrafted.checked === true && drafted === false){
         searchTableRows[i].style.display = "";
-      } else if (td.innerHTML.toUpperCase().indexOf(filter) > -1 && position === "ALL" && watchlistFilter.checked === true && watchlistChecked === true){
+      } else if (nameCheck && posCheck && watchlistFilter.checked === true && watchlistChecked === true && hideDrafted.checked === false){
         searchTableRows[i].style.display = "";
-      } else if (td.innerHTML.toUpperCase().indexOf(filter) > -1 && td2.innerHTML.toUpperCase().indexOf(position) > -1 && watchlistFilter.checked === true && watchlistChecked === true){
+      } else if (nameCheck && posCheck && watchlistFilter.checked === true && watchlistChecked === true && hideDrafted.checked === true && drafted === false){
         searchTableRows[i].style.display = "";
-      }
-      else {
+      } else {
         searchTableRows[i].style.display = "none";
       }
     } 
@@ -267,8 +280,10 @@ for (var i = 1; i < searchTableRows.length; i++) {
 
     if (td) {
       if (pluck.indexOf(td.innerHTML) > -1) {
-        searchTableRows[i].style.backgroundColor = "#4d4d4d";
-        searchTableRows[i].style.color = "#333333";
+        searchTableRows[i].style.backgroundColor = "#C0C0C0";
+        searchTableRows[i].style.color = "#E5E4E2";
+        searchTableRows[i].getElementsByTagName("td")[1].style.color = "#E5E4E2";
+        searchTableRows[i].style.textDecoration = "line-through";
         var clone = searchTableRows[i].cloneNode(true);
         searchTableRows[i].parentNode.replaceChild(clone,searchTableRows[i]);
       }

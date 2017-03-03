@@ -103,6 +103,8 @@ html(lang='en')
 					label
 						input#watchlistSearch(type='checkbox', onchange='updateSearch()')
 						|  Watchlist
+						input#hideDrafted(type='checkbox', onchange='updateSearch()')
+						|  Hide Drafted
 
 
 
@@ -131,10 +133,10 @@ html(lang='en')
 						tr
 							th Rank
 							th Name
-							th Position
-							th Ave (2016)
+							th Pos
+							th Ave
 							th Team
-							th Price (2015)
+							th Price16
 							th Watchlist
 
 						tbody

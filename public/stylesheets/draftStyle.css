@@ -255,6 +255,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   position: absolute;
   left: 0;
   top: 28%;
+  color: white;
 
   background: #4d4d4d;
 
@@ -284,6 +285,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 
 .playerSearchPane .name{
   font-weight: bold;
+  color: #0020C2;
 }
 
 /*
