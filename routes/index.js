@@ -51,7 +51,7 @@ router.post("/login", function(req, res, next){
 				req.session.name = user.name;
 				req.session.teamName = user.teamName;
 				req.session.email = user.email;
-				return res.redirect ("/profile");
+				return res.redirect ("/myDrafts");
 			}
 		});
 	} else {

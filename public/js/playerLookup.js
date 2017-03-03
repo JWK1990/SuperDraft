@@ -28,11 +28,14 @@ console.log(players.length);
 */
 
 
+
+// Prevent the "Place Bid" button from opening a new page.
 $("#bidForm").submit(function(e){
   e.preventDefault();
 });
 
 // Define global variables.
+
 // Search and selected player variables.
 var selectedPlayer;
 var selectedPlayerName = document.getElementById("selectedName");
@@ -45,6 +48,18 @@ var watchlistFilter = document.getElementById("watchlistSearch");
 watchlistFilter.checked = false;
 var watchlistCheckboxes = searchTable.getElementsByTagName("input");
 watchlistCheckboxes.checked = false;
+var playerData;
+var sppRank = document.getElementById("rank");
+var sppAve = document.getElementById("ave");
+var sppPoints = document.getElementById("points");
+var sppStdDev = document.getElementById("stdDev");
+var sppGames = document.getElementById("games");
+var sppAge = document.getElementById("age");
+var sppPrice16 = document.getElementById("price16");
+var sppPrice15 = document.getElementById("price15");
+var sppPrice14 = document.getElementById("price14");
+var selectedPlayerData;
+
 // On the block variables.
 var otbPlayer;
 var otbName = document.getElementById("otbName");
@@ -69,6 +84,11 @@ var playerCount;
 // Budgets Pane variables.
 var budgetsTable = document.getElementById("budgetsTable");
 var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
+
+
+// Drafted Players variables.
+var dpFilter = document.getElementById("myTeamFilter");
+var dpFilterOptions = dpFilter.getElementsByTagName("option");
 
 
 // Define updateSearch() function used to filter the search pane.
@@ -114,6 +134,7 @@ function selectPlayer(){
     searchTableRows[i].addEventListener("click",function(){
       selectedPlayer = this;
       console.log(selectedPlayer);
+
       // Update top section with name, position and picture.
       selectedPlayerName.innerHTML = this.getElementsByTagName("td")[1].innerHTML;
       selectedPlayerPosition.innerHTML = this.getElementsByTagName("td")[2].innerHTML;
@@ -122,7 +143,21 @@ function selectPlayer(){
       otbPlayerID = this.getElementsByTagName("td")[1].innerHTML;
       otbPos = this.getElementsByTagName("td")[2].innerHTML;
       otbAverage = this.getElementsByTagName("td")[3].innerHTML;
+
       // Update bottom section with table stats.
+      selectedPlayerData = playerData.filter(function(e){
+        return (e.name==selectedPlayerName.innerHTML);
+      })[0];
+
+      sppRank.innerHTML = selectedPlayerData.rank;
+      sppAve.innerHTML = selectedPlayerData.ave16;
+      sppPoints.innerHTML = selectedPlayerData.points16;
+      sppStdDev.innerHTML = selectedPlayerData.sd16;
+      sppGames.innerHTML = selectedPlayerData.games16;
+      sppAge.innerHTML = selectedPlayerData.age;
+      sppPrice16.innerHTML = "$" + selectedPlayerData.draftPrice16;
+      sppPrice15.innerHTML = "$" + selectedPlayerData.draftPrice15;
+      sppPrice14.innerHTML = "$" + selectedPlayerData.draftPrice14;
 
       updateSearch();
     });
@@ -232,7 +267,7 @@ for (var i = 1; i < searchTableRows.length; i++) {
 
     if (td) {
       if (pluck.indexOf(td.innerHTML) > -1) {
-        searchTableRows[i].bgColor = "#4d4d4d";
+        searchTableRows[i].style.backgroundColor = "#4d4d4d";
         searchTableRows[i].style.color = "#333333";
         var clone = searchTableRows[i].cloneNode(true);
         searchTableRows[i].parentNode.replaceChild(clone,searchTableRows[i]);
@@ -282,6 +317,19 @@ function updateBudgets(data){
 }; // Close updateBudgets() function.
 
 
+// Define updateDPFilter() function to update the Drafted Players team filter based on the teams in the Budgets pane.
+function updateDPFilter(){
+  for (i=1; i < dpFilterOptions.length; i++){
+  dpFilterOptions[i].value = budgetsTableRows[i].getElementsByTagName("td")[0].innerHTML
+  document.getElementById("myTeamFilter").options[i].innerHTML = budgetsTableRows[i].getElementsByTagName("td")[0].innerHTML
+};
+}
+// Call the updateDPFilter() function.
+updateDPFilter();
+
+
+
+
 
 // WEBSOCKETS FUNCTIONS.
 
@@ -297,10 +345,13 @@ socket.on("pageLoaded", function(data){
   highlightOtb(data.loadData.otbCoach)
   highlightBidder(data.loadData.otbBidder)
 
+  playerData = data.playerData;
+  console.log(playerData);
 }); // Close socket.on() function.
 
 
 pageLoad();
+
 
 
 
@@ -346,8 +397,10 @@ var bid = function(){
     socket.emit('bid', { draftID: draftID, bidValue: otbBidValue, currentUser: currentUser });
 } else if(playerCount >= 22){
     alert("Your team is full!");
-} else {
+} else if (otbBidValue > maxBid){
     alert("That bid is above your max bid!");
+} else{
+    alert("Sorry, you've been locked out of this round of bidding!");
 }
 
 }; // Close bid() function.
@@ -578,7 +631,29 @@ function updateMyTeam() {
 
 
 
+$(document).ready(function() {
+    $('#searchTable').DataTable( {
+        scrollY:        '70.5vh',
+        scrollCollapse: true,
+        paging:         false,
+        searching: false,
+        ordering: false,
+        bInfo: false
 
+    } );
+} );
+
+$(document).ready(function() {
+    $('#myTeamTable').DataTable( {
+        scrollY:        '90vh',
+        scrollCollapse: true,
+        paging:         false,
+        searching: false,
+        ordering: false,
+        bInfo: false
+
+    } );
+} );
 
 
 

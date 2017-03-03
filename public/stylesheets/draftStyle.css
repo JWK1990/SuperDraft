@@ -32,6 +32,37 @@ h4 {
   margin: 0;
 }
 
+body {
+  font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
+}
+
+
+table.tableSection {
+        display: table;
+        width: 100%;
+    }
+    table.tableSection thead, table.tableSection tbody {
+        float: left;
+        width: 100%;
+    }
+    table.tableSection tbody {
+        overflow: auto;
+        height: 100px;
+    }
+    table.tableSection tr {
+        width: 100%;
+        display: table;
+        text-align: left;
+      }
+    table.tableSection thead {
+     padding-right:18px;   /* 18px is approx. value of width of scroll bar */
+     width: calc(100% - 18px);
+}
+
+
+
+
+
 
 /* Class styling */
 
@@ -48,7 +79,7 @@ h4 {
   height: 22%;
   float: left;
   border-collapse: collapse;
-  background-color: #1f281f;
+  background-color: #4d4d4d;
 }
 
 .otbTextHolder{
@@ -124,11 +155,13 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 }
 
 .selectedPlayerPane{
-  width: 60%;
-  height: 22%;
+  width: 59%;
+  height: 20%;
   float: left;
   border-collapse: collapse;
-  background-color: brown;
+  background-color: yellow;
+  padding-left: 0.5%;
+  padding-right: 0.5%;
 }
 
 .selectedPlayerPane #topSPP{
@@ -138,7 +171,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   /*background-position takes 2 percentages, 1 for the % moved on the x axis and 1 for the % moved on the y axis.*/
   background-position: 50% 65%;
   width: 100%;
-  height: 50%;
+  height: 65%;
 }
 
 .selectedPlayerPane #topSPP img{
@@ -171,7 +204,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   color: blue;
   background-color: white;
   width: 100%;
-  height: 50%;
+  height: 35%;
 }
 
 .selectedPlayerPane #bottomSPP table{
@@ -190,16 +223,20 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 }
 
 .clockPane{
-  width: 80%;
+  width: 20%;
   height: 5%;
-  float:left;
+  position: absolute;
+  top: 22%;
+  left: 0;
   border-collapse: collapse;
+  padding-bottom: 1%;
+  background-color: yellow;
 }
 
 .clockPane #clock{
-  width:25%;
+  width:100%;
   height: 100%;
-  background-color: #1f281f;
+  background-color: #4d4d4d;
   float:left;
 }
 
@@ -210,28 +247,18 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   vertical-align: middle;
 }
 
-.clockPane #searchButtons{
-  background-color: pink;
-  float: left;
-  width: 75%;
-  height: 100%;
-}
 
-.clockPane #searchButtons #searchButton{
-  width: 25%;
-  height: 100%;
-  float: left;
-  background-color: grey;
-  border: solid 0.5px black;
-  color: white;
-  font-size: 1.7vmin;
-}
 
 .budgetsPane{
   width: 20%;
-  height: 71%;
-  float: left;
-  background-color: blue;
+  height: 70.5%;
+  position: absolute;
+  left: 0;
+  top: 28%;
+
+  background: #4d4d4d;
+
+
   border-collapse: collapse;
   overflow: hidden;
 }
@@ -245,14 +272,21 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 }
 
 .playerSearchPane{
-  width: 60%;
-  height: 71%;
-  float: left;
-  background-color: green;
+  width: 59%;
+  height: 74%;
+  float: right;
+  background-color: yellow;
   border-collapse: collapse;
   overflow: hidden;
+  padding-left: 0.5%;
+  padding-right: 0.5%;
 }
 
+.playerSearchPane .name{
+  font-weight: bold;
+}
+
+/*
 .playerSearchPane table{
   width: 100%;
   font-size: 2.2vmin;
@@ -274,9 +308,22 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   cursor: pointer;
   cursor: hand;
 }
+*/
 
-.playerSearchPane #filter{ 
-  padding: 0.5vmin;
+.filterPane{
+  width: 59%;
+  height: 4%;
+  float: left;
+  background-color: yellow;
+  border-collapse: collapse;
+  overflow: hidden;
+  padding-left: 0.5%;
+  padding-right: 0.5%;
+}
+
+
+.filterPane #filter{ 
+  padding: 1vmin;
   padding-left: 1vmin;
   float: left;
   background-color: yellow;
@@ -284,14 +331,14 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   text-align: left;
 }
 
-.playerSearchPane #filter #playerSearch{
+.filterPane #filter #playerSearch{
   width: 25vmin;
   height: 2vmin;
   font-size: 1.5vmin;
   margin-right: 2vmin;
 }
 
-.playerSearchPane #filter #positionSearch{
+.filterPane #filter #positionSearch{
   width: 6vmin;
   height: 100%;
   margin-right: 2vmin;
@@ -302,9 +349,10 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   height: 98%;
   position: relative;
   float: right;
-  background-color: pink;
+  background-color: #4d4d4d;
   border-collapse: collapse;
   overflow: hidden;
+  color: white;
 }
 
 .myTeamPane table{
@@ -313,27 +361,17 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   font-size: 1vmin;
   text-align: middle;
   vertical-align: middle;
+  background-color: #4d4d4d;
 }
 
 .myTeamPane tr{
   vertical-align: middle;
+  background-color: #4d4d4d;
 }
 
-.draftedPlayersPane{
-  width: 20%;
-  height: 25%;
-  position: relative;
-  float: right;
-  background-color: orange;
-  border-collapse: collapse;
-  overflow: hidden;
-}
-
-.draftedPlayersPane table{
-  width: 100%;
-  height: 100%;
-  border-collapse: collapse;
-  overflow: hidden;
+.myTeamPane td{
+  background-color: #4d4d4d;
+  color: white;
 }
 
 .bottomPane{
@@ -341,6 +379,14 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   height: 2%;
   border-collapse: collapse;
   background-color: yellow;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.bottomPane #next{
+  float: left;
+  margin-left: 8%;
 }
 
 /* ID styling */

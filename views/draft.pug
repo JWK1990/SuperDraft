@@ -4,10 +4,13 @@ html(lang='en')
 		meta(charset='UTF-8')
 		title SuperDraft
 		link(rel='stylesheet', href='/stylesheets/draftStyle.css')
+		link(rel='stylesheet', href='/stylesheets/jquery.dataTables.min.css')
 		script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
 		script(src='/js/jquery.countdown.js')
 		script(src='/socket.io/socket.io.js')
 		script(src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js')
+		script(src='https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js')
+
 	body
 		.container
 
@@ -30,40 +33,40 @@ html(lang='en')
 				#bottomSPP
 					table
 						tr
-							th Season
-							th Average
+							th Rank
+							th Ave
+							th Points
+							th StdDev
 							th Games
-							th Disp
-							th Goals
-							th Std Dev
+							th Age
+							th Price16
+							th Price15
+							th Price14
 						tr
-							td 2016
-							td 95
-							td 20
-							td 17
-							td 20
-							td 6.54
-						tr
-							td Career
-							td 91
-							td 270
-							td 22
-							td 121
-							td 5.32
+							td#rank -
+							td#ave -
+							td#points -
+							td#stdDev -
+							td#games -
+							td#age -
+							td#price16 -
+							td#price15 -
+							td#price14 -
+
 			.myTeamPane
 				h3 Drafted Players
 				select#myTeamFilter(onchange="updateMyTeam()")
 					option(value="ALL") All
-					option(value='TPP@gmail.com') TPP
-					option(value='SMB@gmail.com') SMB
-					option(value='MMR@gmail.com') MMR
-					option(value='SMB@gmail.com') SMB
-					option(value='J@gmail.com') J
-					option(value='TL@gmail.com') TL
-					option(value='TS@gmail.com') TS
-					option(value='5318008@gmail.com') 5318008
-					option(value='KA@gmail.com') KA
-					option(value='TOL@gmail.com') TOL
+					option(value='-') -
+					option(value='-') -
+					option(value='-') -
+					option(value='-') -
+					option(value='-') -
+					option(value='-') -
+					option(value='-') -
+					option(value='-') -
+					option(value='-') -
+					option(value='-') -
 
 				select#myTeamPosFilter(onchange="updateMyTeam()")
 					option(value="ALL") All
@@ -73,31 +76,41 @@ html(lang='en')
 					option(value="RUC") RUC
 
 				table#myTeamTable
-					tr
-						th Team
-						th Position
-						th Player
-						th Price
-						each result in results
-								tr
-									td= result.team
-									td= result.position
-									td= result.name
-									td= result.price
+					thead
+						tr
+							th Team
+							th Pos
+							th Player
+							th $
+						tbody
+							each result in results
+									tr
+										td= result.team
+										td= result.position
+										td= result.name
+										td= result.price
+
+
+			.filterPane
+				#filter
+					select#positionSearch(onchange='updateSearch()')
+						option(value='All') All
+						option(value='DEF') DEF
+						option(value='MID') MID
+						option(value='RUC') RUC
+						option(value='FWD') FWD
+					input#playerSearch(type='text', onkeyup='updateSearch()', placeholder='Search for players...')
+					label
+						input#watchlistSearch(type='checkbox', onchange='updateSearch()')
+						|  Watchlist
+
 
 
 			.clockPane
 				#clock
 					div#demo
-				#searchButtons
-					button#searchButton
-						| PLAYERS
-					button#searchButton
-						| TEAMS
-					button#searchButton
-						| RESULTS
-					button#searchButton
-						| STANDINGS
+
+
 			.budgetsPane
 				h3#draftID #{drafts[0]._id}
 				h3#currentUser #{currentUser}
@@ -112,20 +125,8 @@ html(lang='en')
 									td= "$" + coach.budget
 									td= coach.numOfPlayers + "/22"
 
-
 			.playerSearchPane
-				#filter
-					select#positionSearch(onchange='updateSearch()')
-						option(value='All') All
-						option(value='DEF') DEF
-						option(value='MID') MID
-						option(value='RUC') RUC
-						option(value='FWD') FWD
-					input#playerSearch(type='text', onkeyup='updateSearch()', placeholder='Search for players...')
-					label
-						input#watchlistSearch(type='checkbox', onchange='updateSearch()')
-						|  Watchlist
-				table#searchTable
+				table#searchTable.display(cellspacing='0', width='100%')
 					thead
 						tr
 							th Rank
@@ -135,20 +136,20 @@ html(lang='en')
 							th Team
 							th Price (2015)
 							th Watchlist
+
 						tbody
 							each result in players
 								tr
 									td= result.rank
-									td= result.name
+									td.name= result.name
 									td= result.position
 									td= result.ave16
 									td= result.team
 									td= "$" + result.draftPrice16
 									td
 										input#watchlistCheckbox(type='checkbox')
-
-
-
+			
+			
 			.bottomPane
 				button#next(onclick="draft()") Next
 
