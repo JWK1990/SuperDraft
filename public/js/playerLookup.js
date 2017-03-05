@@ -187,6 +187,7 @@ selectPlayer();
 
 var counter;
 var distance;
+var sppCounter;
 
 
 // Define startCountdown function to start the countdown clock.
@@ -225,6 +226,47 @@ var startCountdown = function(endTime){
       }
   }, 1000);
 }; // Close startCountdown() function.
+
+
+
+// Define sppStartCountdown function to start the countdown clock to put a player On The Block.
+var sppStartCountdown = function(){
+  var time = 10;
+  var autoTD;
+
+  // Update the count down every 1 second
+  sppCounter = setInterval(function() {
+
+      // Get todays date and time
+      time--;
+      
+      // Output the result in an element with id="demo"
+      document.getElementById("sppClock").innerHTML = time + " secs";
+      
+      // If the count down is over, the interval is cleared, 
+      if (time < 0) {
+          clearInterval(sppCounter);
+          document.getElementById("sppClock").innerHTML = "-";
+          if(otbName.innerHTML === "-"){
+
+      for (var i = 1; i < searchTableRows.length; i++) {
+          if(Boolean(searchTableRows[i].style.textDecoration === "")){
+            autoTD = searchTableRows[i].getElementsByTagName("td")
+            otbPlayerID = autoTD[1].innerHTML;
+            otbPos = autoTD[2].innerHTML;
+            otbAverage = autoTD[3].innerHTML;
+            break;
+          }
+        }
+
+       addToBlock();
+
+       }
+      }
+  }, 1000);
+}; // Close startCountdown() function.
+
+
 
 
 // Define highlightBidder() function to update the colour of the curent lead bidder to pink. 
@@ -364,6 +406,7 @@ socket.on("pageLoaded", function(data){
   console.log(playerData);
 }); // Close socket.on() function.
 
+// Comment out for development.
 
 pageLoad();
 
@@ -384,7 +427,7 @@ socket.on('playerDrafted', function(data) {
 
   highlightSearch(data.dbData.results);
 
-  // Call highlightOtb() function to under the on the block coach.
+  // Call highlightOtb() function to underline the on the block coach.
   highlightOtb(data.dbData.otbCoach);
 
   // Code to change all team names back to black in the Budgets pane.
@@ -398,6 +441,8 @@ socket.on('playerDrafted', function(data) {
   updateBudgets(data.dbData.coaches);
 
   console.log(data.dbData.coaches);
+
+  sppStartCountdown();
 
 }); // Close socket.on() function.
 
@@ -445,7 +490,11 @@ socket.on('bidUpdate', function(data) {
 // Websockets addToBlock() function.
 var addToBlock = function(){
 
-  socket.emit('addToBlock', { draftID: draftID, player: otbPlayerID, position: otbPos, average: otbAverage, currentUser: currentUser});
+  clearInterval(sppCounter);
+  document.getElementById("sppClock").innerHTML = "-";
+
+
+  socket.emit('addToBlock', { draftID: draftID, player: otbPlayerID, position: otbPos, average: otbAverage, currentUser: currentOtbCoach});
 };
 
 socket.on('otbUpdate', function(data) {
@@ -473,6 +522,8 @@ socket.on('otbUpdate', function(data) {
   playerCount = data.updatedOtbData.coaches.filter(function(e){
     return (e.email==currentUser);
   })[0].numOfPlayers;
+
+
 
 }); // Close socket.on("otbUpdate") function.
 
