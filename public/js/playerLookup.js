@@ -34,6 +34,8 @@ $("#bidForm").submit(function(e){
   e.preventDefault();
 });
 
+$("#dialogues").hide();
+
 // Define global variables.
 
 // Search and selected player variables.
@@ -49,7 +51,8 @@ watchlistFilter.checked = false;
 var watchlistCheckboxes = searchTable.getElementsByTagName("input");
 watchlistCheckboxes.checked = false;
 var hideDrafted = document.getElementById("hideDrafted");
-hideDrafted.checked = false;
+hideDrafted.checked = true;
+var addToQueue = document.getElementById("addToQueue");
 
 var playerData;
 var sppRank = document.getElementById("rank");
@@ -78,11 +81,11 @@ var otbAverage;
 
 // Bidding variables.
 var currentBid = document.getElementById("currentBid");
-var otbEndTime;
 var biddingTeam;
 var otbBidValue;
 var maxBid;
 var playerCount;
+var placeBidButton = document.getElementById("placeBid");
 
 // Budgets Pane variables.
 var budgetsTable = document.getElementById("budgetsTable");
@@ -92,6 +95,16 @@ var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
 // Drafted Players variables.
 var dpFilter = document.getElementById("myTeamFilter");
 var dpFilterOptions = dpFilter.getElementsByTagName("option");
+
+var filterValue = document.getElementById("myTeamFilter");
+var team = filterValue.value.toUpperCase();
+
+var posFilterValue = document.getElementById("myTeamPosFilter");
+var pos = posFilterValue.value.toUpperCase();
+
+
+var myTeamTable = document.getElementById("myTeamTable");
+var myTeamTableRows = myTeamTable.getElementsByTagName("tr");
 
 
 // Define updateSearch() function used to filter the search pane.
@@ -109,13 +122,6 @@ function updateSearch() {
     var td3 = searchTableRows[i].getElementsByTagName("td")[6];
     var watchlistChecked = td3.getElementsByTagName("input")[0].checked;
     var drafted = Boolean(searchTableRows[i].style.textDecoration === "line-through");
-
-
-    
-
-
-
-
 
     if (td) {
       var nameCheck = Boolean(td.innerHTML.toUpperCase().indexOf(filter) > -1);
@@ -188,24 +194,24 @@ selectPlayer();
 var counter;
 var distance;
 var sppCounter;
+var demo = document.getElementById("demo");
+var countDownDate;
+var now;
 
 
 // Define startCountdown function to start the countdown clock.
 var startCountdown = function(endTime){
+  // Set the date we're counting down to
+  countDownDate = endTime;
 
   // Clear any current timers.
   clearInterval(counter);
-  document.getElementById("placeBid").disabled = false;
-  document.getElementById("addToQueue").disabled = true;
-
-  // Set the date we're counting down to
-  var countDownDate = endTime;
 
   // Update the count down every 1 second
   counter = setInterval(function() {
 
       // Get todays date and time
-      var now = new Date().getTime();
+      now = new Date().getTime();
       
       // Find the distance between now and the count down date
       distance = countDownDate - now;
@@ -214,17 +220,18 @@ var startCountdown = function(endTime){
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
       
       // Output the result in an element with id="demo"
-      document.getElementById("demo").innerHTML = seconds + " secs";
+      demo.innerHTML = seconds + " secs";
       
       // If the count down is over, write some text 
       if (distance < 0) {
           clearInterval(counter);
-          document.getElementById("demo").innerHTML = "SOLD";
-          document.getElementById("placeBid").disabled = true;
+          placeBidButton.disabled = true;
+          demo.innerHTML = "Sold for " + currentBid.innerHTML;
+          placeBidButton.style.background = "grey";
           document.getElementById("bidValue").value = 1;
           document.getElementById("next").disabled = false;
       }
-  }, 1000);
+  }, 100);
 }; // Close startCountdown() function.
 
 
@@ -251,10 +258,15 @@ var sppStartCountdown = function(){
 
       for (var i = 1; i < searchTableRows.length; i++) {
           if(Boolean(searchTableRows[i].style.textDecoration === "")){
+            // Update OTB data.
             autoTD = searchTableRows[i].getElementsByTagName("td")
             otbPlayerID = autoTD[1].innerHTML;
             otbPos = autoTD[2].innerHTML;
             otbAverage = autoTD[3].innerHTML;
+            // Update SPP data.
+            selectedPlayerName.innerHTML = autoTD[1].innerHTML;
+            selectedPlayerPosition.innerHTML = autoTD[2].innerHTML;
+            // selectedPlayerPic.innerHTML = "TBA";
             break;
           }
         }
@@ -302,9 +314,9 @@ function highlightOtb(data){
   currentOtbCoach = data;
 
     if(currentOtbCoach === currentUser){
-      document.getElementById("addToQueue").disabled = false;
+      addToQueue.disabled = false;
     } else {
-      document.getElementById("addToQueue").disabled = true;
+      addToQueue.disabled = true;
     };
 
     document.getElementById("next").disabled = true;
@@ -336,7 +348,6 @@ for (var i = 1; i < searchTableRows.length; i++) {
 
 // Define lockBid() function to stop the leading bidder from placing a bid.
 function lockBid(data, currentUser){
-var placeBidButton = document.getElementById("placeBid");
 
 if(data === currentUser){
   placeBidButton.disabled = true;
@@ -401,9 +412,10 @@ socket.on("pageLoaded", function(data){
   highlightSearch(data.loadData.results);
   highlightOtb(data.loadData.otbCoach)
   highlightBidder(data.loadData.otbBidder)
+  updateSearch();
 
   playerData = data.playerData;
-  console.log(playerData);
+
 }); // Close socket.on() function.
 
 // Comment out for development.
@@ -442,6 +454,8 @@ socket.on('playerDrafted', function(data) {
 
   console.log(data.dbData.coaches);
 
+  updateSearch();
+
   sppStartCountdown();
 
 }); // Close socket.on() function.
@@ -456,33 +470,43 @@ var bid = function(){
   if(otbBidValue <= maxBid && playerCount < 22){
     socket.emit('bid', { draftID: draftID, bidValue: otbBidValue, currentUser: currentUser });
 } else if(playerCount >= 22){
-    alert("Your team is full!");
+    // Code to show the jQuery UI Dialog.
+    $(function(){
+      $("#dialogFull").dialog({
+          position: top
+        });
+    });
 } else if (otbBidValue > maxBid){
-    alert("That bid is above your max bid!");
-} else{
-    alert("Sorry, you've been locked out of this round of bidding!");
+    // Code to show the jQuery UI Dialog.
+    $(function(){
+      $("#dialogMax").dialog({
+          position: top
+        });
+    });
+} else {
+    // Code to show the jQuery UI Dialog.
+    $(function(){
+      $("#dialogWait").dialog({
+          position: top
+        });
+    });
 }
 
 }; // Close bid() function.
 
 socket.on('bidUpdate', function(data) {
-
-  console.log('New Bid Data:', data.bidData.otbBid);
-  currentBid.innerHTML = "$" + data.bidData.otbBid;
-  biddingTeam = data.bidData.otbBidder;
-  otbEndTime = data.bidData.otbEndTime;
-  // Updates the bid value input to be the current bid price plus 1.
-  document.getElementById("bidValue").value = data.bidData.otbBid + 1;
-  console.log(biddingTeam);
-  console.log(otbEndTime);
+  if (distance < 10000 && distance > 0){
+   startCountdown(data.bidData.otbEndTime);
+  };
 
   highlightBidder(data.bidData.otbBidder);
 
-  if (distance < 10000 && distance > 0){
-   startCountdown(otbEndTime);
-  };
-
   lockBid(data.bidData.otbBidder, currentUser);
+
+  currentBid.innerHTML = "$" + data.bidData.otbBid;
+  biddingTeam = data.bidData.otbBidder;
+  // Updates the bid value input to be the current bid price plus 1.
+  document.getElementById("bidValue").value = data.bidData.otbBid + 1;
 
 }); // Close socket.on() function.
 
@@ -490,29 +514,58 @@ socket.on('bidUpdate', function(data) {
 // Websockets addToBlock() function.
 var addToBlock = function(){
 
-  clearInterval(sppCounter);
-  document.getElementById("sppClock").innerHTML = "-";
+  var validAdd;
+
+  for (var i = 1; i < myTeamTableRows.length; i++) {
+    if(myTeamTableRows[i].getElementsByTagName("td")[2].innerHTML === selectedPlayerName.innerHTML){
+      validAdd = false;
+      // Code to show the jQuery UI Dialog.
+      $(function(){
+        $("#dialogDrafted").dialog({
+          position: {my: "center", at: "top"}
+        });
+      });
+      break;
+    } else {
+        clearInterval(sppCounter);
+        document.getElementById("sppClock").innerHTML = "-";
+        addToQueue.disabled = true;
+        socket.emit('addToBlock', { draftID: draftID, player: otbPlayerID, position: otbPos, average: otbAverage, currentUser: currentOtbCoach});
+    }
+  };
 
 
-  socket.emit('addToBlock', { draftID: draftID, player: otbPlayerID, position: otbPos, average: otbAverage, currentUser: currentOtbCoach});
-};
+/* Code to automatically update SPP with highest ranked player after a coach adds a player to the block.
+  var autoSPP;
+
+  for (var i = 1; i < searchTableRows.length; i++) {
+      if(Boolean(searchTableRows[i].style.textDecoration === "")){
+        autoSPP = searchTableRows[i].getElementsByTagName("td")
+        selectedPlayerName.innerHTML = autoSPP[1].innerHTML;
+        selectedPlayerPosition.innerHTML = autoSPP[2].innerHTML;
+        // selectedPlayerPic.innerHTML = autoSPP[3].innerHTML;
+        break;
+      }
+    }
+    */
+
+}; // Close addToBlock() function.
 
 socket.on('otbUpdate', function(data) {
+  startCountdown(data.updatedOtbData.otbEndTime);
+
+  highlightBidder(data.updatedOtbData.otbBidder);
+
+  lockBid(data.updatedOtbData.otbBidder, currentUser);
+
   currentBid.innerHTML = "$" + data.updatedOtbData.otbBid;
   otbPlayer = data.updatedOtbData.otbPlayer;
   otbName.innerHTML = otbPlayer;
-  otbEndTime = data.updatedOtbData.otbEndTime;
   otbTeamPos.innerHTML = data.updatedOtbData.otbPos + " - " + data.updatedOtbData.otbAverage;
   otbPic.src = "./images/" + data.updatedOtbData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";;
 
   // Updates the default bid value to be $2 as it starts at $1.
   document.getElementById("bidValue").value = data.updatedOtbData.otbBid + 1;
-
-  highlightBidder(data.updatedOtbData.otbBidder);
-
-  startCountdown(otbEndTime);
-
-  lockBid(data.updatedOtbData.otbBidder, currentUser);
 
   // Set the maxBid variable to the current users Max Bid as per the Budgets pane.
   maxBid = data.updatedOtbData.coaches.filter(function(e){
@@ -522,8 +575,6 @@ socket.on('otbUpdate', function(data) {
   playerCount = data.updatedOtbData.coaches.filter(function(e){
     return (e.email==currentUser);
   })[0].numOfPlayers;
-
-
 
 }); // Close socket.on("otbUpdate") function.
 
@@ -568,7 +619,7 @@ var draftPlayer = function(){
 */
     // The below single line of code can be removed when the block above is re-enabled.
     // These should be the only two changes required for the otb button changes to work.
-     document.getElementById("addToQueue").disabled = false;
+     addToQueue.disabled = false;
 
     },
     error: function(jqXHR, textStatus, errorThrown){
@@ -594,10 +645,9 @@ var updateOtbPlayer = function(){
     success: function(resultData){
       otbPlayer = resultData.otbPlayer;
       otbName.innerHTML = otbPlayer;
-      otbEndTime = resultData.otbEndTime;
       otbPos = resultData.otbPos;
 
-      startCountdown(otbEndTime);
+      startCountdown(resultData.otbEndTime);
     },
     error: function(jqXHR, textStatus, errorThrown){
     },
@@ -635,13 +685,12 @@ otbBidValue = document.getElementById("bidValue").value;
       success: function(resultData){
         currentBid.innerHTML = "$" + resultData.otbBid;
         biddingTeam = resultData.otbBidder;
-        otbEndTime = resultData.otbEndTime;
         console.log(biddingTeam);
         console.log(otbEndTime);
 
 
         if (distance < 10000 && distance > 0){
-         startCountdown(otbEndTime);
+         startCountdown(resultData.otbEndTime);
         };
       },
       // Displays an error if the bid value is less than the current bid.
@@ -659,16 +708,6 @@ otbBidValue = document.getElementById("bidValue").value;
 
 // Define myTeam() function used to filter the My Team Pane.
 function updateMyTeam() {
-  // Declare variables 
-  var filterValue = document.getElementById("myTeamFilter");
-  var team = filterValue.value.toUpperCase();
-
-  var posFilterValue = document.getElementById("myTeamPosFilter");
-  var pos = posFilterValue.value.toUpperCase();
-
-
-  var myTeamTable = document.getElementById("myTeamTable");
-  var myTeamTableRows = myTeamTable.getElementsByTagName("tr");
 
   // Loop through all table rows and hide those who don't match the search query.
   for (var i = 1; i < myTeamTableRows.length; i++) {
@@ -711,11 +750,11 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $('#myTeamTable').DataTable( {
-        scrollY:        '90vh',
+        scrollY: '90vh',
         scrollCollapse: true,
-        paging:         false,
+        paging: false,
         searching: false,
-        ordering: false,
+        aaSorting: [],
         bInfo: false
 
     } );

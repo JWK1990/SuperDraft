@@ -6,12 +6,23 @@ html(lang='en')
 		link(rel='stylesheet', href='/stylesheets/draftStyle.css')
 		link(rel='stylesheet', href='/stylesheets/jquery.dataTables.min.css')
 		script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
-		script(src='/js/jquery.countdown.js')
 		script(src='/socket.io/socket.io.js')
 		script(src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js')
 		script(src='https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js')
 
+		link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
+		script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+
 	body
+		div#dialogues
+			div#dialogDrafted(title="Player Already Drafted")
+				p Please select another player!
+			div#dialogFull(title="Bid Error")
+				p Your team is already full!
+			div#dialogMax(title="Bid Error")
+				p That bid is above your maximum bid!
+			div#dialogWait(title="Bid Error")
+				p Please wait until the next round of bidding!
 		.container
 
 			.otbPane
