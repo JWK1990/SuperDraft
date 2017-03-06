@@ -515,9 +515,13 @@ socket.on('bidUpdate', function(data) {
 var addToBlock = function(){
 
   var validAdd;
+  var td;
 
-  for (var i = 1; i < myTeamTableRows.length; i++) {
-    if(myTeamTableRows[i].getElementsByTagName("td")[2].innerHTML === selectedPlayerName.innerHTML){
+  for (var i = 1; i < searchTableRows.length; i++) {
+    td = searchTableRows[i].getElementsByTagName("td")[1];
+    // Can potentially be updated to check selectedPlayerName.innerHTML later to search through less rows.
+    // Currently this causes an issue on the first player that goes On The Block so changed for now.
+    if(selectedPlayerName.innerHTML === td.innerHTML && searchTableRows[i].style.textDecoration === "line-through"){
       validAdd = false;
       // Code to show the jQuery UI Dialog.
       $(function(){
