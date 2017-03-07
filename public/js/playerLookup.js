@@ -34,7 +34,32 @@ $("#bidForm").submit(function(e){
   e.preventDefault();
 });
 
+// Hide dialog boxes.
 $("#dialogues").hide();
+
+
+// Set up Data Tables.
+$(document).ready(function() {
+    $('#searchTable').DataTable( {
+        scrollY:        '70.5vh',
+        scrollCollapse: true,
+        paging:         false,
+        searching: false,
+        ordering: false,
+        bInfo: false
+    } );
+} );
+
+$(document).ready(function() {
+    $('#myTeamTable').DataTable( {
+        scrollY: '90vh',
+        scrollCollapse: true,
+        paging: false,
+        searching: false,
+        aaSorting: [],
+        bInfo: false
+    } );
+} );
 
 // Define global variables.
 
@@ -96,11 +121,8 @@ var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
 var dpFilter = document.getElementById("myTeamFilter");
 var dpFilterOptions = dpFilter.getElementsByTagName("option");
 
-var filterValue = document.getElementById("myTeamFilter");
-var team = filterValue.value.toUpperCase();
-
-var posFilterValue = document.getElementById("myTeamPosFilter");
-var pos = posFilterValue.value.toUpperCase();
+var teamFilter = document.getElementById("myTeamFilter");
+var posFilter = document.getElementById("myTeamPosFilter");
 
 
 var myTeamTable = document.getElementById("myTeamTable");
@@ -142,7 +164,23 @@ function updateSearch() {
   }
 } // Close updateSearch().
 
+// Define updateSPPTable() to update the stats in the SPP Table.
+function updateSPPTable(name){
 
+  selectedPlayerData = playerData.filter(function(e){
+    return (e.name==name.innerHTML);
+  })[0];
+
+  sppRank.innerHTML = selectedPlayerData.rank;
+  sppAve.innerHTML = selectedPlayerData.ave16;
+  sppPoints.innerHTML = selectedPlayerData.points16;
+  sppStdDev.innerHTML = selectedPlayerData.sd16;
+  sppGames.innerHTML = selectedPlayerData.games16;
+  sppAge.innerHTML = selectedPlayerData.age;
+  sppPrice16.innerHTML = "$" + selectedPlayerData.draftPrice16;
+  sppPrice15.innerHTML = "$" + selectedPlayerData.draftPrice15;
+  sppPrice14.innerHTML = "$" + selectedPlayerData.draftPrice14;
+}; // Close updateSPPTable() function.
 
 
 // Define selectPlayer() function used to put a player from the search pane to the SPP.
@@ -152,7 +190,6 @@ function selectPlayer(){
   for (i=0; i < searchTableRows.length; i += 1){
     searchTableRows[i].addEventListener("click",function(){
       selectedPlayer = this;
-      console.log(selectedPlayer);
 
       // Update top section with name, position and picture.
       selectedPlayerName.innerHTML = this.getElementsByTagName("td")[1].innerHTML;
@@ -164,19 +201,7 @@ function selectPlayer(){
       otbAverage = this.getElementsByTagName("td")[3].innerHTML;
 
       // Update bottom section with table stats.
-      selectedPlayerData = playerData.filter(function(e){
-        return (e.name==selectedPlayerName.innerHTML);
-      })[0];
-
-      sppRank.innerHTML = selectedPlayerData.rank;
-      sppAve.innerHTML = selectedPlayerData.ave16;
-      sppPoints.innerHTML = selectedPlayerData.points16;
-      sppStdDev.innerHTML = selectedPlayerData.sd16;
-      sppGames.innerHTML = selectedPlayerData.games16;
-      sppAge.innerHTML = selectedPlayerData.age;
-      sppPrice16.innerHTML = "$" + selectedPlayerData.draftPrice16;
-      sppPrice15.innerHTML = "$" + selectedPlayerData.draftPrice15;
-      sppPrice14.innerHTML = "$" + selectedPlayerData.draftPrice14;
+      updateSPPTable(selectedPlayerName);
 
       updateSearch();
     });
@@ -234,12 +259,32 @@ var startCountdown = function(endTime){
   }, 100);
 }; // Close startCountdown() function.
 
+// Define autoSPP() function used to update the SPP with the top ranked undrafted player.
+// This is used when the sppStartCountdown() function reaches 0 or when a drafted player is in the SPP for the OTB Coach.
+function autoSPP(){
+  var autoTD;
+
+  for (var i = 1; i < searchTableRows.length; i++) {
+      if(Boolean(searchTableRows[i].style.textDecoration === "")){
+        // Update OTB data.
+        autoTD = searchTableRows[i].getElementsByTagName("td");
+        otbPlayerID = autoTD[1].innerHTML;
+        otbPos = autoTD[2].innerHTML;
+        otbAverage = autoTD[3].innerHTML;
+        // Update SPP data.
+        selectedPlayerName.innerHTML = autoTD[1].innerHTML;
+        selectedPlayerPosition.innerHTML = autoTD[2].innerHTML;
+        // selectedPlayerPic.innerHTML = "TBA";
+        updateSPPTable(autoTD[1]);
+        break;
+      }
+    }
+}; // Close autoSPP function.
 
 
 // Define sppStartCountdown function to start the countdown clock to put a player On The Block.
 var sppStartCountdown = function(){
   var time = 10;
-  var autoTD;
 
   // Update the count down every 1 second
   sppCounter = setInterval(function() {
@@ -252,26 +297,18 @@ var sppStartCountdown = function(){
       
       // If the count down is over, the interval is cleared, 
       if (time < 0) {
-          clearInterval(sppCounter);
-          document.getElementById("sppClock").innerHTML = "-";
-          if(otbName.innerHTML === "-"){
+        clearInterval(sppCounter);
+        document.getElementById("sppClock").innerHTML = "-";
+        if(otbName.innerHTML === "-"){
 
-      for (var i = 1; i < searchTableRows.length; i++) {
-          if(Boolean(searchTableRows[i].style.textDecoration === "")){
-            // Update OTB data.
-            autoTD = searchTableRows[i].getElementsByTagName("td")
-            otbPlayerID = autoTD[1].innerHTML;
-            otbPos = autoTD[2].innerHTML;
-            otbAverage = autoTD[3].innerHTML;
-            // Update SPP data.
-            selectedPlayerName.innerHTML = autoTD[1].innerHTML;
-            selectedPlayerPosition.innerHTML = autoTD[2].innerHTML;
-            // selectedPlayerPic.innerHTML = "TBA";
-            break;
-          }
+        // Run autoSPP() to update the SPP for the current OTB Coach.
+        // THIS CODE SHOULD POTENTIALLY BE UPDATED.
+        // THE FACT THAT AUTOSPP() AND ADDTOBLOCK() ARE IN THE IF STATEMENTS MEANS THAT THEY ONLY EXECUTE IF THE CURRENT USER IS LOGGED IN.
+        // THE USER CAN LOG IN AND ADD A PLAYER TO THE BLOCK, BUT IT MEANS THAT THE DRAFT IS FROZEN IF THE OTB USER IS LOGGED OUT.
+        if(currentUser === currentOtbCoach){
+          autoSPP();
+          addToBlock();
         }
-
-       addToBlock();
 
        }
       }
@@ -326,7 +363,6 @@ function highlightOtb(data){
 // Define highlightSearch() function to grey out players once they have been drafted.
 function highlightSearch(data){
 var pluck = _.pluck(data, "name");
-console.log(pluck);
 
 for (var i = 1; i < searchTableRows.length; i++) {
     var td = searchTableRows[i].getElementsByTagName("td")[1];
@@ -366,8 +402,6 @@ function addRow(data){
    var row = table.insertRow(1);
    var index = data.length -1;
 
-   console.log(index);
-
     row.insertCell(0).innerHTML = data[index].team;
     row.insertCell(1).innerHTML = data[index].position;
     row.insertCell(2).innerHTML = data[index].name;
@@ -377,7 +411,6 @@ function addRow(data){
 
 function updateBudgets(data){
   for (var i = 1; i < budgetsTableRows.length; i++) {
-    console.log(data[i-1].budget)
     budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML = data[i-1].budget
     budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML = data[i-1].numOfPlayers + "/22"
   }
@@ -388,12 +421,30 @@ function updateBudgets(data){
 // Define updateDPFilter() function to update the Drafted Players team filter based on the teams in the Budgets pane.
 function updateDPFilter(){
   for (i=1; i < dpFilterOptions.length; i++){
-  dpFilterOptions[i].value = budgetsTableRows[i].getElementsByTagName("td")[0].innerHTML
-  document.getElementById("myTeamFilter").options[i].innerHTML = budgetsTableRows[i].getElementsByTagName("td")[0].innerHTML
+  dpFilterOptions[i].value = budgetsTableRows[i].getElementsByTagName("td")[0].innerHTML;
+  dpFilterOptions[i].innerHTML = budgetsTableRows[i].getElementsByTagName("td")[0].innerHTML;
 };
 }
 // Call the updateDPFilter() function.
 updateDPFilter();
+
+
+function checkSPP(){
+  if(currentUser === currentOtbCoach){
+    var td;
+
+    for(i=1; i < myTeamTableRows.length; i++){
+
+      td = myTeamTableRows[i].getElementsByTagName("td")[2];
+
+      if(selectedPlayerName.innerHTML === td.innerHTML){
+        // Update SPP data.
+        autoSPP();
+        // selectedPlayerPic.innerHTML = "TBA";
+      }
+    }
+  }
+} // Close checkSPP() function.
 
 
 
@@ -431,7 +482,6 @@ var draft = function(){
 };
 
 socket.on('playerDrafted', function(data) {
-  console.log('Got data:', data.dbData);
   currentBid.innerHTML = "-";
   otbName.innerHTML = "-";
   otbTeamPos.innerHTML = "-";
@@ -452,11 +502,11 @@ socket.on('playerDrafted', function(data) {
   // Call updateBudgets() to update the Budgets pane.
   updateBudgets(data.dbData.coaches);
 
-  console.log(data.dbData.coaches);
-
   updateSearch();
 
   sppStartCountdown();
+
+  checkSPP();
 
 }); // Close socket.on() function.
 
@@ -514,6 +564,7 @@ socket.on('bidUpdate', function(data) {
 // Websockets addToBlock() function.
 var addToBlock = function(){
 
+/*
   var validAdd;
   var td;
 
@@ -537,6 +588,13 @@ var addToBlock = function(){
         socket.emit('addToBlock', { draftID: draftID, player: otbPlayerID, position: otbPos, average: otbAverage, currentUser: currentOtbCoach});
     }
   };
+  */
+
+  clearInterval(sppCounter);
+  document.getElementById("sppClock").innerHTML = "-";
+  addToQueue.disabled = true;
+
+  socket.emit('addToBlock', { draftID: draftID, player: otbPlayerID, position: otbPos, average: otbAverage, currentUser: currentOtbCoach});
 
 
 /* Code to automatically update SPP with highest ranked player after a coach adds a player to the block.
@@ -583,152 +641,28 @@ socket.on('otbUpdate', function(data) {
 }); // Close socket.on("otbUpdate") function.
 
 
-
-
-// Define draftPlayer() function to draft a player to a team when the timer runs out.
-var draftPlayer = function(){
-
-  jQuery.ajax({
-    url:"/draftData/" + draftID + "/coaches",
-    type: "PUT",
-
-    contentType: "application/json; charset=utf-8",
-    success: function(resultData){
-    console.log(resultData);
-
-/* The below code enables/disables buttons so that only the otbCoach can put players on the block.
-     for (var i = 1; i < budgetsTableRows.length; i++) {
-    var td = budgetsTableRows[i].getElementsByTagName("td")[0];
-
-    if (td) {
-      if (td.innerHTML.toUpperCase() === resultData.otbCoach.toUpperCase()) {
-        budgetsTableRows[i].style.textDecoration = "underline";
-      } else {
-        budgetsTableRows[i].style.textDecoration = "none";
-      }
-    } 
-  };
-
-  currentOtbCoach = resultData.otbCoach.toUpperCase();
-  currentUser = document.getElementById("currentUser").innerHTML.toUpperCase();
-
-    if(currentOtbCoach === currentUser){
-      document.getElementById("addToQueue").disabled = false;
-    } else {
-      document.getElementById("addToQueue").disabled = true;
-    };
-
-    document.getElementById("next").disabled = true;
-
-*/
-    // The below single line of code can be removed when the block above is re-enabled.
-    // These should be the only two changes required for the otb button changes to work.
-     addToQueue.disabled = false;
-
-    },
-    error: function(jqXHR, textStatus, errorThrown){
-    },
-    timeout: 120000,
-  });
-}; // Close draftPlayer() function.
-
-
-//ADDING A PLAYER FROM THE SEARCH PANE TO THE BLOCK.
-
-// Define updateOtbPlayer function to update the otbPlayer in the DB.
-var updateOtbPlayer = function(){
-  // Included the draftPlayer() function here to add the previously drafted player to the DB.
-  // We do this when the next player is added to the queue so that the DB is only updated once.
-  // This is as opposed to linking with countdown where everyone browser would trigger when the countdown expires.
-
-  jQuery.ajax({
-    url:"/draftData/" + draftID + "/otbPlayer/" + otbPlayerID + "/" + otbPos,
-    type: "PUT",
-
-    contentType: "application/json; charset=utf-8",
-    success: function(resultData){
-      otbPlayer = resultData.otbPlayer;
-      otbName.innerHTML = otbPlayer;
-      otbPos = resultData.otbPos;
-
-      startCountdown(resultData.otbEndTime);
-    },
-    error: function(jqXHR, textStatus, errorThrown){
-    },
-    timeout: 120000,
-  });
-
-  otbPic.src = selectedPlayerImgString;
-
-}; // Close updateOtbPlayer function.
-
-
-// Define addToBlock() function to put a player from the SPP to the block.
-// Not sure whether this is require or not as its mostly covered in teh updateOtbPlayer() function.
-// function addToBlock(){
-
-  // var selectedPlayerTeam = selectedPlayer.getElementsByTagName("td")[3].innerHTML;
-
-//}; // Close addToBlock().
-
-
-
-
-//BIDDING ON A PLAYER.
-
-// Define logBid() function to update the otbBid in the DB.
-var logBid = function(){
-
-otbBidValue = document.getElementById("bidValue").value;
-
-    jQuery.ajax({
-      url:"/draftData/" + draftID + "/otbBid/" + otbBidValue,
-      type: "PUT",
-
-      contentType: "application/json; charset=utf-8",
-      success: function(resultData){
-        currentBid.innerHTML = "$" + resultData.otbBid;
-        biddingTeam = resultData.otbBidder;
-        console.log(biddingTeam);
-        console.log(otbEndTime);
-
-
-        if (distance < 10000 && distance > 0){
-         startCountdown(resultData.otbEndTime);
-        };
-      },
-      // Displays an error if the bid value is less than the current bid.
-      error: function(error){
-        if(error.responseText = "showAlert")
-          alert("Bid value must be greater than current bid!");
-      },
-      timeout: 120000,
-    });
-
-
-  }; // Close logBid() function.
-
-
-
 // Define myTeam() function used to filter the My Team Pane.
 function updateMyTeam() {
-
+  var td;
+  var tdPos;
+  var team = teamFilter.value;
+  var pos = posFilter.value;
   // Loop through all table rows and hide those who don't match the search query.
   for (var i = 1; i < myTeamTableRows.length; i++) {
-    var td = myTeamTableRows[i].getElementsByTagName("td")[0];
-    var tdPos = myTeamTableRows[i].getElementsByTagName("td")[1];
+    td = myTeamTableRows[i].getElementsByTagName("td")[0];
+    tdPos = myTeamTableRows[i].getElementsByTagName("td")[1];
 
     if (td) {
-      if (team === "ALL" && pos === "ALL"){
+      if (team === "All" && pos === "All"){
         myTeamTableRows[i].style.display = ""
       }
-      else if (td.innerHTML.toUpperCase() === team && tdPos.innerHTML.toUpperCase().indexOf(pos) > -1) {
+      else if (td.innerHTML === team && tdPos.innerHTML.indexOf(pos) > -1) {
         myTeamTableRows[i].style.display = ""
       }
-      else if (team === "ALL" && tdPos.innerHTML.toUpperCase().indexOf(pos) > -1){
+      else if (team === "All" && tdPos.innerHTML.indexOf(pos) > -1){
         myTeamTableRows[i].style.display = ""
       }
-      else if (td.innerHTML.toUpperCase() === team && pos === "ALL"){
+      else if (td.innerHTML === team && pos === "All"){
         myTeamTableRows[i].style.display = ""
       }
       else {
@@ -737,78 +671,6 @@ function updateMyTeam() {
     } 
   }
 } // Close updateMyTeam().
-
-
-
-$(document).ready(function() {
-    $('#searchTable').DataTable( {
-        scrollY:        '70.5vh',
-        scrollCollapse: true,
-        paging:         false,
-        searching: false,
-        ordering: false,
-        bInfo: false
-
-    } );
-} );
-
-$(document).ready(function() {
-    $('#myTeamTable').DataTable( {
-        scrollY: '90vh',
-        scrollCollapse: true,
-        paging: false,
-        searching: false,
-        aaSorting: [],
-        bInfo: false
-
-    } );
-} );
-
-
-
-
-
-/* Example of how to iterate through the draftData array and the coaches object within this array.
-
-  jQuery.ajax({
-    url:"/draftData/" + draftID + "/coaches/" + "TBP@gmail.com",
-    type: "PUT",
-
-    contentType: "application/json; charset=utf-8",
-    success: function(resultData){
-
-    var coaches = resultData[0].coaches;
-
-    console.log(coaches);
-
-    var coach = coaches.filter(function( obj ) {
-    return obj.email == "TBP@gmail.com";
-  });
-
-   console.log(coach);
-
-    var budget = coach[0].budget;
-    console.log(budget);
-
-    var players = coach[0].players;
-
-    console.log(players);
-
-    var player = players.filter(function( obj ) {
-    return obj.name == "Sam Mitchell";
-  });
-    console.log(player);
-
-    var playerName = player[0].name;
-
-    console.log(playerName);
-
-*/
-
-
-
-
-
 
 
 
