@@ -177,9 +177,9 @@ function updateSPPTable(name){
   sppStdDev.innerHTML = selectedPlayerData.sd16;
   sppGames.innerHTML = selectedPlayerData.games16;
   sppAge.innerHTML = selectedPlayerData.age;
-  sppPrice16.innerHTML = "$" + selectedPlayerData.draftPrice16;
-  sppPrice15.innerHTML = "$" + selectedPlayerData.draftPrice15;
-  sppPrice14.innerHTML = "$" + selectedPlayerData.draftPrice14;
+  sppPrice16.innerHTML = selectedPlayerData.draftPrice16;
+  sppPrice15.innerHTML = selectedPlayerData.draftPrice15;
+  sppPrice14.innerHTML = selectedPlayerData.draftPrice14;
 }; // Close updateSPPTable() function.
 
 
