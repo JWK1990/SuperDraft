@@ -210,7 +210,7 @@ var startCountdown = function(endTime){
           document.getElementById("bidValue").value = 1;
           document.getElementById("next").disabled = false;
       }
-  }, 1000);
+  }, 10);
 }; // Close startCountdown() function.
 
 
