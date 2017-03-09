@@ -40,7 +40,7 @@ html(lang='en')
 					img#selectedPic(src="./images/TBA.png", alt='On The Block', title='On The Block')
 					h1#selectedName PLAYER NAME
 					h3#selectedPosition POSITION
-					button#addToQueue(onclick='addToBlock()') ADD TO QUEUE
+					button#addToQueue(onclick='addToBlock()') ADD TO BLOCK
 					.sppTimer
 						h1#sppClock
 				#bottomSPP
@@ -127,16 +127,18 @@ html(lang='en')
 
 
 			.budgetsPane
-				h3#draftID #{drafts[0]._id}
 				h3#currentUser #{currentUser}
+				h5#draftID #{drafts[0]._id}
 				table#budgetsTable
 					tr
 						th Team
-						th Max Bid
+						th Max
+						th $
 						th Roster
 						each coach in coaches
 								tr
 									td= coach.email
+									td= "$" + (coach.budget - (21 - coach.numOfPlayers))
 									td= "$" + coach.budget
 									td= coach.numOfPlayers + "/22"
 

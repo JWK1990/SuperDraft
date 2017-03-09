@@ -156,7 +156,7 @@ router.post("/create", function(req, res, next){
 				draftYear: req.body.draftYear,
 				numOfCoaches: req.body.numOfCoaches,
 				admin: req.session.name,
-				coaches: [{email: req.body.coach1, budget: 300, numOfPlayers: 0, players:[{name: "Patrick Dangerfield", price: 10, position: "M"}, {name: "Sam Mitchell", price: 20, position: "M"}]}, 
+				coaches: [{email: req.body.coach1, budget: 300, numOfPlayers: 0}, 
 						{email: req.body.coach2, budget: 300, numOfPlayers: 0},
 						{email: req.body.coach3, budget: 300, numOfPlayers: 0}, 
 						{email: req.body.coach4, budget: 300, numOfPlayers: 0},
@@ -170,7 +170,7 @@ router.post("/create", function(req, res, next){
 				otbBid: 1,
 				otbEndTime: new Date(),
 				otbCoach :req.body.coach1,
-				pickCounter: 0
+				pickCounter: 1
 			};
 
 			// use schema's 'create' method to insert document into Mongo.
@@ -197,7 +197,7 @@ router.get("/myDrafts", function(req, res, next){
 	});
 
 
-
+/*
 
 // ROUTERS THAT LINK UP WITH AJAX REQUESTS IN THE PLAYERLOOKUP.JS FILE.
 
@@ -302,5 +302,6 @@ router.put("/draftData/:dID/coaches", function(req, res, next){
 
 });
 
+*/
 
 module.exports = router;
