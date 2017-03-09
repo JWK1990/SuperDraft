@@ -4,7 +4,6 @@ body, html {
   height: 100%;
   margin: 0px;
   padding: 0px;
-  background-color: yellow;
 }
 
 * {
@@ -336,10 +335,6 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   color: #0020C2;
 }
 
-.playerSearchPane th{
-  background: yellow;
-}
-
 /*
 .playerSearchPane table{
   width: 100%;
@@ -371,53 +366,28 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   background-color: yellow;
   border-collapse: collapse;
   overflow: hidden;
-  margin-left: 0.5%;
-  margin-right: 0.5%;
+  padding-left: 0.5%;
+  padding-right: 0.5%;
 }
 
 
-.filterPane #playerSearch{
+.filterPane #filter{ 
+  margin-top: 0.5vmin;
+  float: left;
+  background-color: yellow;
+  width: 100%;
+  text-align: middle;
+}
+
+.filterPane #filter #playerSearch{
   width: 25vmin;
   height: 2vmin;
   font-size: 1.5vmin;
-  left-margin: 1vmin;
-  right-margin: 1vmin;
-  margin-top: 0.7vmin;
-  float:left;
-  margin-left: 3vmin;
 }
 
-.filterPane #positionSearch{
+.filterPane #filter #positionSearch{
   width: 10vmin;
   height: 100%;
-  float: left;
-  margin-top: 1vmin;
-  margin-left: 11vmin;
-}
-
-
-.filterPane #watchlistSearch{
-  margin-top: 1.4vmin;
-  float:left;
-  margin-left: 3vmin;
-}
-
-.filterPane #watchlist{
-  margin-top: 1.4vmin;
-  margin-left: 0.8vmin;
-  float: left;
-}
-
-.filterPane #hideDrafted{
-  margin-top: 1.4vmin;
-  float: left;
-  margin-left: 3vmin;
-}
-
-.filterPane #drafted{
-  margin-top: 1.2vmin;
-  margin-left: 0.8vmin;
-  float: left;
 }
 
 .myTeamPane{

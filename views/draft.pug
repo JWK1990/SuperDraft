@@ -108,22 +108,23 @@ html(lang='en')
 										td#dMid= result.name
 										td= result.position
 										td= result.team
-										td= "$" + result.price
+										td= result.price
 
 
 			.filterPane
-				select#positionSearch(onchange='updateSearch()')
-					option(value='All') All
-					option(value='DEF') DEF
-					option(value='MID') MID
-					option(value='RUC') RUC
-					option(value='FWD') FWD
-				input#playerSearch(type='text', onkeyup='updateSearch()', placeholder='Search for players...')
-				label
-					input#watchlistSearch(type='checkbox', onchange='updateSearch()') 
-					h4#watchlist Watchlist
-					input#hideDrafted(type='checkbox', onchange='updateSearch()')
-					h4#drafted Hide Drafted
+				#filter
+					select#positionSearch(onchange='updateSearch()')
+						option(value='All') All
+						option(value='DEF') DEF
+						option(value='MID') MID
+						option(value='RUC') RUC
+						option(value='FWD') FWD
+					input#playerSearch(type='text', onkeyup='updateSearch()', placeholder='Search for players...')
+					label
+						input#watchlistSearch(type='checkbox', onchange='updateSearch()')
+						|  Watchlist
+						input#hideDrafted(type='checkbox', onchange='updateSearch()')
+						|  Hide Drafted
 
 
 

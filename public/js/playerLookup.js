@@ -635,7 +635,7 @@ socket.on('otbUpdate', function(data) {
   otbPlayer = data.updatedOtbData.otbPlayer;
   otbName.innerHTML = otbPlayer;
   otbTeamPos.innerHTML = data.updatedOtbData.otbPos + " - " + data.updatedOtbData.otbAverage;
-  otbPic.src = "./images/" + data.updatedOtbData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";
+  otbPic.src = "./images/" + data.updatedOtbData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";;
 
   // Updates the default bid value to be $2 as it starts at $1.
   document.getElementById("bidValue").value = data.updatedOtbData.otbBid + 1;
