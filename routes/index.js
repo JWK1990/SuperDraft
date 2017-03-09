@@ -126,7 +126,7 @@ router.get("/draft", function(req, res, next){
 		Draft.find({"_id":req.query.draft}, function(err, drafts){
 			Player.find({}, function(err, players){
 				if(!err){
-					var currentUser = req.session.email;
+					var currentUser = req.session.teamName;
 					return res.render("draft", {title: "Draft", players: players, drafts: drafts, users: users, currentUser: currentUser, coaches: drafts[0].coaches, results: drafts[0].results.reverse()});
 				} else {
 					throw err;
@@ -155,6 +155,7 @@ router.post("/create", function(req, res, next){
 				leagueName: req.body.leagueName,
 				draftYear: req.body.draftYear,
 				numOfCoaches: req.body.numOfCoaches,
+<<<<<<< HEAD
 				admin: req.session.name,
 				coaches: [{email: req.body.coach1, budget: 300, numOfPlayers: 0}, 
 						{email: req.body.coach2, budget: 300, numOfPlayers: 0},
@@ -166,6 +167,19 @@ router.post("/create", function(req, res, next){
 						{email: req.body.coach8, budget: 300, numOfPlayers: 0},
 						{email: req.body.coach9, budget: 300, numOfPlayers: 0},
 						{email: req.body.coach10, budget: 300, numOfPlayers: 0}],
+=======
+				admin: req.session.teamName,
+				coaches: [{teamName: req.body.coach1, budget: 300, numOfPlayers: 0}, 
+						{teamName: req.body.coach2, budget: 300, numOfPlayers: 0},
+						{teamName: req.body.coach3, budget: 300, numOfPlayers: 0}, 
+						{teamName: req.body.coach4, budget: 300, numOfPlayers: 0},
+						{teamName: req.body.coach5, budget: 300, numOfPlayers: 0}, 
+						{teamName: req.body.coach6, budget: 300, numOfPlayers: 0},
+						{teamName: req.body.coach7, budget: 300, numOfPlayers: 0},
+						{teamName: req.body.coach8, budget: 300, numOfPlayers: 0},
+						{teamName: req.body.coach9, budget: 300, numOfPlayers: 0},
+						{teamName: req.body.coach10, budget: 300, numOfPlayers: 0}],
+>>>>>>> e32818243767c5c6d771afb0d0c1f8b9e4e56a1a
 				otbPlayer: "Patrick Dangerfield",
 				otbBid: 1,
 				otbEndTime: new Date(),
@@ -233,7 +247,7 @@ router.put("/draftData/:dID/otbBid/:bID", function(req, res, next){
 		if (req.params.bID > data.otbBid){
 
 		data.otbBid = req.params.bID;
-		data.otbBidder = req.session.email;
+		data.otbBidder = req.session.teamName;
 		// Code to add 11 seconds to the current end time.
 	    var now = new Date();
 	    now.setSeconds(now.getSeconds() + 11);
@@ -269,7 +283,7 @@ router.put("/draftData/:dID/coaches", function(req, res, next){
 		data.results.push(newResult);
 
 		// The update $inc function incremenents the budget and numOfPlayers fields by the provided number.
-		Draft.update({"_id": req.params.dID, "coaches.email": data.otbBidder}, {"$inc":{
+		Draft.update({"_id": req.params.dID, "coaches.teamName": data.otbBidder}, {"$inc":{
 			"coaches.$.budget" : -data.otbBid,
 			"coaches.$.numOfPlayers": 1
 
@@ -278,14 +292,14 @@ router.put("/draftData/:dID/coaches", function(req, res, next){
 		});
 
 		// The update $push function adds the newPlayer variable defined above to the relevant coaches players array.
-		Draft.update({"_id": req.params.dID, "coaches.email": data.otbBidder}, {"$push":{
+		Draft.update({"_id": req.params.dID, "coaches.teamName": data.otbBidder}, {"$push":{
 			"coaches.$.players" : newPlayer
 
 		}}, function(err){
 			if(err) throw err
 		});
 
-		data.otbCoach = data.coaches[data.pickCounter].email;
+		data.otbCoach = data.coaches[data.pickCounter].teamName;
 		console.log(data.otbCoach);
 
 		if (data.pickCounter === 9){

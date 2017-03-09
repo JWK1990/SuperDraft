@@ -33,7 +33,7 @@ var PlayersSchema = new mongoose.Schema({
 
 
 var CoachSchema = new mongoose.Schema({
-	email: {
+	teamName: {
 		type: String
 	},
 	budget: {
