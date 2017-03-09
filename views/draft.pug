@@ -6,23 +6,12 @@ html(lang='en')
 		link(rel='stylesheet', href='/stylesheets/draftStyle.css')
 		link(rel='stylesheet', href='/stylesheets/jquery.dataTables.min.css')
 		script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
+		script(src='/js/jquery.countdown.js')
 		script(src='/socket.io/socket.io.js')
 		script(src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js')
 		script(src='https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js')
 
-		link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
-		script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
-
 	body
-		div#dialogues
-			div#dialogDrafted(title="Player Already Drafted")
-				p Please select another player!
-			div#dialogFull(title="Bid Error")
-				p Your team is already full!
-			div#dialogMax(title="Bid Error")
-				p That bid is above your maximum bid!
-			div#dialogWait(title="Bid Error")
-				p Please wait until the next round of bidding!
 		.container
 
 			.otbPane
@@ -40,9 +29,7 @@ html(lang='en')
 					img#selectedPic(src="./images/TBA.png", alt='On The Block', title='On The Block')
 					h1#selectedName PLAYER NAME
 					h3#selectedPosition POSITION
-					button#addToQueue(onclick='addToBlock()') ADD TO BLOCK
-					.sppTimer
-						h1#sppClock
+					button#addToQueue(onclick='addToBlock()') ADD TO QUEUE
 				#bottomSPP
 					table
 						tr
@@ -69,7 +56,7 @@ html(lang='en')
 			.myTeamPane
 				h3 Drafted Players
 				select#myTeamFilter(onchange="updateMyTeam()")
-					option(value="All") All
+					option(value="ALL") All
 					option(value='-') -
 					option(value='-') -
 					option(value='-') -
@@ -82,19 +69,19 @@ html(lang='en')
 					option(value='-') -
 
 				select#myTeamPosFilter(onchange="updateMyTeam()")
-					option(value="All") All
+					option(value="ALL") All
 					option(value="DEF") DEF
 					option(value="MID") MID
 					option(value="FWD") FWD
 					option(value="RUC") RUC
 
-				table#myTeamTable
+				table#myTeamTable.display(cellspacing='0', width='100%')
 					thead
 						tr
 							th Team
-							th Pos
+							th Position
 							th Player
-							th $
+							th Price
 						tbody
 							each result in results
 									tr
@@ -116,8 +103,6 @@ html(lang='en')
 					label
 						input#watchlistSearch(type='checkbox', onchange='updateSearch()')
 						|  Watchlist
-						input#hideDrafted(type='checkbox', onchange='updateSearch()')
-						|  Hide Drafted
 
 
 
@@ -127,18 +112,16 @@ html(lang='en')
 
 
 			.budgetsPane
+				h3#draftID #{drafts[0]._id}
 				h3#currentUser #{currentUser}
-				h5#draftID #{drafts[0]._id}
 				table#budgetsTable
 					tr
 						th Team
-						th Max
-						th $
+						th Max Bid
 						th Roster
 						each coach in coaches
 								tr
 									td= coach.email
-									td= "$" + (coach.budget - (21 - coach.numOfPlayers))
 									td= "$" + coach.budget
 									td= coach.numOfPlayers + "/22"
 
@@ -148,10 +131,10 @@ html(lang='en')
 						tr
 							th Rank
 							th Name
-							th Pos
-							th Ave
+							th Position
+							th Ave (2016)
 							th Team
-							th Price16
+							th Price (2015)
 							th Watchlist
 
 						tbody
@@ -162,7 +145,7 @@ html(lang='en')
 									td= result.position
 									td= result.ave16
 									td= result.team
-									td= result.draftPrice16
+									td= "$" + result.draftPrice16
 									td
 										input#watchlistCheckbox(type='checkbox')
 			
