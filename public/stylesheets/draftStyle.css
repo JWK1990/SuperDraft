@@ -104,34 +104,25 @@ table.tableSection {
 
 /* Sets the max width and height of the container and cuts off any overflow outside this container-*/
 .otbImgHolder{
-  width: 36%;
+  width: 100%;
   height: 40%;
   overflow: hidden;
-  float: left;
-}
-
-.otbCurrentBidHolder{
-  width: 64%;
-  height: 40%;
-  overflow: hidden;
-  float: left;
 }
 
 /* Says that the max width and height of the image can be 100% of the width and height of the container. 
 The margin top increases the gap between the top of the container and the top of the image. 
 As any overflow of the container is cut off, this crops out the bottom of the image outside of the container*/
 .otbImgHolder img{
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 130%;
+  max-height: 130%;
   transform: translateX(-8%);
-  margin-left:0.8vmin;
   float: left;
 }
 
-.otbCurrentBidHolder h1{
-  color: #2CFC0E;
+.otbImgHolder h1{
+  color: white;
+  margin-top: 1.2vmin; 
   font-size: 6vmin;
-  text-align: middle;
 }
 
 .otbBiddingHolder{
@@ -213,14 +204,6 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   font-size: 1vmin;
 }
 
-.selectedPlayerPane #topSPP #startValue{
-  float: left;
-  height: 23%;
-  width: 8%;
-  font-size: 2vmin;
-  text-align: center;
-}
-
 .selectedPlayerPane #bottomSPP{
   color: blue;
   background-color: white;
@@ -293,15 +276,6 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 
 .budgetsPane #draftID{
   color:#4d4d4d;
-<<<<<<< HEAD
-=======
-  margin-bottom: -0.75vmin;
-}
-
-.budgetsPane #currentUser{
-  color: yellow;
-  margin-top: 0.5vmin;
->>>>>>> e32818243767c5c6d771afb0d0c1f8b9e4e56a1a
 }
 
 
@@ -309,17 +283,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   width: 100%;
   height: 93%;
   font-size: 1.5vmin;
-  text-align: middle;
-  border-collapse: collapse;
-  margin-left: 0.3vmin;
-}
-
-.budgetsPane table .budgetName{
-  text-align: left;
-}
-
-.budgetsPane th{
-  border-bottom: 1px black solid;
+  text-align:left;
 }
 
 .playerSearchPane{
@@ -375,22 +339,25 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 
 
 .filterPane #filter{ 
-  margin-top: 0.5vmin;
+  padding: 1vmin;
+  padding-left: 1vmin;
   float: left;
   background-color: yellow;
   width: 100%;
-  text-align: middle;
+  text-align: left;
 }
 
 .filterPane #filter #playerSearch{
   width: 25vmin;
   height: 2vmin;
   font-size: 1.5vmin;
+  margin-right: 2vmin;
 }
 
 .filterPane #filter #positionSearch{
-  width: 10vmin;
+  width: 6vmin;
   height: 100%;
+  margin-right: 2vmin;
 }
 
 .myTeamPane{
@@ -401,31 +368,26 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   background-color: #4d4d4d;
   border-collapse: collapse;
   overflow: hidden;
-}
-
-.myTeamPane h3{
-  color: yellow;
-  margin: 0.5vmin;
+  color: white;
 }
 
 .myTeamPane table{
-  font-size: 1.2vmin;
+  width: 100%;
+  height: auto;
+  font-size: 1vmin;
+  text-align: middle;
+  vertical-align: middle;
   background-color: #4d4d4d;
 }
 
-.myTeamPane th{
+.myTeamPane tr{
+  vertical-align: middle;
   background-color: #4d4d4d;
-  color: white;
 }
 
 .myTeamPane td{
   background-color: #4d4d4d;
   color: white;
-}
-
-
-.myTeamPane #dMid{
-  text-align: left;
 }
 
 .bottomPane{

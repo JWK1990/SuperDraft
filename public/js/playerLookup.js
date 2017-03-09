@@ -47,10 +47,6 @@ $(document).ready(function() {
         searching: false,
         ordering: false,
         bInfo: false,
-<<<<<<< HEAD
-=======
-        autoWidth: true
->>>>>>> e32818243767c5c6d771afb0d0c1f8b9e4e56a1a
 });
 });
 
@@ -62,21 +58,11 @@ $(document).ready(function() {
         searching: false,
         aaSorting: [],
         bInfo: false,
-<<<<<<< HEAD
         oLanguage: {
           sZeroRecords: "No players have been drafted yet."
         }
     });
 });
-=======
-        autoWidth: true,
-        oLanguage: {
-          sZeroRecords: "-"
-        }
-    });
-});
-
->>>>>>> e32818243767c5c6d771afb0d0c1f8b9e4e56a1a
 
 // Define global variables.
 
@@ -107,8 +93,6 @@ var sppPrice16 = document.getElementById("price16");
 var sppPrice15 = document.getElementById("price15");
 var sppPrice14 = document.getElementById("price14");
 var selectedPlayerData;
-var startValue = document.getElementById("startValue");
-var startingBid;
 
 // On the block variables.
 var otbPlayer;
@@ -295,10 +279,6 @@ function autoSPP(){
         selectedPlayerPosition.innerHTML = autoTD[2].innerHTML;
         selectedPlayerImgString = "./images/" + autoTD[1].innerHTML.toUpperCase().replace(/\s+/g,"") + ".png";
         selectedPlayerPic.src = selectedPlayerImgString;
-<<<<<<< HEAD
-=======
-        startValue.value = 1;
->>>>>>> e32818243767c5c6d771afb0d0c1f8b9e4e56a1a
         updateSPPTable(autoTD[1]);
         break;
       }
@@ -423,15 +403,15 @@ if(data === currentUser){
 
 // Code for addRow() function used to add the newly drafted player to the Drafted Players list.
 function addRow(data){
+  var table = document.getElementById("myTeamTable");
 
-   var row = myTeamTable.insertRow(1);
+   var row = table.insertRow(1);
    var index = data.length -1;
 
-    row.insertCell(0).innerHTML = myTeamTableRows.length + 1;
-    row.insertCell(1).innerHTML = data[index].name;
-    row.insertCell(2).innerHTML = data[index].position;
-    row.insertCell(3).innerHTML = data[index].team;
-    row.insertCell(4).innerHTML = "$" + data[index].price;
+    row.insertCell(0).innerHTML = data[index].team;
+    row.insertCell(1).innerHTML = data[index].position;
+    row.insertCell(2).innerHTML = data[index].name;
+    row.insertCell(3).innerHTML = data[index].price;
 };
 
 
@@ -462,7 +442,7 @@ function checkSPP(){
 
     for(i=1; i < myTeamTableRows.length; i++){
 
-      td = myTeamTableRows[i].getElementsByTagName("td")[1];
+      td = myTeamTableRows[i].getElementsByTagName("td")[2];
 
       if(selectedPlayerName.innerHTML === td.innerHTML){
         // Update SPP data.
@@ -473,18 +453,6 @@ function checkSPP(){
 } // Close checkSPP() function.
 
 
-  function setMaxBid(data){
-  var budgetData = data.coaches.filter(function(e){
-                      return (e.teamName==currentUser);
-                    })[0].budget;
-
-  playerCount = data.coaches.filter(function(e){
-    return (e.teamName==currentUser);
-  })[0].numOfPlayers;
-
-  maxBid = budgetData - (21 - playerCount);
-
-  }; // Close setMaxBid() function.
 
 
 
@@ -498,22 +466,12 @@ var pageLoad = function(){
 };
 
 socket.on("pageLoaded", function(data){
-  playerData = data.playerData;
-
   highlightSearch(data.loadData.results);
   highlightOtb(data.loadData.otbCoach)
   highlightBidder(data.loadData.otbBidder)
   updateSearch();
-  setMaxBid(data.loadData);
-  placeBidButton.disabled = true;
-  placeBidButton.style.background = "grey";
 
-
-  // Hide the "Next" button for all users except for the Admin user.
-  if(currentUser !== data.loadData.admin){
-    $("#next").hide()
-  };
-
+  playerData = data.playerData;
 
 }); // Close socket.on() function.
 
@@ -555,9 +513,6 @@ socket.on('playerDrafted', function(data) {
   sppStartCountdown();
 
   checkSPP();
-
-  // Set the maxBid variable to the current users Max Bid as per the Budgets pane.
-  setMaxBid(data.dbData);
 
 }); // Close socket.on() function.
 
@@ -614,25 +569,12 @@ socket.on('bidUpdate', function(data) {
 
 // Websockets addToBlock() function.
 var addToBlock = function(){
-<<<<<<< HEAD
 
-=======
->>>>>>> e32818243767c5c6d771afb0d0c1f8b9e4e56a1a
   clearInterval(sppCounter);
   document.getElementById("sppClock").innerHTML = "-";
   addToQueue.disabled = true;
-  placeBidButton.disabled = false;
-  placeBidButton.style.background = "blue";
 
-<<<<<<< HEAD
   socket.emit('addToBlock', { draftID: draftID, player: otbPlayerID, position: otbPos, average: otbAverage, currentUser: currentOtbCoach});
-=======
-  // Checks if the starting bid price is greater than the maxBid for the current OTB coach.
-  // If so, shows a dialog and sets the startValue.value back to 1.
-
-  socket.emit('addToBlock', { draftID: draftID, player: otbPlayerID, position: otbPos, average: otbAverage, currentUser: currentOtbCoach, startingBid: startValue.value});
-  // Close else{} statement.
->>>>>>> e32818243767c5c6d771afb0d0c1f8b9e4e56a1a
 
 }; // Close addToBlock() function.
 
@@ -652,6 +594,15 @@ socket.on('otbUpdate', function(data) {
   // Updates the default bid value to be $2 as it starts at $1.
   document.getElementById("bidValue").value = data.updatedOtbData.otbBid + 1;
 
+  // Set the maxBid variable to the current users Max Bid as per the Budgets pane.
+  maxBid = data.updatedOtbData.coaches.filter(function(e){
+    return (e.email==currentUser);
+  })[0].budget;
+
+  playerCount = data.updatedOtbData.coaches.filter(function(e){
+    return (e.email==currentUser);
+  })[0].numOfPlayers;
+
 }); // Close socket.on("otbUpdate") function.
 
 
@@ -663,8 +614,8 @@ function updateMyTeam() {
   var pos = posFilter.value;
   // Loop through all table rows and hide those who don't match the search query.
   for (var i = 1; i < myTeamTableRows.length; i++) {
-    td = myTeamTableRows[i].getElementsByTagName("td")[3];
-    tdPos = myTeamTableRows[i].getElementsByTagName("td")[2];
+    td = myTeamTableRows[i].getElementsByTagName("td")[0];
+    tdPos = myTeamTableRows[i].getElementsByTagName("td")[1];
 
     if (td) {
       if (team === "All" && pos === "All"){
