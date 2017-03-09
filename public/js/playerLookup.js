@@ -600,27 +600,17 @@ socket.on('bidUpdate', function(data) {
 
 // Websockets addToBlock() function.
 var addToBlock = function(){
-
-  // Checks if the starting bid price is greater than the maxBid for the current OTB coach.
-  // If so, shows a dialog and sets the startValue.value back to 1.
-  if(startValue.value > maxBid){
-    $(function(){
-      $("#dialogOTB").dialog({
-          position: top
-        })
-    });
-    startValue.value = 1;
-  } else {
-
   clearInterval(sppCounter);
   document.getElementById("sppClock").innerHTML = "-";
   addToQueue.disabled = true;
   placeBidButton.disabled = false;
   placeBidButton.style.background = "blue";
 
+  // Checks if the starting bid price is greater than the maxBid for the current OTB coach.
+  // If so, shows a dialog and sets the startValue.value back to 1.
 
   socket.emit('addToBlock', { draftID: draftID, player: otbPlayerID, position: otbPos, average: otbAverage, currentUser: currentOtbCoach, startingBid: startValue.value});
-  } // Close else{} statement.
+  // Close else{} statement.
 
 }; // Close addToBlock() function.
 
