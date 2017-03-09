@@ -23,6 +23,9 @@ html(lang='en')
 				p That bid is above your maximum bid!
 			div#dialogWait(title="Bid Error")
 				p Please wait until the next round of bidding!
+			div#dialogOTB(title="Bid Error")
+				p The starting bid is greated than your Max Bid!
+
 		.container
 
 			.otbPane
@@ -31,6 +34,7 @@ html(lang='en')
 					h4#otbTeamPos.otbText -
 				.otbImgHolder
 					img#otbPic(src="./images/TBA.png", alt='TBA', title='TBA')
+				.otbCurrentBidHolder
 					h1#currentBid -
 				dev.otbBiddingHolder
 					input#bidValue(type='number', name='otbBidValue', value=1)
@@ -40,7 +44,8 @@ html(lang='en')
 					img#selectedPic(src="./images/TBA.png", alt='On The Block', title='On The Block')
 					h1#selectedName PLAYER NAME
 					h3#selectedPosition POSITION
-					button#addToQueue(onclick='addToBlock()') ADD TO QUEUE
+					button#addToQueue(onclick='addToBlock()') ADD TO BLOCK
+					input#startValue(type='number', name='startValue', value=1, min=1)
 					.sppTimer
 						h1#sppClock
 				#bottomSPP
@@ -91,16 +96,18 @@ html(lang='en')
 				table#myTeamTable
 					thead
 						tr
-							th Team
+							th #
+							th#dMid Player
 							th Pos
-							th Player
+							th Team
 							th $
 						tbody
-							each result in results
+							each result, i in results
 									tr
-										td= result.team
+										td= results.length - i
+										td#dMid= result.name
 										td= result.position
-										td= result.name
+										td= result.team
 										td= result.price
 
 
@@ -127,16 +134,18 @@ html(lang='en')
 
 
 			.budgetsPane
-				h3#draftID #{drafts[0]._id}
 				h3#currentUser #{currentUser}
+				h5#draftID #{drafts[0]._id}
 				table#budgetsTable
 					tr
-						th Team
-						th Max Bid
+						th.budgetName Team
+						th Max
+						th $
 						th Roster
 						each coach in coaches
 								tr
-									td= coach.email
+									td.budgetName= coach.teamName
+									td= "$" + (coach.budget - (21 - coach.numOfPlayers))
 									td= "$" + coach.budget
 									td= coach.numOfPlayers + "/22"
 
