@@ -6,14 +6,14 @@ html(lang='en')
 		link(rel='stylesheet', href='/stylesheets/draftStyle.css')
 		link(rel='stylesheet', href='/stylesheets/jquery.dataTables.min.css')
 		script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
-		script(src='/js/jquery.countdown.js')
 		script(src='/socket.io/socket.io.js')
 		script(src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js')
 		script(src='https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js')
 
+		link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
+		script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+
 	body
-<<<<<<< Updated upstream
-=======
 		div#dialogues
 			div#dialogDrafted(title="Player Already Drafted")
 				p Please select another player!
@@ -26,7 +26,6 @@ html(lang='en')
 			div#dialogOTB(title="Bid Error")
 				p The starting bid is greated than your Max Bid!
 
->>>>>>> Stashed changes
 		.container
 
 			.otbPane
@@ -38,21 +37,16 @@ html(lang='en')
 				.otbCurrentBidHolder
 					h1#currentBid
 				div.otbBiddingHolder
-					button#placeBid(onclick="bid()")
+					button#placeBid(onclick="bid()") Place Bid
 			.selectedPlayerPane
 				#topSPP
 					img#selectedPic(src="./images/TBA.png", alt='On The Block', title='On The Block')
 					h1#selectedName PLAYER NAME
 					h3#selectedPosition POSITION
-<<<<<<< Updated upstream
-					button#addToQueue(onclick='addToBlock()') ADD TO QUEUE
-				#bottomSPP
-=======
 					button#addToQueue(onclick='addToBlock()') ADD TO BLOCK
 					input#startValue(type='number', name='startValue', value=1, min=1)
 					.sppTimer
 						h1#sppClock
->>>>>>> Stashed changes
 					table
 						tr
 							th Rank
@@ -78,7 +72,7 @@ html(lang='en')
 			.myTeamPane
 				h3 Drafted Players
 				select#myTeamFilter(onchange="updateMyTeam()")
-					option(value="ALL") All
+					option(value="All") All
 					option(value='-') -
 					option(value='-') -
 					option(value='-') -
@@ -91,53 +85,28 @@ html(lang='en')
 					option(value='-') -
 
 				select#myTeamPosFilter(onchange="updateMyTeam()")
-					option(value="ALL") All
+					option(value="All") All
 					option(value="DEF") DEF
 					option(value="MID") MID
 					option(value="FWD") FWD
 					option(value="RUC") RUC
 
-				table#myTeamTable.display(cellspacing='0', width='100%')
+				table#myTeamTable
 					thead
 						tr
-<<<<<<< Updated upstream
-							th Team
-							th Position
-							th Player
-							th Price
-=======
 							th #
 							th Player
 							th Pos
 							th Team
 							th $
->>>>>>> Stashed changes
 						tbody
 							each result, i in results
 									tr
 										td= results.length - i
 										td= result.name
-<<<<<<< Updated upstream
-										td= result.price
-
-
-			.filterPane
-				#filter
-					select#positionSearch(onchange='updateSearch()')
-						option(value='All') All
-						option(value='DEF') DEF
-						option(value='MID') MID
-						option(value='RUC') RUC
-						option(value='FWD') FWD
-					input#playerSearch(type='text', onkeyup='updateSearch()', placeholder='Search for players...')
-					label
-						input#watchlistSearch(type='checkbox', onchange='updateSearch()')
-						|  Watchlist
-=======
 										td= result.position
 										td= result.team
 										td= "$" + result.price
->>>>>>> Stashed changes
 
 
 
@@ -183,10 +152,10 @@ html(lang='en')
 						tr
 							th Rank
 							th Name
-							th Position
-							th Ave (2016)
+							th Pos
+							th Ave
 							th Team
-							th Price (2015)
+							th Price16
 							th Watchlist
 
 						tbody
@@ -203,7 +172,7 @@ html(lang='en')
 			
 			
 			.bottomPane
-				button#next Next
+				button#next(onclick="draft()") Next
 
 
 		script(src='/js/playerData.js')
