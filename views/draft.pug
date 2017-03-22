@@ -12,25 +12,47 @@ html(lang='en')
 		script(src='https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js')
 
 	body
+<<<<<<< Updated upstream
+=======
+		div#dialogues
+			div#dialogDrafted(title="Player Already Drafted")
+				p Please select another player!
+			div#dialogFull(title="Bid Error")
+				p Your team is already full!
+			div#dialogMax(title="Bid Error")
+				p That bid is above your maximum bid!
+			div#dialogWait(title="Bid Error")
+				p Please wait until the next round of bidding!
+			div#dialogOTB(title="Bid Error")
+				p The starting bid is greated than your Max Bid!
+
+>>>>>>> Stashed changes
 		.container
 
 			.otbPane
 				.otbTextHolder
-					h2#otbName.otbText -
-					h4#otbTeamPos.otbText -
+					h2#otbName.otbText
+					h4#otbTeamPos.otbText
 				.otbImgHolder
-					img#otbPic(src="./images/TBA.png", alt='TBA', title='TBA')
-					h1#currentBid -
-				dev.otbBiddingHolder
-					input#bidValue(type='number', name='otbBidValue', value=1)
-					button#placeBid(onclick="bid()") Place Bid
+					img#otbPic
+				.otbCurrentBidHolder
+					h1#currentBid
+				div.otbBiddingHolder
+					button#placeBid(onclick="bid()")
 			.selectedPlayerPane
 				#topSPP
 					img#selectedPic(src="./images/TBA.png", alt='On The Block', title='On The Block')
 					h1#selectedName PLAYER NAME
 					h3#selectedPosition POSITION
+<<<<<<< Updated upstream
 					button#addToQueue(onclick='addToBlock()') ADD TO QUEUE
 				#bottomSPP
+=======
+					button#addToQueue(onclick='addToBlock()') ADD TO BLOCK
+					input#startValue(type='number', name='startValue', value=1, min=1)
+					.sppTimer
+						h1#sppClock
+>>>>>>> Stashed changes
 					table
 						tr
 							th Rank
@@ -78,16 +100,24 @@ html(lang='en')
 				table#myTeamTable.display(cellspacing='0', width='100%')
 					thead
 						tr
+<<<<<<< Updated upstream
 							th Team
 							th Position
 							th Player
 							th Price
+=======
+							th #
+							th Player
+							th Pos
+							th Team
+							th $
+>>>>>>> Stashed changes
 						tbody
-							each result in results
+							each result, i in results
 									tr
-										td= result.team
-										td= result.position
+										td= results.length - i
 										td= result.name
+<<<<<<< Updated upstream
 										td= result.price
 
 
@@ -103,6 +133,11 @@ html(lang='en')
 					label
 						input#watchlistSearch(type='checkbox', onchange='updateSearch()')
 						|  Watchlist
+=======
+										td= result.position
+										td= result.team
+										td= "$" + result.price
+>>>>>>> Stashed changes
 
 
 
@@ -112,20 +147,37 @@ html(lang='en')
 
 
 			.budgetsPane
-				h3#draftID #{drafts[0]._id}
 				h3#currentUser #{currentUser}
+				h5#draftID #{drafts[0]._id}
 				table#budgetsTable
 					tr
-						th Team
-						th Max Bid
+						th.budgetName Team
+						th Max
+						th $
 						th Roster
 						each coach in coaches
 								tr
-									td= coach.email
+									td.budgetName= coach.teamName
+									td= "$" + (coach.budget - (21 - coach.numOfPlayers))
 									td= "$" + coach.budget
 									td= coach.numOfPlayers + "/22"
 
 			.playerSearchPane
+
+				#filter
+					select#positionSearch(onchange='updateSearch()')
+						option(value='All') All
+						option(value='DEF') DEF
+						option(value='MID') MID
+						option(value='RUC') RUC
+						option(value='FWD') FWD
+					input#playerSearch(type='text', onkeyup='updateSearch()', placeholder='Search for players...')
+					label
+						input#watchlistSearch(type='checkbox', onchange='updateSearch()')
+						|  Watchlist
+						input#hideDrafted(type='checkbox', onchange='updateSearch()')
+						|  Hide Drafted
+
 				table#searchTable.display(cellspacing='0', width='100%')
 					thead
 						tr
@@ -151,7 +203,7 @@ html(lang='en')
 			
 			
 			.bottomPane
-				button#next(onclick="draft()") Next
+				button#next Next
 
 
 		script(src='/js/playerData.js')
