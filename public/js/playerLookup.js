@@ -268,7 +268,7 @@ var startCountdown = function(endTime){
           placeBidButton.style.background = "grey";
           document.getElementById("next").disabled = false;
       }
-  }, 10);
+  }, 1000);
 }; // Close startCountdown() function.
 
 // Define autoSPP() function used to update the SPP with the top ranked undrafted player.
