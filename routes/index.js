@@ -168,7 +168,6 @@ router.post("/create", function(req, res, next){
 						{teamName: req.body.coach10, budget: 300, numOfPlayers: 0}],
 				otbPlayer: "Patrick Dangerfield",
 				otbBid: 1,
-				otbEndTime: new Date(),
 				otbCoach :req.body.coach1,
 				pickCounter: 1
 			};
