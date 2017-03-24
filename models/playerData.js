@@ -27,70 +27,70 @@ var PlayerSchema = new mongoose.Schema({
 		required: true
 	},
 	scPrice: {
-		type: Number
+		type: String
 	},
 	scChange: {
-		type: Number
+		type: String
 	},
 	points16: {
-		type: Number
+		type: String
 	},
 	games16: {
-		type: Number
+		type: String
 	},
 	ave16: {
-		type: Number
+		type: String
 	},
 	sd16: {
-		type: Number
+		type: String
 	},
 	min16: {
-		type: Number
+		type: String
 	},
 	max16: {
-		type: Number
+		type: String
 	},
 	ave1To8: {
-		type: Number
+		type: String
 	},
 	ave9To16: {
-		type: Number
+		type: String
 	},
 	ave17To23: {
-		type: Number
+		type: String
 	},
 	aveSCFinals: {
-		type: Number
+		type: String
 	},
 	age: {
-		type: Number
+		type: String
 	},
 	draftPrice16: {
-		type: Number
+		type: String
 	},
 	draftTeam16: {
 		type: String
 	},
 	draftPrice15: {
-		type: Number
+		type: String
 	},
 	draftTeam15: {
 		type: String
 	},
 	draftPrice14: {
-		type: Number
+		type: String
 	},
 	draftTeam14: {
 		type: String
 	},
 	points15: {
-		type: Number
+		type: String
 	},
 	ave15: {
-		type: Number
+		type: String
 	},
 	nabDraftPick: {
-		type: Number
+		type: String
 	},
 	draftee16: {
 		type: String

@@ -36,8 +36,14 @@ html(lang='en')
 					img#otbPic
 				.otbCurrentBidHolder
 					h1#currentBid
-				div.otbBiddingHolder
-					button#placeBid(onclick="bid()") Place Bid
+				dev.otbBiddingHolder
+					button#placeBid(onclick="bid()")
+
+				.clockPane
+					#clock
+						div#demo
+
+
 			.selectedPlayerPane
 				#topSPP
 					img#selectedPic(src="./images/TBA.png", alt='On The Block', title='On The Block')
@@ -47,6 +53,7 @@ html(lang='en')
 					input#startValue(type='number', name='startValue', value=1, min=1)
 					.sppTimer
 						h1#sppClock
+
 					table
 						tr
 							th Rank
@@ -109,12 +116,6 @@ html(lang='en')
 										td= "$" + result.price
 
 
-
-			.clockPane
-				#clock
-					div#demo
-
-
 			.budgetsPane
 				h3#currentUser #{currentUser}
 				h5#draftID #{drafts[0]._id}
@@ -132,7 +133,6 @@ html(lang='en')
 									td= coach.numOfPlayers + "/22"
 
 			.playerSearchPane
-
 				#filter
 					select#positionSearch(onchange='updateSearch()')
 						option(value='All') All
@@ -146,6 +146,7 @@ html(lang='en')
 						|  Watchlist
 						input#hideDrafted(type='checkbox', onchange='updateSearch()')
 						|  Hide Drafted
+
 
 				table#searchTable.display(cellspacing='0', width='100%')
 					thead
@@ -172,7 +173,7 @@ html(lang='en')
 			
 			
 			.bottomPane
-				button#next(onclick="draft()") Next
+				button#next Next
 
 
 		script(src='/js/playerData.js')
