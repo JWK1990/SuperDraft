@@ -579,11 +579,6 @@ var bid = function(){
 
 // If statements to send an alert if the bid value is greater than the current users max bid or if their team is full.
   if(otbBidValue <= maxBid && playerCount < 22){
-
-    if (distance < 10000 && distance > 0){
-      startCountdown(data.bidData.otbEndTime);
-    };
-
     socket.emit('bid', { draftID: draftID, bidValue: otbBidValue, currentUser: currentUser });
 } else if(playerCount >= 22){
     // Code to show the jQuery UI Dialog.
@@ -611,6 +606,10 @@ var bid = function(){
 }; // Close bid() function.
 
 socket.on('bidUpdate', function(data) {
+  
+  if (distance < 10000 && distance > 0){
+   startCountdown(data.bidData.otbEndTime);
+  };
 
   highlightBidder(data.bidData.otbBidder);
 
