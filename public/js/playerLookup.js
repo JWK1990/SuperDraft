@@ -268,7 +268,7 @@ var startCountdown = function(endTime){
           placeBidButton.style.background = "grey";
           document.getElementById("next").disabled = false;
       }
-  }, 1000);
+  }, 10);
 }; // Close startCountdown() function.
 
 // Define autoSPP() function used to update the SPP with the top ranked undrafted player.
@@ -326,7 +326,7 @@ var sppStartCountdown = function(){
 
        }
       }
-  }, 1000);
+  }, 10);
 }; // Close sppStartCountdown() function.
 
 
@@ -579,6 +579,11 @@ var bid = function(){
 
 // If statements to send an alert if the bid value is greater than the current users max bid or if their team is full.
   if(otbBidValue <= maxBid && playerCount < 22){
+
+    if (distance < 10000 && distance > 0){
+      startCountdown(data.bidData.otbEndTime);
+    };
+
     socket.emit('bid', { draftID: draftID, bidValue: otbBidValue, currentUser: currentUser });
 } else if(playerCount >= 22){
     // Code to show the jQuery UI Dialog.
@@ -606,9 +611,6 @@ var bid = function(){
 }; // Close bid() function.
 
 socket.on('bidUpdate', function(data) {
-  if (distance < 10000 && distance > 0){
-   startCountdown(data.bidData.otbEndTime);
-  };
 
   highlightBidder(data.bidData.otbBidder);
 
