@@ -327,7 +327,7 @@ var sppStartCountdown = function(){
        }
       }
   }, 1000);
-}; // Close startCountdown() function.
+}; // Close sppStartCountdown() function.
 
 
 
