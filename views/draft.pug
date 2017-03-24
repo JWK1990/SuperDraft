@@ -36,7 +36,7 @@ html(lang='en')
 					img#otbPic
 				.otbCurrentBidHolder
 					h1#currentBid
-				dev.otbBiddingHolder
+				div.otbBiddingHolder
 					button#placeBid(onclick="bid()")
 
 				.clockPane
@@ -167,7 +167,7 @@ html(lang='en')
 									td= result.position
 									td= result.ave16
 									td= result.team
-									td= "$" + result.draftPrice16
+									td= result.draftPrice16
 									td
 										input#watchlistCheckbox(type='checkbox')
 			
