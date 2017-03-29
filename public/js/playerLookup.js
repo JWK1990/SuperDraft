@@ -636,6 +636,8 @@ var addToBlock = function(){
     });
     startValue.value = 1;
   } else {
+      console.log(otbPlayerID)
+      console.log(otbAverage)
       socket.emit('addToBlock', { draftID: draftID, player: otbPlayerID, position: otbPos, average: otbAverage, currentUser: currentOtbCoach, startingBid: startValue.value});
   } // Close else{} statement.
 

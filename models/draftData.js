@@ -77,7 +77,7 @@ var DraftSchema = new mongoose.Schema({
 		type: String
 	},
 	otbAverage: {
-		type: Number
+		type: String
 	},
 	otbBid: {
 		type: Number
