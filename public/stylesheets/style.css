@@ -21,7 +21,7 @@ a:hover {
 }
 .main {
 	/* Main text colour */
-	color: green;
+	color: rgb(44,252,14);
 	min-height: calc(100vh - 34px);
 }
 .foot {
@@ -53,28 +53,73 @@ a:hover {
 	margin: 3px 0 0 4px;
 }
 
+th{
+	color: rgb(44,252,14);
+}
+tr{
+	color: white;
+}
+
+
+
+
 /* Button Styles */
 
+/* Button color override */
+.btn{
+	background-color: #417aba;
+	border-color: #417aba;
+	color: white;
+}
+
+.btn:hover {
+	background-color: #417aba;
+	border-color: rgb(44,252,14);
+	color: rgb(44,252,14);
+}
+
+#joinButton{
+	background-color: #417aba;
+	border-color: white;
+	border-left: none;
+	border-right: none;
+	border-bottom: none;
+	color: white;
+}
+
+#joinButton:hover {
+	background-color: #417aba;
+	color: rgb(44,252,14);
+}
+
+
+/* Commenting out button formatting
 .btn-primary {
 	background: #417aba;
 	border-color: #417aba;
 }
 .btn-info {
-	background-color: #31b0d5;
-	border-color: #2aabd2;
+	background-color: rgba(44,252,14,0.0);
+	border-color: rgb(44,252,14);
+	color: white;
 }
 .btn-info:hover {
-	background-color: #5bc0de;
-	border-color: #5bc0de;
+	background-color: rgb(44,252,14);
+	border-color: grey;
+	color: #417aba;
 }
 .btn-light {
-	/* Log Out text colour */
-	color: rgba(255,255,255, .75);
-	background: rgba(255,255,255, .12);
+	background-color: rgba(44,252,14,0.0);
+	border-color: rgb(44,252,14);
+	color: white;
 }
 .btn-light:hover {
-	background: rgba(255,255,255, .2);	
+	background-color: rgb(44,252,14);
+	border-color: grey;
+	color: #417aba;
 }
+*/
+
 .active,
 .btn {
 	transition: .4s;

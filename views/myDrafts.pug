@@ -8,12 +8,12 @@ block content
 				h1.display-4.m-b-2 My Drafts
 					table.table
 						tr
-							th League Name
-							th Draft Year
-							th # Of Coaches
+							th League
+							th Year
+							th Coaches
 							th Draft Code
 							th Admin
-							th
+							th Join
 							each result in results
 								tr
 									td= result.leagueName
@@ -21,11 +21,11 @@ block content
 									td= result.numOfCoaches
 									td#draftID= result._id
 									td= result.admin
-									td#joinButton.btn.btn-info-outline.btn-lg.m-t-1 Join
+									td#joinButton.btn.btn-info-outline.btn-lg.m-t-1(onclick='join(this)') Join
 
-	script.
-		var join = document.getElementById("joinButton");
-		var draftID = document.getElementById("draftID").innerHTML;
-		join.addEventListener("click", function(){
-			window.open("/draft?draft=" + draftID)
-		});
+									script.
+										function join(item){
+											var row = item.closest("tr");
+											var draftID = row.getElementsByTagName("td")[3].innerHTML;
+											window.open('/draft?draft=' + draftID);
+										}
