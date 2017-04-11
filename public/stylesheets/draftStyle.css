@@ -227,7 +227,8 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 
 .selectedPlayerPane #sppClock{
   color: white;
-  vertical-align: middle;
+  vertical-align: top;
+  font-size: 3vmin;
 }
 
 
