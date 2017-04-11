@@ -340,7 +340,7 @@ function highlightBidder(data){
 
     if (td) {
     if (td.innerHTML === data) {
-      budgetsTableRows[i].style.color = "#2CFC0E";
+      budgetsTableRows[i].style.color = "yellow";
     } else {
         budgetsTableRows[i].style.color = "white";
     }

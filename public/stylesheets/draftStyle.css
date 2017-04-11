@@ -4,7 +4,7 @@ body, html {
   height: 100%;
   margin: 0px;
   padding: 0px;
-  background-color: yellow;
+  background-color: #2CFC0E;;
 }
 
 * {
@@ -130,7 +130,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 }
 
 .otbCurrentBidHolder h1{
-  color: #2CFC0E;
+  color: yellow;
   font-size: 6vmin;
   text-align: middle;
   margin-top: 3vmin;
@@ -252,6 +252,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   padding:0.75vmin;
   font-size: 3vmin;
   vertical-align: middle;
+  color: yellow;
 }
 
 
@@ -273,7 +274,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 }
 
 .budgetsPane #currentUser{
-  color: yellow;
+  color: #2CFC0E;
   margin-top: 0.5vmin;
 }
 
@@ -356,7 +357,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 }
 
 .myTeamPane h3{
-  color: yellow;
+  color: #2CFC0E;
   margin: 0.5vmin;
 }
 
@@ -379,7 +380,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   width: 100%;
   height: 2%;
   border-collapse: collapse;
-  background-color: yellow;
+  background-color: #2CFC0E;
   position: absolute;
   bottom: 0;
   left: 0;
