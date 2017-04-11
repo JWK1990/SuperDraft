@@ -3,7 +3,7 @@ extends layout
 block content
 
 	.main.container
-		.row
+		.row#myDraftsTable
 			.col-md-8.col-md-offset-2
 				h1.display-4.m-b-2 My Drafts
 					table.table
@@ -11,7 +11,7 @@ block content
 							th League
 							th Year
 							th Coaches
-							th Draft Code
+							th#draftCode Draft Code
 							th Admin
 							th Join
 							each result in results

@@ -202,7 +202,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 
 .selectedPlayerPane #topSPP #startValue{
   float: left;
-  height: 23%;
+  height: 22%;
   width: 8%;
   font-size: 2vmin;
   text-align: center;
