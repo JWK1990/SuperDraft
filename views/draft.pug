@@ -127,7 +127,7 @@ html(lang='en')
 						th Roster
 						each coach in coaches
 								tr
-									td.budgetName= coach.teamName
+									td.budgetName= coach.teamName2
 									td= "$" + (coach.budget - (21 - coach.numOfPlayers))
 									td= "$" + coach.budget
 									td= coach.numOfPlayers + "/22"

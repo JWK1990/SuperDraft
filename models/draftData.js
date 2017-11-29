@@ -44,6 +44,9 @@ var CoachSchema = new mongoose.Schema({
 	},
 	players: {
 		type: [PlayersSchema]
+	},
+	teamName2: {
+		type: String
 	}
 });
 

@@ -29,6 +29,7 @@ console.log(players.length);
 
 var myTeamDT;
 
+
 // Prevent the "Place Bid" button from opening a new page.
 $("#bidForm").submit(function(e){
   e.preventDefault();
@@ -350,19 +351,29 @@ function highlightBidder(data){
 
 
 // Define highlightOtb() function to underline the coach currently on the block and disable Add To Queue for others.
-function highlightOtb(data){
-  for (var i = 1; i < budgetsTableRows.length; i++) {
-    var td = budgetsTableRows[i].getElementsByTagName("td")[0];
 
-    if (td) {
-      if (td.innerHTML === data) {
-        budgetsTableRows[i].style.textDecoration = "underline";
-      } else {
-        budgetsTableRows[i].style.textDecoration = "none";
-      }
-    } 
+function highlightOtb(data){
+
+  // The data parameter above holds the pickCounter. As the pickCounter starts at 1 and loops between 0 and 9,
+  // we need to manipulate it into the currentOtbIndex variable below so that when the pick counter is on 0, it is changed to 10 to highlight the last coach on the budgets pane.
+  var currentOtbIndex;
+
+  if(data===0){
+    currentOtbIndex = 10;
+  } else {
+    currentOtbIndex = data;
+  }
+
+  // Clears underline on all team names in Budgets Table.
+  for (var i = 1; i < budgetsTableRows.length; i++) {
+    budgetsTableRows[i].style.textDecoration = "none";
   };
-  currentOtbCoach = data;
+
+  // Adds an underline to the coach currently on the block as determined by the pick counter.
+  budgetsTableRows[currentOtbIndex].style.textDecoration = "underline";
+
+  // Updates the value of the currentOtbCoach based on the pick counter.
+  currentOtbCoach = budgetsTableRows[currentOtbIndex].getElementsByTagName("td")[0].innerHTML;
 
     if(currentOtbCoach === currentUser){
       addToQueue.disabled = false;
@@ -450,12 +461,15 @@ function checkSPP(){
 
 
   function setMaxBid(data){
+    console.log(data);
   var budgetData = data.coaches.filter(function(e){
-                      return (e.teamName==currentUser);
+                      return (e.teamName2==currentUser);
                     })[0].budget;
 
+  console.log(budgetData);
+
   playerCount = data.coaches.filter(function(e){
-    return (e.teamName==currentUser);
+    return (e.teamName2==currentUser);
   })[0].numOfPlayers;
 
   maxBid = budgetData - (21 - playerCount);
@@ -499,16 +513,37 @@ function updateMyTeam() {
 
 var socket = io.connect('/');
 
+// Set the Websocket room ID.
+var room = draftID;
+console.log('Room:' + room);
+
+socket.on('connect', function(){
+  // Connected, let's sign up to receive messages for this room.
+  socket.emit('room', room);
+}); // Close socket.on('connect').
+
+// The socket.on("joinedCoach") function updates the Team Names in the budgets pane for all users connected to the room every time a new coach joins the room.
+socket.on("joinedCoach", function(data){
+  console.log(data.joinedCoaches);
+  console.log('Team Name 2: ' + data.joinedCoaches[0].teamName2);
+  for (var i = 1; i < budgetsTableRows.length; i++) {
+      var td = budgetsTableRows[i].getElementsByTagName("td")[0];
+      td.innerHTML = data.joinedCoaches[i-1].teamName2
+    }
+});
+
+
 // WebSockets pageLoad() function used to set up the page properly on page load.
 var pageLoad = function(){
   socket.emit("pageLoad", {draftID: draftID});
+  console.log('pageLoad emitted');
 };
 
 socket.on("pageLoaded", function(data){
   playerData = data.playerData;
 
   highlightSearch(data.loadData.results);
-  highlightOtb(data.loadData.otbCoach)
+  highlightOtb(data.loadData.pickCounter)
   highlightBidder(data.loadData.otbBidder)
   updateSearch();
   setMaxBid(data.loadData);
@@ -516,6 +551,8 @@ socket.on("pageLoaded", function(data){
   placeBidButton.style.background = "grey";
 
   document.getElementById("next").disabled = false;
+
+  console.log('pageLoaded completed: ' + data.loadData.pickCounter);
 
 
   // Hide the "Next" button for all users except for the Admin user.
@@ -547,7 +584,7 @@ socket.on('playerDrafted', function(data) {
   highlightSearch(data.dbData.results);
 
   // Call highlightOtb() function to underline the on the block coach.
-  highlightOtb(data.dbData.otbCoach);
+  highlightOtb(data.dbData.pickCounter);
 
   // Code to change all team names back to white in the Budgets pane.
   for (var i = 1; i < budgetsTableRows.length; i++) {
@@ -580,6 +617,7 @@ var bid = function(){
 // If statements to send an alert if the bid value is greater than the current users max bid or if their team is full.
   if(otbBidValue <= maxBid && playerCount < 22){
     socket.emit('bid', { draftID: draftID, bidValue: otbBidValue, currentUser: currentUser });
+    console.log('currentUser: ' + currentUser);
 } else if(playerCount >= 22){
     // Code to show the jQuery UI Dialog.
     $(function(){
