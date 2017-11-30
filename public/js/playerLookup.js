@@ -232,6 +232,123 @@ selectPlayer();
 
 var counter;
 var distance;
+var demo = document.getElementById("demo");
+var countDownDate;
+var now;
+
+
+// Define startCountdown function to start the countdown clock.
+var startCountdown = function(endTime){
+  // Set the date we're counting down to
+  countDownDate = endTime;
+
+  // Clear any current timers.
+  clearInterval(counter);
+
+  // Update the count down every 1 second
+  counter = setInterval(function() {
+
+      // Get todays date and time
+      now = new Date().getTime();
+      
+      // Find the distance between now and the count down date
+      distance = countDownDate - now;
+      
+      // Time calculations for days, hours, minutes and seconds
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      // Output the result in an element with id="demo"
+      demo.innerHTML = seconds + " secs";
+      
+      // If the count down is over, write some text 
+      if (distance < 0) {
+          clearInterval(counter);
+          placeBidButton.disabled = true;
+          demo.innerHTML = "Sold for " + currentBid.innerHTML;
+          placeBidButton.style.background = "grey";
+          placeBidButton.innerHTML = "-";
+          document.getElementById("next").disabled = false;
+      }
+  }, 10);
+}; // Close startCountdown() function.
+
+// Define autoSPP() function used to update the SPP with the top ranked undrafted player.
+// This is used when the sppStartCountdown() function reaches 0 or when a drafted player is in the SPP for the OTB Coach.
+function autoSPP(){
+  var autoTD;
+
+  for (var i = 1; i < searchTableRows.length; i++) {
+      if(Boolean(searchTableRows[i].style.textDecoration === "")){
+        // Update OTB data.
+        autoTD = searchTableRows[i].getElementsByTagName("td");
+        otbPlayerID = autoTD[1].innerHTML;
+        otbPos = autoTD[2].innerHTML;
+        otbAverage = autoTD[3].innerHTML;
+        // Update SPP data.
+        selectedPlayerName.innerHTML = autoTD[1].innerHTML;
+        selectedPlayerPosition.innerHTML = autoTD[2].innerHTML;
+        selectedPlayerImgString = "./images/" + autoTD[1].innerHTML.toUpperCase().replace(/\s+/g,"") + ".png";
+        selectedPlayerPic.src = selectedPlayerImgString;
+        startValue.value = 1;
+        updateSPPTable(autoTD[1]);
+        break;
+      }
+    }
+}; // Close autoSPP function.
+
+
+// Define sppStartCountdown function to start the countdown clock to put a player On The Block.
+var sppCounter;
+var sppDistance;
+var sppClock = document.getElementById("sppClock");
+var sppCountDownDate;
+var sppNow;
+
+var sppStartCountdown = function(sppEndTime){
+
+  // Set the date we're counting down to
+  sppCountDownDate = sppEndTime;
+
+  // Clear any current timers.
+  clearInterval(sppCounter);
+
+  // Update the count down every 1 second
+  sppCounter = setInterval(function() {
+
+      // Get todays date and time
+      sppNow = new Date().getTime();
+      
+      // Find the distance between now and the count down date
+      sppDistance = sppCountDownDate - sppNow;
+      
+      // Time calculations for days, hours, minutes and seconds
+      var seconds = Math.floor((sppDistance % (1000 * 60)) / 1000);
+      
+      // Output the result in an element with id="demo"
+      sppClock.innerHTML = seconds + " secs";
+      
+      // If the count down is over, write some text 
+      if (sppDistance < 0) {
+          clearInterval(sppCounter);
+          sppClock.innerHTML = "-";
+          if(otbName.innerHTML === "-"){
+          // Run autoSPP() to update the SPP for the current OTB Coach.
+          // THIS CODE SHOULD POTENTIALLY BE UPDATED.
+          // THE FACT THAT AUTOSPP() AND ADDTOBLOCK() ARE IN THE IF STATEMENTS MEANS THAT THEY ONLY EXECUTE IF THE CURRENT USER IS LOGGED IN.
+          // THE USER CAN LOG IN AND ADD A PLAYER TO THE BLOCK, BUT IT MEANS THAT THE DRAFT IS FROZEN IF THE OTB USER IS LOGGED OUT.
+          if(currentUser === currentOtbCoach){
+            autoSPP();
+            addToBlock();
+          }
+
+       }
+      }
+  }, 10);
+}; // Close sppStartCountdown() function.
+
+
+var counter;
+var distance;
 var sppCounter;
 var demo = document.getElementById("demo");
 var countDownDate;
@@ -267,68 +384,11 @@ var startCountdown = function(endTime){
           placeBidButton.disabled = true;
           demo.innerHTML = "Sold for " + currentBid.innerHTML;
           placeBidButton.style.background = "grey";
+          placeBidButton.innerHTML = "-";
           document.getElementById("next").disabled = false;
       }
   }, 10);
 }; // Close startCountdown() function.
-
-// Define autoSPP() function used to update the SPP with the top ranked undrafted player.
-// This is used when the sppStartCountdown() function reaches 0 or when a drafted player is in the SPP for the OTB Coach.
-function autoSPP(){
-  var autoTD;
-
-  for (var i = 1; i < searchTableRows.length; i++) {
-      if(Boolean(searchTableRows[i].style.textDecoration === "")){
-        // Update OTB data.
-        autoTD = searchTableRows[i].getElementsByTagName("td");
-        otbPlayerID = autoTD[1].innerHTML;
-        otbPos = autoTD[2].innerHTML;
-        otbAverage = autoTD[3].innerHTML;
-        // Update SPP data.
-        selectedPlayerName.innerHTML = autoTD[1].innerHTML;
-        selectedPlayerPosition.innerHTML = autoTD[2].innerHTML;
-        selectedPlayerImgString = "./images/" + autoTD[1].innerHTML.toUpperCase().replace(/\s+/g,"") + ".png";
-        selectedPlayerPic.src = selectedPlayerImgString;
-        startValue.value = 1;
-        updateSPPTable(autoTD[1]);
-        break;
-      }
-    }
-}; // Close autoSPP function.
-
-
-// Define sppStartCountdown function to start the countdown clock to put a player On The Block.
-var sppStartCountdown = function(){
-  var time = 10;
-
-  // Update the count down every 1 second
-  sppCounter = setInterval(function() {
-
-      // Get todays date and time
-      time--;
-      
-      // Output the result in an element with id="demo"
-      document.getElementById("sppClock").innerHTML = time + " secs";
-      
-      // If the count down is over, the interval is cleared, 
-      if (time < 0) {
-        clearInterval(sppCounter);
-        document.getElementById("sppClock").innerHTML = "-";
-        if(otbName.innerHTML === "-"){
-
-        // Run autoSPP() to update the SPP for the current OTB Coach.
-        // THIS CODE SHOULD POTENTIALLY BE UPDATED.
-        // THE FACT THAT AUTOSPP() AND ADDTOBLOCK() ARE IN THE IF STATEMENTS MEANS THAT THEY ONLY EXECUTE IF THE CURRENT USER IS LOGGED IN.
-        // THE USER CAN LOG IN AND ADD A PLAYER TO THE BLOCK, BUT IT MEANS THAT THE DRAFT IS FROZEN IF THE OTB USER IS LOGGED OUT.
-        if(currentUser === currentOtbCoach){
-          autoSPP();
-          addToBlock();
-        }
-
-       }
-      }
-  }, 1000);
-}; // Close sppStartCountdown() function.
 
 
 
@@ -599,7 +659,7 @@ socket.on('playerDrafted', function(data) {
 
   updateSearch();
 
-  sppStartCountdown();
+  sppStartCountdown(data.dbData.otbEndTime);
 
   checkSPP();
 
@@ -643,11 +703,20 @@ var bid = function(){
 
 }; // Close bid() function.
 
+
+// Locks the bidding button, clears the countdown timer and displays 'Bid Pending' for all clients every time one user submits a bid.
+socket.on('bidLock', function(){
+  placeBidButton.disabled = true;
+  clearInterval(counter);
+  placeBidButton.innerHTML = 'Bid Pending...';
+  demo.innerHTML = "-";
+});
+
+
+
 socket.on('bidUpdate', function(data) {
   
-  if (distance < 10000 && distance > 0){
-   startCountdown(data.bidData.otbEndTime);
-  };
+  startCountdown(data.bidData.otbEndTime);
 
   highlightBidder(data.bidData.otbBidder);
 
@@ -656,7 +725,7 @@ socket.on('bidUpdate', function(data) {
   currentBid.innerHTML = "$" + data.bidData.otbBid;
   biddingTeam = data.bidData.otbBidder;
   // Updates the Place Bid button to have the current bid price plus 1.
-  document.getElementById("placeBid").innerHTML = "Bid $" + (Number(data.bidData.otbBid) + 1);
+  placeBidButton.innerHTML = "Bid $" + (Number(data.bidData.otbBid) + 1);
 
 }); // Close socket.on() function.
 
