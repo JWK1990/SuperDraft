@@ -287,6 +287,8 @@ router.get("/myDrafts", function(req, res, next){
 			}
 		    }
 		};
+		// Reverses the myDraftsList array so that the most recent drafts appear at the top.
+		myDraftsList.reverse();
 
 		User.find({}, function(err, users){
 			// We send the myDraftsList array and the users data to the front end to be used in our template.

@@ -142,6 +142,9 @@ var posFilter = document.getElementById("myTeamPosFilter");
 var myTeamTable = document.getElementById("myTeamTable");
 var myTeamTableRows = myTeamTable.getElementsByTagName("tr");
 
+var myTeamOrderSort = document.getElementById("myTeamOrderSort");
+var myTeamPlayerSort = document.getElementById("myTeamPlayerSort");
+
 
 // Define updateSearch() function used to filter the search pane.
 function updateSearch() {
@@ -666,6 +669,14 @@ socket.on('playerDrafted', function(data) {
   // Set the maxBid variable to the current users Max Bid as per the Budgets pane.
   setMaxBid(data.dbData);
 
+  // Clicks the 'Player' and the '#' in the drafted players table header to sort the table and resize it after a player is drafted.
+  // This still needs some work. Clicking in this order is a bit of a workaround and I don't believe that it will work for all cases.
+  myTeamPlayerSort.click();
+  myTeamOrderSort.click();
+  myTeamOrderSort.click();
+
+  // Updates the 'Sold for' text to say "Selection Pending...".
+  demo.innerHTML = "Selection Pending...";
 }); // Close socket.on() function.
 
 
