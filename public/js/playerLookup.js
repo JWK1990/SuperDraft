@@ -66,9 +66,11 @@ $(document).ready(function() {
         }
     });
 
+/* COMMENTED OUT TO REMOVE THE NEED FOR THE ADMIN USER TO CLICK THE NEXT BUTTON TO ADVANCE THE DRAFT. HAS BEEN REPLACED WITH A SET TIMEOUT IN THE STARTCOUNTDOWN() FUNCTION.
     $("#next").on("click", function(){
       draft();
   })
+ */
 
 });
 
@@ -117,6 +119,7 @@ var otbPos;
 var currentOtbCoach;
 var currentUser = document.getElementById("currentUser").innerHTML;
 var otbAverage;
+var demo = document.getElementById("demo");
 
 // Bidding variables.
 var currentBid = document.getElementById("currentBid");
@@ -242,6 +245,9 @@ var now;
 
 // Define startCountdown function to start the countdown clock.
 var startCountdown = function(endTime){
+  // Increase the font size back to normal size after it is reduced for 'On the block:' text.
+  demo.style.fontSize = "3vmin";
+
   // Set the date we're counting down to
   countDownDate = endTime;
 
@@ -263,7 +269,7 @@ var startCountdown = function(endTime){
       // Output the result in an element with id="demo"
       demo.innerHTML = seconds + " secs";
       
-      // If the count down is over, write some text 
+      // If the count down is over, update the text in the clock pane and wait 5 seconds before putting the next coach on the block.
       if (distance < 0) {
           clearInterval(counter);
           placeBidButton.disabled = true;
@@ -271,6 +277,12 @@ var startCountdown = function(endTime){
           placeBidButton.style.background = "grey";
           placeBidButton.innerHTML = "-";
           document.getElementById("next").disabled = false;
+
+          // Waits 5 seconds before running the draft() function, this replaces the admin user clicking the next button.
+          if(currentUser === adminCoach){
+            setTimeout(draft, 5000);
+          }
+
       }
   }, 10);
 }; // Close startCountdown() function.
@@ -284,26 +296,30 @@ function autoSPP(){
       if(Boolean(searchTableRows[i].style.textDecoration === "")){
         // Update OTB data.
         autoTD = searchTableRows[i].getElementsByTagName("td");
+        break;
+      }
+  }
+
         otbPlayerID = autoTD[1].innerHTML;
         otbPos = autoTD[2].innerHTML;
         otbAverage = autoTD[3].innerHTML;
-        // Update SPP data.
-        selectedPlayerName.innerHTML = autoTD[1].innerHTML;
-        selectedPlayerPosition.innerHTML = autoTD[2].innerHTML;
-        selectedPlayerImgString = "./images/" + autoTD[1].innerHTML.toUpperCase().replace(/\s+/g,"") + ".png";
-        selectedPlayerPic.src = selectedPlayerImgString;
-        startValue.value = 1;
-        updateSPPTable(autoTD[1]);
-        break;
-      }
-    }
+
+
+        // Update SPP data only for the currentOtbCoach if they are logged in.
+        if(currentUser === currentOtbCoach){
+          selectedPlayerName.innerHTML = autoTD[1].innerHTML;
+          selectedPlayerPosition.innerHTML = autoTD[2].innerHTML;
+          selectedPlayerImgString = "./images/" + autoTD[1].innerHTML.toUpperCase().replace(/\s+/g,"") + ".png";
+          selectedPlayerPic.src = selectedPlayerImgString;
+          startValue.value = 1;
+          updateSPPTable(autoTD[1]);
+        }
 }; // Close autoSPP function.
 
 
 // Define sppStartCountdown function to start the countdown clock to put a player On The Block.
 var sppCounter;
 var sppDistance;
-var sppClock = document.getElementById("sppClock");
 var sppCountDownDate;
 var sppNow;
 
@@ -328,72 +344,28 @@ var sppStartCountdown = function(sppEndTime){
       var seconds = Math.floor((sppDistance % (1000 * 60)) / 1000);
       
       // Output the result in an element with id="demo"
-      sppClock.innerHTML = seconds + " secs";
+      demo.innerHTML = seconds + " secs";
       
       // If the count down is over, write some text 
-      if (sppDistance < 0) {
+      if (sppDistance <= 0) {
           clearInterval(sppCounter);
-          sppClock.innerHTML = "-";
           if(otbName.innerHTML === "-"){
           // Run autoSPP() to update the SPP for the current OTB Coach.
           // THIS CODE SHOULD POTENTIALLY BE UPDATED.
           // THE FACT THAT AUTOSPP() AND ADDTOBLOCK() ARE IN THE IF STATEMENTS MEANS THAT THEY ONLY EXECUTE IF THE CURRENT USER IS LOGGED IN.
           // THE USER CAN LOG IN AND ADD A PLAYER TO THE BLOCK, BUT IT MEANS THAT THE DRAFT IS FROZEN IF THE OTB USER IS LOGGED OUT.
-          if(currentUser === currentOtbCoach){
+          /* I'VE REMOVED THE IF STATEMENT FOR NOW SO THAT IT EXECUTES REGARDLESS OF WHETHER THE USER IS LOGGED IN. THE PROBLEM WITH THIS PREVIOUSLY
+          IS THAT THE sppStartCountdown() function was executed for all users when the playerDrafted websockets was emitted. To fix this I've changed
+          it so that only the coach that is on the block sees the SPP countdown timer. I will probably move this countdown into the existing otb clock
+          pane as well. */
+
             autoSPP();
             addToBlock();
-          }
 
        }
       }
   }, 10);
 }; // Close sppStartCountdown() function.
-
-
-var counter;
-var distance;
-var sppCounter;
-var demo = document.getElementById("demo");
-var countDownDate;
-var now;
-
-
-// Define startCountdown function to start the countdown clock.
-var startCountdown = function(endTime){
-  // Set the date we're counting down to
-  countDownDate = endTime;
-
-  // Clear any current timers.
-  clearInterval(counter);
-
-  // Update the count down every 1 second
-  counter = setInterval(function() {
-
-      // Get todays date and time
-      now = new Date().getTime();
-      
-      // Find the distance between now and the count down date
-      distance = countDownDate - now;
-      
-      // Time calculations for days, hours, minutes and seconds
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      
-      // Output the result in an element with id="demo"
-      demo.innerHTML = seconds + " secs";
-      
-      // If the count down is over, write some text 
-      if (distance < 0) {
-          clearInterval(counter);
-          placeBidButton.disabled = true;
-          demo.innerHTML = "Sold for " + currentBid.innerHTML;
-          placeBidButton.style.background = "grey";
-          placeBidButton.innerHTML = "-";
-          document.getElementById("next").disabled = false;
-      }
-  }, 10);
-}; // Close startCountdown() function.
-
-
 
 
 // Define highlightBidder() function to update the colour of the curent lead bidder to fluro green. 
@@ -595,6 +567,7 @@ socket.on("joinedCoach", function(data){
     }
 });
 
+var adminCoach;
 
 // WebSockets pageLoad() function used to set up the page properly on page load.
 var pageLoad = function(){
@@ -604,6 +577,7 @@ var pageLoad = function(){
 
 socket.on("pageLoaded", function(data){
   playerData = data.playerData;
+  adminCoach = data.loadData.admin;
 
   highlightSearch(data.loadData.results);
   highlightOtb(data.loadData.pickCounter)
@@ -662,7 +636,23 @@ socket.on('playerDrafted', function(data) {
 
   updateSearch();
 
-  sppStartCountdown(data.dbData.otbEndTime);
+  // If the currentUser is logged into the room then the sppStartCountdown will start a 10 second countdown
+  // after which it will select the top available player to be automatically put on the block.
+  if(currentUser === currentOtbCoach){
+    sppStartCountdown(data.dbData.otbEndTime);
+  };
+
+  // The absentOtbOverride waits 25 seconds (allowing a buffer for the 10 second timer to elapse) and then automatically puts a player
+  // on the block in the event the otb coach isnt logged in.
+  function absentOtbOverride(){
+    if(otbName.innerHTML === "-"){
+      autoSPP();
+      addToBlock();
+    }
+  };
+    // The below line sets teh absentOtbOverride function to be run after 25 seconds, 
+    // allowing ample time for the 20 second countdown to elapse if the otb coach is logged in.
+    setTimeout(absentOtbOverride, 25000);
 
   checkSPP();
 
@@ -676,7 +666,10 @@ socket.on('playerDrafted', function(data) {
   myTeamOrderSort.click();
 
   // Updates the 'Sold for' text to say "Selection Pending...".
-  demo.innerHTML = "Selection Pending...";
+  demo.innerHTML = "On The Block: " + data.dbData.otbCoach;
+  demo.style.fontSize = "2vmin";
+
+
 }); // Close socket.on() function.
 
 
@@ -720,6 +713,7 @@ socket.on('bidLock', function(){
   placeBidButton.disabled = true;
   clearInterval(counter);
   placeBidButton.innerHTML = 'Bid Pending...';
+  placeBidButton.style.background = "grey";
   demo.innerHTML = "-";
 });
 
@@ -764,7 +758,6 @@ var addToBlock = function(){
 socket.on('otbUpdate', function(data) {
   // Clears the current sppCountdownTimer for all users.
   clearInterval(sppCounter);
-  document.getElementById("sppClock").innerHTML = "-";
   addToQueue.disabled = true;
   placeBidButton.disabled = false;
   placeBidButton.style.background = "blue";
@@ -783,6 +776,9 @@ socket.on('otbUpdate', function(data) {
 
   // Updates the Place Bid button to contain $1 more than the starting bid.
   document.getElementById("placeBid").innerHTML = "Bid $" + (Number(data.updatedOtbData.otbBid) + 1);
+
+  // Updates the start value in the SPP back to $1 for all coaches after a player is added to the block.
+  startValue.value = 1;
 
 }); // Close socket.on("otbUpdate") function.
 
