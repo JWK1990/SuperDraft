@@ -278,9 +278,17 @@ var startCountdown = function(endTime){
           placeBidButton.innerHTML = "-";
           document.getElementById("next").disabled = false;
 
-          // Waits 5 seconds before running the draft() function, this replaces the admin user clicking the next button.
+          // Waits 5 seconds before running the delayDraft() function, this replaces the admin user clicking the next button.
+          // This function checks if the placeBidButton has a '-' which means that drafting has finished.
+          // As it only checks the admins screen, we wait 5 seconds to ensure that drafting has completed for all coaches.
+          function delayDraft(){
+            if (placeBidButton.innerHTML === "-"){
+             draft();
+            }
+          };
+
           if(currentUser === adminCoach){
-            setTimeout(draft, 5000);
+            setTimeout(delayDraft, 5000);
           }
 
       }
