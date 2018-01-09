@@ -77,6 +77,12 @@ $(document).ready(function() {
 
 // Define global variables.
 
+// Coaches variables.
+var adminCoach;
+var currentUserSocketID;
+var connectedSocketsList = [];
+var firstConnectedSocketID;
+
 // Search and selected player variables.
 var selectedPlayer;
 var selectedPlayerName = document.getElementById("selectedName");
@@ -106,6 +112,7 @@ var sppPrice14 = document.getElementById("price14");
 var selectedPlayerData;
 var startValue = document.getElementById("startValue");
 var startingBid;
+var topPlayer;
 
 // On the block variables.
 var otbPlayer;
@@ -132,6 +139,7 @@ var placeBidButton = document.getElementById("placeBid");
 // Budgets Pane variables.
 var budgetsTable = document.getElementById("budgetsTable");
 var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
+var joinedUsers = [];
 
 
 // Drafted Players variables.
@@ -280,14 +288,15 @@ var startCountdown = function(endTime){
 
           // Waits 5 seconds before running the delayDraft() function, this replaces the admin user clicking the next button.
           // This function checks if the placeBidButton has a '-' which means that drafting has finished.
-          // As it only checks the admins screen, we wait 5 seconds to ensure that drafting has completed for all coaches.
+          // Previously this only checked the admins screen, however to reduce the reliance on the admin being logged in, we now check the users screen with the firstConnectedSocketID.
+          // We wait 5 seconds to ensure that drafting has completed for all coaches.
           function delayDraft(){
             if (placeBidButton.innerHTML === "-"){
              draft();
             }
           };
 
-          if(currentUser === adminCoach){
+          if(currentUserSocketID === firstConnectedSocketID){
             setTimeout(delayDraft, 5000);
           }
 
@@ -295,34 +304,54 @@ var startCountdown = function(endTime){
   }, 10);
 }; // Close startCountdown() function.
 
-// Define autoSPP() function used to update the SPP with the top ranked undrafted player.
-// This is used when the sppStartCountdown() function reaches 0 or when a drafted player is in the SPP for the OTB Coach.
-function autoSPP(){
-  var autoTD;
 
+
+
+// Define getTopPlayer() used to get the top available player from the Player Search pane.
+function getTopPlayer(){
   for (var i = 1; i < searchTableRows.length; i++) {
       if(Boolean(searchTableRows[i].style.textDecoration === "")){
         // Update OTB data.
-        autoTD = searchTableRows[i].getElementsByTagName("td");
+        topPlayer = searchTableRows[i].getElementsByTagName("td");
         break;
       }
   }
+  otbPlayerID = topPlayer[1].innerHTML;
+  otbPos = topPlayer[2].innerHTML;
+  otbAverage = topPlayer[3].innerHTML;
+};
 
-        otbPlayerID = autoTD[1].innerHTML;
-        otbPos = autoTD[2].innerHTML;
-        otbAverage = autoTD[3].innerHTML;
+
+// Define updateSPP() used to update the text in the Selected Player Pane.
+function updateSPP(data){
+  selectedPlayerName.innerHTML = data[1].innerHTML;
+  selectedPlayerPosition.innerHTML = data[2].innerHTML;
+  selectedPlayerImgString = "./images/" + data[1].innerHTML.toUpperCase().replace(/\s+/g,"") + ".png";
+  selectedPlayerPic.src = selectedPlayerImgString;
+  startValue.value = 1;
+  updateSPPTable(data[1]);
+};
 
 
-        // Update SPP data only for the currentOtbCoach if they are logged in.
-        if(currentUser === currentOtbCoach){
-          selectedPlayerName.innerHTML = autoTD[1].innerHTML;
-          selectedPlayerPosition.innerHTML = autoTD[2].innerHTML;
-          selectedPlayerImgString = "./images/" + autoTD[1].innerHTML.toUpperCase().replace(/\s+/g,"") + ".png";
-          selectedPlayerPic.src = selectedPlayerImgString;
-          startValue.value = 1;
-          updateSPPTable(autoTD[1]);
-        }
+// Define autoSPP() function used to update the SPP and OTB with the top ranked available player.
+// This is used when the sppStartCountdown() function reaches 0 or when a drafted player is in the SPP for the OTB Coach.
+function autoSPP(){
+  // Run getTopPlayer() to find the top available player and update the otb variables.
+  getTopPlayer();
+  // Update SPP data only for the currentOtbCoach if they are logged in.
+  if(currentUser === currentOtbCoach){
+    updateSPP(topPlayer);
+  };
 }; // Close autoSPP function.
+
+
+// Define loadAutoSPP() function used to update the SPP with the top available player for all coaches upon the page being loaded.
+// This is different to the autoSPP as it doesn't automatically put the player on the block and it does it for all coaches.
+function loadAutoSPP(){
+  getTopPlayer();
+  updateSPP(topPlayer);
+};
+
 
 
 // Define sppStartCountdown function to start the countdown clock to put a player On The Block.
@@ -565,17 +594,59 @@ socket.on('connect', function(){
   socket.emit('room', room);
 }); // Close socket.on('connect').
 
+
+
 // The socket.on("joinedCoach") function updates the Team Names in the budgets pane for all users connected to the room every time a new coach joins the room.
 socket.on("joinedCoach", function(data){
-  console.log(data.joinedCoaches);
+  console.log("Joined Coaches: " + data.joinedCoaches);
   console.log('Team Name 2: ' + data.joinedCoaches[0].teamName2);
-  for (var i = 1; i < budgetsTableRows.length; i++) {
-      var td = budgetsTableRows[i].getElementsByTagName("td")[0];
-      td.innerHTML = data.joinedCoaches[i-1].teamName2
+
+  // First we clear the connectedSocketList. Then we loop through the socketList of all connected sockets (across all rooms) and adds them to the current rooms connectedSocketsList if they start with the correct room.
+  connectedSocketsList = [];
+
+  for (var i=0; i < data.socketList.length; i++){
+    if(data.socketList[i].startsWith(room)){
+      connectedSocketsList.push(data.socketList[i]);
     }
+  };
+
+  // Gets the firstConnectedSocketID by getting the first ID from the connectedSocketsList.
+  firstConnectedSocketID = connectedSocketsList[0];
+
+  console.log('Connected Sockets List: ' + connectedSocketsList);
+  console.log('First Connected Socket ID: ' + firstConnectedSocketID);
+
+  for (var i = 1; i < budgetsTableRows.length; i++) {
+    var td = budgetsTableRows[i].getElementsByTagName("td")[0];
+    td.innerHTML = data.joinedCoaches[i-1].teamName2;
+  }
 });
 
-var adminCoach;
+socket.on("socketDetails", function(data){
+  console.log("TEST");
+  // Sets the current users socket ID to the socket ID returned from the server side combined with the room ID to match the format of the connectedSocketsList.
+  currentUserSocketID = room + " - " + data.socketID;
+  console.log("Current User Socket ID: " + currentUserSocketID);
+})
+
+socket.on('disconnectedCoach', function(data){
+  // Disonnected, let's send a message to the server. We will do a similar process to when we have a connection, clearing and rebuilding the connectedSockets List and setting the firstConnectedSocketID.
+  // First we clear the connectedSocketsList. Then we loop through the socketList of all connected sockets (across all rooms) and adds them to the current rooms connectedSocketsList if they start with the correct room.
+    connectedSocketsList = [];
+
+  for (var i=0; i < data.socketList.length; i++){
+    if(data.socketList[i].startsWith(room)){
+      connectedSocketsList.push(data.socketList[i]);
+    }
+  };
+
+  // Gets the firstConnectedSocketID by getting the first ID from the connectedSocketsList.
+  firstConnectedSocketID = connectedSocketsList[0];
+
+  console.log("Connected Sockets List: " + connectedSocketsList);
+}); // Close socket.on('disconnect').
+
+
 
 // WebSockets pageLoad() function used to set up the page properly on page load.
 var pageLoad = function(){
@@ -588,12 +659,14 @@ socket.on("pageLoaded", function(data){
   adminCoach = data.loadData.admin;
 
   highlightSearch(data.loadData.results);
-  highlightOtb(data.loadData.pickCounter)
-  highlightBidder(data.loadData.otbBidder)
+  highlightOtb(data.loadData.pickCounter);
   updateSearch();
   setMaxBid(data.loadData);
   placeBidButton.disabled = true;
   placeBidButton.style.background = "grey";
+  loadAutoSPP();
+
+  console.log("Load Data: " + data.loadData.otbPlayer);
 
   document.getElementById("next").disabled = false;
 
@@ -752,6 +825,14 @@ socket.on('bidUpdate', function(data) {
     placeBidButton.style.background = "grey";
   }
 
+  // Checks if the otb pane is blank, if so a coach has re-entered the draft room mid way through a draft.
+  // If this is the case then we want to update the otb pane with the otb player details for that coach but not for other other coaches that already have the details loaded.
+  if (otbName.innerHTML === ""){
+    otbName.innerHTML = data.bidData.otbPlayer;
+    otbTeamPos.innerHTML = data.bidData.otbPos + " - " + data.bidData.otbAverage;
+    otbPic.src = "./images/" + data.bidData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";
+  }
+
 }); // Close socket.on() function.
 
 
@@ -792,7 +873,7 @@ socket.on('otbUpdate', function(data) {
   otbPlayer = data.updatedOtbData.otbPlayer;
   otbName.innerHTML = otbPlayer;
   otbTeamPos.innerHTML = data.updatedOtbData.otbPos + " - " + data.updatedOtbData.otbAverage;
-  otbPic.src = "./images/" + data.updatedOtbData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";;
+  otbPic.src = "./images/" + data.updatedOtbData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";
 
   // Updates the Place Bid button to contain $1 more than the starting bid.
   if (currentUser === data.updatedOtbData.otbBidder){
