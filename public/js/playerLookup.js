@@ -737,8 +737,20 @@ socket.on('bidUpdate', function(data) {
 
   currentBid.innerHTML = "$" + data.bidData.otbBid;
   biddingTeam = data.bidData.otbBidder;
-  // Updates the Place Bid button to have the current bid price plus 1.
+
+  // Updates the Place Bid button to have the current bid price plus 1 or 'You Lead' text if the logged in coach leads the bidding.
+  if (currentUser === data.bidData.otbBidder){
+    placeBidButton.innerHTML = "You Lead @ $" + (Number(data.bidData.otbBid));
+  } else {
   placeBidButton.innerHTML = "Bid $" + (Number(data.bidData.otbBid) + 1);
+    }
+
+  // Disables the bid button if bidding exceeds the coaches max bid.
+  if (data.bidData.otbBid >= maxBid){
+    placeBidButton.disabled = true;
+    placeBidButton.innerHTML = "> Max Bid";
+    placeBidButton.style.background = "grey";
+  }
 
 }); // Close socket.on() function.
 
@@ -783,7 +795,11 @@ socket.on('otbUpdate', function(data) {
   otbPic.src = "./images/" + data.updatedOtbData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";;
 
   // Updates the Place Bid button to contain $1 more than the starting bid.
-  document.getElementById("placeBid").innerHTML = "Bid $" + (Number(data.updatedOtbData.otbBid) + 1);
+  if (currentUser === data.updatedOtbData.otbBidder){
+    placeBidButton.innerHTML = "You Lead @ $" + Number(data.updatedOtbData.otbBid);
+  } else {
+    placeBidButton.innerHTML = "Bid $" + (Number(data.updatedOtbData.otbBid) + 1);
+    };
 
   // Updates the start value in the SPP back to $1 for all coaches after a player is added to the block.
   startValue.value = 1;
