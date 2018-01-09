@@ -291,14 +291,12 @@ var startCountdown = function(endTime){
           // Previously this only checked the admins screen, however to reduce the reliance on the admin being logged in, we now check the users screen with the firstConnectedSocketID.
           // We wait 5 seconds to ensure that drafting has completed for all coaches.
           function delayDraft(){
-            if (placeBidButton.innerHTML === "-"){
+            if (placeBidButton.innerHTML === "-" && currentUserSocketID === firstConnectedSocketID){
              draft();
             }
           };
 
-          if(currentUserSocketID === firstConnectedSocketID){
-            setTimeout(delayDraft, 5000);
-          }
+          setTimeout(delayDraft, 5000);
 
       }
   }, 10);
