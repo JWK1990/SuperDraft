@@ -257,7 +257,7 @@ var startCountdown = function(endTime){
   demo.style.fontSize = "3vmin";
 
   // Set the date we're counting down to
-  countDownDate = endTime;
+  countDownDate = Number(endTime);
 
   // Clear any current timers.
   clearInterval(counter);
