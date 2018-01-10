@@ -247,6 +247,7 @@ selectPlayer();
 var counter;
 var distance;
 var demo = document.getElementById("demo");
+var countDownDate;
 var now;
 
 
@@ -256,7 +257,7 @@ var startCountdown = function(endTime){
   demo.style.fontSize = "3vmin";
 
   // Set the date we're counting down to
-  var countDownDate = Number(endTime);
+  countDownDate = Number(endTime);
 
   // Clear any current timers.
   clearInterval(counter);
@@ -271,13 +272,13 @@ var startCountdown = function(endTime){
       distance = countDownDate - now;
       
       // Time calculations for days, hours, minutes and seconds
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      var seconds = Math.floor(distance / 1000);
       
       // Output the result in an element with id="demo"
       demo.innerHTML = seconds + " secs";
       
       // If the count down is over, update the text in the clock pane and wait 5 seconds before putting the next coach on the block.
-      if (distance < 0) {
+      if (distance <= 0) {
           clearInterval(counter);
           placeBidButton.disabled = true;
           demo.innerHTML = "Sold for " + currentBid.innerHTML;
