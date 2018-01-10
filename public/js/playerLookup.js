@@ -278,7 +278,7 @@ var startCountdown = function(endTime){
       demo.innerHTML = seconds + " secs";
       
       // If the count down is over, update the text in the clock pane and wait 5 seconds before putting the next coach on the block.
-      if (distance <= 0) {
+      if (distance < 0) {
           clearInterval(counter);
           placeBidButton.disabled = true;
           demo.innerHTML = "Sold for " + currentBid.innerHTML;
