@@ -79,20 +79,12 @@ html(lang='en')
 			.myTeamPane
 				h3 Drafted Players
 				select#myTeamFilter(onchange="updateMyTeam()")
-					option(value="All") All
-					option(value='-') -
-					option(value='-') -
-					option(value='-') -
-					option(value='-') -
-					option(value='-') -
-					option(value='-') -
-					option(value='-') -
-					option(value='-') -
-					option(value='-') -
-					option(value='-') -
+					option(value="All") All Teams
+					each coach in coaches
+						option(value='-') coach.teamName2
 
 				select#myTeamPosFilter(onchange="updateMyTeam()")
-					option(value="All") All
+					option(value="All") All Pos
 					option(value="DEF") DEF
 					option(value="MID") MID
 					option(value="FWD") FWD

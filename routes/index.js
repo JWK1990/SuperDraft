@@ -204,6 +204,18 @@ router.post("/create", function(req, res, next){
 		req.body.draftYear &&
 		req.body.numOfCoaches){
 
+		// First we create a coachesList, which is an array containing objects with all of the relevant coaches details.
+		// We then assign this to the coaches value in the draftData object.
+		var coachesList = [];
+		var coachObject;
+		var coachNum = "";
+
+		for (var i=1; i <= req.body.numOfCoaches; i++){
+			coachNum = "coachNum: " + "coach" + i;
+			coachObject = {teamName: req["body"]["coach" + i], budget: 300, numOfPlayers: 0, teamName2: req["body"]["coach" + i]};
+			coachesList.push(coachObject);
+		};
+
 
 			// create object with form input
 			var draftData = {
@@ -211,16 +223,7 @@ router.post("/create", function(req, res, next){
 				draftYear: req.body.draftYear,
 				numOfCoaches: req.body.numOfCoaches,
 				admin: req.session.teamName,
-				coaches: [{teamName: req.body.coach1, budget: 300, numOfPlayers: 0, teamName2: req.body.coach1}, 
-						{teamName: req.body.coach2, budget: 300, numOfPlayers: 0, teamName2: req.body.coach2},
-						{teamName: req.body.coach3, budget: 300, numOfPlayers: 0, teamName2: req.body.coach3}, 
-						{teamName: req.body.coach4, budget: 300, numOfPlayers: 0, teamName2: req.body.coach4},
-						{teamName: req.body.coach5, budget: 300, numOfPlayers: 0, teamName2: req.body.coach5}, 
-						{teamName: req.body.coach6, budget: 300, numOfPlayers: 0, teamName2: req.body.coach6},
-						{teamName: req.body.coach7, budget: 300, numOfPlayers: 0, teamName2: req.body.coach7},
-						{teamName: req.body.coach8, budget: 300, numOfPlayers: 0, teamName2: req.body.coach8},
-						{teamName: req.body.coach9, budget: 300, numOfPlayers: 0, teamName2: req.body.coach9},
-						{teamName: req.body.coach10, budget: 300, numOfPlayers: 0, teamName2: req.body.coach10}],
+				coaches: coachesList,
 				otbPlayer: "Patrick Dangerfield",
 				otbBid: 1,
 				otbCoach :req.body.coach1,

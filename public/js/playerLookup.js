@@ -82,7 +82,7 @@ var adminCoach;
 var currentUserSocketID;
 var connectedSocketsList = [];
 var firstConnectedSocketID;
-
+var numOfCoaches;
 // Search and selected player variables.
 var selectedPlayer;
 var selectedPlayerName = document.getElementById("selectedName");
@@ -429,7 +429,7 @@ function highlightOtb(data){
   var currentOtbIndex;
 
   if(data===0){
-    currentOtbIndex = 10;
+    currentOtbIndex = numOfCoaches;
   } else {
     currentOtbIndex = data;
   }
@@ -655,6 +655,7 @@ var pageLoad = function(){
 socket.on("pageLoaded", function(data){
   playerData = data.playerData;
   adminCoach = data.loadData.admin;
+  numOfCoaches = data.loadData.numOfCoaches;
 
   highlightSearch(data.loadData.results);
   highlightOtb(data.loadData.pickCounter);
