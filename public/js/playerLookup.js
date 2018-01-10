@@ -247,7 +247,6 @@ selectPlayer();
 var counter;
 var distance;
 var demo = document.getElementById("demo");
-var countDownDate;
 var now;
 
 
@@ -257,7 +256,7 @@ var startCountdown = function(endTime){
   demo.style.fontSize = "3vmin";
 
   // Set the date we're counting down to
-  countDownDate = Number(endTime);
+  var countDownDate = Number(endTime);
 
   // Clear any current timers.
   clearInterval(counter);
