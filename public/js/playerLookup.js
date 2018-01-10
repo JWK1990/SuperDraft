@@ -272,7 +272,7 @@ var startCountdown = function(endTime){
       distance = countDownDate - now;
       
       // Time calculations for days, hours, minutes and seconds
-      var seconds = Math.floor(distance / 1000);
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
       
       // Output the result in an element with id="demo"
       demo.innerHTML = seconds + " secs";
