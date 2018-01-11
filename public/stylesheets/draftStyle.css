@@ -196,7 +196,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   float: left;
   height: 24%;
   width: 30%;
-  background-color: yellow;
+  background-color: #DCDCDC;
   font-size: 1vmin;
 }
 

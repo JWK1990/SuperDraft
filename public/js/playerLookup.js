@@ -83,6 +83,10 @@ var currentUserSocketID;
 var connectedSocketsList = [];
 var firstConnectedSocketID;
 var numOfCoaches;
+var rosterSize;
+var totalRosterSpots;
+var numOfPlayersDrafted;
+
 // Search and selected player variables.
 var selectedPlayer;
 var selectedPlayerName = document.getElementById("selectedName");
@@ -127,6 +131,7 @@ var currentOtbCoach;
 var currentUser = document.getElementById("currentUser").innerHTML;
 var otbAverage;
 var demo = document.getElementById("demo");
+var absentOtbOverrideTimeout;
 
 // Bidding variables.
 var currentBid = document.getElementById("currentBid");
@@ -494,9 +499,9 @@ if(data === currentUser){
 
 function updateBudgets(data){
   for (var i = 1; i < budgetsTableRows.length; i++) {
-    budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML = "$" + (data[i-1].budget - (21 - data[i-1].numOfPlayers));
+    budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML = "$" + (data[i-1].budget - (rosterSize -1 - data[i-1].numOfPlayers));
     budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML = "$" + data[i-1].budget;
-    budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML = data[i-1].numOfPlayers + "/22";
+    budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML = data[i-1].numOfPlayers + "/" + rosterSize;
   }
 
 }; // Close updateBudgets() function.
@@ -542,7 +547,7 @@ function checkSPP(){
     return (e.teamName2==currentUser);
   })[0].numOfPlayers;
 
-  maxBid = budgetData - (21 - playerCount);
+  maxBid = budgetData - (rosterSize -1 - playerCount);
 
   }; // Close setMaxBid() function.
 
@@ -656,6 +661,9 @@ socket.on("pageLoaded", function(data){
   playerData = data.playerData;
   adminCoach = data.loadData.admin;
   numOfCoaches = data.loadData.numOfCoaches;
+  rosterSize = data.loadData.rosterSize;
+  totalRosterSpots = numOfCoaches * rosterSize;
+  numOfPlayersDrafted = data.loadData.results.length;
 
   highlightSearch(data.loadData.results);
   highlightOtb(data.loadData.pickCounter);
@@ -671,6 +679,10 @@ socket.on("pageLoaded", function(data){
 
   console.log('pageLoaded completed: ' + data.loadData.pickCounter);
 
+  if (numOfPlayersDrafted >= totalRosterSpots){
+    addToQueue.disabled = true;
+    addToQueue.style.backgroundColor = "#DCDCDC";
+  }
 
   // Hide the "Next" button for all users except for the Admin user.
   if(currentUser !== data.loadData.admin){
@@ -700,9 +712,6 @@ socket.on('playerDrafted', function(data) {
 
   highlightSearch(data.dbData.results);
 
-  // Call highlightOtb() function to underline the on the block coach.
-  highlightOtb(data.dbData.pickCounter);
-
   // Code to change all team names back to white in the Budgets pane.
   for (var i = 1; i < budgetsTableRows.length; i++) {
     budgetsTableRows[i].style.color = "white";
@@ -716,41 +725,59 @@ socket.on('playerDrafted', function(data) {
 
   updateSearch();
 
-  // If the currentUser is logged into the room then the sppStartCountdown will start a 10 second countdown
-  // after which it will select the top available player to be automatically put on the block.
-  if(currentUser === currentOtbCoach){
-    sppStartCountdown(data.dbData.otbEndTime);
-  };
+  // Update the total number of players drafted.
+  numOfPlayersDrafted = data.dbData.results.length;
+  // If the total number of players drafted is greater than or equal to the total amount of roster spots then the draft is complete.
+  // In this case we issue an alert, if not we execute all of our normal playerDrafted functions to continue on the draft.
+  // The functions above relate to updated details for the most recent draftee, so we want to run them regardless.
+  if (numOfPlayersDrafted >= totalRosterSpots){
+    alert("Congratulations! The draft is complete!");
+    demo.innerHTML = "Draft Complete!";
+    addToQueue.disabled = true;
+    addToQueue.style.backgroundColor = "#DCDCDC";
+  } else {
 
-  // The absentOtbOverride waits 25 seconds (allowing a buffer for the 10 second timer to elapse) and then automatically puts a player
-  // on the block in the event the otb coach isnt logged in.
-  function absentOtbOverride(){
-    if(otbName.innerHTML === "-"){
-      autoSPP();
-      addToBlock();
-    }
-  };
-    // The below line sets teh absentOtbOverride function to be run after 25 seconds, 
+    // Call highlightOtb() function to underline the on the block coach.
+    highlightOtb(data.dbData.pickCounter);
+
+    // If the currentUser is logged into the room then the sppStartCountdown will start a 20 second countdown
+    // after which it will select the top available player to be automatically put on the block.
+    if(currentUser === currentOtbCoach){
+      sppStartCountdown(data.dbData.otbEndTime);
+    };
+
+    // The absentOtbOverride waits 25 seconds (allowing a buffer for the 20 second timer to elapse) and then automatically puts a player
+    // on the block in the event the otb coach isnt logged in.
+    function absentOtbOverride(){
+      if(otbName.innerHTML === "-"){
+        autoSPP();
+        addToBlock();
+        console.log("ABSENT OTB OVERRIDE!");
+      }
+    };
+    // The below line sets the absentOtbOverride function to be run after 25 seconds, 
     // allowing ample time for the 20 second countdown to elapse if the otb coach is logged in.
-    setTimeout(absentOtbOverride, 25000);
+    // We need to assign this to the absentOtbOverrideTimeout variable so that we can clear it later when the 'otbUpdate' function is run.
+    absentOtbOverrideTimeout = setTimeout(absentOtbOverride, 25000);
 
-  checkSPP();
+    checkSPP();
 
-  // Set the maxBid variable to the current users Max Bid as per the Budgets pane.
-  setMaxBid(data.dbData);
+    // Set the maxBid variable to the current users Max Bid as per the Budgets pane.
+    setMaxBid(data.dbData);
 
-  // Clicks the 'Player' and the '#' in the drafted players table header to sort the table and resize it after a player is drafted.
-  // This still needs some work. Clicking in this order is a bit of a workaround and I don't believe that it will work for all cases.
-  myTeamPlayerSort.click();
-  myTeamOrderSort.click();
-  myTeamOrderSort.click();
+    // Clicks the 'Player' and the '#' in the drafted players table header to sort the table and resize it after a player is drafted.
+    // This still needs some work. Clicking in this order is a bit of a workaround and I don't believe that it will work for all cases.
+    myTeamPlayerSort.click();
+    myTeamOrderSort.click();
+    myTeamOrderSort.click();
 
-  // Updates the 'Sold for' text to say "Selection Pending...".
-  demo.innerHTML = "On The Block: " + data.dbData.otbCoach;
-  demo.style.fontSize = "2vmin";
+    // Updates the 'Sold for' text to say "Selection Pending...".
+    demo.innerHTML = "On The Block: " + data.dbData.otbCoach;
+    demo.style.fontSize = "2vmin";
 
+  } // Close else statement.
 
-}); // Close socket.on() function.
+}); // Close socket.on('playerDrafted') function.
 
 
 // WebSockets bid() function used to log a bid. Need to add an error function for bids under the otb bid price.
@@ -759,10 +786,10 @@ var bid = function(){
   otbBidValue = Number(currentBid.innerHTML.replace(/[^0-9\.]+/g,"")) + 1;
 
 // If statements to send an alert if the bid value is greater than the current users max bid or if their team is full.
-  if(otbBidValue <= maxBid && playerCount < 22){
+  if(otbBidValue <= maxBid && playerCount < rosterSize){
     socket.emit('bid', { draftID: draftID, bidValue: otbBidValue, currentUser: currentUser });
     console.log('currentUser: ' + currentUser);
-} else if(playerCount >= 22){
+} else if(playerCount >= rosterSize){
     // Code to show the jQuery UI Dialog.
     $(function(){
       $("#dialogFull").dialog({
@@ -838,6 +865,9 @@ socket.on('bidUpdate', function(data) {
 // Websockets addToBlock() function.
 var addToBlock = function(){
 
+  // Clears the current sppCountdownTimer for the current user.
+  clearInterval(sppCounter);
+
   // Checks if the starting bid price is greater than the maxBid for the current OTB coach.
   // If so, shows a dialog and sets the startValue.value back to 1.
   if(startValue.value > maxBid){
@@ -856,7 +886,11 @@ var addToBlock = function(){
 }; // Close addToBlock() function.
 
 socket.on('otbUpdate', function(data) {
-  // Clears the current sppCountdownTimer for all users.
+
+  // First we clear the absentOtbOverride setTimeout.
+  // If we don't do this then it keeps counting in the background and can run the absentOtbOverride when we don' want it to.
+  clearTimeout(absentOtbOverrideTimeout);
+
   clearInterval(sppCounter);
   addToQueue.disabled = true;
   placeBidButton.disabled = false;

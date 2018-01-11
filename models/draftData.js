@@ -67,6 +67,11 @@ var DraftSchema = new mongoose.Schema({
 		required: true,
 		trim: true
 	},
+	rosterSize: {
+		type: Number,
+		required: true,
+		trim: true
+	},
 	admin: {
 		type: String
 	},
