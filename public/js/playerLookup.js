@@ -86,6 +86,51 @@ var numOfCoaches;
 var rosterSize;
 var totalRosterSpots;
 var numOfPlayersDrafted;
+var benchCount;
+var addToBench;
+
+// Position validation variables.
+// Hold the number of players in each position on the current coaches team.
+var numOfDef;
+var numOfFwd;
+var numOfRuc;
+var numOfMid;
+var numOfDF;
+var numOfDR;
+var numOfDM;
+var numOfFR;
+var numOfFM;
+var numOfRM;
+// Hold the individual rules for different position combinations.
+var defRule;
+var fwdRule;
+var rucRule;
+var midRule;
+var dfRule;
+var drRule;
+var dmRule;
+var frRule;
+var fmRule;
+var rmRule;
+// Use the individual rules above to determine whether there is a spot on the field on the current coaches team for each different position.
+var defSpot;
+var fwdSpot;
+var rucSpot;
+var midSpot;
+var dfSpot;
+var drSpot;
+var dmSpot;
+var frSpot;
+var fmSpot;
+var rmSpot;
+var rosterSpotsArray;
+var availablePosition;
+// Holds the total roster spots for each position from the database for the current draft.
+var totalDefSpots;
+var totalFwdSpots;
+var totalRucSpots;
+var totalMidSpots;
+var totalBenSpots;
 
 // Search and selected player variables.
 var selectedPlayer;
@@ -314,9 +359,16 @@ var startCountdown = function(endTime){
 function getTopPlayer(){
   for (var i = 1; i < searchTableRows.length; i++) {
       if(Boolean(searchTableRows[i].style.textDecoration === "")){
-        // Update OTB data.
-        topPlayer = searchTableRows[i].getElementsByTagName("td");
-        break;
+
+        // Looks through the avaialble players and performs a benchCheck.
+        // benchCheck() then sets the addToBench variable to 0 or 1 based on whether the currentCoach has availability for that position.
+        benchCheck(searchTableRows[i].getElementsByTagName("td")[2].innerHTML);
+
+        // Update topPlayer variable if the 
+        if(benchCount < totalBenSpots || benchCount >= totalBenSpots && addToBench < 1){
+          topPlayer = searchTableRows[i].getElementsByTagName("td");
+          break;
+        }
       }
   }
   otbPlayerID = topPlayer[1].innerHTML;
@@ -583,6 +635,58 @@ function updateMyTeam() {
   }
 } // Close updateMyTeam().
 
+// Checks if there is a spot on the current users field for the position that is currently on the block.
+// data[0]=D, 1=F, 2=R, 3=M, 4=DF, 5=DR, 6=DM, 7=FR, 8=FM, 9=RM.
+function benchCheck(data){
+  addToBench = 0;
+
+  if (data === "DEF" && rosterSpotsArray[0] === false){
+    addToBench = 1;
+  } else if (data === "FWD" && rosterSpotsArray[1] === false){
+    addToBench = 1;
+  } else if (data === "RUC" && rosterSpotsArray[2] === false){
+    addToBench = 1;
+  } else if (data === "MID" && rosterSpotsArray[3] === false){
+    addToBench = 1;
+  } else if (data === "DEF-FWD" && rosterSpotsArray[4] === false){
+    addToBench = 1;
+  } else if (data === "DEF-RUC" && rosterSpotsArray[5] === false){
+    addToBench = 1;
+  } else if (data === "DEF-MID" && rosterSpotsArray[6] === false){
+    addToBench = 1;
+  } else if (data === "FWD-RUC" && rosterSpotsArray[7] === false){
+    addToBench = 1;
+  } else if (data === "FWD-MID" && rosterSpotsArray[8] === false){
+    addToBench = 1;
+  } else if (data === "RUC-MID" && rosterSpotsArray[9] === false){
+    addToBench = 1;
+  };
+
+}; // Close benchCheck() function.
+
+
+// Define the setBenchCount() function to set the benchCount variable to the number of bench players for the current user from the database.
+function setBenchCount(data){
+  benchCount = data.coaches.filter(function(e){
+                    return (e.teamName2==currentUser);
+                  })[0].benchCount;
+
+  console.log("Bench Count: " + benchCount);
+
+}; // Close setBenchCount() function.
+
+
+// Define the setRosterArray() function to set the rosterSpotsArray variable to the rosterSpots array variable from the database.
+function setRosterArray(data){
+  rosterSpotsArray = data.coaches.filter(function(e){
+                    return (e.teamName2==currentUser);
+                  })[0].rosterSpots;
+
+  console.log("Roster Spots Array: " + rosterSpotsArray);
+
+}; // Close setRosterArray() function.
+
+
 
 // WEBSOCKETS FUNCTIONS.
 
@@ -664,6 +768,19 @@ socket.on("pageLoaded", function(data){
   rosterSize = data.loadData.rosterSize;
   totalRosterSpots = numOfCoaches * rosterSize;
   numOfPlayersDrafted = data.loadData.results.length;
+  totalDefSpots = data.loadData.numOfDef;
+  totalFwdSpots = data.loadData.numOfFwd;
+  totalRucSpots = data.loadData.numOfRuc;
+  totalMidSpots = data.loadData.numOfMid;
+  totalBenSpots = data.loadData.numOfBen;
+
+  // Set the benchCount variable to the benchCount for the current user from the database.
+  setBenchCount(data.loadData);
+
+  // Set the rosterSpotsArray variable to the rosterSpots variable for the current user from the database.
+  setRosterArray(data.loadData);
+
+  // Check how many players of each position the current coach has drafted.
 
   highlightSearch(data.loadData.results);
   highlightOtb(data.loadData.pickCounter);
@@ -701,14 +818,21 @@ pageLoad();
 
 // WebSockets draft() function below used to draft a player once bidding is complete.
 var draft = function(){
-  socket.emit('draft', { draftID: draftID, biddingTeam: biddingTeam, price: currentBid.innerHTML });
+  socket.emit('draft', { draftID: draftID, biddingTeam: biddingTeam, price: currentBid.innerHTML, addToBench: addToBench });
 };
 
 socket.on('playerDrafted', function(data) {
+
+  // Sets the benchCount variable to hold the number of players on the current coaches bench.
+  setBenchCount(data.dbData);
+  // Sets the rosterSpotsArray variable to hold the rosterArray variable for the current coach from the database.
+  setRosterArray(data.dbData);
+
   currentBid.innerHTML = "-";
   otbName.innerHTML = "-";
   otbTeamPos.innerHTML = "-";
   otbPic.src = "./images/TBA.png";
+
 
   highlightSearch(data.dbData.results);
 
@@ -785,7 +909,7 @@ var bid = function(){
 
   otbBidValue = Number(currentBid.innerHTML.replace(/[^0-9\.]+/g,"")) + 1;
 
-// If statements to send an alert if the bid value is greater than the current users max bid or if their team is full.
+  // If statements to send an alert if the bid value is greater than the current users max bid or if their team is full.
   if(otbBidValue <= maxBid && playerCount < rosterSize){
     socket.emit('bid', { draftID: draftID, bidValue: otbBidValue, currentUser: currentUser });
     console.log('currentUser: ' + currentUser);
@@ -827,61 +951,82 @@ socket.on('bidLock', function(){
 
 
 socket.on('bidUpdate', function(data) {
-  
-  startCountdown(data.bidData.otbEndTime);
 
-  highlightBidder(data.bidData.otbBidder);
-
-  lockBid(data.bidData.otbBidder, currentUser);
-
-  currentBid.innerHTML = "$" + data.bidData.otbBid;
-  biddingTeam = data.bidData.otbBidder;
-
-  // Updates the Place Bid button to have the current bid price plus 1 or 'You Lead' text if the logged in coach leads the bidding.
-  if (currentUser === data.bidData.otbBidder){
-    placeBidButton.innerHTML = "You Lead @ $" + (Number(data.bidData.otbBid));
-  } else {
-  placeBidButton.innerHTML = "Bid $" + (Number(data.bidData.otbBid) + 1);
-    }
-
-  // Disables the bid button if bidding exceeds the coaches max bid.
-  if (data.bidData.otbBid >= maxBid){
+  // Checks if the availablePosition variable is false (this is set upon the player being added to the block).
+  // If the availablePosition is false then we disable the coach from bidding, if it is true then we run the normal bid code
+  if(availablePosition === false){
+    placeBidButton.innerHTML = "No " + data.bidData.otbPos + " Spots";
     placeBidButton.disabled = true;
-    placeBidButton.innerHTML = "> Max Bid";
     placeBidButton.style.background = "grey";
-  }
+  } else {
+  
+      startCountdown(data.bidData.otbEndTime);
 
-  // Checks if the otb pane is blank, if so a coach has re-entered the draft room mid way through a draft.
-  // If this is the case then we want to update the otb pane with the otb player details for that coach but not for other other coaches that already have the details loaded.
-  if (otbName.innerHTML === ""){
-    otbName.innerHTML = data.bidData.otbPlayer;
-    otbTeamPos.innerHTML = data.bidData.otbPos + " - " + data.bidData.otbAverage;
-    otbPic.src = "./images/" + data.bidData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";
-  }
+      highlightBidder(data.bidData.otbBidder);
+
+      lockBid(data.bidData.otbBidder, currentUser);
+
+      currentBid.innerHTML = "$" + data.bidData.otbBid;
+      biddingTeam = data.bidData.otbBidder;
+
+      // Updates the Place Bid button to have the current bid price plus 1 or 'You Lead' text if the logged in coach leads the bidding.
+      if (currentUser === data.bidData.otbBidder){
+        placeBidButton.innerHTML = "You Lead @ $" + (Number(data.bidData.otbBid));
+      } else if (data.bidData.otbBid >= maxBid){
+          // Disables the bid button if bidding exceeds the coaches max bid.
+          placeBidButton.disabled = true;
+          placeBidButton.innerHTML = "> Max Bid";
+          placeBidButton.style.background = "grey";
+        } else {
+            placeBidButton.innerHTML = "Bid $" + (Number(data.bidData.otbBid) + 1);
+          };
+
+      // Checks if the otb pane is blank, if so a coach has re-entered the draft room mid way through a draft.
+      // If this is the case then we want to update the otb pane with the otb player details for that coach but not for other other coaches that already have the details loaded.
+      if (otbName.innerHTML === ""){
+        otbName.innerHTML = data.bidData.otbPlayer;
+        otbTeamPos.innerHTML = data.bidData.otbPos + " - " + data.bidData.otbAverage;
+        otbPic.src = "./images/" + data.bidData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";
+      }
+
+  }; // Close if(availablePosition) else{} statement.
 
 }); // Close socket.on() function.
 
 
 // Websockets addToBlock() function.
 var addToBlock = function(){
+  // Run the benchCheck function to set the addToBench variable to 0 or 1 depending on whether there is an avaialble spot on the field for the current otbPosition.
+  benchCheck(otbPos);
 
-  // Clears the current sppCountdownTimer for the current user.
-  clearInterval(sppCounter);
-
-  // Checks if the starting bid price is greater than the maxBid for the current OTB coach.
-  // If so, shows a dialog and sets the startValue.value back to 1.
-  if(startValue.value > maxBid){
-    $(function(){
-      $("#dialogOTB").dialog({
+  // Check if there is space in the current coaches team for the current otbPosition.
+  // If not then we issue a message and get the coach to pick again, if there is then we run the normal addToBlock() code.
+  if (benchCount >= totalBenSpots && addToBench > 0){
+     $(function(){
+      $("#dialogRoster").dialog({
           position: top
         })
     });
-    startValue.value = 1;
   } else {
-      console.log(otbPlayerID)
-      console.log(otbAverage)
-      socket.emit('addToBlock', { draftID: draftID, player: otbPlayerID, position: otbPos, average: otbAverage, currentUser: currentOtbCoach, startingBid: startValue.value});
-  } // Close else{} statement.
+    // Clears the current sppCountdownTimer for the current user.
+    clearInterval(sppCounter);
+
+    // Checks if the starting bid price is greater than the maxBid for the current OTB coach.
+    // If so, shows a dialog and sets the startValue.value back to 1.
+    if(startValue.value > maxBid){
+      $(function(){
+        $("#dialogOTB").dialog({
+            position: top
+          })
+      });
+      startValue.value = 1;
+    } else {
+        console.log(otbPlayerID)
+        console.log(otbAverage)
+        socket.emit('addToBlock', { draftID: draftID, player: otbPlayerID, position: otbPos, average: otbAverage, currentUser: currentOtbCoach, startingBid: startValue.value});
+    } // Close else{} statement.
+
+  }; // Close if(benchCount) else statement.
 
 }; // Close addToBlock() function.
 
@@ -908,17 +1053,45 @@ socket.on('otbUpdate', function(data) {
   otbTeamPos.innerHTML = data.updatedOtbData.otbPos + " - " + data.updatedOtbData.otbAverage;
   otbPic.src = "./images/" + data.updatedOtbData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";
 
-  // Updates the Place Bid button to contain $1 more than the starting bid.
-  if (currentUser === data.updatedOtbData.otbBidder){
-    placeBidButton.innerHTML = "You Lead @ $" + Number(data.updatedOtbData.otbBid);
+  // Perform benchCheck() to see if the current coach has roster spots for the current otb position.
+  benchCheck(data.updatedOtbData.otbPos);
+  console.log("OTB Pos: " + data.updatedOtbData.otbPos);
+  console.log("Bench Count: " + benchCount);
+  console.log("Add To Bench: " + addToBench);
+
+  // If the coach has no roster spots available and their bench is full, we disable the bid button.
+  // Else perform the normal bid button function.
+  if (benchCount >= totalBenSpots && addToBench > 0){
+    placeBidButton.innerHTML = "No " + data.updatedOtbData.otbPos + " Spots";
+    placeBidButton.disabled = true;
+    placeBidButton.style.background = "grey";
+    // Sets the available position variable to false to keep the coach locked out of bidding.
+    availablePosition = false;
+
   } else {
-    placeBidButton.innerHTML = "Bid $" + (Number(data.updatedOtbData.otbBid) + 1);
-    };
+    // Sets the available position variable to true to allow the coach to bid.
+    availablePosition = true;
+    // Updates the Place Bid button to contain $1 more than the starting bid.
+    if (currentUser === data.updatedOtbData.otbBidder){
+      placeBidButton.innerHTML = "You Lead @ $" + Number(data.updatedOtbData.otbBid);
+    } else if (data.updatedOtbData.otbBid >= maxBid){
+        // Disables the bid button if bidding exceeds the coaches max bid.
+        placeBidButton.disabled = true;
+        placeBidButton.innerHTML = "> Max Bid";
+        placeBidButton.style.background = "grey";
+      }
+      else {
+        placeBidButton.innerHTML = "Bid $" + (Number(data.updatedOtbData.otbBid) + 1);
+      };
+
+  }; // Close if(benchCount) else statement.
 
   // Updates the start value in the SPP back to $1 for all coaches after a player is added to the block.
   startValue.value = 1;
 
 }); // Close socket.on("otbUpdate") function.
+
+
 
 
 

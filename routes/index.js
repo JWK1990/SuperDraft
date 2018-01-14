@@ -203,7 +203,13 @@ router.post("/create", function(req, res, next){
 	if (req.body.leagueName &&
 		req.body.draftYear &&
 		req.body.numOfCoaches &&
-		req.body.rosterSize){
+		req.body.rosterSize &&
+		req.body.numOfDef &&
+		req.body.numOfFwd &&
+		req.body.numOfRuc &&
+		req.body.numOfMid &&
+		req.body.numOfBen &&
+		req.body.budget){
 
 		// First we create a coachesList, which is an array containing objects with all of the relevant coaches details.
 		// We then assign this to the coaches value in the draftData object.
@@ -213,7 +219,7 @@ router.post("/create", function(req, res, next){
 
 		for (var i=1; i <= req.body.numOfCoaches; i++){
 			coachNum = "coachNum: " + "coach" + i;
-			coachObject = {teamName: req["body"]["coach" + i], budget: 300, numOfPlayers: 0, teamName2: req["body"]["coach" + i]};
+			coachObject = {teamName: req["body"]["coach" + i], budget: req.body.budget, numOfPlayers: 0, teamName2: req["body"]["coach" + i], benchCount: 0, rosterSpots: [true, true, true, true, true, true, true, true, true, true]};
 			coachesList.push(coachObject);
 		};
 
@@ -224,6 +230,11 @@ router.post("/create", function(req, res, next){
 				draftYear: req.body.draftYear,
 				numOfCoaches: req.body.numOfCoaches,
 				rosterSize: req.body.rosterSize,
+				numOfDef: req.body.numOfDef,
+				numOfFwd: req.body.numOfFwd,
+				numOfRuc: req.body.numOfRuc,
+				numOfMid: req.body.numOfMid,
+				numOfBen: req.body.numOfBen,
 				admin: req.session.teamName,
 				coaches: coachesList,
 				otbPlayer: "Patrick Dangerfield",

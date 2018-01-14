@@ -13,7 +13,7 @@ var ResultsSchema = new mongoose.Schema({
 	team: {
 		type: String
 	}
-})
+});
 
 
 
@@ -27,8 +27,7 @@ var PlayersSchema = new mongoose.Schema({
 	price: {
 		type: Number
 	}
-})
-
+});
 
 
 
@@ -47,6 +46,12 @@ var CoachSchema = new mongoose.Schema({
 	},
 	teamName2: {
 		type: String
+	},
+	benchCount: {
+		type: Number
+	},
+	rosterSpots: {
+		type: Array
 	}
 });
 
@@ -68,6 +73,31 @@ var DraftSchema = new mongoose.Schema({
 		trim: true
 	},
 	rosterSize: {
+		type: Number,
+		required: true,
+		trim: true
+	},
+	numOfDef: {
+		type: Number,
+		required: true,
+		trim: true
+	},
+	numOfFwd: {
+		type: Number,
+		required: true,
+		trim: true
+	},	
+	numOfRuc: {
+		type: Number,
+		required: true,
+		trim: true
+	},
+	numOfMid: {
+		type: Number,
+		required: true,
+		trim: true
+	},
+	numOfBen: {
 		type: Number,
 		required: true,
 		trim: true
