@@ -87,7 +87,9 @@ var rosterSize;
 var totalRosterSpots;
 var numOfPlayersDrafted;
 var benchCount;
+var otbBenchCount;
 var addToBench;
+var otbAddToBench;
 
 // Position validation variables.
 // Hold the number of players in each position on the current coaches team.
@@ -124,6 +126,7 @@ var frSpot;
 var fmSpot;
 var rmSpot;
 var rosterSpotsArray;
+var otbRosterSpotsArray;
 var availablePosition;
 // Holds the total roster spots for each position from the database for the current draft.
 var totalDefSpots;
@@ -162,6 +165,7 @@ var selectedPlayerData;
 var startValue = document.getElementById("startValue");
 var startingBid;
 var topPlayer;
+var otbTopPlayer;
 
 // On the block variables.
 var otbPlayer;
@@ -353,10 +357,15 @@ var startCountdown = function(endTime){
 }; // Close startCountdown() function.
 
 
+// Define updateOtb() used to update the otb details.
+function updateOtb(data){
+  otbPlayerID = data[1].innerHTML;
+  otbPos = data[2].innerHTML;
+  otbAverage = data[3].innerHTML;
+};
 
-
-// Define getTopPlayer() used to get the top available player from the Player Search pane.
-function getTopPlayer(){
+// Define getTopPlayer() used to get the top available valid player for the current user from the Player Search pane.
+function getTopPlayer(data){
   for (var i = 1; i < searchTableRows.length; i++) {
       if(Boolean(searchTableRows[i].style.textDecoration === "")){
 
@@ -364,16 +373,33 @@ function getTopPlayer(){
         // benchCheck() then sets the addToBench variable to 0 or 1 based on whether the currentCoach has availability for that position.
         benchCheck(searchTableRows[i].getElementsByTagName("td")[2].innerHTML);
 
-        // Update topPlayer variable if the 
-        if(benchCount < totalBenSpots || benchCount >= totalBenSpots && addToBench < 1){
+        // Update topPlayer variable if there is a spot available in the current coaches team for the current player in the loop.
+        if(addToBench < 1 || benchCount < totalBenSpots){
           topPlayer = searchTableRows[i].getElementsByTagName("td");
           break;
         }
       }
   }
-  otbPlayerID = topPlayer[1].innerHTML;
-  otbPos = topPlayer[2].innerHTML;
-  otbAverage = topPlayer[3].innerHTML;
+  console.log("Top Player: " + topPlayer[1].innerHTML);
+};
+
+// Define getTopPlayer() used to get the top available valid player for the current user from the Player Search pane.
+function otbGetTopPlayer(data){
+  for (var i = 1; i < searchTableRows.length; i++) {
+      if(Boolean(searchTableRows[i].style.textDecoration === "")){
+
+        // Looks through the avaialble players and performs a benchCheck.
+        // benchCheck() then sets the addToBench variable to 0 or 1 based on whether the currentCoach has availability for that position.
+        otbBenchCheck(searchTableRows[i].getElementsByTagName("td")[2].innerHTML);
+
+        // Update topPlayer variable if there is a spot available in the current coaches team for the current player in the loop.
+        if(otbAddToBench < 1 || otbBenchCount < totalBenSpots){
+          otbTopPlayer = searchTableRows[i].getElementsByTagName("td");
+          break;
+        }
+      }
+  }
+  console.log("OTB Top Player: " + otbTopPlayer[1].innerHTML);
 };
 
 
@@ -391,20 +417,23 @@ function updateSPP(data){
 // Define autoSPP() function used to update the SPP and OTB with the top ranked available player.
 // This is used when the sppStartCountdown() function reaches 0 or when a drafted player is in the SPP for the OTB Coach.
 function autoSPP(){
-  // Run getTopPlayer() to find the top available player and update the otb variables.
-  getTopPlayer();
   // Update SPP data only for the currentOtbCoach if they are logged in.
   if(currentUser === currentOtbCoach){
     updateSPP(topPlayer);
-  };
+    updateOtb(topPlayer);
+  } else {
+    updateOtb(otbTopPlayer);
+  }
 }; // Close autoSPP function.
 
 
 // Define loadAutoSPP() function used to update the SPP with the top available player for all coaches upon the page being loaded.
 // This is different to the autoSPP as it doesn't automatically put the player on the block and it does it for all coaches.
 function loadAutoSPP(){
-  getTopPlayer();
   updateSPP(topPlayer);
+  if(currentUser === currentOtbCoach){
+    updateOtb(topPlayer);
+  }
 };
 
 
@@ -588,18 +617,17 @@ function checkSPP(){
 
 
   function setMaxBid(data){
-    console.log(data);
-  var budgetData = data.coaches.filter(function(e){
-                      return (e.teamName2==currentUser);
-                    })[0].budget;
+    var budgetData = data.coaches.filter(function(e){
+                        return (e.teamName2==currentUser);
+                      })[0].budget;
 
-  console.log(budgetData);
+    console.log(budgetData);
 
-  playerCount = data.coaches.filter(function(e){
-    return (e.teamName2==currentUser);
-  })[0].numOfPlayers;
+    playerCount = data.coaches.filter(function(e){
+      return (e.teamName2==currentUser);
+    })[0].numOfPlayers;
 
-  maxBid = budgetData - (rosterSize -1 - playerCount);
+    maxBid = budgetData - (rosterSize -1 - playerCount);
 
   }; // Close setMaxBid() function.
 
@@ -635,35 +663,10 @@ function updateMyTeam() {
   }
 } // Close updateMyTeam().
 
-// Checks if there is a spot on the current users field for the position that is currently on the block.
-// data[0]=D, 1=F, 2=R, 3=M, 4=DF, 5=DR, 6=DM, 7=FR, 8=FM, 9=RM.
-function benchCheck(data){
-  addToBench = 0;
 
-  if (data === "DEF" && rosterSpotsArray[0] === false){
-    addToBench = 1;
-  } else if (data === "FWD" && rosterSpotsArray[1] === false){
-    addToBench = 1;
-  } else if (data === "RUC" && rosterSpotsArray[2] === false){
-    addToBench = 1;
-  } else if (data === "MID" && rosterSpotsArray[3] === false){
-    addToBench = 1;
-  } else if (data === "DEF-FWD" && rosterSpotsArray[4] === false){
-    addToBench = 1;
-  } else if (data === "DEF-RUC" && rosterSpotsArray[5] === false){
-    addToBench = 1;
-  } else if (data === "DEF-MID" && rosterSpotsArray[6] === false){
-    addToBench = 1;
-  } else if (data === "FWD-RUC" && rosterSpotsArray[7] === false){
-    addToBench = 1;
-  } else if (data === "FWD-MID" && rosterSpotsArray[8] === false){
-    addToBench = 1;
-  } else if (data === "RUC-MID" && rosterSpotsArray[9] === false){
-    addToBench = 1;
-  };
 
-}; // Close benchCheck() function.
 
+// OTB POSITION VALIDATIONS FOR CURRENT USER.
 
 // Define the setBenchCount() function to set the benchCount variable to the number of bench players for the current user from the database.
 function setBenchCount(data){
@@ -672,9 +675,7 @@ function setBenchCount(data){
                   })[0].benchCount;
 
   console.log("Bench Count: " + benchCount);
-
 }; // Close setBenchCount() function.
-
 
 // Define the setRosterArray() function to set the rosterSpotsArray variable to the rosterSpots array variable from the database.
 function setRosterArray(data){
@@ -682,10 +683,94 @@ function setRosterArray(data){
                     return (e.teamName2==currentUser);
                   })[0].rosterSpots;
 
-  console.log("Roster Spots Array: " + rosterSpotsArray);
+  console.log(currentUser + " Roster Spots Array: " + rosterSpotsArray);
+}; // Close setRosterArray() function.
+
+
+// Checks if there is a spot on the current users field for the position that is currently on the block.
+// data[0]=D, 1=F, 2=R, 3=M, 4=DF, 5=DR, 6=DM, 7=FR, 8=FM, 9=RM.
+function benchCheck(position){
+  addToBench = 0;
+
+  if (position === "DEF" && rosterSpotsArray[0] === false){
+    addToBench = 1;
+  } else if (position === "FWD" && rosterSpotsArray[1] === false){
+    addToBench = 1;
+  } else if (position === "RUC" && rosterSpotsArray[2] === false){
+    addToBench = 1;
+  } else if (position === "MID" && rosterSpotsArray[3] === false){
+    addToBench = 1;
+  } else if (position === "DEF-FWD" && rosterSpotsArray[4] === false){
+    addToBench = 1;
+  } else if (position === "DEF-RUC" && rosterSpotsArray[5] === false){
+    addToBench = 1;
+  } else if (position === "DEF-MID" && rosterSpotsArray[6] === false){
+    addToBench = 1;
+  } else if (position === "FWD-RUC" && rosterSpotsArray[7] === false){
+    addToBench = 1;
+  } else if (position === "FWD-MID" && rosterSpotsArray[8] === false){
+    addToBench = 1;
+  } else if (position === "RUC-MID" && rosterSpotsArray[9] === false){
+    addToBench = 1;
+  };
+
+      console.log("Add To Bench: " + addToBench);
+}; // Close benchCheck() function.
+
+
+//OTB POSITION VALIDATIONS FOR OTB COACH.
+
+// Define the setBenchCount() function to set the benchCount variable to the number of bench players for the current user from the database.
+function otbSetBenchCount(data){
+  otbBenchCount = data.coaches.filter(function(e){
+                    return (e.teamName2==currentOtbCoach);
+                  })[0].benchCount;
+
+  console.log("OTB Bench Count: " + otbBenchCount);
+
+}; // Close setBenchCount() function.
+
+
+// Define the setRosterArray() function to set the rosterSpotsArray variable to the rosterSpots array variable from the database.
+function otbSetRosterArray(data){
+  otbRosterSpotsArray = data.coaches.filter(function(e){
+                    return (e.teamName2==currentOtbCoach);
+                  })[0].rosterSpots;
+
+  console.log(currentOtbCoach + " OTB Roster Spots Array: " + otbRosterSpotsArray);
 
 }; // Close setRosterArray() function.
 
+// Checks if there is a spot on the current users field for the position that is currently on the block.
+// data[0]=D, 1=F, 2=R, 3=M, 4=DF, 5=DR, 6=DM, 7=FR, 8=FM, 9=RM.
+function otbBenchCheck(position){
+  otbAddToBench = 0;
+
+  if (position === "DEF" && otbRosterSpotsArray[0] === false){
+    otbAddToBench = 1;
+  } else if (position === "FWD" && otbRosterSpotsArray[1] === false){
+    otbAddToBench = 1;
+  } else if (position === "RUC" && otbRosterSpotsArray[2] === false){
+    otbAddToBench = 1;
+  } else if (position === "MID" && otbRosterSpotsArray[3] === false){
+    otbAddToBench = 1;
+  } else if (position === "DEF-FWD" && otbRosterSpotsArray[4] === false){
+    otbAddToBench = 1;
+  } else if (position === "DEF-RUC" && otbRosterSpotsArray[5] === false){
+    otbAddToBench = 1;
+  } else if (position === "DEF-MID" && otbRosterSpotsArray[6] === false){
+    otbAddToBench = 1;
+  } else if (position === "FWD-RUC" && otbRosterSpotsArray[7] === false){
+    otbAddToBench = 1;
+  } else if (position === "FWD-MID" && otbRosterSpotsArray[8] === false){
+    otbAddToBench = 1;
+  } else if (position === "RUC-MID" && otbRosterSpotsArray[9] === false){
+    otbAddToBench = 1;
+  };
+
+  console.log("OTB Add To Bench: " + otbAddToBench);
+
+}; // Close benchCheck() function.
 
 
 // WEBSOCKETS FUNCTIONS.
@@ -694,7 +779,6 @@ var socket = io.connect('/');
 
 // Set the Websocket room ID.
 var room = draftID;
-console.log('Room:' + room);
 
 socket.on('connect', function(){
   // Connected, let's sign up to receive messages for this room.
@@ -705,8 +789,6 @@ socket.on('connect', function(){
 
 // The socket.on("joinedCoach") function updates the Team Names in the budgets pane for all users connected to the room every time a new coach joins the room.
 socket.on("joinedCoach", function(data){
-  console.log("Joined Coaches: " + data.joinedCoaches);
-  console.log('Team Name 2: ' + data.joinedCoaches[0].teamName2);
 
   // First we clear the connectedSocketList. Then we loop through the socketList of all connected sockets (across all rooms) and adds them to the current rooms connectedSocketsList if they start with the correct room.
   connectedSocketsList = [];
@@ -720,9 +802,6 @@ socket.on("joinedCoach", function(data){
   // Gets the firstConnectedSocketID by getting the first ID from the connectedSocketsList.
   firstConnectedSocketID = connectedSocketsList[0];
 
-  console.log('Connected Sockets List: ' + connectedSocketsList);
-  console.log('First Connected Socket ID: ' + firstConnectedSocketID);
-
   for (var i = 1; i < budgetsTableRows.length; i++) {
     var td = budgetsTableRows[i].getElementsByTagName("td")[0];
     td.innerHTML = data.joinedCoaches[i-1].teamName2;
@@ -730,10 +809,8 @@ socket.on("joinedCoach", function(data){
 });
 
 socket.on("socketDetails", function(data){
-  console.log("TEST");
   // Sets the current users socket ID to the socket ID returned from the server side combined with the room ID to match the format of the connectedSocketsList.
   currentUserSocketID = room + " - " + data.socketID;
-  console.log("Current User Socket ID: " + currentUserSocketID);
 })
 
 socket.on('disconnectedCoach', function(data){
@@ -750,7 +827,6 @@ socket.on('disconnectedCoach', function(data){
   // Gets the firstConnectedSocketID by getting the first ID from the connectedSocketsList.
   firstConnectedSocketID = connectedSocketsList[0];
 
-  console.log("Connected Sockets List: " + connectedSocketsList);
 }); // Close socket.on('disconnect').
 
 
@@ -758,7 +834,6 @@ socket.on('disconnectedCoach', function(data){
 // WebSockets pageLoad() function used to set up the page properly on page load.
 var pageLoad = function(){
   socket.emit("pageLoad", {draftID: draftID});
-  console.log('pageLoad emitted');
 };
 
 socket.on("pageLoaded", function(data){
@@ -774,12 +849,6 @@ socket.on("pageLoaded", function(data){
   totalMidSpots = data.loadData.numOfMid;
   totalBenSpots = data.loadData.numOfBen;
 
-  // Set the benchCount variable to the benchCount for the current user from the database.
-  setBenchCount(data.loadData);
-
-  // Set the rosterSpotsArray variable to the rosterSpots variable for the current user from the database.
-  setRosterArray(data.loadData);
-
   // Check how many players of each position the current coach has drafted.
 
   highlightSearch(data.loadData.results);
@@ -788,18 +857,25 @@ socket.on("pageLoaded", function(data){
   setMaxBid(data.loadData);
   placeBidButton.disabled = true;
   placeBidButton.style.background = "grey";
-  loadAutoSPP();
-
-  console.log("Load Data: " + data.loadData.otbPlayer);
 
   document.getElementById("next").disabled = false;
-
-  console.log('pageLoaded completed: ' + data.loadData.pickCounter);
 
   if (numOfPlayersDrafted >= totalRosterSpots){
     addToQueue.disabled = true;
     addToQueue.style.backgroundColor = "#DCDCDC";
   }
+
+  // Set the position validation variables.
+  setBenchCount(data.loadData);
+  otbSetBenchCount(data.loadData);
+  setRosterArray(data.loadData);
+  otbSetRosterArray(data.loadData);
+  getTopPlayer();
+  otbGetTopPlayer();
+
+
+  // Run the loadAutoSPP() function to load the top available valid player for the current user.
+  loadAutoSPP();
 
   // Hide the "Next" button for all users except for the Admin user.
   if(currentUser !== data.loadData.admin){
@@ -818,21 +894,15 @@ pageLoad();
 
 // WebSockets draft() function below used to draft a player once bidding is complete.
 var draft = function(){
-  socket.emit('draft', { draftID: draftID, biddingTeam: biddingTeam, price: currentBid.innerHTML, addToBench: addToBench });
+  socket.emit('draft', { draftID: draftID, biddingTeam: biddingTeam, price: currentBid.innerHTML});
 };
 
 socket.on('playerDrafted', function(data) {
-
-  // Sets the benchCount variable to hold the number of players on the current coaches bench.
-  setBenchCount(data.dbData);
-  // Sets the rosterSpotsArray variable to hold the rosterArray variable for the current coach from the database.
-  setRosterArray(data.dbData);
 
   currentBid.innerHTML = "-";
   otbName.innerHTML = "-";
   otbTeamPos.innerHTML = "-";
   otbPic.src = "./images/TBA.png";
-
 
   highlightSearch(data.dbData.results);
 
@@ -863,6 +933,14 @@ socket.on('playerDrafted', function(data) {
 
     // Call highlightOtb() function to underline the on the block coach.
     highlightOtb(data.dbData.pickCounter);
+
+    // Set the position validation variables.
+    setBenchCount(data.dbData);
+    otbSetBenchCount(data.dbData);
+    setRosterArray(data.dbData);
+    otbSetRosterArray(data.dbData);
+    getTopPlayer();
+    otbGetTopPlayer();
 
     // If the currentUser is logged into the room then the sppStartCountdown will start a 20 second countdown
     // after which it will select the top available player to be automatically put on the block.
@@ -912,7 +990,6 @@ var bid = function(){
   // If statements to send an alert if the bid value is greater than the current users max bid or if their team is full.
   if(otbBidValue <= maxBid && playerCount < rosterSize){
     socket.emit('bid', { draftID: draftID, bidValue: otbBidValue, currentUser: currentUser });
-    console.log('currentUser: ' + currentUser);
 } else if(playerCount >= rosterSize){
     // Code to show the jQuery UI Dialog.
     $(function(){
@@ -996,37 +1073,28 @@ socket.on('bidUpdate', function(data) {
 
 // Websockets addToBlock() function.
 var addToBlock = function(){
-  // Run the benchCheck function to set the addToBench variable to 0 or 1 depending on whether there is an avaialble spot on the field for the current otbPosition.
+
+  // We run the benchCheck() function to set the addToBench variable to 1 or 0.
   benchCheck(otbPos);
 
-  // Check if there is space in the current coaches team for the current otbPosition.
-  // If not then we issue a message and get the coach to pick again, if there is then we run the normal addToBlock() code.
-  if (benchCount >= totalBenSpots && addToBench > 0){
+  if(currentOtbCoach === currentUser && benchCount >= totalBenSpots && addToBench > 0){
+    $(function(){
+          $("#dialogRoster").dialog({
+              position: top
+            })
+        });
+  } else if(currentOtbCoach === currentUser && startValue.value > maxBid){
      $(function(){
-      $("#dialogRoster").dialog({
-          position: top
-        })
-    });
+            $("#dialogOTB").dialog({
+                position: top
+              })
+          });
+          startValue.value = 1;
   } else {
-    // Clears the current sppCountdownTimer for the current user.
+     // Clears the current sppCountdownTimer for the current user.
     clearInterval(sppCounter);
-
-    // Checks if the starting bid price is greater than the maxBid for the current OTB coach.
-    // If so, shows a dialog and sets the startValue.value back to 1.
-    if(startValue.value > maxBid){
-      $(function(){
-        $("#dialogOTB").dialog({
-            position: top
-          })
-      });
-      startValue.value = 1;
-    } else {
-        console.log(otbPlayerID)
-        console.log(otbAverage)
-        socket.emit('addToBlock', { draftID: draftID, player: otbPlayerID, position: otbPos, average: otbAverage, currentUser: currentOtbCoach, startingBid: startValue.value});
-    } // Close else{} statement.
-
-  }; // Close if(benchCount) else statement.
+    socket.emit('addToBlock', { draftID: draftID, player: otbPlayerID, position: otbPos, average: otbAverage, currentUser: currentOtbCoach, startingBid: startValue.value});
+  }; // Close else statement.
 
 }; // Close addToBlock() function.
 
@@ -1053,14 +1121,10 @@ socket.on('otbUpdate', function(data) {
   otbTeamPos.innerHTML = data.updatedOtbData.otbPos + " - " + data.updatedOtbData.otbAverage;
   otbPic.src = "./images/" + data.updatedOtbData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";
 
-  // Perform benchCheck() to see if the current coach has roster spots for the current otb position.
-  benchCheck(data.updatedOtbData.otbPos);
-  console.log("OTB Pos: " + data.updatedOtbData.otbPos);
-  console.log("Bench Count: " + benchCount);
-  console.log("Add To Bench: " + addToBench);
-
+  // We run the benchCheck() function with the current otb positon to set the addToBench variable.
   // If the coach has no roster spots available and their bench is full, we disable the bid button.
   // Else perform the normal bid button function.
+  benchCheck(data.updatedOtbData.otbPos);
   if (benchCount >= totalBenSpots && addToBench > 0){
     placeBidButton.innerHTML = "No " + data.updatedOtbData.otbPos + " Spots";
     placeBidButton.disabled = true;
