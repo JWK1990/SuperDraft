@@ -12,6 +12,9 @@ var ResultsSchema = new mongoose.Schema({
 	},
 	team: {
 		type: String
+	},
+	average: {
+		type: String
 	}
 });
 
@@ -25,6 +28,9 @@ var PlayersSchema = new mongoose.Schema({
 		type: String
 	},
 	price: {
+		type: Number
+	},
+	average: {
 		type: Number
 	}
 });
@@ -51,6 +57,9 @@ var CoachSchema = new mongoose.Schema({
 		type: Number
 	},
 	rosterSpots: {
+		type: Array
+	},
+	positionCount: {
 		type: Array
 	}
 });

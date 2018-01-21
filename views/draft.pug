@@ -28,35 +28,62 @@ html(lang='en')
 			div#dialogRoster(title="Bid Error")
 				p You have no available roster spots for that player!
 
-		.container
+		.leftColumn
 
-			.otbPane
-				.otbTextHolder
-					h2#otbName.otbText
-					h4#otbTeamPos.otbText
-				.otbImgHolder
+			.otbTextHolder
+				h2#otbName.otbText
+				h4#otbTeamPos.otbText
+			.otbImgHolder
+				.otbImgHolderLeft
 					img#otbPic
-				.otbCurrentBidHolder
+				.otbImgHolderRight
 					h1#currentBid
-				div.otbBiddingHolder
-					button#placeBid(onclick="bid()")
+			.otbBiddingHolder
+				button#placeBid(onclick="bid()")
 
-				.clockPane
-					#clock
-						div#demo
+			.clockPane
+				#clock
+					div#demo
 
 
+			.budgetsPane
+				h3#currentUser #{currentUser}
+				h5#draftID #{drafts[0]._id}
+				table#budgetsTable
+					tr.header
+						th.budgetName Team
+						th Max
+						th $
+						th Roster
+						each coach in coaches
+								tr
+									td.budgetName= coach.teamName2
+									td= "$" + (coach.budget - (drafts[0].rosterSize -1 - coach.numOfPlayers))
+									td= "$" + coach.budget
+									td= coach.numOfPlayers + "/" + drafts[0].rosterSize
+
+
+
+		.middleColumn
 			.selectedPlayerPane
-				#topSPP
-					img#selectedPic(src="./images/TBA.png", alt='On The Block', title='On The Block')
-					h1#selectedName -
-					h3#selectedPosition -
-					button#addToQueue(disabled=true, onclick='addToBlock()') ADD TO BLOCK
-					input#startValue(type='number', name='startValue', value=1, min=1)
-					.sppTimer
-						h1#sppClock
+				.sppTop
+					.sppTopLeft
+						img#selectedPic(src="./images/TBA.png", alt='On The Block', title='On The Block')
+					.sppTopRight
+						.sppTopRightTop
+							h1#selectedName -
+						.sppTopRightMid
+							h3#selectedPosition -
+						.sppTopRightBottom
+							.sppTopRightBottomLeft
+								button#addToQueue(disabled=true, onclick='addToBlock()') ADD TO BLOCK
+							.sppTopRightBottomRight
+								input#startValue(type='number', name='startValue', value=1, min=1)
 
-					table
+
+				.sppBottom
+
+					table#sppTable
 						tr
 							th Rank
 							th Ave
@@ -78,70 +105,32 @@ html(lang='en')
 							td#price15 -
 							td#price14 -
 
-			.myTeamPane
-				h3 Drafted Players
-				select#myTeamFilter(onchange="updateMyTeam()")
-					option(value="All") All Teams
-					each coach in coaches
-						option(value='-') coach.teamName2
 
-				select#myTeamPosFilter(onchange="updateMyTeam()")
-					option(value="All") All Pos
-					option(value="DEF") DEF
-					option(value="MID") MID
-					option(value="FWD") FWD
-					option(value="RUC") RUC
-
-				table#myTeamTable
-					thead
-						tr
-							th#myTeamOrderSort #
-							th#myTeamPlayerSort Player
-							th Pos
-							th Team
-							th $
-						tbody
-							each result, i in results
-									tr
-										td= results.length - i
-										td= result.name
-										td= result.position
-										td= result.team
-										td= "$" + result.price
-
-
-			.budgetsPane
-				h3#currentUser #{currentUser}
-				h5#draftID #{drafts[0]._id}
-				table#budgetsTable
-					tr
-						th.budgetName Team
-						th Max
-						th $
-						th Roster
-						each coach in coaches
-								tr
-									td.budgetName= coach.teamName2
-									td= "$" + (coach.budget - (drafts[0].rosterSize -1 - coach.numOfPlayers))
-									td= "$" + coach.budget
-									td= coach.numOfPlayers + "/" + drafts[0].rosterSize
-
-			.playerSearchPane
-				#filter
+			.playerFilterPane
+				.pfpLeft
 					select#positionSearch(onchange='updateSearch()')
-						option(value='All') All
+						option(value='All') All Pos
 						option(value='DEF') DEF
 						option(value='MID') MID
 						option(value='RUC') RUC
 						option(value='FWD') FWD
+				.pfpInnerLeft
 					input#playerSearch(type='text', onkeyup='updateSearch()', placeholder='Search for players...')
-					label
+
+				.pfpInnerRight
+					.pfpInnerRightLeft
 						input#watchlistSearch(type='checkbox', onchange='updateSearch()')
-						|  Watchlist
+					.pfpInnerRightRight
+						h3 Watchlist
+
+				.pfpRight
+					.pfpRightLeft
 						input#hideDrafted(type='checkbox', onchange='updateSearch()')
-						|  Hide Drafted
+					.pfpRightRight
+						h3 Hide Drafted
 
 
+			.playerSearchPane
 				table#searchTable.display(cellspacing='0', width='100%')
 					thead
 						tr
@@ -164,10 +153,84 @@ html(lang='en')
 									td= result.draftPrice16
 									td
 										input#watchlistCheckbox(type='checkbox')
+
+		.rightColumn
+
+			.myRosterPane
+				select#myRosterFilter(onchange="filterRosterPane()")
+
+				table#myRosterTable
+					thead
+						tr
+							th Pos
+							th Player
+							th Ave
+							th $
+
+						tbody
+							- for(var i=0; i < drafts[0].numOfDef; i++){
+								tr
+									td="DEF"
+									td=""
+									td=""
+									td=""
+							- }
+
+							- for(var i=0; i < drafts[0].numOfMid; i++){
+								tr
+									td="MID"
+									td=""
+									td=""
+									td=""
+							- }
+
+							- for(var i=0; i < drafts[0].numOfRuc; i++){
+								tr
+									td="RUC"
+									td=""
+									td=""
+									td=""
+							- }
+
+							- for(var i=0; i < drafts[0].numOfFwd; i++){
+								tr
+									td="FWD"
+									td=""
+									td=""
+									td=""
+							- }
+
+							- for(var i=0; i < drafts[0].numOfBen; i++){
+								tr
+									td="BEN"
+									td=""
+									td=""
+									td=""
+							- }
+
+
+
+
+			.myTeamPane
+
+				table#myTeamTable
+					thead
+						tr
+							th#myTeamOrderSort #
+							th#myTeamPlayerSort Player
+							th Pos
+							th Team
+							th $
+						tbody
+							each result, i in results
+									tr
+										td= results.length - i
+										td= result.name
+										td= result.position
+										td= result.team
+										td= "$" + result.price
+
 			
-			
-			.bottomPane
-				button#next Next
 
 
 		script(src='/js/playerData.js')

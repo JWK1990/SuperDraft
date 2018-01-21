@@ -57,7 +57,6 @@ table.tableSection {
     table.tableSection tr {
         width: 100%;
         display: table;
-        text-align: left;
       }
     table.tableSection thead {
      padding-right:18px;   /* 18px is approx. value of width of scroll bar */
@@ -66,34 +65,281 @@ table.tableSection {
 
 
 
-
+input, select, textarea{
+    border: 0px solid #ccc;
+    
+    -ms-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box; 
+}
 
 
 /* Class styling */
 
-.container{
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
 
-.otbPane{
+/* Define the 3 columns. */
+.leftColumn{
+  float: left;
   width: 20%;
-  height: 22%;
+  height: 100%;
   float: left;
   border-collapse: collapse;
   background-color: #4d4d4d;
 }
 
-.otbTextHolder{
-  width: 100%;
-  height: 25%;
-  overflow: hidden;
-  vertical-align: top;
-  margin: 3px;
+    /* Left Column Stylings.*/
+    .otbTextHolder{
+      width: 100%;
+      height: 6%;
+      overflow: hidden;
+      float: left;
+    }
+
+    .otbImgHolder{
+      width: 100%;
+      height: 10%;
+      float: left;
+      overflow: hidden;
+      border-collapse: collapse;
+      text-align: center;
+    }
+
+        .otbImgHolderLeft{
+          float:left;
+          width: 50%;
+          height: 100%;
+          border-collapse: collapse;
+        }
+
+        .otbImgHolderRight{
+          float:left;
+          width: 50%;
+          height: 100%;
+          border-collapse: collapse;
+        }
+
+    .otbBiddingHolder{
+      width:100%;
+      height:7%;
+      float: left;
+      text-align: center;
+      border-collapse: collapse;
+    }
+
+    .clockPane{
+      width: 100%;
+      height: 5%;
+      float: left;
+      border-collapse: collapse;
+    }
+
+    .budgetsPane{
+      width: 100%;
+      height: 72%;
+      float: left;
+      color: white;
+      border-collapse: collapse;
+      overflow: hidden;
+      text-align: center;
+    }
+
+
+
+
+
+
+.middleColumn{
+  float: left;
+  width: 55%;
+  height: 100%;
+  float: left;
+  border-collapse: collapse;
+  background-color: #4d4d4d;
 }
+
+
+    .selectedPlayerPane{
+      width: 100%;
+      height: 20%;
+      float: left;
+      border-collapse: collapse;
+      /* Relevant for the background image*/
+      background: url('../images/bg.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      /*background-position takes 2 percentages, 1 for the % moved on the x axis and 1 for the % moved on the y axis.*/
+      background-position: 50% 65%;
+    }
+
+        .sppTop{
+          height: 65%;
+          width: 100%;
+          float: left;
+        }
+
+            .sppTopLeft{
+              height: 100%;
+              width: 14%;
+              float: left;
+            }
+
+            .sppTopRight{
+              height: 100%;
+              width: 86%;
+              float: left;
+              text-align: left;
+              color: white;
+            }
+
+                .sppTopRightTop{
+                  width: 100%;
+                  height: 40%;
+                  float: left;
+                }
+
+                .sppTopRightMiddle{
+                  width: 100%;
+                  height: 20%;
+                  float: left;
+                }
+
+                .sppTopRightBottom{
+                  width: 100%;
+                  height: 40%;
+                  float: left;
+                }
+
+                    .sppTopRightBottomLeft{
+                      width: 43%;
+                      height: 100%;
+                      float: left;
+                    }
+
+
+                    .sppTopRightBottomRight{
+                      width: 57%;
+                      height: 100%;
+                      float: left;
+                    }
+
+
+        .sppBottom{
+          height: 35%;
+          width: 100%;
+          float: left;
+          text-align: center;
+        }
+
+
+
+    .playerFilterPane{
+      width: 100%;
+      height: 4%;
+      border-collapse: collapse;
+      display: inline-block;
+      /* Sets the watchlist and hide drafted checkboxes to be aligned to the middle of their panes.*/
+      text-align: left;
+    }
+
+
+        .pfpLeft{
+          height: 100%;
+          width: 15%;
+          display: inline-block;
+        }
+
+
+        .pfpInnerLeft{
+          height: 100%;
+          width: 35%;
+          display: inline-block;
+        }
+
+        .pfpInnerRight{
+          height: 100%;
+          width: 25%;
+          display: inline-block;
+        }
+
+            .pfpInnerRightLeft{
+              height: 100%;
+              width: 35%;
+              display: inline-block;
+              /* Sets the checkboxes to appear in the middle of their div.*/
+              text-align: right;
+            }
+
+            .pfpInnerRightRight{
+              height: 100%;
+              width: 65%;
+              display: inline-block;
+            }
+
+
+        .pfpRight{
+          height: 100%;
+          width: 25%;
+          display: inline-block;
+
+        }
+
+            .pfpRightLeft{
+              height: 100%;
+              width: 25%;
+              display: inline-block;
+              /* Sets the checkboxes to appear in the right of their div.*/
+              text-align: right;
+
+            }
+
+            .pfpRightRight{
+              height: 100%;
+              width: 75%;
+              display: inline-block;
+            }
+
+
+
+    .playerSearchPane{
+      width: 100%;
+      height: 76%;
+      border-collapse: collapse;
+      display: inline-block;
+      overflow: hidden;
+      font-size: 1.5vmin;
+      text-align: center;
+    }
+
+
+
+
+
+.rightColumn{
+  float: left;
+  width: 25%;
+  height: 100%;
+  float: left;
+  border-collapse: collapse;
+  background-color: #4d4d4d;
+}
+
+      .myRosterPane{
+        width: 100%;
+        height: 82%;
+        display: inline-block;
+        text-align: middle;
+      }
+
+      .myTeamPane{
+        width: 100%;
+        height: 18%;
+        background-color: #4d4d4d;
+        display: inline-block;
+        text-align: center;
+        overflow: hidden;
+      }
+
 
 .otbText{
     text-indent: 5px;
@@ -103,44 +349,20 @@ table.tableSection {
 }
 
 
-/* Sets the max width and height of the container and cuts off any overflow outside this container-*/
-.otbImgHolder{
-  width: 50%;
-  height: 50%;
-  overflow: hidden;
-  float: left;
-}
-
-.otbCurrentBidHolder{
-  width: 50%;
-  height: 50%;
-  overflow: hidden;
-  float: left;
-}
-
 /* Says that the max width and height of the image can be 100% of the width and height of the container. 
 The margin top increases the gap between the top of the container and the top of the image. 
 As any overflow of the container is cut off, this crops out the bottom of the image outside of the container*/
 .otbImgHolder img{
   max-width: 100%;
   max-height: 100%;
-  transform: translateX(-8%);
-  margin-left:1.25vmin;
   float: left;
 }
 
-.otbCurrentBidHolder h1{
+.otbImgHolderRight h1{
   color: yellow;
   font-size: 6vmin;
-  text-align: middle;
-  margin-top: 3vmin;
 }
 
-.otbBiddingHolder{
-  width:100%;
-  height:25%;
-  float: left;
-}
 
 .otbBiddingHolder button{
   border: solid 1px blue;
@@ -152,76 +374,42 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   color: white;
   cursor: pointer;
   cursor: hand;
-  margin-top: 0.5vmin;
 }
 
-.selectedPlayerPane{
-  width: 54%;
-  height: 20%;
-  float: left;
-  border-collapse: collapse;
-  padding-left: 0.5%;
-  padding-right: 0.5%;
-}
 
-.selectedPlayerPane #topSPP{
-  background: url('../images/bg.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  /*background-position takes 2 percentages, 1 for the % moved on the x axis and 1 for the % moved on the y axis.*/
-  background-position: 50% 65%;
-  width: 100%;
-  height: 100%;
-}
-
-.selectedPlayerPane #topSPP img{
-  max-height: 65%;
+.selectedPlayerPane img{
+  max-height: 100%;
   max-width: 100%;
-  float: left;
-  margin-left: 2vmin;
 }
 
-.selectedPlayerPane #topSPP #selectedName{
-  color: white;
-  text-align: left;
-}
 
-.selectedPlayerPane #topSPP #selectedPosition{
-  margin-top: -1vmin;
-  color: white;
-  text-align: left;
-}
-
-.selectedPlayerPane #topSPP #addToQueue{
-  float: left;
-  height: 24%;
-  width: 30%;
+.selectedPlayerPane #addToQueue{
+  height: 100%;
+  width: 100%;
   background-color: #DCDCDC;
   font-size: 1vmin;
 }
 
-.selectedPlayerPane #topSPP #startValue{
-  float: left;
-  height: 19%;
-  width: 8%;
+.selectedPlayerPane #startValue{
+  height: 100%;
+  width: 15%;
   font-size: 2vmin;
-  text-align: center;
 }
 
-.selectedPlayerPane #topSPP table{
+.selectedPlayerPane table{
   width: 100%;
-  height: 35%;
+  height: 100%;
   font-size:2vmin;
   border-collapse: collapse;
   color: white;
   background-color: rgba(77,77,77,.6);
 }
 
-.selectedPlayerPane #topSPP table th{
+.selectedPlayerPane table th{
   border: solid grey 1.5px;
 }
 
-.selectedPlayerPane #topSPP table td{
+.selectedPlayerPane table td{
   border: solid grey 1px;
 }
 
@@ -232,42 +420,19 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 }
 
 
-.clockPane{
-  width: 20%;
-  height: 5%;
-  position: absolute;
-  top: 22%;
-  left: 0;
-  border-collapse: collapse;
-}
 
 .clockPane #clock{
   width:100%;
   height: 100%;
-  background-color: #4d4d4d;
-  float:left;
 }
 
 .clockPane #clock #demo{
   color: white;
-  padding:0.75vmin;
   font-size: 3vmin;
-  vertical-align: middle;
+  text-align: center;
   color: yellow;
 }
 
-
-.budgetsPane{
-  width: 20%;
-  height: 70.5%;
-  position: absolute;
-  left: 0;
-  top: 27.5%;
-  color: white;
-  background: #4d4d4d;
-  border-collapse: collapse;
-  overflow: hidden;
-}
 
 .budgetsPane #draftID{
   color:#4d4d4d;
@@ -275,18 +440,17 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 }
 
 .budgetsPane #currentUser{
-  color: #2CFC0E;
+  color: #4d4d4d;
   margin-top: 0.5vmin;
 }
 
 
 .budgetsPane table{
   width: 100%;
-  height: 93%;
+  height: 100%;
   font-size: 1.5vmin;
   text-align: middle;
   border-collapse: collapse;
-  margin-left: 0.3vmin;
 }
 
 .budgetsPane table .budgetName{
@@ -295,20 +459,14 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 
 .budgetsPane th{
   border-bottom: 1px white solid;
+  font-size: 1.5vmin;
+  height: 5%;
 }
 
-.playerSearchPane{
-  width: 54%;
-  height: 78%;
-  float: right;
-  background-color: #4d4d4d;
-  border-collapse: collapse;
-  overflow: hidden;
-  margin-left: 0.5%;
-  margin-right: 0.5%;
-  margin-top: 0.5%;
-  font-size: 1.5vmin;
+.budgetsPane tr{
+  border-bottom: 0.75px grey solid;
 }
+
 
 .playerSearchPane .name{
   font-weight: bold;
@@ -316,51 +474,68 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 }
 
 .playerSearchPane table th{
-  border-top: solid white 1px;
   color: white;
 }
 
-.playerSearchPane #filter{
-  margin-top: 1vmin;
-  margin-bottom: 1vmin;
-  float: left;
-  background-color: #4d4d4d;
+.playerFilterPane #positionSearch{
   width: 100%;
-  text-align: middle;
+  height: 100%;
+  background-color: #4d4d4d;
   color: white;
 }
 
-.playerSearchPane #filter #positionSearch{
-  width: 15%;
-  height: 100%;
-  margin-right: 5vmin;
-}
 
-.playerSearchPane #filter #playerSearch{
-  width: 30%;
-  height: 2vmin;
+.playerFilterPane #playerSearch{
   font-size: 1.5vmin;
-  margin-right: 5vmin;
-}
-
-.playerSearchPane #filter #hideDrafted{
-  margin-left: 5vmin;
-}
-
-.myTeamPane{
-  width: 25%;
-  height: 98%;
-  position: relative;
-  float: right;
+  width: 100%;
+  height: 100%;
   background-color: #4d4d4d;
-  border-collapse: collapse;
-  overflow: hidden;
+  color: white;
 }
 
-.myTeamPane h3{
-  color: #2CFC0E;
-  margin: 0.5vmin;
+
+.playerFilterPane h3{
+  font-weight: normal;
+  font-size: 1.6vmin;
+  color: white;
+  /* The below two lines, along with the 'display:inline-block' property of the pfp panes above, ensures that the heading appears vertically aligned in the middle.*/
+  display: inline-block;
+  vertical-align: middle;
 }
+
+
+.myRosterPane select{
+  width: 100%;
+  background-color: #4d4d4d;
+  color: white;
+}
+
+.myRosterPane option{
+  text-align: center;
+}
+
+.myRosterPane table{
+  width: 100%;
+  height: 100%;
+  font-size: 1.5vmin;
+  border-collapse: collapse;
+  background-color: #4d4d4d;
+  text-align: center;
+}
+
+.myRosterPane th{
+  background-color: #4d4d4d;
+  color: white;
+  border-bottom: white 1px solid;
+  border-top: white 1px solid;
+}
+
+.myRosterPane td{
+  color: white;
+  border-bottom: grey 1px solid;
+  background-color: #4d4d4d;
+}
+
 
 .myTeamPane table{
   font-size: 1.2vmin;
@@ -376,6 +551,8 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   background-color: #4d4d4d;
   color: white;
 }
+
+
 
 .bottomPane{
   width: 100%;
