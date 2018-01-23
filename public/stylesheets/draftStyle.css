@@ -545,6 +545,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 .myTeamPane th{
   background-color: #4d4d4d;
   color: white;
+  border-top: white 1px solid;
 }
 
 .myTeamPane td{

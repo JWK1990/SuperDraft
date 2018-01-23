@@ -63,6 +63,7 @@ $(document).ready(function() {
         // We need to update this if we're updating the height of the table.
         scrollY: '14vh',
         scrollCollapse: true,
+        order: [[ 0, "desc" ]],
         paging: false,
         searching: false,
         aaSorting: [],
@@ -71,6 +72,7 @@ $(document).ready(function() {
         oLanguage: {
           sZeroRecords: "-"
         }
+
     });
 
 });
@@ -161,18 +163,15 @@ var sppAge = document.getElementById("age");
 var sppPrice16 = document.getElementById("price16");
 var sppPrice15 = document.getElementById("price15");
 var sppPrice14 = document.getElementById("price14");
-var selectedPlayerData;
 var startValue = document.getElementById("startValue");
 var startingBid;
 var topPlayer;
 var otbTopPlayer;
 
 // On the block variables.
-var otbPlayer;
 var otbName = document.getElementById("otbName");
 var otbTeamPos = document.getElementById("otbTeamPos");
 var otbPic = document.getElementById("otbPic");
-var otbPlayer;
 var draftID = document.getElementById("draftID").innerHTML;
 var otbPlayerID;
 var otbPos;
@@ -201,7 +200,7 @@ var teamFilter = document.getElementById("myRosterFilter");
 var posFilter = document.getElementById("myTeamPosFilter");
 
 var myRosterTable = document.getElementById("myRosterTable");
-var myRosterTableRows = myRosterTable.getElementsByTagName("tr");
+var myRosterTableRows = myRosterTable.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
 
 var myTeamTable = document.getElementById("myTeamTable");
 var myTeamTableRows = myTeamTable.getElementsByTagName("tr");
@@ -245,24 +244,6 @@ function updateSearch() {
   }
 } // Close updateSearch().
 
-// Define updateSPPTable() to update the stats in the SPP Table.
-function updateSPPTable(name){
-
-  selectedPlayerData = playerData.filter(function(e){
-    return (e.name==name.innerHTML);
-  })[0];
-
-  sppRank.innerHTML = selectedPlayerData.rank;
-  sppAve.innerHTML = selectedPlayerData.ave16;
-  sppPoints.innerHTML = selectedPlayerData.points16;
-  sppStdDev.innerHTML = selectedPlayerData.sd16;
-  sppGames.innerHTML = selectedPlayerData.games16;
-  sppAge.innerHTML = selectedPlayerData.age;
-  sppPrice16.innerHTML = selectedPlayerData.draftPrice16;
-  sppPrice15.innerHTML = selectedPlayerData.draftPrice15;
-  sppPrice14.innerHTML = selectedPlayerData.draftPrice14;
-}; // Close updateSPPTable() function.
-
 
 // Define selectPlayer() function used to put a player from the search pane to the SPP.
 function selectPlayer(){
@@ -277,13 +258,28 @@ function selectPlayer(){
       selectedPlayerPosition.innerHTML = this.getElementsByTagName("td")[2].innerHTML;
       selectedPlayerImgString = "./images/" + this.getElementsByTagName("td")[1].innerHTML.toUpperCase().replace(/\s+/g,"") + ".png";
       selectedPlayerPic.src = selectedPlayerImgString;
+
+      // Update the otb player details held in the client.
       otbPlayerID = this.getElementsByTagName("td")[1].innerHTML;
       otbPos = this.getElementsByTagName("td")[2].innerHTML;
       otbAverage = this.getElementsByTagName("td")[3].innerHTML;
 
       // Update bottom section with table stats.
-      updateSPPTable(selectedPlayerName);
+      var selectedPlayerData = playerData.filter(function(e){
+        return (e.name==selectedPlayerName.innerHTML);
+      })[0];
 
+      sppRank.innerHTML = selectedPlayerData.rank;
+      sppAve.innerHTML = selectedPlayerData.ave16;
+      sppPoints.innerHTML = selectedPlayerData.points16;
+      sppStdDev.innerHTML = selectedPlayerData.sd16;
+      sppGames.innerHTML = selectedPlayerData.games16;
+      sppAge.innerHTML = selectedPlayerData.age;
+      sppPrice16.innerHTML = selectedPlayerData.draftPrice16;
+      sppPrice15.innerHTML = selectedPlayerData.draftPrice15;
+      sppPrice14.innerHTML = selectedPlayerData.draftPrice14;
+
+      // Update search details.
       updateSearch();
     });
   }
@@ -355,15 +351,8 @@ var startCountdown = function(endTime){
 }; // Close startCountdown() function.
 
 
-// Define updateOtb() used to update the otb details.
-function updateOtb(data){
-  otbPlayerID = data[1].innerHTML;
-  otbPos = data[2].innerHTML;
-  otbAverage = data[3].innerHTML;
-};
-
 // Define getTopPlayer() used to get the top available valid player for the current user from the Player Search pane.
-function getTopPlayer(data){
+function getTopPlayer(){
   for (var i = 1; i < searchTableRows.length; i++) {
       if(Boolean(searchTableRows[i].style.textDecoration === "")){
 
@@ -378,11 +367,11 @@ function getTopPlayer(data){
         }
       }
   }
-  console.log("Top Player: " + topPlayer[1].innerHTML);
+  console.log("TOP PLAYER(): " + topPlayer[1].innerHTML)
 };
 
 // Define getTopPlayer() used to get the top available valid player for the current user from the Player Search pane.
-function otbGetTopPlayer(data){
+function otbGetTopPlayer(){
   for (var i = 1; i < searchTableRows.length; i++) {
       if(Boolean(searchTableRows[i].style.textDecoration === "")){
 
@@ -397,7 +386,7 @@ function otbGetTopPlayer(data){
         }
       }
   }
-  console.log("OTB Top Player: " + otbTopPlayer[1].innerHTML);
+  console.log("OTB TOP PLAYER(): " + otbTopPlayer[1].innerHTML)
 };
 
 
@@ -408,32 +397,28 @@ function updateSPP(data){
   selectedPlayerImgString = "./images/" + data[1].innerHTML.toUpperCase().replace(/\s+/g,"") + ".png";
   selectedPlayerPic.src = selectedPlayerImgString;
   startValue.value = 1;
-  updateSPPTable(data[1]);
-};
+  
+  // Update the SPP Table details.
+  var selectedPlayerData = playerData.filter(function(e){
+    return (e.name==selectedPlayerName.innerHTML);
+  })[0];
 
+  sppRank.innerHTML = selectedPlayerData.rank;
+  sppAve.innerHTML = selectedPlayerData.ave16;
+  sppPoints.innerHTML = selectedPlayerData.points16;
+  sppStdDev.innerHTML = selectedPlayerData.sd16;
+  sppGames.innerHTML = selectedPlayerData.games16;
+  sppAge.innerHTML = selectedPlayerData.age;
+  sppPrice16.innerHTML = selectedPlayerData.draftPrice16;
+  sppPrice15.innerHTML = selectedPlayerData.draftPrice15;
+  sppPrice14.innerHTML = selectedPlayerData.draftPrice14;
 
-// Define autoSPP() function used to update the SPP and OTB with the top ranked available player.
-// This is used when the sppStartCountdown() function reaches 0 or when a drafted player is in the SPP for the OTB Coach.
-function autoSPP(){
-  // Update SPP data only for the currentOtbCoach if they are logged in.
-  if(currentUser === currentOtbCoach){
-    updateSPP(topPlayer);
-    updateOtb(topPlayer);
-  } else {
-    updateOtb(otbTopPlayer);
-  }
-}; // Close autoSPP function.
+  // Update the otb player details held in the client.
+  otbPlayerID = data[1].innerHTML;
+  otbPos = data[2].innerHTML;
+  otbAverage = data[3].innerHTML;
 
-
-// Define loadAutoSPP() function used to update the SPP with the top available player for all coaches upon the page being loaded.
-// This is different to the autoSPP as it doesn't automatically put the player on the block and it does it for all coaches.
-function loadAutoSPP(){
-  updateSPP(topPlayer);
-  if(currentUser === currentOtbCoach){
-    updateOtb(topPlayer);
-  }
-};
-
+}; // Close updateSPP() function.
 
 
 // Define sppStartCountdown function to start the countdown clock to put a player On The Block.
@@ -469,7 +454,7 @@ var sppStartCountdown = function(sppEndTime){
       if (sppDistance <= 0) {
           clearInterval(sppCounter);
           if(otbName.innerHTML === "-"){
-          // Run autoSPP() to update the SPP for the current OTB Coach.
+          // Run updateSPP to update the SPP for the current OTB Coach.
           // THIS CODE SHOULD POTENTIALLY BE UPDATED.
           // THE FACT THAT AUTOSPP() AND ADDTOBLOCK() ARE IN THE IF STATEMENTS MEANS THAT THEY ONLY EXECUTE IF THE CURRENT USER IS LOGGED IN.
           // THE USER CAN LOG IN AND ADD A PLAYER TO THE BLOCK, BUT IT MEANS THAT THE DRAFT IS FROZEN IF THE OTB USER IS LOGGED OUT.
@@ -478,8 +463,10 @@ var sppStartCountdown = function(sppEndTime){
           it so that only the coach that is on the block sees the SPP countdown timer. I will probably move this countdown into the existing otb clock
           pane as well. */
 
-            autoSPP();
-            addToBlock();
+          if(currentUser === currentOtbCoach){
+            updateSPP(otbTopPlayer);
+            addToBlock(otbPlayerID, otbPos, otbAverage);
+          }
 
        }
       }
@@ -546,9 +533,9 @@ function highlightOtb(data){
 
 // Define highlightSearch() function to grey out players once they have been drafted.
 function highlightSearch(data){
-var pluck = _.pluck(data, "name");
+  var pluck = _.pluck(data, "name");
 
-for (var i = 1; i < searchTableRows.length; i++) {
+  for (var i = 1; i < searchTableRows.length; i++) {
     var td = searchTableRows[i].getElementsByTagName("td")[1];
 
 
@@ -591,34 +578,30 @@ function updateBudgets(data){
 
 
 // Define the checkSPP() function which checks the currently SPP players name against the results in the DB to see if they are already drafted.
-// If they have already been drafted we then run the autoSPP() function to update the SPP with the top available player.
+// If they have already been drafted we then update the SPP with the top available player.
 function checkSPP(data){
-  if(currentUser === currentOtbCoach){
-    var resultsName;
-
-    resultsName = data.results.filter(function(e){
-                        return (e.name==selectedPlayerName.innerHTML);
-                      })[0].name;
-
-    if(selectedPlayerName.innerHTML == resultsName){
-      autoSPP();
-    }
+  var latestResult = data[data.length-1].name;
+  console.log("Latest Result: " + latestResult);
+  console.log("SPN: " + selectedPlayerName.innerHTML);
+  if(selectedPlayerName.innerHTML === latestResult){
+    console.log("Match!" + topPlayer[1].innerHTML)
+    updateSPP(topPlayer)
   }
-}; // Close checkSPP() function.
+} // Close checkSPP() function.
 
 
-  function setMaxBid(data){
-    var budgetData = data.coaches.filter(function(e){
-                        return (e.teamName2==currentUser);
-                      })[0].budget;
+function setMaxBid(data){
+  var budgetData = data.coaches.filter(function(e){
+                      return (e.teamName2==currentUser);
+                    })[0].budget;
 
-    playerCount = data.coaches.filter(function(e){
-      return (e.teamName2==currentUser);
-    })[0].numOfPlayers;
+  playerCount = data.coaches.filter(function(e){
+    return (e.teamName2==currentUser);
+  })[0].numOfPlayers;
 
-    maxBid = budgetData - (rosterSize -1 - playerCount);
+  maxBid = budgetData - (rosterSize -1 - playerCount);
 
-  }; // Close setMaxBid() function.
+}; // Close setMaxBid() function.
 
 /*
 // Define myTeam() function used to filter the My Team Pane.
@@ -671,8 +654,6 @@ function setRosterArray(data){
   rosterSpotsArray = data.coaches.filter(function(e){
                     return (e.teamName2==currentUser);
                   })[0].rosterSpots;
-
-  console.log(currentUser + " Roster Spots Array: " + rosterSpotsArray);
 }; // Close setRosterArray() function.
 
 
@@ -703,7 +684,6 @@ function benchCheck(position){
     addToBench = 1;
   };
 
-      console.log("Add To Bench: " + addToBench);
 }; // Close benchCheck() function.
 
 
@@ -715,8 +695,6 @@ function otbSetBenchCount(data){
                     return (e.teamName2==currentOtbCoach);
                   })[0].benchCount;
 
-  console.log("OTB Bench Count: " + otbBenchCount);
-
 }; // Close setBenchCount() function.
 
 
@@ -725,8 +703,6 @@ function otbSetRosterArray(data){
   otbRosterSpotsArray = data.coaches.filter(function(e){
                     return (e.teamName2==currentOtbCoach);
                   })[0].rosterSpots;
-
-  console.log(currentOtbCoach + " OTB Roster Spots Array: " + otbRosterSpotsArray);
 
 }; // Close setRosterArray() function.
 
@@ -757,124 +733,13 @@ function otbBenchCheck(position){
     otbAddToBench = 1;
   };
 
-  console.log("OTB Add To Bench: " + otbAddToBench);
-
 }; // Close benchCheck() function.
-
-
-/*
-
-// Define the filterRosterPane() function used to filter the roster pane with the currently selected coaches team.
-function filterRosterPane(data, selectedCoach){
-  // Get a list of the currently selected coaches players and individual lists of their Def, Fwd, Ruc, Mid and Bench players (excluding DPPs).
-  // We don't count the DPPs as we assign them to a position with the assignDpp() function below.
-  var selectedCoachesPlayers = data.coaches.filter(function(e){
-                                return (e.teamName2==selectedCoach);
-                              })[0].players;
-
-  var selectedCoachesDef = selectedCoachesPlayers.filter(function(e){
-                              return(e.position=="DEF");
-                            });
-
-  var selectedCoachesFwd = selectedCoachesPlayers.filter(function(e){
-                              return(e.position=="FWD");
-                            });
-
-  var selectedCoachesRuc = selectedCoachesPlayers.filter(function(e){
-                              return(e.position=="RUC");
-                            });
-
-  var selectedCoachesMid = selectedCoachesPlayers.filter(function(e){
-                              return(e.position=="MID");
-                            });
-
-  var selectedCoachesBen = selectedCoachesPlayers.filter(function(e){
-                              return(e.position=="BEN");
-                            });
-
-  var defCount = selectedCoachesDef.length;
-  var fwdCount = selectedCoachesFwd.length;
-  var rucCount = selectedCoachesRuc.length;
-  var midCount = selectedCoachesMid.length;
-  var benCount = selectedCoachesBen.length;
-
-
-  // Define the assignDpp() function used to determine which position DPP players should be assigned to in a specific coaches team.
-  function assignDpp(position, firstCount, firstData, firstArray, secondCount, secondData, secondArray){
-      if(selectedCoachesPlayers[i].position == position){
-        if(firstCount < firstData){
-          firstArray.push(selectedCoachesPlayers[i])
-          console.log("FIRST COUNT: " + firstCount);
-        } else if(secondCount < secondData){
-            secondArray.push(selectedCoachesPlayers[i])
-            console.log("SECOND COUNT: " + secondCount);
-          } else {
-            selectedCoachesBen.push(selectedCoachesPlayers[i])
-            console.log("BENCH COUNT: " + benCount)
-          }
-      } //Close if(selectedCoachesPlayers).
-  }; // Close assignDpp() function.
-
-
-  // Loop through the selected coaches players and run the assignDpp() function to assign all DPPs to a specific position.
-  for(var i=0; i<selectedCoachesPlayers.length; i++){
-
-    defCount = selectedCoachesDef.length;
-    fwdCount = selectedCoachesFwd.length;
-    rucCount = selectedCoachesRuc.length;
-    midCount = selectedCoachesMid.length;
-    benCount = selectedCoachesBen.length;
-
-    assignDpp("DEF-FWD", defCount, data.numOfDef, selectedCoachesDef, fwdCount, data.numOfFwd, selectedCoachesFwd);
-    assignDpp("DEF-RUC", defCount, data.numOfDef, selectedCoachesDef, rucCount, data.numOfRuc, selectedCoachesRuc);
-    assignDpp("DEF-MID", defCount, data.numOfDef, selectedCoachesDef, midCount, data.numOfMid, selectedCoachesMid);
-    assignDpp("FWD-RUC", fwdCount, data.numOfFwd, selectedCoachesFwd, rucCount, data.numOfRuc, selectedCoachesRuc);
-    assignDpp("FWD-MID", fwdCount, data.numOfFwd, selectedCoachesFwd, midCount, data.numOfMid, selectedCoachesMid);
-    assignDpp("RUC-MID", rucCount, data.numOfRuc, selectedCoachesRuc, midCount, data.numOfMid, selectedCoachesMid);
-  } //Close for().
-
-
-  console.log("AFTER FWD COUNT: " + fwdCount);
-  console.log(selectedCoachesFwd);
-  console.log(selectedCoachesFwd.length);
-
-  console.log("SELECTED COACHES DEF: ");
-  console.log(selectedCoachesDef);
-
-  console.log("SELECTED COACHES PLAYERS: ");
-  console.log(selectedCoachesPlayers);
-
-
-
-  // Define the updateMyRosterTable() function used to update the data in the rosterTable.
-  function updateMyRosterTable(position, array, indexAdd){
-    for(var i=0; i < array.length; i++){
-          myRosterTableRows[i+1+indexAdd].getElementsByTagName("td")[0].innerHTML = position;
-          myRosterTableRows[i+1+indexAdd].getElementsByTagName("td")[1].innerHTML = array[i].name;
-          myRosterTableRows[i+1+indexAdd].getElementsByTagName("td")[2].innerHTML = array[i].price;
-          myRosterTableRows[i+1+indexAdd].getElementsByTagName("td")[3].innerHTML = array[i].position;
-          myRosterTableRows[i+1+indexAdd].getElementsByTagName("td")[4].innerHTML = selectedCoach;
-    } // Close for() loop.
-  }; // Close updateMyRosterTable() function.
-
-  updateMyRosterTable("DEF", selectedCoachesDef, 0);
-  updateMyRosterTable("MID", selectedCoachesMid, data.numOfDef);
-  updateMyRosterTable("RUC", selectedCoachesRuc, data.numOfDef + data.numOfMid);
-  updateMyRosterTable("FWD", selectedCoachesFwd, data.numOfDef + data.numOfMid + data.numOfRuc);
-  updateMyRosterTable("BEN", selectedCoachesBen, data.numOfDef + data.numOfMid + data.numOfRuc + data.numOfFwd);
-
-}; // Close filterRosterPane() function.
-
-Commented out original filterRosterPane() function. */
-
 
 
 
 // Define the filterRosterPane() function used to filter the roster pane with the currently selected coaches team.
 function filterRosterPane(){
   var selectedCoach = teamFilter.value;
-
-  console.log(selectedCoach);
 
   // Get a list of the currently selected coaches players and assign it to the selectedCoachesPlayers variable.
   var selectedCoachesPlayers = draftedPlayersList.filter(function(e){
@@ -959,39 +824,30 @@ function filterRosterPane(){
 
   } // Close for() loop.
 
-
-  console.log("SELECTED COACHES DEF: ");
-  console.log(selectedCoachesDef);
-
-  console.log("SELECTED COACHES PLAYERS: ");
-  console.log(selectedCoachesPlayers);
-
-
-
   // Define the updateMyRosterTable() function used to update the data in the rosterTable.
-  function updateMyRosterTable(position, array, indexAdd){
+  function updateMyRosterTable(array, indexAdd){
 
     for(var i=0; i < array.length; i++){
-          myRosterTableRows[i+1+indexAdd].getElementsByTagName("td")[1].innerHTML = array[i].name;
-          myRosterTableRows[i+1+indexAdd].getElementsByTagName("td")[2].innerHTML = array[i].average;
-          myRosterTableRows[i+1+indexAdd].getElementsByTagName("td")[3].innerHTML = "$" + array[i].price;
+          myRosterTableRows[i+indexAdd].getElementsByTagName("td")[1].innerHTML = array[i].name;
+          myRosterTableRows[i+indexAdd].getElementsByTagName("td")[2].innerHTML = array[i].average;
+          myRosterTableRows[i+indexAdd].getElementsByTagName("td")[3].innerHTML = "$" + array[i].price;
     } // Close for() loop.
   }; // Close updateMyRosterTable() function.
 
 
   // Loop through the myRosterTable and clear out the current innerHTML from each table row.
   for(var i=0; i < myRosterTableRows.length -1; i++){
-      myRosterTableRows[i+1].getElementsByTagName("td")[1].innerHTML = "";
-      myRosterTableRows[i+1].getElementsByTagName("td")[2].innerHTML = "";
-      myRosterTableRows[i+1].getElementsByTagName("td")[3].innerHTML = "";
+      myRosterTableRows[i].getElementsByTagName("td")[1].innerHTML = "";
+      myRosterTableRows[i].getElementsByTagName("td")[2].innerHTML = "";
+      myRosterTableRows[i].getElementsByTagName("td")[3].innerHTML = "";
   }
 
   // Run the updateMyRosterTable() function to update the data in the rosterTable.
-  updateMyRosterTable("DEF", selectedCoachesDef, 0);
-  updateMyRosterTable("MID", selectedCoachesMid, totalDefSpots);
-  updateMyRosterTable("RUC", selectedCoachesRuc, totalDefSpots + totalMidSpots);
-  updateMyRosterTable("FWD", selectedCoachesFwd, totalDefSpots + totalMidSpots + totalRucSpots);
-  updateMyRosterTable("BEN", selectedCoachesBen, totalDefSpots + totalMidSpots + totalRucSpots + totalFwdSpots);
+  updateMyRosterTable(selectedCoachesDef, 0);
+  updateMyRosterTable(selectedCoachesMid, totalDefSpots);
+  updateMyRosterTable(selectedCoachesRuc, totalDefSpots + totalMidSpots);
+  updateMyRosterTable(selectedCoachesFwd, totalDefSpots + totalMidSpots + totalRucSpots);
+  updateMyRosterTable(selectedCoachesBen, totalDefSpots + totalMidSpots + totalRucSpots + totalFwdSpots);
 
 }; // Close filterRosterPane() function.
 
@@ -1093,11 +949,13 @@ socket.on("pageLoaded", function(data){
 
   // Add the coaches array to the roster filter drop down list.
   // Set the default filter value to the current user.
-  // Update the draftedPlayers list with the updated results list from the DB.
-  // Run the filterRosterPane() function to update the roster pane with the selected coaches team.
   addRosterFilterOption(data.loadData.coaches);
   teamFilter.value = currentUser;
-  draftedPlayersList = data.loadData.results;
+  // Update the draftedPlayers list with the updated results list from the DB.
+  // We used ‘JSON.parse(JSON.stringify(data.loadData.results))’ to convert the data.loadData.resutls data into a string and then re-convert it into an object.
+  // We do this because if we just assigned data.loadData.results directly to the draftedPlayerList variable then we are passing the value by reference and anything we do to the draftedPlayersList also updates the data.loadData.results variable.
+  draftedPlayersList = JSON.parse(JSON.stringify(data.loadData.results));
+  // Run the filterRosterPane() function to update the roster pane with the selected coaches team.
   filterRosterPane();
 
   highlightSearch(data.loadData.results);
@@ -1121,9 +979,8 @@ socket.on("pageLoaded", function(data){
   otbGetTopPlayer();
 
 
-  // Run the loadAutoSPP() function to load the top available valid player for the current user.
-  loadAutoSPP();
-
+  // Run the updateSPP() function to load the top available valid player for the current user.
+  updateSPP(topPlayer);
 
 }); // Close socket.on() function.
 
@@ -1153,16 +1010,6 @@ socket.on('playerDrafted', function(data) {
     budgetsTableRows[i].style.color = "white";
   }
 
-  // Add a row to the myTeamDT data table containing the details of the most recently drafted player.
-  var index = data.dbData.results.length -1;
-  myTeamDT.row.add([data.dbData.results.length, data.dbData.results[index].name, data.dbData.results[index].position, data.dbData.results[index].team, "$" + data.dbData.results[index].price]).draw(false);
-
-  // Updated the draftedPlayersList with the updated results list from the DB.
-  // Run the filterRosterPane() function to update the myRoster pane with the selected coaches data.
-  draftedPlayersList = data.dbData.results;
-  filterRosterPane();
-
-
   // Call updateBudgets() to update the Budgets pane.
   updateBudgets(data.dbData.coaches);
 
@@ -1183,6 +1030,7 @@ socket.on('playerDrafted', function(data) {
     // Call highlightOtb() function to underline the on the block coach.
     highlightOtb(data.dbData.pickCounter);
 
+
     // Set the position validation variables.
     setBenchCount(data.dbData);
     otbSetBenchCount(data.dbData);
@@ -1191,18 +1039,36 @@ socket.on('playerDrafted', function(data) {
     getTopPlayer();
     otbGetTopPlayer();
 
+    // Check the SPP to see if it currently has a previously drafted player and update if required.
+    checkSPP(data.dbData.results);
+
+
+    // Add a row to the myTeamDT data table containing the details of the most recently drafted player.
+    var index = data.dbData.results.length -1;
+    myTeamDT.row.add([data.dbData.results.length, data.dbData.results[index].name, data.dbData.results[index].position, data.dbData.results[index].team, "$" + data.dbData.results[index].price]).draw(false);
+
+    // Update the draftedPlayersList with the updated results list from the DB.
+    // We used ‘JSON.parse(JSON.stringify(data.dbData.results))’ to convert the data.dbData.resutls data into a string and then re-convert it into an object.
+    // We do this because if we just assigned data.dbData.results directly to the draftedPlayerList variable then we are passing the value by reference and anything we do to the draftedPlayersList also updates the data.dbData.results variable.
+    // Run the filterRosterPane() function to update the myRoster pane with the selected coaches data.
+    draftedPlayersList = JSON.parse(JSON.stringify(data.dbData.results));
+    filterRosterPane();
+
+    console.log("RESULTS AFTER FILTER.");
+    console.log(data.dbData.results);
+
+
     // If the currentUser is logged into the room then the sppStartCountdown will start a 20 second countdown
     // after which it will select the top available player to be automatically put on the block.
     if(currentUser === currentOtbCoach){
       sppStartCountdown(data.dbData.otbEndTime);
     };
 
-    // The absentOtbOverride waits 25 seconds (allowing a buffer for the 20 second timer to elapse) and then automatically puts a player
-    // on the block in the event the otb coach isnt logged in.
+    // The absentOtbOverride waits 25 seconds (allowing a buffer for the 20 second timer to elapse).
+    // It then automatically gets the first connected socket id to add the top otb player onto the block on behalf of the absent coach.
     function absentOtbOverride(){
-      if(otbName.innerHTML === "-"){
-        autoSPP();
-        addToBlock();
+      if(otbName.innerHTML === "-" && currentUserSocketID === firstConnectedSocketID){
+        addToBlock(otbTopPlayer[1].innerHTML, otbTopPlayer[2].innerHTML, otbTopPlayer[3].innerHTML);
         console.log("ABSENT OTB OVERRIDE!");
       }
     };
@@ -1211,16 +1077,8 @@ socket.on('playerDrafted', function(data) {
     // We need to assign this to the absentOtbOverrideTimeout variable so that we can clear it later when the 'otbUpdate' function is run.
     absentOtbOverrideTimeout = setTimeout(absentOtbOverride, 25000);
 
-    checkSPP(data.dbData);
-
     // Set the maxBid variable to the current users Max Bid as per the Budgets pane.
     setMaxBid(data.dbData);
-
-    // Clicks the 'Player' and the '#' in the drafted players table header to sort the table and resize it after a player is drafted.
-    // This still needs some work. Clicking in this order is a bit of a workaround and I don't believe that it will work for all cases.
-    myTeamPlayerSort.click();
-    myTeamOrderSort.click();
-    myTeamOrderSort.click();
 
     // Updates the 'Sold for' text to say "Selection Pending...".
     demo.innerHTML = "On The Block: " + data.dbData.otbCoach;
@@ -1321,10 +1179,14 @@ socket.on('bidUpdate', function(data) {
 
 
 // Websockets addToBlock() function.
-var addToBlock = function(){
+function addToBlock(player, position, average){
+
+  console.log(player);
+  console.log(position);
+  console.log(average);
 
   // We run the benchCheck() function to set the addToBench variable to 1 or 0.
-  benchCheck(otbPos);
+  benchCheck(position);
 
   if(currentOtbCoach === currentUser && benchCount >= totalBenSpots && addToBench > 0){
     $(function(){
@@ -1342,7 +1204,7 @@ var addToBlock = function(){
   } else {
      // Clears the current sppCountdownTimer for the current user.
     clearInterval(sppCounter);
-    socket.emit('addToBlock', { draftID: draftID, player: otbPlayerID, position: otbPos, average: otbAverage, currentUser: currentOtbCoach, startingBid: startValue.value});
+    socket.emit('addToBlock', { draftID: draftID, player: player, position: position, average: average, currentUser: currentOtbCoach, startingBid: startValue.value});
   }; // Close else statement.
 
 }; // Close addToBlock() function.
@@ -1365,8 +1227,7 @@ socket.on('otbUpdate', function(data) {
   lockBid(data.updatedOtbData.otbBidder, currentUser);
 
   currentBid.innerHTML = "$" + data.updatedOtbData.otbBid;
-  otbPlayer = data.updatedOtbData.otbPlayer;
-  otbName.innerHTML = otbPlayer;
+  otbName.innerHTML = data.updatedOtbData.otbPlayer;
   otbTeamPos.innerHTML = data.updatedOtbData.otbPos + " - " + data.updatedOtbData.otbAverage;
   otbPic.src = "./images/" + data.updatedOtbData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";
 

@@ -76,7 +76,7 @@ html(lang='en')
 							h3#selectedPosition -
 						.sppTopRightBottom
 							.sppTopRightBottomLeft
-								button#addToQueue(disabled=true, onclick='addToBlock()') ADD TO BLOCK
+								button#addToQueue(disabled=true, onclick='addToBlock(otbPlayerID, otbPos, otbAverage)') ADD TO BLOCK
 							.sppTopRightBottomRight
 								input#startValue(type='number', name='startValue', value=1, min=1)
 
@@ -213,7 +213,7 @@ html(lang='en')
 
 			.myTeamPane
 
-				table#myTeamTable
+				table#myTeamTable.display(cellspacing='0', width='100%')
 					thead
 						tr
 							th#myTeamOrderSort #

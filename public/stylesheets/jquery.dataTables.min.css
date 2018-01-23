@@ -127,6 +127,8 @@ table.dataTable.display tbody tr:hover.selected {
     background-color: #aab7d1
 }
 
+/* Commeting out sorting styling.
+
 table.dataTable.order-column tbody tr>.sorting_1,
 table.dataTable.order-column tbody tr>.sorting_2,
 table.dataTable.order-column tbody tr>.sorting_3,
@@ -234,6 +236,8 @@ table.dataTable.display tbody tr:hover.selected>.sorting_3,
 table.dataTable.order-column.hover tbody tr:hover.selected>.sorting_3 {
     background-color: #a5b2cb
 }
+
+*/
 
 table.dataTable.no-footer {
     border-bottom: 1px solid white;
