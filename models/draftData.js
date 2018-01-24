@@ -32,6 +32,9 @@ var PlayersSchema = new mongoose.Schema({
 	},
 	average: {
 		type: Number
+	},
+	originalPosition: {
+		type: String
 	}
 });
 

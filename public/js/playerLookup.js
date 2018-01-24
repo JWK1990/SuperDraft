@@ -581,10 +581,7 @@ function updateBudgets(data){
 // If they have already been drafted we then update the SPP with the top available player.
 function checkSPP(data){
   var latestResult = data[data.length-1].name;
-  console.log("Latest Result: " + latestResult);
-  console.log("SPN: " + selectedPlayerName.innerHTML);
   if(selectedPlayerName.innerHTML === latestResult){
-    console.log("Match!" + topPlayer[1].innerHTML)
     updateSPP(topPlayer)
   }
 } // Close checkSPP() function.
@@ -739,29 +736,20 @@ function otbBenchCheck(position){
 
 // Define the filterRosterPane() function used to filter the roster pane with the currently selected coaches team.
 function filterRosterPane(){
-  var selectedCoach = teamFilter.value;
+  var selectedCoachIndex = teamFilter.selectedIndex;
+  console.log(selectedCoachIndex);
 
   // Get a list of the currently selected coaches players and assign it to the selectedCoachesPlayers variable.
-  var selectedCoachesPlayers = draftedPlayersList.filter(function(e){
-                                return (e.team==selectedCoach);
-                              });
+  var selectedCoachesPlayers = JSON.parse(JSON.stringify(draftedPlayersList[selectedCoachIndex]));
 
 
-  // Sort the selectedCoachesPlayers array from ascending to descending averages to ensure that their top averages are put on the field.
-  // First we define a compare() function to help sort the player arrays.
-  function compare(a, b) {
+  // First we sort the selectedCoachesPlayers array based on the length of the position string.
+  selectedCoachesPlayers.sort(function (a, b) {
+    return a.position.length - b.position.length;
+  });
 
-    let comparison = 0;
-    if (a.average < b.average) {
-      comparison = 1;
-    } else if (a.average < b.average) {
-      comparison = -1;
-    }
-    return comparison;
-  }
-
-  // Then we run the sort function with our compare function as an input to sort the array from highest to lowest.
-  selectedCoachesPlayers.sort(compare);
+  console.log("Selected Coaches Players.");
+  console.log(selectedCoachesPlayers);
 
 
   // Define the selectedCoaches position variables to hold the coaches players from each position.
@@ -773,14 +761,16 @@ function filterRosterPane(){
 
   // Loop through the selectedCoachesPlayers list and assign each player to a specific position.
   for(var i=0; i<selectedCoachesPlayers.length; i++){
-    if(selectedCoachesPlayers[i].position == "DEF" && selectedCoachesDef.length < totalDefSpots){
+    if(selectedCoachesPlayers[i].position == "DEF"){
       selectedCoachesDef.push(selectedCoachesPlayers[i])
-    } else if(selectedCoachesPlayers[i].position == "FWD" && selectedCoachesFwd.length < totalFwdSpots){
+    } else if(selectedCoachesPlayers[i].position == "FWD"){
         selectedCoachesFwd.push(selectedCoachesPlayers[i])
-    } else if(selectedCoachesPlayers[i].position == "RUC" && selectedCoachesRuc.length < totalRucSpots){
+    } else if(selectedCoachesPlayers[i].position == "RUC"){
         selectedCoachesRuc.push(selectedCoachesPlayers[i])
-    } else if (selectedCoachesPlayers[i].position == "MID" && selectedCoachesMid.length < totalMidSpots){
+    } else if (selectedCoachesPlayers[i].position == "MID"){
         selectedCoachesMid.push(selectedCoachesPlayers[i])
+    } else if(selectedCoachesPlayers[i].position == "BEN"){
+        selectedCoachesBen.push(selectedCoachesPlayers[i])
     } else if(selectedCoachesPlayers[i].position == "DEF-FWD" && selectedCoachesDef.length < totalDefSpots){
         selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (D/F)"
         selectedCoachesDef.push(selectedCoachesPlayers[i])
@@ -817,9 +807,6 @@ function filterRosterPane(){
     } else if(selectedCoachesPlayers[i].position == "RUC-MID" && selectedCoachesMid.length < totalMidSpots){
         selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (R/M)"
         selectedCoachesMid.push(selectedCoachesPlayers[i])
-    } else {
-        selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (" + selectedCoachesPlayers[i].position + ")"
-        selectedCoachesBen.push(selectedCoachesPlayers[i])
     }
 
   } // Close for() loop.
@@ -841,6 +828,7 @@ function filterRosterPane(){
       myRosterTableRows[i].getElementsByTagName("td")[2].innerHTML = "";
       myRosterTableRows[i].getElementsByTagName("td")[3].innerHTML = "";
   }
+
 
   // Run the updateMyRosterTable() function to update the data in the rosterTable.
   updateMyRosterTable(selectedCoachesDef, 0);
@@ -947,14 +935,18 @@ socket.on("pageLoaded", function(data){
   totalMidSpots = data.loadData.numOfMid;
   totalBenSpots = data.loadData.numOfBen;
 
+  console.log(data.loadData.coaches[0].rosterSpots);
+  console.log(data.loadData.coaches[0].positionCount);
+
   // Add the coaches array to the roster filter drop down list.
   // Set the default filter value to the current user.
   addRosterFilterOption(data.loadData.coaches);
   teamFilter.value = currentUser;
   // Update the draftedPlayers list with the updated results list from the DB.
   // We used ‘JSON.parse(JSON.stringify(data.loadData.results))’ to convert the data.loadData.resutls data into a string and then re-convert it into an object.
-  // We do this because if we just assigned data.loadData.results directly to the draftedPlayerList variable then we are passing the value by reference and anything we do to the draftedPlayersList also updates the data.loadData.results variable.
-  draftedPlayersList = JSON.parse(JSON.stringify(data.loadData.results));
+  // We do this because if we just assigned data.loadData.results directly to the draftedPlayersList variable then we are passing the value by reference and anything we do to the draftedPlayersList also updates the data.loadData.results variable.
+  draftedPlayersList = JSON.parse(JSON.stringify(_.pluck(data.loadData.coaches, "players")));
+
   // Run the filterRosterPane() function to update the roster pane with the selected coaches team.
   filterRosterPane();
 
@@ -1015,6 +1007,18 @@ socket.on('playerDrafted', function(data) {
 
   updateSearch();
 
+
+  // Add a row to the myTeamDT data table containing the details of the most recently drafted player.
+  var index = data.dbData.results.length -1;
+  myTeamDT.row.add([data.dbData.results.length, data.dbData.results[index].name, data.dbData.results[index].position, data.dbData.results[index].team, "$" + data.dbData.results[index].price]).draw(false);
+
+  // Update the draftedPlayersList with the updated results list from the DB.
+  // We used ‘JSON.parse(JSON.stringify(data.dbData.results))’ to convert the data.dbData.resutls data into a string and then re-convert it into an object.
+  // We do this because if we just assigned data.dbData.results directly to the draftedPlayersList variable then we are passing the value by reference and anything we do to the draftedPlayersList also updates the data.dbData.results variable.
+  // Run the filterRosterPane() function to update the myRoster pane with the selected coaches data.
+  draftedPlayersList = JSON.parse(JSON.stringify(_.pluck(data.dbData.coaches, "players")));
+  filterRosterPane();
+
   // Update the total number of players drafted.
   numOfPlayersDrafted = data.dbData.results.length;
   // If the total number of players drafted is greater than or equal to the total amount of roster spots then the draft is complete.
@@ -1042,17 +1046,6 @@ socket.on('playerDrafted', function(data) {
     // Check the SPP to see if it currently has a previously drafted player and update if required.
     checkSPP(data.dbData.results);
 
-
-    // Add a row to the myTeamDT data table containing the details of the most recently drafted player.
-    var index = data.dbData.results.length -1;
-    myTeamDT.row.add([data.dbData.results.length, data.dbData.results[index].name, data.dbData.results[index].position, data.dbData.results[index].team, "$" + data.dbData.results[index].price]).draw(false);
-
-    // Update the draftedPlayersList with the updated results list from the DB.
-    // We used ‘JSON.parse(JSON.stringify(data.dbData.results))’ to convert the data.dbData.resutls data into a string and then re-convert it into an object.
-    // We do this because if we just assigned data.dbData.results directly to the draftedPlayerList variable then we are passing the value by reference and anything we do to the draftedPlayersList also updates the data.dbData.results variable.
-    // Run the filterRosterPane() function to update the myRoster pane with the selected coaches data.
-    draftedPlayersList = JSON.parse(JSON.stringify(data.dbData.results));
-    filterRosterPane();
 
     console.log("RESULTS AFTER FILTER.");
     console.log(data.dbData.results);
