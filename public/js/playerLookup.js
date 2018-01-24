@@ -770,6 +770,14 @@ function filterRosterPane(){
     } else if (selectedCoachesPlayers[i].position == "MID"){
         selectedCoachesMid.push(selectedCoachesPlayers[i])
     } else if(selectedCoachesPlayers[i].position == "BEN"){
+        var posAbbreviation;
+        console.log(selectedCoachesPlayers[i].originalPosition.length)
+        if(selectedCoachesPlayers[i].originalPosition.length === 3){
+          posAbbreviation = selectedCoachesPlayers[i].originalPosition[0];
+        } else {
+          posAbbreviation = selectedCoachesPlayers[i].originalPosition[0] + "/" + selectedCoachesPlayers[i].originalPosition[4];
+        }
+        selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (" + posAbbreviation + ")"
         selectedCoachesBen.push(selectedCoachesPlayers[i])
     } else if(selectedCoachesPlayers[i].position == "DEF-FWD" && selectedCoachesDef.length < totalDefSpots){
         selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (D/F)"
@@ -1129,44 +1137,41 @@ socket.on('bidLock', function(){
 
 socket.on('bidUpdate', function(data) {
 
+  startCountdown(data.bidData.otbEndTime);
+
+  highlightBidder(data.bidData.otbBidder);
+
+  lockBid(data.bidData.otbBidder, currentUser);
+
+  currentBid.innerHTML = "$" + data.bidData.otbBid;
+  biddingTeam = data.bidData.otbBidder;
+
+
   // Checks if the availablePosition variable is false (this is set upon the player being added to the block).
   // If the availablePosition is false then we disable the coach from bidding, if it is true then we run the normal bid code
   if(availablePosition === false){
     placeBidButton.innerHTML = "No " + data.bidData.otbPos + " Spots";
     placeBidButton.disabled = true;
     placeBidButton.style.background = "grey";
-  } else {
-  
-      startCountdown(data.bidData.otbEndTime);
-
-      highlightBidder(data.bidData.otbBidder);
-
-      lockBid(data.bidData.otbBidder, currentUser);
-
-      currentBid.innerHTML = "$" + data.bidData.otbBid;
-      biddingTeam = data.bidData.otbBidder;
-
+  } else if (currentUser === data.bidData.otbBidder){
       // Updates the Place Bid button to have the current bid price plus 1 or 'You Lead' text if the logged in coach leads the bidding.
-      if (currentUser === data.bidData.otbBidder){
-        placeBidButton.innerHTML = "You Lead @ $" + (Number(data.bidData.otbBid));
-      } else if (data.bidData.otbBid >= maxBid){
-          // Disables the bid button if bidding exceeds the coaches max bid.
-          placeBidButton.disabled = true;
-          placeBidButton.innerHTML = "> Max Bid";
-          placeBidButton.style.background = "grey";
-        } else {
-            placeBidButton.innerHTML = "Bid $" + (Number(data.bidData.otbBid) + 1);
-          };
+      placeBidButton.innerHTML = "You Lead @ $" + (Number(data.bidData.otbBid));
+  } else if (data.bidData.otbBid >= maxBid){
+      // Disables the bid button if bidding exceeds the coaches max bid.
+      placeBidButton.disabled = true;
+      placeBidButton.innerHTML = "> Max Bid";
+      placeBidButton.style.background = "grey";
+    } else {
+        placeBidButton.innerHTML = "Bid $" + (Number(data.bidData.otbBid) + 1);
+      };
 
-      // Checks if the otb pane is blank, if so a coach has re-entered the draft room mid way through a draft.
-      // If this is the case then we want to update the otb pane with the otb player details for that coach but not for other other coaches that already have the details loaded.
-      if (otbName.innerHTML === ""){
-        otbName.innerHTML = data.bidData.otbPlayer;
-        otbTeamPos.innerHTML = data.bidData.otbPos + " - " + data.bidData.otbAverage;
-        otbPic.src = "./images/" + data.bidData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";
-      }
-
-  }; // Close if(availablePosition) else{} statement.
+  // Checks if the otb pane is blank, if so a coach has re-entered the draft room mid way through a draft.
+  // If this is the case then we want to update the otb pane with the otb player details for that coach but not for other other coaches that already have the details loaded.
+  if (otbName.innerHTML === ""){
+    otbName.innerHTML = data.bidData.otbPlayer;
+    otbTeamPos.innerHTML = data.bidData.otbPos + " - " + data.bidData.otbAverage;
+    otbPic.src = "./images/" + data.bidData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";
+  }
 
 }); // Close socket.on() function.
 
