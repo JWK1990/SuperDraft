@@ -820,30 +820,43 @@ function filterRosterPane(){
   } // Close for() loop.
 
   // Define the updateMyRosterTable() function used to update the data in the rosterTable.
-  function updateMyRosterTable(array, indexAdd){
+  function updateMyRosterTable(array, indexAdd, classAdd){
 
     for(var i=0; i < array.length; i++){
           myRosterTableRows[i+indexAdd].getElementsByTagName("td")[1].innerHTML = array[i].name;
           myRosterTableRows[i+indexAdd].getElementsByTagName("td")[2].innerHTML = array[i].average;
           myRosterTableRows[i+indexAdd].getElementsByTagName("td")[3].innerHTML = "$" + array[i].price;
+
+          // Update the colouring of the roster pane for any filled positions.
+          myRosterTableRows[i+indexAdd].getElementsByTagName("td")[0].classList.add(classAdd);
+          myRosterTableRows[i+indexAdd].getElementsByTagName("td")[1].classList.add(classAdd);
+          myRosterTableRows[i+indexAdd].getElementsByTagName("td")[2].classList.add(classAdd);
+          myRosterTableRows[i+indexAdd].getElementsByTagName("td")[3].classList.add(classAdd);
+
     } // Close for() loop.
   }; // Close updateMyRosterTable() function.
 
 
   // Loop through the myRosterTable and clear out the current innerHTML from each table row.
-  for(var i=0; i < myRosterTableRows.length -1; i++){
+  for(var i=0; i < myRosterTableRows.length; i++){
       myRosterTableRows[i].getElementsByTagName("td")[1].innerHTML = "";
       myRosterTableRows[i].getElementsByTagName("td")[2].innerHTML = "";
       myRosterTableRows[i].getElementsByTagName("td")[3].innerHTML = "";
+
+      // Update the colouring of the roster pane for any filled positions.
+      myRosterTableRows[i].getElementsByTagName("td")[0].classList.remove("filledDef", "filledMid", "filledRuc", "filledFwd", "filledBen");
+      myRosterTableRows[i].getElementsByTagName("td")[1].classList.remove("filledDef", "filledMid", "filledRuc", "filledFwd", "filledBen");
+      myRosterTableRows[i].getElementsByTagName("td")[2].classList.remove("filledDef", "filledMid", "filledRuc", "filledFwd", "filledBen");
+      myRosterTableRows[i].getElementsByTagName("td")[3].classList.remove("filledDef", "filledMid", "filledRuc", "filledFwd", "filledBen");
   }
 
 
   // Run the updateMyRosterTable() function to update the data in the rosterTable.
-  updateMyRosterTable(selectedCoachesDef, 0);
-  updateMyRosterTable(selectedCoachesMid, totalDefSpots);
-  updateMyRosterTable(selectedCoachesRuc, totalDefSpots + totalMidSpots);
-  updateMyRosterTable(selectedCoachesFwd, totalDefSpots + totalMidSpots + totalRucSpots);
-  updateMyRosterTable(selectedCoachesBen, totalDefSpots + totalMidSpots + totalRucSpots + totalFwdSpots);
+  updateMyRosterTable(selectedCoachesDef, 0, "filledDef");
+  updateMyRosterTable(selectedCoachesMid, totalDefSpots, "filledMid");
+  updateMyRosterTable(selectedCoachesRuc, totalDefSpots + totalMidSpots, "filledRuc");
+  updateMyRosterTable(selectedCoachesFwd, totalDefSpots + totalMidSpots + totalRucSpots, "filledFwd");
+  updateMyRosterTable(selectedCoachesBen, totalDefSpots + totalMidSpots + totalRucSpots + totalFwdSpots, "filledBen");
 
 }; // Close filterRosterPane() function.
 
@@ -1053,11 +1066,6 @@ socket.on('playerDrafted', function(data) {
 
     // Check the SPP to see if it currently has a previously drafted player and update if required.
     checkSPP(data.dbData.results);
-
-
-    console.log("RESULTS AFTER FILTER.");
-    console.log(data.dbData.results);
-
 
     // If the currentUser is logged into the room then the sppStartCountdown will start a 20 second countdown
     // after which it will select the top available player to be automatically put on the block.

@@ -54,8 +54,8 @@ router.get("/login", mid.loggedOut, function(req, res, next){
 
 // POST /login
 router.post("/login", function(req, res, next){
-	if (req.body.email && req.body.password){
-		User.authenticate(req.body.email, req.body.password, function(error, user){
+	if (req.body.email.toUpperCase() && req.body.password){
+		User.authenticate(req.body.email.toUpperCase(), req.body.password, function(error, user){
 			if (error || !user){
 				var err = new Error("Wrong email or password.");
 				err.status = 401;
@@ -97,7 +97,7 @@ router.post("/register", function(req, res, next){
 
 			// create object with form input
 			var userData = {
-				email: req.body.email,
+				email: req.body.email.toUpperCase(),
 				name: req.body.name,
 				teamName: req.body.teamName,
 				password: req.body.password
@@ -219,7 +219,7 @@ router.post("/create", function(req, res, next){
 
 		for (var i=1; i <= req.body.numOfCoaches; i++){
 			coachNum = "coachNum: " + "coach" + i;
-			coachObject = {teamName: req["body"]["coach" + i], budget: req.body.budget, numOfPlayers: 0, teamName2: req["body"]["coach" + i], benchCount: 0, rosterSpots: [true, true, true, true, true, true, true, true, true, true]};
+			coachObject = {teamName: req["body"]["coach" + i].toUpperCase(), budget: req.body.budget, numOfPlayers: 0, teamName2: req["body"]["coach" + i].toUpperCase(), benchCount: 0, rosterSpots: [true, true, true, true, true, true, true, true, true, true]};
 			coachesList.push(coachObject);
 		};
 

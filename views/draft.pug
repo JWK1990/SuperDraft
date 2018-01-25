@@ -157,58 +157,58 @@ html(lang='en')
 		.rightColumn
 
 			.myRosterPane
-				select#myRosterFilter(onchange="filterRosterPane()")
+				.myRosterFilterPane
+					select#myRosterFilter(onchange="filterRosterPane()")
 
-				table#myRosterTable
-					thead
-						tr
-							th Pos
-							th Player
-							th Ave
-							th $
+				.myRosterTablePane
+					table#myRosterTable
+						thead
+							tr
+								th Pos
+								th Player
+								th Ave
+								th $
 
-						tbody
-							- for(var i=0; i < drafts[0].numOfDef; i++){
-								tr
-									td="DEF"
-									td=""
-									td=""
-									td=""
-							- }
+							tbody
+								- for(var i=0; i < drafts[0].numOfDef; i++){
+									tr(style='border-left: RGB(255,105,180) 4px solid')
+										td.emptyDef="DEF"
+										td=""
+										td=""
+										td=""
+								- }
 
-							- for(var i=0; i < drafts[0].numOfMid; i++){
-								tr
-									td="MID"
-									td=""
-									td=""
-									td=""
-							- }
+								- for(var i=0; i < drafts[0].numOfMid; i++){
+									tr(style='border-left: RGB(30,144,255) 4px solid')
+										td.emptyMid="MID"
+										td=""
+										td=""
+										td=""
+								- }
 
-							- for(var i=0; i < drafts[0].numOfRuc; i++){
-								tr
-									td="RUC"
-									td=""
-									td=""
-									td=""
-							- }
+								- for(var i=0; i < drafts[0].numOfRuc; i++){
+									tr(style='border-left: RGB(243,243,21) 4px solid')
+										td.emptyRuc="RUC"
+										td=""
+										td=""
+										td=""
+								- }
 
-							- for(var i=0; i < drafts[0].numOfFwd; i++){
-								tr
-									td="FWD"
-									td=""
-									td=""
-									td=""
-							- }
+								- for(var i=0; i < drafts[0].numOfFwd; i++){
+									tr(style='border-left: RGB(4,252,14) 4px solid')
+										td.emptyFwd="FWD"
+										td=""
+										td=""
+										td=""
+								- }
 
-							- for(var i=0; i < drafts[0].numOfBen; i++){
-								tr
-									td="BEN"
-									td=""
-									td=""
-									td=""
-							- }
-
-
+								- for(var i=0; i < drafts[0].numOfBen; i++){
+									tr(style='border-left: RGB(192,192,192) 4px solid')
+										td.emptyBen="BEN"
+										td=""
+										td=""
+										td=""
+								- }
 
 
 			.myTeamPane
