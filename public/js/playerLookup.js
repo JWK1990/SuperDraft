@@ -352,42 +352,61 @@ var startCountdown = function(endTime){
 
 
 // Define getTopPlayer() used to get the top available valid player for the current user from the Player Search pane.
+// If there is an error it usually means that the coaches team is full therefore we assign the top undrafted player to the topPlayer variable.
 function getTopPlayer(){
-  for (var i = 1; i < searchTableRows.length; i++) {
-      if(Boolean(searchTableRows[i].style.textDecoration === "")){
 
-        // Looks through the avaialble players and performs a benchCheck.
-        // benchCheck() then sets the addToBench variable to 0 or 1 based on whether the currentCoach has availability for that position.
-        benchCheck(searchTableRows[i].getElementsByTagName("td")[2].innerHTML);
+  try {
+    for (var i = 1; i < searchTableRows.length; i++) {
+        if(Boolean(searchTableRows[i].style.textDecoration === "")){
 
-        // Update topPlayer variable if there is a spot available in the current coaches team for the current player in the loop.
-        if(addToBench < 1 || benchCount < totalBenSpots){
+          // Looks through the avaialble players and performs a benchCheck.
+          // benchCheck() then sets the addToBench variable to 0 or 1 based on whether the currentCoach has availability for that position.
+          benchCheck(searchTableRows[i].getElementsByTagName("td")[2].innerHTML);
+
+          // Update topPlayer variable if there is a spot available in the current coaches team for the current player in the loop.
+          if(addToBench < 1 || benchCount < totalBenSpots){
+            topPlayer = searchTableRows[i].getElementsByTagName("td");
+            break;
+          }
+        }
+    }
+    console.log("TOP PLAYER(): " + topPlayer[1].innerHTML)
+
+  } catch(err){
+      for (var i = 1; i < searchTableRows.length; i++) {
+        if(Boolean(searchTableRows[i].style.textDecoration === "")){
           topPlayer = searchTableRows[i].getElementsByTagName("td");
           break;
         }
       }
-  }
-  console.log("TOP PLAYER(): " + topPlayer[1].innerHTML)
-};
+      console.log("Team is full. Top Player: " + topPlayer + ".");
+  } // Close catch() statement.
+}; // Close getTopPlayer() function.
 
 // Define getTopPlayer() used to get the top available valid player for the current user from the Player Search pane.
+// If there is an error then we log the error. There shouldn't be though as the otb coach should always have a top available player.
 function otbGetTopPlayer(){
-  for (var i = 1; i < searchTableRows.length; i++) {
-      if(Boolean(searchTableRows[i].style.textDecoration === "")){
+  try {
+    for (var i = 1; i < searchTableRows.length; i++) {
+        if(Boolean(searchTableRows[i].style.textDecoration === "")){
 
-        // Looks through the avaialble players and performs a benchCheck.
-        // benchCheck() then sets the addToBench variable to 0 or 1 based on whether the currentCoach has availability for that position.
-        otbBenchCheck(searchTableRows[i].getElementsByTagName("td")[2].innerHTML);
+          // Looks through the avaialble players and performs a benchCheck.
+          // benchCheck() then sets the addToBench variable to 0 or 1 based on whether the currentCoach has availability for that position.
+          otbBenchCheck(searchTableRows[i].getElementsByTagName("td")[2].innerHTML);
 
-        // Update topPlayer variable if there is a spot available in the current coaches team for the current player in the loop.
-        if(otbAddToBench < 1 || otbBenchCount < totalBenSpots){
-          otbTopPlayer = searchTableRows[i].getElementsByTagName("td");
-          break;
+          // Update topPlayer variable if there is a spot available in the current coaches team for the current player in the loop.
+          if(otbAddToBench < 1 || otbBenchCount < totalBenSpots){
+            otbTopPlayer = searchTableRows[i].getElementsByTagName("td");
+            break;
+          }
         }
-      }
-  }
-  console.log("OTB TOP PLAYER(): " + otbTopPlayer[1].innerHTML)
-};
+    }
+    console.log("OTB TOP PLAYER(): " + otbTopPlayer[1].innerHTML)
+
+  } catch(err){
+      console.log(err);
+  } // Close catch() statement.
+}; // Close otbGetTopPlayer() function.
 
 
 // Define updateSPP() used to update the text in the Selected Player Pane.

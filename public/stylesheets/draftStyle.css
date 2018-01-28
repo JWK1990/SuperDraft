@@ -558,11 +558,11 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 }
 
 .myRosterPane .emptyFwd{
-  color: #04FC0E;
+  color: #16C172;
 }
 
 .myRosterPane .emptyRuc{
-  color: #F3F315;
+  color: #FA9F42;
 }
 
 .myRosterPane .emptyMid{
@@ -570,7 +570,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 }
 
 .myRosterPane .emptyBen{
-  color: #C0C0C0;
+  color: #A9A9A9;
 }
 
 
@@ -580,12 +580,12 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 }
 
 .myRosterPane .filledFwd{
-  background-color: #04FC0E;
+  background-color: #16C172;
   color: white;
 }
 
 .myRosterPane .filledRuc{
-  background-color: #F3F315;
+  background-color: #FA9F42;
   color: white;
 }
 
@@ -595,7 +595,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 }
 
 .myRosterPane .filledBen{
-  background-color: #C0C0C0;
+  background-color: #A9A9A9;
   color: white;
 }
 
