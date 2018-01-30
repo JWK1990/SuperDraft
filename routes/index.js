@@ -61,7 +61,7 @@ router.post("/login", function(req, res, next){
 	// If all details are correct then we redirect to the /myDrafts page.
 	if (req.body.email.toUpperCase() && req.body.password){
 
-		User.findOne({email: req.body.email}, function(error, user){
+		User.findOne({email: req.body.email.toUpperCase()}, function(error, user){
 			if(user == null){
 				return res.render("login", {fail:" User does not exist!"});
 			} else {
@@ -99,7 +99,7 @@ router.post("/register", function(req, res, next){
 		req.body.confirmPassword){
 
 
-			User.findOne({email:req.body.email}, function(err, user){
+			User.findOne({email:req.body.email.toUpperCase()}, function(err, user){
 				if(user != null){
 					return res.render("register", {fail: " Email already in use!", dupEmail: req.body.email, reqBodyFail: req.body})
 				} else if (req.body.password !== req.body.confirmPassword){
@@ -133,7 +133,7 @@ router.post("/register", function(req, res, next){
 			// confirm that the user typed same password twice.
 
 	} else {
-		return res.render("register", {fail: " All fields are required." })
+		return res.render("register", {fail: " All fields are required.", reqBodyFail: req.body})
 }});
 
 // GET /
