@@ -27,7 +27,7 @@ router.get("/profile", mid.requiresLogin, function(req, res, next){
 			if (error){
 				return next(error);
 			} else {
-				return res.render("profile", {title: "My Profile", name: user.name, teamName: user.teamName});
+				return res.render("profile", {title: "My Profile", name: user.name, teamName: user.teamName, currentUserName: req.session.name});
 			}
 		});
 });
@@ -54,26 +54,36 @@ router.get("/login", mid.loggedOut, function(req, res, next){
 
 // POST /login
 router.post("/login", function(req, res, next){
+
+	// We first check if both required fields are filled out and if not we issue an "Email and password are required" error message.
+	// If they are filled out, we first check for a matching email address and if there isn't a match we issue an error message.
+	// If there is a matched user we then check if there is a matching password, if not we issue an error message.
+	// If all details are correct then we redirect to the /myDrafts page.
 	if (req.body.email.toUpperCase() && req.body.password){
-		User.authenticate(req.body.email.toUpperCase(), req.body.password, function(error, user){
-			if (error || !user){
-				var err = new Error("Wrong email or password.");
-				err.status = 401;
-				return next(err);
+
+		User.findOne({email: req.body.email}, function(error, user){
+			if(user == null){
+				return res.render("login", {fail:" User does not exist!"});
 			} else {
-				req.session.userId = user._id;
-				req.session.name = user.name;
-				req.session.teamName = user.teamName;
-				req.session.email = user.email;
-				return res.redirect ("/myDrafts");
+				User.authenticate(req.body.email.toUpperCase(), req.body.password, function(error, user){
+					if (error || !user){
+						return res.render("login",{fail:" Wrong password! Please Try Again."});
+					} else {
+						req.session.userId = user._id;
+						req.session.name = user.name;
+						req.session.teamName = user.teamName;
+						req.session.email = user.email;
+						return res.redirect ("/myDrafts");
+					}
+				});
 			}
-		});
+		}); // Close User.find();
+
 	} else {
-		var err = new Error("Email and password are required.");
-		err.status = 401;
-		return next(err);
+		return res.render("login",{fail:" Email and password are required!"});
 	}
-});
+	});
+
 
 // GET /register
 router.get("/register", mid.loggedOut, function(req, res, next){
@@ -88,53 +98,57 @@ router.post("/register", function(req, res, next){
 		req.body.password &&
 		req.body.confirmPassword){
 
-			// confirm that the user typed same password twice.
-			if (req.body.password !== req.body.confirmPassword){
-				var err = new Error("Passwords do not match.");
-				err.status = 400;
-				return next(err);
-			}
 
-			// create object with form input
-			var userData = {
-				email: req.body.email.toUpperCase(),
-				name: req.body.name,
-				teamName: req.body.teamName,
-				password: req.body.password
-			};
-
-			// use schema's 'create' method to insert document into Mongo.
-			User.create(userData, function (error, user){
-				if (error){
-					return next(error);
+			User.findOne({email:req.body.email}, function(err, user){
+				if(user != null){
+					return res.render("register", {fail: " Email already in use!", dupEmail: req.body.email, reqBodyFail: req.body})
+				} else if (req.body.password !== req.body.confirmPassword){
+					return res.render("register", {fail: " Passwords did not match.", passMismatch: true, reqBodyFail: req.body})
 				} else {
-					req.session.userId = user._id;
-					req.session.name = user.name;
-					req.session.teamName = user.teamName;
-					req.session.email = user.email;
-					return res.redirect("/myDrafts");
+					// create object with form input
+					var userData = {
+						email: req.body.email.toUpperCase(),
+						name: req.body.name,
+						teamName: req.body.teamName,
+						password: req.body.password
+					};
+
+					// use schema's 'create' method to insert document into Mongo.
+					User.create(userData, function (error, user){
+						if (error){
+							return next(error);
+						} else {
+							req.session.userId = user._id;
+							req.session.name = user.name;
+							req.session.teamName = user.teamName;
+							req.session.email = user.email;
+							return res.redirect("/myDrafts");
+						}
+					});
 				}
-			});
+
+			}); // Close User.find() function.
+
+
+			// confirm that the user typed same password twice.
 
 	} else {
-		var err = new Error("All fields required.");
-		err.status = 400;
-		return next(err);
+		return res.render("register", {fail: " All fields are required." })
 }});
 
 // GET /
 router.get('/', function(req, res, next) {
-  return res.render('index', { title: 'Home' });
+  return res.render('index', { title: 'Home', currentUserName: req.session.name});
 });
 
 // GET /about
 router.get('/about', function(req, res, next) {
-  return res.render('about', { title: 'About' });
+  return res.render('about', { title: 'About', currentUserName: req.session.name});
 });
 
 // GET /contact
 router.get('/contact', function(req, res, next) {
-  return res.render('contact', { title: 'Contact' });
+  return res.render('contact', { title: 'Contact', currentUserName: req.session.name});
 });
 
 // GET /draft
@@ -193,7 +207,7 @@ router.get("/draft", function(req, res, next){
 
 // GET /create
 router.get("/create", function(req, res, next){
-	return res.render("create", {title: "Create A Draft"});
+	return res.render("create", {title: "Create A Draft", currentUserName: req.session.name});
 });
 
 // POST /create
@@ -201,7 +215,6 @@ router.get("/create", function(req, res, next){
 router.post("/create", function(req, res, next){
 
 	if (req.body.leagueName &&
-		req.body.draftYear &&
 		req.body.numOfCoaches &&
 		req.body.rosterSize &&
 		req.body.numOfDef &&
@@ -227,7 +240,7 @@ router.post("/create", function(req, res, next){
 			// create object with form input
 			var draftData = {
 				leagueName: req.body.leagueName,
-				draftYear: req.body.draftYear,
+				draftYear: 2018,
 				numOfCoaches: req.body.numOfCoaches,
 				rosterSize: req.body.rosterSize,
 				numOfDef: req.body.numOfDef,
@@ -308,7 +321,7 @@ router.get("/myDrafts", function(req, res, next){
 
 		User.find({}, function(err, users){
 			// We send the myDraftsList array and the users data to the front end to be used in our template.
-			return res.render("myDrafts", {title: "My Drafts", results: myDraftsList, users: users});
+			return res.render("myDrafts", {title: "My Drafts", results: myDraftsList, users: users, currentUserName: req.session.name});
 			});
 		});
 	});

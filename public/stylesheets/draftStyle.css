@@ -329,6 +329,8 @@ input, select, textarea{
         height: 82%;
         display: inline-block;
         text-align: middle;
+        overflow-y: scroll;
+        overflow-x: hide;
       }
 
 

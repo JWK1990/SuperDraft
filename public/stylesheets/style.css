@@ -1,4 +1,7 @@
 
+/* Import the font-awesome stylesheet */
+@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
 /* Base Styles */
 
 body {
@@ -85,6 +88,40 @@ tr{
 	display: none;
 }
 
+.positionEntry{
+	font-size: 0.75em;
+	display: inline-block;
+	width: 20%;
+	text-align: center;
+}
+
+/* Authentication message stylings */
+.auth_info, .auth_success, .auth_warning, .auth_error {
+margin: 10px 0px;
+padding:5px;
+ 
+}
+.auth_info {
+    color: #00529B;
+    background-color: #BDE5F8;
+}
+.auth_success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+.auth_warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+.auth_error {
+    color: #D8000C;
+    background-color: #FFD2D2;
+}
+.auth_info i, .auth_success i, .auth_warning i, .auth_error i {
+    margin:10px 10px;
+    font-size:1em;
+    vertical-align:middle;
+}
 
 /* Button Styles */
 

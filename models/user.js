@@ -28,9 +28,6 @@ var UserSchema = new mongoose.Schema({
 	},
 })
 
-var BudgetSchema = new mongoose.Schema({
-		
-})
 // authenticate input against database documents.
 UserSchema.statics.authenticate = function(email, password, callback){
 	User.findOne({email: email})

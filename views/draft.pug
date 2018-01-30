@@ -2,7 +2,7 @@ doctype html
 html(lang='en')
 	head
 		meta(charset='UTF-8')
-		title SuperDraft
+		title SuperDraft | #{drafts[0].leagueName} | #{drafts[0].draftYear} | #{currentUser}
 		link(rel='stylesheet', href='/stylesheets/draftStyle.css')
 		link(rel='stylesheet', href='/stylesheets/jquery.dataTables.min.css')
 		script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')

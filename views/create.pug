@@ -1,6 +1,7 @@
 extends layout
 
 block content
+
   .main.container
     .row
       .col-md-6.col-md-offset-3
@@ -10,44 +11,178 @@ block content
         form(method='POST' action='/create')
           div.form-group
             label(for='leagueName') League Name:
-            input#name.form-control(type='text', placeholder='e.g. WAFL' name='leagueName')
-          div.form-group
-            label(for='draftYear') Draft Year:
-            input#name.form-control(type='text', placeholder='e.g. 2017' name='draftYear')
+            input.form-control(type='text', placeholder='e.g. WAFL' name='leagueName')
           div.form-group
             label(for='numOfCoaches') # of Coaches:
-            input#name.form-control(type='text', placeholder='e.g. 10' name='numOfCoaches')
+            select.form-control#numOfCoaches(name='numOfCoaches' onchange = 'updateCoachFields()')
+              option(value=2) 2
+              option(value=3) 3
+              option(value=4) 4
+              option(value=5) 5
+              option(value=6) 6
+              option(value=7) 7  
+              option(value=8) 8
+              option(value=9) 9
+              option(value=10 selected="selected") 10
+              option(value=11) 11
+              option(value=12) 12
+              option(value=13) 13
+              option(value=14) 14
+              option(value=15) 15
+              option(value=16) 16
+              option(value=17) 17
+              option(value=18) 18
+              option(value=19) 19
+              option(value=20) 20 
           div.form-group
             label(for='rosterSize') Roster Size:
-            input#name.form-control(type='text', placeholder='e.g. D-5, F-5, M-7, R-1, B-4 = 22' name='rosterSize')
-          div.form-group
-            label(for='numOfDef') # of Defenders:
-            input#name.form-control(type='text', placeholder='e.g. 5' name='numOfDef')
-          div.form-group
-            label(for='numOfFwd') # of Forwards:
-            input#name.form-control(type='text', placeholder='e.g. 5' name='numOfFwd')
-          div.form-group
-            label(for='numOfRuc') # of Rucks:
-            input#name.form-control(type='text', placeholder='e.g. 1' name='numOfRuc')
-          div.form-group
-            label(for='numOfMid') # of Midfielders:
-            input#name.form-control(type='text', placeholder='e.g. 7' name='numOfMid')
-          div.form-group
-            label(for='numOf') # of Bench:
-            input#name.form-control(type='text', placeholder='e.g. 4' name='numOfBen')
+            select.form-control#rosterSize(name='rosterSize' onchange="showPositionCounts()")
+              option(value=12) 12 Players (2D - 2M - 1R - 2F / 5B)
+              option(value=12) 12 Players (2D - 3M - 1R - 2F / 4B)
+              option(value=15) 15 Players (2D - 2M - 1R - 2F / 8B)  
+              option(value=15) 15 Players (2D - 3M - 1R - 2F / 7B)
+              option(value=15) 15 Players (3D - 3M - 1R - 3F / 5B)
+              option(value=15) 15 Players (3D - 4M - 1R - 3F / 4B)  
+              option(value=19) 19 Players (4D - 5M - 1R - 4F / 5B)
+              option(value=22) 22 Players (5D - 7M - 1R - 5F / 4B)
+              option(value="") Custom     
+          div.form-group.positionEntry(style="display:none")
+            label(for='numOfDef') # of Def:
+            select.form-control#numOfDef(name='numOfDef' onchange="updateRosterCount()")
+              option(value=0) 0
+              option(value=1) 1
+              option(value=2) 2
+              option(value=3) 3
+              option(value=4) 4
+              option(value=5) 5
+              option(value=6) 6
+              option(value=7) 7
+              option(value=8) 8
+              option(value=9) 9
+              option(value=10) 10
+              option(value=11) 11
+              option(value=12) 12
+              option(value=13) 13
+              option(value=14) 14
+              option(value=15) 15
+              option(value=16) 16
+              option(value=17) 17
+              option(value=18) 18
+              option(value=19) 19
+              option(value=20) 20
+          div.form-grou.positionEntry(style="display:none")
+            label(for='numOfMid') # of Mid:
+            select.form-control#numOfMid(name='numOfMid' onchange="updateRosterCount()")
+              option(value=0) 0
+              option(value=1) 1
+              option(value=2) 2
+              option(value=3) 3
+              option(value=4) 4
+              option(value=5) 5
+              option(value=6) 6
+              option(value=7) 7
+              option(value=8) 8
+              option(value=9) 9
+              option(value=10) 10
+              option(value=11) 11
+              option(value=12) 12
+              option(value=13) 13
+              option(value=14) 14
+              option(value=15) 15
+              option(value=16) 16
+              option(value=17) 17
+              option(value=18) 18
+              option(value=19) 19
+              option(value=20) 20
+          div.form-group.positionEntry(style="display:none")
+            label(for='numOfRuc') # of Ruc:
+            select.form-control#numOfRuc(name='numOfRuc' onchange="updateRosterCount()")
+              option(value=0) 0
+              option(value=1) 1
+              option(value=2) 2
+              option(value=3) 3
+              option(value=4) 4
+              option(value=5) 5
+              option(value=6) 6
+              option(value=7) 7
+              option(value=8) 8
+              option(value=9) 9
+              option(value=10) 10
+              option(value=11) 11
+              option(value=12) 12
+              option(value=13) 13
+              option(value=14) 14
+              option(value=15) 15
+              option(value=16) 16
+              option(value=17) 17
+              option(value=18) 18
+              option(value=19) 19
+              option(value=20) 20
+          div.form-group.positionEntry(style="display:none")
+            label(for='numOfFwd') # of Fwd:
+            select.form-control#numOfFwd(name='numOfFwd' onchange="updateRosterCount()")
+              option(value=0) 0
+              option(value=1) 1
+              option(value=2) 2
+              option(value=3) 3
+              option(value=4) 4
+              option(value=5) 5
+              option(value=6) 6
+              option(value=7) 7
+              option(value=8) 8
+              option(value=9) 9
+              option(value=10) 10
+              option(value=11) 11
+              option(value=12) 12
+              option(value=13) 13
+              option(value=14) 14
+              option(value=15) 15
+              option(value=16) 16
+              option(value=17) 17
+              option(value=18) 18
+              option(value=19) 19
+              option(value=20) 20
+          div.form-group.positionEntry(style="display:none")
+            label(for='numOf') # of Ben:
+            select.form-control#numOfBen(name='numOfBen' onchange="updateRosterCount()")
+              option(value=0) 0
+              option(value=1) 1
+              option(value=2) 2
+              option(value=3) 3
+              option(value=4) 4
+              option(value=5) 5
+              option(value=6) 6
+              option(value=7) 7
+              option(value=8) 8
+              option(value=9) 9
+              option(value=10) 10
+              option(value=11) 11
+              option(value=12) 12
+              option(value=13) 13
+              option(value=14) 14
+              option(value=15) 15
+              option(value=16) 16
+              option(value=17) 17
+              option(value=18) 18
+              option(value=19) 19
+              option(value=20) 20
           div.form-group
             label(for='budget') Budget:
-            input#name.form-control(type='text', placeholder='$300' name='budget')
-          div.form-group
-            label(for='coachEmails') Invite Teams:
-            input#email.form-control(type='email', placeholder='Team #1 Email' name='coach1')
-            input#email.form-control(type='email', placeholder='Team #2 Email' name='coach2')
-            input#email.form-control(type='email', placeholder='Team #3 Email' name='coach3')
-            input#email.form-control(type='email', placeholder='Team #4 Email' name='coach4')
-            input#email.form-control(type='email', placeholder='Team #5 Email' name='coach5')
-            input#email.form-control(type='email', placeholder='Team #6 Email' name='coach6')
-            input#email.form-control(type='email', placeholder='Team #7 Email' name='coach7')
-            input#email.form-control(type='email', placeholder='Team #8 Email' name='coach8')
-            input#email.form-control(type='email', placeholder='Team #9 Email' name='coach9')
-            input#email.form-control(type='email', placeholder='Team #10 Email' name='coach10')
+            input.form-control(type='text', placeholder='$300' name='budget')
+          div.form-group#coachEmails
+            // The label and inputs in here are populated by the create.js Javascript file.
           button.btn.btn-primary(type='submit') Create Draft
+
+  script(src='/js/create.js')
+
+
+            //input#email.form-control(type='email', placeholder='Team #1 Email' name='coach1')
+            //input#email.form-control(type='email', placeholder='Team #2 Email' name='coach2')
+            //input#email.form-control(type='email', placeholder='Team #3 Email' name='coach3')
+            //input#email.form-control(type='email', placeholder='Team #4 Email' name='coach4')
+            //input#email.form-control(type='email', placeholder='Team #5 Email' name='coach5')
+            //input#email.form-control(type='email', placeholder='Team #6 Email' name='coach6')
+            //input#email.form-control(type='email', placeholder='Team #7 Email' name='coach7')
+            //input#email.form-control(type='email', placeholder='Team #8 Email' name='coach8')
+            //input#email.form-control(type='email', placeholder='Team #9 Email' name='coach9')
+            //input#email.form-control(type='email', placeholder='Team #10 Email' name='coach10')
