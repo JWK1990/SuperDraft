@@ -662,7 +662,6 @@ function setBenchCount(data){
                     return (e.teamName2==currentUser);
                   })[0].benchCount;
 
-  console.log("Bench Count: " + benchCount);
 }; // Close setBenchCount() function.
 
 // Define the setRosterArray() function to set the rosterSpotsArray variable to the rosterSpots array variable from the database.
@@ -756,7 +755,6 @@ function otbBenchCheck(position){
 // Define the filterRosterPane() function used to filter the roster pane with the currently selected coaches team.
 function filterRosterPane(){
   var selectedCoachIndex = teamFilter.selectedIndex;
-  console.log(selectedCoachIndex);
 
   // Get a list of the currently selected coaches players and assign it to the selectedCoachesPlayers variable.
   var selectedCoachesPlayers = JSON.parse(JSON.stringify(draftedPlayersList[selectedCoachIndex]));
@@ -767,9 +765,6 @@ function filterRosterPane(){
     return a.position.length - b.position.length;
   });
 
-  console.log("Selected Coaches Players.");
-  console.log(selectedCoachesPlayers);
-
 
   // Define the selectedCoaches position variables to hold the coaches players from each position.
   var selectedCoachesDef = [];
@@ -777,6 +772,7 @@ function filterRosterPane(){
   var selectedCoachesRuc = [];
   var selectedCoachesMid = [];
   var selectedCoachesBen = [];
+  var selectedCoachesDpp = [];
 
   // Loop through the selectedCoachesPlayers list and assign each player to a specific position.
   for(var i=0; i<selectedCoachesPlayers.length; i++){
@@ -790,7 +786,6 @@ function filterRosterPane(){
         selectedCoachesMid.push(selectedCoachesPlayers[i])
     } else if(selectedCoachesPlayers[i].position == "BEN"){
         var posAbbreviation;
-        console.log(selectedCoachesPlayers[i].originalPosition.length)
         if(selectedCoachesPlayers[i].originalPosition.length === 3){
           posAbbreviation = selectedCoachesPlayers[i].originalPosition[0];
         } else {
@@ -798,45 +793,146 @@ function filterRosterPane(){
         }
         selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (" + posAbbreviation + ")"
         selectedCoachesBen.push(selectedCoachesPlayers[i])
-    } else if(selectedCoachesPlayers[i].position == "DEF-FWD" && selectedCoachesDef.length < totalDefSpots){
-        selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (D/F)"
-        selectedCoachesDef.push(selectedCoachesPlayers[i])
-    } else if(selectedCoachesPlayers[i].position == "DEF-FWD" && selectedCoachesFwd.length < totalFwdSpots){
-        selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (D/F)"
-        selectedCoachesFwd.push(selectedCoachesPlayers[i])
-    } else if(selectedCoachesPlayers[i].position == "DEF-RUC" && selectedCoachesDef.length < totalDefSpots){
-        selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (D/R)"
-        selectedCoachesDef.push(selectedCoachesPlayers[i])
-    } else if(selectedCoachesPlayers[i].position == "DEF-RUC" && selectedCoachesRuc.length < totalRucSpots){
-        selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (D/R)"
-        selectedCoachesRuc.push(selectedCoachesPlayers[i])
-    } else if(selectedCoachesPlayers[i].position == "DEF-MID" && selectedCoachesDef.length < totalDefSpots){
-        selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (D/M)"
-        selectedCoachesDef.push(selectedCoachesPlayers[i])
-    } else if(selectedCoachesPlayers[i].position == "DEF-MID" && selectedCoachesMid.length < totalMidSpots){
-        selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (D/M)"
-        selectedCoachesMid.push(selectedCoachesPlayers[i])
-    } else if(selectedCoachesPlayers[i].position == "FWD-RUC" && selectedCoachesFwd.length < totalFwdSpots){
-        selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (F/R)"
-        selectedCoachesFwd.push(selectedCoachesPlayers[i])
-    } else if(selectedCoachesPlayers[i].position == "FWD-RUC" && selectedCoachesRuc.length < totalRucSpots){
-        selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (F/R)"
-        selectedCoachesRuc.push(selectedCoachesPlayers[i])
-    } else if(selectedCoachesPlayers[i].position == "FWD-MID" && selectedCoachesFwd.length < totalFwdSpots){
-        selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (F/M)"
-        selectedCoachesFwd.push(selectedCoachesPlayers[i])
-    } else if(selectedCoachesPlayers[i].position == "FWD-MID" && selectedCoachesMid.length < totalMidSpots){
-        selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (F/M)"
-        selectedCoachesMid.push(selectedCoachesPlayers[i])
-    } else if(selectedCoachesPlayers[i].position == "RUC-MID" && selectedCoachesRuc.length < totalRucSpots){
-        selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (R/M)"
-        selectedCoachesRuc.push(selectedCoachesPlayers[i])
-    } else if(selectedCoachesPlayers[i].position == "RUC-MID" && selectedCoachesMid.length < totalMidSpots){
-        selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (R/M)"
-        selectedCoachesMid.push(selectedCoachesPlayers[i])
+    } else {
+        var posAbbreviation;
+        if(selectedCoachesPlayers[i].position.length === 3){
+          posAbbreviation = selectedCoachesPlayers[i].position[0];
+        } else {
+          posAbbreviation = selectedCoachesPlayers[i].position[0] + "/" + selectedCoachesPlayers[i].position[4];
+        }
+        selectedCoachesPlayers[i].name = selectedCoachesPlayers[i].name + " (" + posAbbreviation + ")"
+        selectedCoachesDpp.push(selectedCoachesPlayers[i])
     }
 
-  } // Close for() loop.
+  }; // Close for() loop.
+
+
+  // The Most Off Least Theory.
+  // We define the assignDpp() function below under the Most Least Theory.
+  // When it comes to dual position players we get a count of available roster spots for each position.
+  // We get the roster positions with both the most and the least avaialble roster spots.
+  // We then look for a "most/least" DPP player who can fit into both of those positions and assign them to the position with the most available spots.
+  // e.g. If we have 5 free Def spots (most) and 2 free Mid spots (least), then we look for a D/M and assign them to a Def spot.
+  function assignDpp(){
+    // Define an object to hold the available roster spots for each position.
+    var availableSpots = [
+                            ["DEF", totalDefSpots - selectedCoachesDef.length],
+                            ["FWD", totalFwdSpots - selectedCoachesFwd.length],
+                            ["RUC", totalRucSpots - selectedCoachesRuc.length],
+                            ["MID", totalMidSpots - selectedCoachesMid.length]
+                        ]
+
+    // Sort the availableSpots array from highest position availability to lowest.
+    availableSpots.sort(function(a, b) {
+        return a[1] - b[1];
+    });
+
+    var flipArray;
+    var targetedPos;
+    var targetedIndex;
+    var targetedPlayer;
+
+    // Define the getTargetedPlayer() function to get the index and object of a player in the selectedCoachesDpp array with the targetedPos.
+    function getTargetedPlayer(mostPos, leastPos){
+      // Define the flipArray variable to flip the mostPos and leastPos variables into an order that matches the position format of our database.
+      var flipArray = [mostPos, leastPos];
+      flipArray.sort();
+      if(flipArray[0] == "MID"){
+        flipArray.reverse();
+      }
+
+      // Update our targetedPos variable to contain the position that we want to search the coaches DPP array for.
+      targetedPos = flipArray[0].toUpperCase() + "-" + flipArray[1].toUpperCase();
+
+      // Update the targetedIndex with the index of the targeted player in the selectedCoachesDpp array.
+      targetedIndex = selectedCoachesDpp.findIndex(function(obj) { return obj["position"] === targetedPos; })
+      targetedPlayer = selectedCoachesDpp[targetedIndex];
+    }; // Close getTargetedPlayer() function.
+
+
+    // Loop 3 times. First trying to match a targeted position with the most availablility and the least availability.
+    // If this fails then we check for a targeted position with the most availability and the second least availability and so on.
+    // Once we find a match we remove this player from the selectedCoachesDpp array and add them to the most available spots position array.
+    // e.g. This could potentially cover DEF-FWD, DEF-RUC, DEF-MID so we only loop 3 times.
+    for(var i=0; i < 3; i++){
+      getTargetedPlayer(availableSpots[3][0], availableSpots[i][0]);
+      if(targetedIndex >= 0){
+        selectedCoachesDpp.splice(targetedIndex,1);
+
+        if(availableSpots[3][0] == "DEF"){
+          selectedCoachesDef.push(targetedPlayer)
+        } 
+        else if(availableSpots[3][0] == "FWD"){
+          selectedCoachesFwd.push(targetedPlayer)
+        }
+        else if(availableSpots[3][0] == "RUC"){
+          selectedCoachesRuc.push(targetedPlayer)
+        }
+        else if(availableSpots[3][0] == "MID"){
+          selectedCoachesMid.push(targetedPlayer);
+        }
+        break;
+      } // Close if() statement.
+    }; // Close for() loop.
+
+    // If the above for() loop cannot find a match, then we try matching the second most availability with the lowest availability.
+    // Then the second most availability with second lowest availability and so on until we find a match.
+    // e.g. This could potentially cover FWD-RUC, FWD-MID so we only loop 2 times.
+    for(var i=0; i < 2; i++){
+      getTargetedPlayer(availableSpots[2][0], availableSpots[i][0]);
+      if(targetedIndex >= 0){
+        selectedCoachesDpp.splice(targetedIndex,1);
+
+        if(availableSpots[2][0] == "DEF"){
+          selectedCoachesDef.push(targetedPlayer)
+        } 
+        else if(availableSpots[2][0] == "FWD"){
+          selectedCoachesFwd.push(targetedPlayer)
+        }
+        else if(availableSpots[2][0] == "RUC"){
+          selectedCoachesRuc.push(targetedPlayer)
+        }
+        else if(availableSpots[2][0] == "MID"){
+          selectedCoachesMid.push(targetedPlayer);
+        }
+        break;
+      } // Close if() statement.
+    }; // Close for() loop.
+
+    // Finally if the above for() loop cannot find a match, then we try matching the third most availability with the lowest availability.
+    // After this we have covered all possible DPP position combinations and the selectedCoachesDpp array should be empty.
+    // e.g. This could potentially cover RUC-MID so we only loop once.
+    for(var i=0; i < 1; i++){
+      getTargetedPlayer(availableSpots[2][0], availableSpots[i][0]);
+      if(targetedIndex >= 0){
+        selectedCoachesDpp.splice(targetedIndex,1);
+
+        if(availableSpots[2][0] == "DEF"){
+          selectedCoachesDef.push(targetedPlayer)
+        } 
+        else if(availableSpots[2][0] == "FWD"){
+          selectedCoachesFwd.push(targetedPlayer)
+        }
+        else if(availableSpots[2][0] == "RUC"){
+          selectedCoachesRuc.push(targetedPlayer)
+        }
+        else if(availableSpots[2][0] == "MID"){
+          selectedCoachesMid.push(targetedPlayer);
+        }
+        break;
+      } // Close if() statement.
+    }; // Close for() loop.
+
+
+}; // Close assignDPP() function.
+
+// We run the assignDpp() function on loop for the length of the selectedCoachesDpp array.
+// This ensures that we assign all of the players in the coaches selectedCoachesDpp array to a position.
+for(var i=0, n=selectedCoachesDpp.length; i < n; i++){
+  assignDpp();
+};
+
+
 
   // Define the updateMyRosterTable() function used to update the data in the rosterTable.
   function updateMyRosterTable(array, indexAdd, classAdd){
@@ -974,9 +1070,6 @@ socket.on("pageLoaded", function(data){
   totalRucSpots = data.loadData.numOfRuc;
   totalMidSpots = data.loadData.numOfMid;
   totalBenSpots = data.loadData.numOfBen;
-
-  console.log(data.loadData.coaches[0].rosterSpots);
-  console.log(data.loadData.coaches[0].positionCount);
 
   // Add the coaches array to the roster filter drop down list.
   // Set the default filter value to the current user.
@@ -1205,10 +1298,6 @@ socket.on('bidUpdate', function(data) {
 
 // Websockets addToBlock() function.
 function addToBlock(player, position, average){
-
-  console.log(player);
-  console.log(position);
-  console.log(average);
 
   // We run the benchCheck() function to set the addToBench variable to 1 or 0.
   benchCheck(position);

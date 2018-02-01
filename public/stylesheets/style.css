@@ -95,6 +95,18 @@ tr{
 	text-align: center;
 }
 
+.static-value{
+	position:absolute;
+	left:12px;
+	font-size:1em;
+	color: grey;
+	top:7px;
+}
+
+#budget{
+	padding-left: 23px;
+}
+
 /* Authentication message stylings */
 .auth_info, .auth_success, .auth_warning, .auth_error {
 margin: 10px 0px;

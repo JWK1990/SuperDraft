@@ -102,33 +102,39 @@ router.post("/register", function(req, res, next){
 			User.findOne({email:req.body.email.toUpperCase()}, function(err, user){
 				if(user != null){
 					return res.render("register", {fail: " Email already in use!", dupEmail: req.body.email, reqBodyFail: req.body})
-				} else if (req.body.password !== req.body.confirmPassword){
-					return res.render("register", {fail: " Passwords did not match.", passMismatch: true, reqBodyFail: req.body})
-				} else {
-					// create object with form input
-					var userData = {
-						email: req.body.email.toUpperCase(),
-						name: req.body.name,
-						teamName: req.body.teamName,
-						password: req.body.password
-					};
+				} 
+			}); // Close User.findOne() function.
 
-					// use schema's 'create' method to insert document into Mongo.
-					User.create(userData, function (error, user){
-						if (error){
-							return next(error);
-						} else {
-							req.session.userId = user._id;
-							req.session.name = user.name;
-							req.session.teamName = user.teamName;
-							req.session.email = user.email;
-							return res.redirect("/myDrafts");
-						}
-					});
+			User.findOne({teamName:req.body.teamName}, function(err, user){
+				if(user != null){
+					return res.render("register", {fail: " Team Name is already taken!", reqBodyFail: req.body})
+				}
+			}); // Close User.findOne() function.
+
+				if(req.body.password !== req.body.confirmPassword){
+					return res.render("register", {fail: " Passwords did not match.", passMismatch: true, reqBodyFail: req.body})
 				}
 
-			}); // Close User.find() function.
+				// create object with form input
+				var userData = {
+					email: req.body.email.toUpperCase(),
+					name: req.body.name,
+					teamName: req.body.teamName,
+					password: req.body.password
+				};
 
+				// use schema's 'create' method to insert document into Mongo.
+				User.create(userData, function (error, user){
+					if (error){
+						return next(error);
+					} else {
+						req.session.userId = user._id;
+						req.session.name = user.name;
+						req.session.teamName = user.teamName;
+						req.session.email = user.email;
+						return res.redirect("/myDrafts");
+					}
+				});
 
 			// confirm that the user typed same password twice.
 
@@ -224,6 +230,12 @@ router.post("/create", function(req, res, next){
 		req.body.numOfBen &&
 		req.body.budget){
 
+			var rosterCount = Number(req.body.numOfDef) + Number(req.body.numOfMid) + Number(req.body.numOfRuc) + Number(req.body.numOfFwd)	+ Number(req.body.numOfBen);
+
+			if(rosterCount == 0){
+				return res.render("create", {fail: " Roster size cannot be 0 players!", reqBodyFail: req.body, rosterSizeFail: true})
+			};
+
 		// First we create a coachesList, which is an array containing objects with all of the relevant coaches details.
 		// We then assign this to the coaches value in the draftData object.
 		var coachesList = [];
@@ -236,13 +248,22 @@ router.post("/create", function(req, res, next){
 			coachesList.push(coachObject);
 		};
 
+		console.log("CoachesList: " + coachesList);
+
+			for(var i=1; i <= req.body.numOfCoaches; i++){
+				if(req["body"]["coach" + i] == ""){
+					return res.render("create", {fail: " All team emails need to be filled!", reqBodyFail: req.body, coachesList: coachesList})
+				}
+			};
+
+
 
 			// create object with form input
 			var draftData = {
 				leagueName: req.body.leagueName,
 				draftYear: 2018,
 				numOfCoaches: req.body.numOfCoaches,
-				rosterSize: req.body.rosterSize,
+				rosterSize: rosterCount,
 				numOfDef: req.body.numOfDef,
 				numOfFwd: req.body.numOfFwd,
 				numOfRuc: req.body.numOfRuc,
@@ -293,9 +314,7 @@ router.post("/create", function(req, res, next){
 			});
 			
 	} else {
-		var err = new Error("All fields required.");
-		err.status = 400;
-		return next(err);
+		return res.render("create", {fail: " All fields are required.", reqBodyFail: req.body})
 }});
 
 router.get("/myDrafts", function(req, res, next){
