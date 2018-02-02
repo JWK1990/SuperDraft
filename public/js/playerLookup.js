@@ -760,10 +760,17 @@ function filterRosterPane(){
   var selectedCoachesPlayers = JSON.parse(JSON.stringify(draftedPlayersList[selectedCoachIndex]));
 
 
-  // First we sort the selectedCoachesPlayers array based on the length of the position string.
+  // First we sort the selectedCoachesPlayers array alphabetically by position.
   selectedCoachesPlayers.sort(function (a, b) {
-    return a.position.length - b.position.length;
+    return b.position < a.position;
   });
+
+ // Then we sort the selectedCoachesPlayers array from highest average to lowest average.
+  selectedCoachesPlayers.sort(function (a, b) {
+    return b.average - a.average;
+  });
+
+  console.log(selectedCoachesPlayers);
 
 
   // Define the selectedCoaches position variables to hold the coaches players from each position.
@@ -807,131 +814,129 @@ function filterRosterPane(){
   }; // Close for() loop.
 
 
-  // The Most Off Least Theory.
-  // We define the assignDpp() function below under the Most Least Theory.
-  // When it comes to dual position players we get a count of available roster spots for each position.
-  // We get the roster positions with both the most and the least avaialble roster spots.
-  // We then look for a "most/least" DPP player who can fit into both of those positions and assign them to the position with the most available spots.
-  // e.g. If we have 5 free Def spots (most) and 2 free Mid spots (least), then we look for a D/M and assign them to a Def spot.
-  function assignDpp(){
-    // Define an object to hold the available roster spots for each position.
-    var availableSpots = [
-                            ["DEF", totalDefSpots - selectedCoachesDef.length],
-                            ["FWD", totalFwdSpots - selectedCoachesFwd.length],
-                            ["RUC", totalRucSpots - selectedCoachesRuc.length],
-                            ["MID", totalMidSpots - selectedCoachesMid.length]
-                        ]
+  // CODE FOR DPP ALLOCATION.
+  // We only run this code if the selected coach has players in their selectedCoachesDpp array.
+  if(selectedCoachesDpp.length > 0){
+    // Define required variables.
+    var combos;
+    var result = [];
+    var testDppArray = [];
+    var availableSpots = [totalDefSpots - selectedCoachesDef.length, totalFwdSpots - selectedCoachesFwd.length, totalRucSpots - selectedCoachesRuc.length, totalMidSpots - selectedCoachesMid.length];
+    var successfulDppArray = [];
 
-    // Sort the availableSpots array from highest position availability to lowest.
-    availableSpots.sort(function(a, b) {
-        return a[1] - b[1];
-    });
+    // Define the binaryCombos() function used to generate an array of potential true/false combinations.
+    function binaryCombos(n){
+      for(y=0; y<Math.pow(2,n); y++){
+          var combo = [];
+          for(x=0; x<n; x++){
+              //shift bit and and it with 1
+              if((y >> x) & 1)
+                  combo.push(true);
+               else 
+                  combo.push(false);
+          }
+            result.push(combo);
+      }
+      combos = result;   
+    }; // Close binaryCombos() function.
 
-    var flipArray;
-    var targetedPos;
-    var targetedIndex;
-    var targetedPlayer;
+    // Run the binaryCombos() function to generate the array of potential true/false combinations for the amount of DPP players.
+    binaryCombos(selectedCoachesDpp.length);
 
-    // Define the getTargetedPlayer() function to get the index and object of a player in the selectedCoachesDpp array with the targetedPos.
-    function getTargetedPlayer(mostPos, leastPos){
-      // Define the flipArray variable to flip the mostPos and leastPos variables into an order that matches the position format of our database.
-      var flipArray = [mostPos, leastPos];
-      flipArray.sort();
-      if(flipArray[0] == "MID"){
-        flipArray.reverse();
+
+    for(x=0; x<combos.length; x++){
+        console.log(combos[x].join(','));
+    };
+
+    // Generate an array of the coaches DPP positions in the following format [["FWD","MID"], ["DEF", "MID"]] etc.
+    var dppPosList = [];
+    for(var i=0; i<selectedCoachesDpp.length; i+=1){
+      var dppChoice = [selectedCoachesDpp[i].position.substring(0,3), selectedCoachesDpp[i].position.substring(4,7)]
+      dppPosList.push(dppChoice)
+    }
+    console.log("DPPPosList");
+    console.log(dppPosList);
+
+    // Define the getSuccessfulDppArray() function used to find a DPP combination that fits into the available positions.
+    // Loop through the combos array containing all the potential true/false combinations and use this to build a testDppArray.
+    // Then check if this testDppArray fits into the available positions.
+    // If it does, we assign it to the successfulDppArray variable and stop the for() loop. If it doesn't, we continue the loop.
+    function getSuccessfulDppArray(){
+      // Loop through the combos array at the highest level and the dppPosList at the lower level.
+      // If combos array value is true, we pick the second DPP position, if false, we pick the first DPP positon (e.g. D/F - True=D, False=F).
+      // We initially did this the other way around (e.g. true=first DPP position, false=second DPP position) but it seemed to follow the order of Mid, Ruc, Fwd, Def which we wanted to reverse.
+      // i is the current array in the list of the combos array (e.g i=0 is the first sub array in the combos array e.g. [true, true, false, true]).
+      // x is the current value within the current array (e.g. x=0 is the first true/false value in the array - e.g. true).
+      // Once we have defined a testDppArray, we check if this array fits within the available positons and if it does we assign it to the successfulDppArray variable.
+      for(var i = 0; i < combos.length; i++){
+        // For each sub array in the dppPosList array.
+        for(var x = 0; x < dppPosList.length; x++){
+          // If x entry in i combos array is true.
+          if(combos[i][x] == true){
+            // Set x entry in the testDppArray to the second DPP value (e.g. D/F = D).
+            testDppArray[x] = dppPosList[x][1];
+          } else {
+            // Else set x entry in the testDppArray to the first DPP value (e.g. D/F = F).
+            testDppArray[x] = dppPosList[x][0];
+          }
+        }; // Close for(dppPosList.length) loop.
+
+        // Count the number of each position in the testDppArray.
+        var testDef = 0;
+        var testFwd = 0;
+        var testRuc = 0;
+        var testMid = 0;
+        for(var n = 0; n < testDppArray.length; n++){
+            if(testDppArray[n] == "DEF"){
+                testDef += 1;
+            } 
+            else if(testDppArray[n] == "FWD"){
+                testFwd += 1;
+            } 
+            else if(testDppArray[n] == "RUC"){
+                testRuc += 1;
+            } 
+            else if(testDppArray[n] == "MID"){
+                testMid += 1;
+            }
+        }; // Close for() loop.
+
+        // Compare the numer of each position in the testDppArray with the number of available spots in each position.
+        // If the testDppArray fits into the avialable spots we then assign it to the successfulyDppArray variable and stop the for() loop.
+        if(testDef <= availableSpots[0] && testFwd <= availableSpots[1] && testRuc <= availableSpots[2] && testMid <= availableSpots[3]){
+          console.log("Positon Conditions Satisfied!");
+          successfulDppArray = testDppArray;
+          break;
+        }
+
+      }; // Close for(combos.length) loop.
+    }; // Close getSuccessfulDppArray() function.
+
+
+    // Run the getSuccessfulDppArray() function.
+    getSuccessfulDppArray();
+
+    // Loop through the selectedCoachesDpp array.
+    // Update each players' position as per the successfulDppArray.
+    // Push each player to the relevant position array.
+    for(var i=0; i < selectedCoachesDpp.length; i++){
+      selectedCoachesDpp[i].position = successfulDppArray[i];
+
+      if(selectedCoachesDpp[i].position == "DEF"){
+        selectedCoachesDef.push(selectedCoachesDpp[i]);
+      }
+      else if(selectedCoachesDpp[i].position == "FWD"){
+        selectedCoachesFwd.push(selectedCoachesDpp[i]);
+      }
+      else if(selectedCoachesDpp[i].position == "RUC"){
+        selectedCoachesRuc.push(selectedCoachesDpp[i]);
+      }
+      else if(selectedCoachesDpp[i].position == "MID"){
+        selectedCoachesMid.push(selectedCoachesDpp[i]);
       }
 
-      // Update our targetedPos variable to contain the position that we want to search the coaches DPP array for.
-      targetedPos = flipArray[0].toUpperCase() + "-" + flipArray[1].toUpperCase();
-
-      // Update the targetedIndex with the index of the targeted player in the selectedCoachesDpp array.
-      targetedIndex = selectedCoachesDpp.findIndex(function(obj) { return obj["position"] === targetedPos; })
-      targetedPlayer = selectedCoachesDpp[targetedIndex];
-    }; // Close getTargetedPlayer() function.
-
-
-    // Loop 3 times. First trying to match a targeted position with the most availablility and the least availability.
-    // If this fails then we check for a targeted position with the most availability and the second least availability and so on.
-    // Once we find a match we remove this player from the selectedCoachesDpp array and add them to the most available spots position array.
-    // e.g. This could potentially cover DEF-FWD, DEF-RUC, DEF-MID so we only loop 3 times.
-    for(var i=0; i < 3; i++){
-      getTargetedPlayer(availableSpots[3][0], availableSpots[i][0]);
-      if(targetedIndex >= 0){
-        selectedCoachesDpp.splice(targetedIndex,1);
-
-        if(availableSpots[3][0] == "DEF"){
-          selectedCoachesDef.push(targetedPlayer)
-        } 
-        else if(availableSpots[3][0] == "FWD"){
-          selectedCoachesFwd.push(targetedPlayer)
-        }
-        else if(availableSpots[3][0] == "RUC"){
-          selectedCoachesRuc.push(targetedPlayer)
-        }
-        else if(availableSpots[3][0] == "MID"){
-          selectedCoachesMid.push(targetedPlayer);
-        }
-        break;
-      } // Close if() statement.
     }; // Close for() loop.
-
-    // If the above for() loop cannot find a match, then we try matching the second most availability with the lowest availability.
-    // Then the second most availability with second lowest availability and so on until we find a match.
-    // e.g. This could potentially cover FWD-RUC, FWD-MID so we only loop 2 times.
-    for(var i=0; i < 2; i++){
-      getTargetedPlayer(availableSpots[2][0], availableSpots[i][0]);
-      if(targetedIndex >= 0){
-        selectedCoachesDpp.splice(targetedIndex,1);
-
-        if(availableSpots[2][0] == "DEF"){
-          selectedCoachesDef.push(targetedPlayer)
-        } 
-        else if(availableSpots[2][0] == "FWD"){
-          selectedCoachesFwd.push(targetedPlayer)
-        }
-        else if(availableSpots[2][0] == "RUC"){
-          selectedCoachesRuc.push(targetedPlayer)
-        }
-        else if(availableSpots[2][0] == "MID"){
-          selectedCoachesMid.push(targetedPlayer);
-        }
-        break;
-      } // Close if() statement.
-    }; // Close for() loop.
-
-    // Finally if the above for() loop cannot find a match, then we try matching the third most availability with the lowest availability.
-    // After this we have covered all possible DPP position combinations and the selectedCoachesDpp array should be empty.
-    // e.g. This could potentially cover RUC-MID so we only loop once.
-    for(var i=0; i < 1; i++){
-      getTargetedPlayer(availableSpots[2][0], availableSpots[i][0]);
-      if(targetedIndex >= 0){
-        selectedCoachesDpp.splice(targetedIndex,1);
-
-        if(availableSpots[2][0] == "DEF"){
-          selectedCoachesDef.push(targetedPlayer)
-        } 
-        else if(availableSpots[2][0] == "FWD"){
-          selectedCoachesFwd.push(targetedPlayer)
-        }
-        else if(availableSpots[2][0] == "RUC"){
-          selectedCoachesRuc.push(targetedPlayer)
-        }
-        else if(availableSpots[2][0] == "MID"){
-          selectedCoachesMid.push(targetedPlayer);
-        }
-        break;
-      } // Close if() statement.
-    }; // Close for() loop.
-
-
-}; // Close assignDPP() function.
-
-// We run the assignDpp() function on loop for the length of the selectedCoachesDpp array.
-// This ensures that we assign all of the players in the coaches selectedCoachesDpp array to a position.
-for(var i=0, n=selectedCoachesDpp.length; i < n; i++){
-  assignDpp();
-};
-
+}; // Close if(selectedCoachesDpp.length) statement.
 
 
   // Define the updateMyRosterTable() function used to update the data in the rosterTable.
@@ -972,6 +977,15 @@ for(var i=0, n=selectedCoachesDpp.length; i < n; i++){
   updateMyRosterTable(selectedCoachesRuc, totalDefSpots + totalMidSpots, "filledRuc");
   updateMyRosterTable(selectedCoachesFwd, totalDefSpots + totalMidSpots + totalRucSpots, "filledFwd");
   updateMyRosterTable(selectedCoachesBen, totalDefSpots + totalMidSpots + totalRucSpots + totalFwdSpots, "filledBen");
+
+
+  console.log(selectedCoachesDpp);
+  console.log(selectedCoachesDef);
+  console.log(selectedCoachesFwd);
+  console.log(selectedCoachesRuc);
+  console.log(selectedCoachesMid);
+  console.log(selectedCoachesBen);
+
 
 }; // Close filterRosterPane() function.
 
