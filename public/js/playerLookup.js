@@ -1012,6 +1012,8 @@ var room = draftID;
 
 socket.on('connect', function(){
   // Connected, let's sign up to receive messages for this room.
+  console.log("Joined Coach!");
+  pageLoad();
   socket.emit('room', room);
 }); // Close socket.on('connect').
 
@@ -1122,10 +1124,6 @@ socket.on("pageLoaded", function(data){
   updateSPP(topPlayer);
 
 }); // Close socket.on() function.
-
-// Comment out for development.
-
-pageLoad();
 
 
 
