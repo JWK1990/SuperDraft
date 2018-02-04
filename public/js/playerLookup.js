@@ -35,8 +35,6 @@ $("#bidForm").submit(function(e){
   e.preventDefault();
 });
 
-// Hide dialog boxes.
-$("#dialogues").hide();
 
 
 // Set up Data Tables.
@@ -1013,6 +1011,8 @@ var room = draftID;
 socket.on('connect', function(){
   // Connected, let's sign up to receive messages for this room.
   console.log("Joined Coach!");
+  document.getElementById("body").style.display = "hide";
+  document.getElementById("body").style.display = "show";
   pageLoad();
   socket.emit('room', room);
 }); // Close socket.on('connect').
