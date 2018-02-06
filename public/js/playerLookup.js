@@ -583,13 +583,22 @@ if(data === currentUser){
 }; // Close lockBid() function.
 
 
+function setDraftedPlayers(data){
+
+  for(var i=0; i < data.length; i++){
+    myTeamDT.row.add([i+1, data[i].name, data[i].position, data[i].team, "$" + data[i].price]).draw(false);
+  } // Close for() loop.
+}; // Close setDraftedPlayers() function.
+
+
+
+
 function updateBudgets(data){
   for (var i = 1; i < budgetsTableRows.length; i++) {
     budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML = "$" + (data[i-1].budget - (rosterSize -1 - data[i-1].numOfPlayers));
     budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML = "$" + data[i-1].budget;
     budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML = data[i-1].numOfPlayers + "/" + rosterSize;
-  }
-
+  } // Close for() loop.
 }; // Close updateBudgets() function.
 
 
@@ -1011,8 +1020,6 @@ var room = draftID;
 socket.on('connect', function(){
   // Connected, let's sign up to receive messages for this room.
   console.log("Joined Coach!");
-  document.getElementById("body").style.display = "hide";
-  document.getElementById("body").style.display = "show";
   pageLoad();
   socket.emit('room', room);
 }); // Close socket.on('connect').
@@ -1071,10 +1078,6 @@ var pageLoad = function(){
 
 socket.on("pageLoaded", function(data){
 
-  // Hide the draftID and currentUser from the top of the budgets pane.
-  document.getElementById("draftID").style.display = "none";
-  document.getElementById("currentUser").style.display = "none";
-
   playerData = data.playerData;
   adminCoach = data.loadData.admin;
   numOfCoaches = data.loadData.numOfCoaches;
@@ -1099,6 +1102,9 @@ socket.on("pageLoaded", function(data){
   // Run the filterRosterPane() function to update the roster pane with the selected coaches team.
   filterRosterPane();
 
+
+  setDraftedPlayers(data.loadData.results);
+  updateBudgets(data.loadData.coaches);
   highlightSearch(data.loadData.results);
   highlightOtb(data.loadData.pickCounter);
   updateSearch();

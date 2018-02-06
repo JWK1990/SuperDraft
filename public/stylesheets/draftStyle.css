@@ -86,6 +86,7 @@ input, select, textarea{
   float: left;
   border-collapse: collapse;
   background-color: #4d4d4d;
+  overflow: hidden;
 }
 
     /* Left Column Stylings.*/
@@ -156,6 +157,7 @@ input, select, textarea{
   float: left;
   border-collapse: collapse;
   background-color: #4d4d4d;
+  overflow: hidden;
 }
 
 
@@ -322,6 +324,7 @@ input, select, textarea{
   float: left;
   border-collapse: collapse;
   background-color: #4d4d4d;
+  overflow: hidden;
 }
 
       .myRosterPane{

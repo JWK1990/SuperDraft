@@ -13,7 +13,7 @@ html(lang='en')
 		link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
 		script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
 
-	body#body
+	body
 		div#dialogues(style="display: none")
 			div#dialogDrafted(title="Player Already Drafted")
 				p Please select another player!
@@ -47,8 +47,8 @@ html(lang='en')
 
 
 			.budgetsPane
-				h3#currentUser #{currentUser}
-				h5#draftID #{drafts[0]._id}
+				h3#currentUser(style="display: none") #{currentUser}
+				h5#draftID(style="display: none") #{drafts[0]._id}
 				table#budgetsTable
 					tr.header
 						th.budgetName Team
@@ -221,14 +221,6 @@ html(lang='en')
 							th Pos
 							th Team
 							th $
-						tbody
-							each result, i in results
-									tr
-										td= results.length - i
-										td= result.name
-										td= result.position
-										td= result.team
-										td= "$" + result.price
 
 			
 
