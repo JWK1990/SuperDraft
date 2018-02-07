@@ -92,6 +92,28 @@ var addToBench;
 var otbAddToBench;
 
 // Position validation variables.
+// Hold the individual rules for different position combinations.
+var defRule;
+var fwdRule;
+var rucRule;
+var midRule;
+var dfRule;
+var drRule;
+var dmRule;
+var frRule;
+var fmRule;
+var rmRule;
+// Use the individual rules above to determine whether there is a spot on the field on the current coaches team for each different position.
+var defSpot;
+var fwdSpot;
+var rucSpot;
+var midSpot;
+var dfSpot;
+var drSpot;
+var dmSpot;
+var frSpot;
+var fmSpot;
+var rmSpot;
 var rosterSpotsArray;
 var otbRosterSpotsArray;
 var availablePosition;
@@ -156,7 +178,6 @@ var currentUser = document.getElementById("currentUser").innerHTML;
 var otbAverage;
 var demo = document.getElementById("demo");
 var absentOtbOverrideTimeout;
-var otbCounter;
 
 // Bidding variables.
 var currentBid = document.getElementById("currentBid");
@@ -272,12 +293,15 @@ selectPlayer();
 
 var counter;
 var distance;
+var demo = document.getElementById("demo");
 var countDownDate;
 var now;
 
 
 // Define startCountdown function to start the countdown clock.
 var startCountdown = function(endTime){
+  // Increase the font size back to normal size after it is reduced for 'On the block:' text.
+  demo.style.fontSize = "3vmin";
 
   // Set the date we're counting down to
   countDownDate = Number(endTime);
@@ -298,7 +322,6 @@ var startCountdown = function(endTime){
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
       
       // Output the result in an element with id="demo"
-      demo.style.fontSize = "3vmin";
       demo.innerHTML = seconds + " secs";
       
       // If the count down is over, update the text in the clock pane and wait 5 seconds before putting the next coach on the block.
@@ -476,10 +499,8 @@ function highlightBidder(data){
 
     if (td) {
     if (td.innerHTML === data) {
-      budgetsTableRows[i].style.backgroundColor = "yellow";
-      budgetsTableRows[i].style.color = "#4d4d4d";
+      budgetsTableRows[i].style.color = "yellow";
     } else {
-        budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
         budgetsTableRows[i].style.color = "white";
     }
     } 
@@ -501,16 +522,16 @@ function highlightOtb(data){
     currentOtbIndex = data;
   }
 
-  // Clears colour on all team names in Budgets Table and bolds the current user.
+  // Clears underline on all team names in Budgets Table.
   for (var i = 1; i < budgetsTableRows.length; i++) {
     budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
     if(budgetsTableRows[i].getElementsByTagName("td")[0].innerHTML === currentUser){
       budgetsTableRows[i].style.fontWeight = "bold";
-      budgetsTableRows[i].getElementsByTagName("td")[0].style.textDecoration = "underline";
+      budgetsTableRows[i].style.fontSize = "1.7vmin";
     }
   };
 
-  // Adds colour to the coach currently on the block as determined by the pick counter.
+  // Adds an underline to the coach currently on the block as determined by the pick counter.
   budgetsTableRows[currentOtbIndex].style.backgroundColor = "rgba(0,0,255,0.5)";
 
   // Updates the value of the currentOtbCoach based on the pick counter.
@@ -563,9 +584,7 @@ if(data === currentUser){
 
 
 function setDraftedPlayers(data){
-  // Clear the current myTeam table.
-  myTeamDT.clear();
-  // Populate the myTeam table with the drafted players details.
+
   for(var i=0; i < data.length; i++){
     myTeamDT.row.add([i+1, data[i].name, data[i].position, data[i].team, "$" + data[i].price]).draw(false);
   } // Close for() loop.
@@ -575,18 +594,10 @@ function setDraftedPlayers(data){
 
 
 function updateBudgets(data){
-
   for (var i = 1; i < budgetsTableRows.length; i++) {
-    if(data[i-1].numOfPlayers < rosterSize){
-      budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML = "$" + (data[i-1].budget - (rosterSize -1 - data[i-1].numOfPlayers));
-      budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML = "$" + data[i-1].budget;
-      budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML = data[i-1].numOfPlayers + "/" + rosterSize;
-  } else {
-      budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML = "-";
-      budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML = "-";
-      budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML = "Full";
-  }
-
+    budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML = "$" + (data[i-1].budget - (rosterSize -1 - data[i-1].numOfPlayers));
+    budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML = "$" + data[i-1].budget;
+    budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML = data[i-1].numOfPlayers + "/" + rosterSize;
   } // Close for() loop.
 }; // Close updateBudgets() function.
 
@@ -988,9 +999,6 @@ function filterRosterPane(){
 
 // Define the addRosterFilterOption() function to add the coaches array do the roster filter drop down list.
 function addRosterFilterOption(data){
-  // Clear any current filter options.
-  $('#myRosterFilter').html('');
-  // Add in the required filter options.
   for(var i=0; i< data.length; i++){
     var option = document.createElement("option");
     option.text = data[i].teamName2;
@@ -1037,14 +1045,7 @@ socket.on("joinedCoach", function(data){
     var td = budgetsTableRows[i].getElementsByTagName("td")[0];
     td.innerHTML = data.joinedCoaches[i-1].teamName2;
   }
-
-  // Re-run the addRosterFilterOption() function every time a new coach joins to update the text in the select options from an email to a team name.
-  addRosterFilterOption(data.joinedCoaches);
-  teamFilter.value = currentUser;
 });
-
-
-
 
 socket.on("socketDetails", function(data){
   // Sets the current users socket ID to the socket ID returned from the server side combined with the room ID to match the format of the connectedSocketsList.
@@ -1101,9 +1102,7 @@ socket.on("pageLoaded", function(data){
   // Run the filterRosterPane() function to update the roster pane with the selected coaches team.
   filterRosterPane();
 
-  // Reduce the size of the text in the otbPane for the "On The Block" text and run the relevant functions.
-  demo.style.fontSize = "2vmin";
-  demo.innerHTML = "On The Block: " + data.loadData.otbCoach;
+
   setDraftedPlayers(data.loadData.results);
   updateBudgets(data.loadData.coaches);
   highlightSearch(data.loadData.results);
@@ -1116,13 +1115,7 @@ socket.on("pageLoaded", function(data){
   if (numOfPlayersDrafted >= totalRosterSpots){
     addToQueue.disabled = true;
     addToQueue.style.backgroundColor = "#DCDCDC";
-    demo.innerHTML = "Draft Complete!";
-    // Set budget table rows back to normal.
-    for(var i = 1; i < budgetsTableRows.length; i++) {
-      budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
-      budgetsTableRows[i].style.color = "white";
-    } // Close for() loop.
-  }; // Close if() statement.
+  }
 
   // Set the position validation variables.
   setBenchCount(data.loadData);
@@ -1148,9 +1141,7 @@ var draft = function(){
 
 socket.on('playerDrafted', function(data) {
 
-  // Reduce font size for "On The BlocK" text and update details in otbPane.
-  demo.style.fontSize = "2vmin";
-  currentBid.innerHTML = "";
+  currentBid.innerHTML = "-";
   otbName.innerHTML = "-";
   otbTeamPos.innerHTML = "-";
   otbPic.src = "./images/TBA.png";
@@ -1166,6 +1157,7 @@ socket.on('playerDrafted', function(data) {
   updateBudgets(data.dbData.coaches);
 
   updateSearch();
+
 
   // Add a row to the myTeamDT data table containing the details of the most recently drafted player.
   var index = data.dbData.results.length -1;
@@ -1188,13 +1180,6 @@ socket.on('playerDrafted', function(data) {
     demo.innerHTML = "Draft Complete!";
     addToQueue.disabled = true;
     addToQueue.style.backgroundColor = "#DCDCDC";
-
-    // Set budget table rows back to normal.
-    for(var i = 1; i < budgetsTableRows.length; i++) {
-      budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
-      budgetsTableRows[i].style.color = "white";
-    }; // Close for() loop.
-
   } else {
 
     // Call highlightOtb() function to underline the on the block coach.
@@ -1221,7 +1206,6 @@ socket.on('playerDrafted', function(data) {
     // The absentOtbOverride waits 25 seconds (allowing a buffer for the 20 second timer to elapse).
     // It then automatically gets the first connected socket id to add the top otb player onto the block on behalf of the absent coach.
     function absentOtbOverride(){
-      clearInterval(otbCounter);
       if(otbName.innerHTML === "-" && currentUserSocketID === firstConnectedSocketID){
         addToBlock(otbTopPlayer[1].innerHTML, otbTopPlayer[2].innerHTML, otbTopPlayer[3].innerHTML);
         console.log("ABSENT OTB OVERRIDE!");
@@ -1230,24 +1214,14 @@ socket.on('playerDrafted', function(data) {
     // The below line sets the absentOtbOverride function to be run after 25 seconds, 
     // allowing ample time for the 20 second countdown to elapse if the otb coach is logged in.
     // We need to assign this to the absentOtbOverrideTimeout variable so that we can clear it later when the 'otbUpdate' function is run.
-    absentOtbOverrideTimeout = setTimeout(absentOtbOverride, 21000);
+    absentOtbOverrideTimeout = setTimeout(absentOtbOverride, 25000);
 
     // Set the maxBid variable to the current users Max Bid as per the Budgets pane.
     setMaxBid(data.dbData);
 
-    // Updates the 'Sold for' text to say "On The Block..." with a countdown for all coaches other than the currentOtbCoach.
-    if(currentUser !== currentOtbCoach){
-      var time = 20;
-      demo.innerHTML = "On The Block: " + data.dbData.otbCoach + " (" + time + ")";
-
-      otbCounter = setInterval(function(){
-        time -= 1;
-        demo.innerHTML = "On The Block: " + data.dbData.otbCoach + " (" + time + ")";
-          if(time <= 0){
-            clearInterval(otbCounter);
-          };
-      }, 1000); // Close setInterval().
-    }; // Close if(currentUser != currentOtbCoach) statement.
+    // Updates the 'Sold for' text to say "Selection Pending...".
+    demo.innerHTML = "On The Block: " + data.dbData.otbCoach;
+    demo.style.fontSize = "2vmin";
 
   } // Close else statement.
 
@@ -1373,10 +1347,7 @@ socket.on('otbUpdate', function(data) {
   // If we don't do this then it keeps counting in the background and can run the absentOtbOverride when we don' want it to.
   clearTimeout(absentOtbOverrideTimeout);
 
-  // Clear the sppCounter so that it stops counting.
   clearInterval(sppCounter);
-  // Clear the otbCountdown so that it stops counting.
-  clearInterval(otbCounter);
   addToQueue.disabled = true;
   placeBidButton.disabled = false;
   placeBidButton.style.background = "blue";
