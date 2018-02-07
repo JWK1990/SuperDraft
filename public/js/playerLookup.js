@@ -499,8 +499,10 @@ function highlightBidder(data){
 
     if (td) {
     if (td.innerHTML === data) {
-      budgetsTableRows[i].style.color = "yellow";
+      budgetsTableRows[i].style.backgroundColor = "yellow";
+      budgetsTableRows[i].style.color = "#4d4d4d";
     } else {
+        budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
         budgetsTableRows[i].style.color = "white";
     }
     } 
@@ -584,7 +586,9 @@ if(data === currentUser){
 
 
 function setDraftedPlayers(data){
-
+  // Clear the current myTeam table.
+  myTeamDT.clear();
+  // Populate the myTeam table with the drafted players details.
   for(var i=0; i < data.length; i++){
     myTeamDT.row.add([i+1, data[i].name, data[i].position, data[i].team, "$" + data[i].price]).draw(false);
   } // Close for() loop.
@@ -999,6 +1003,9 @@ function filterRosterPane(){
 
 // Define the addRosterFilterOption() function to add the coaches array do the roster filter drop down list.
 function addRosterFilterOption(data){
+  // Clear any current filter options.
+  $('#myRosterFilter').html('');
+  // Add in the required filter options.
   for(var i=0; i< data.length; i++){
     var option = document.createElement("option");
     option.text = data[i].teamName2;
@@ -1045,6 +1052,11 @@ socket.on("joinedCoach", function(data){
     var td = budgetsTableRows[i].getElementsByTagName("td")[0];
     td.innerHTML = data.joinedCoaches[i-1].teamName2;
   }
+
+  // Re-run the addRosterFilterOption() function every time a new coach joins to update the text in the select options from an email to a team name.
+  addRosterFilterOption(data.joinedCoaches);
+  teamFilter.value = currentUser;
+
 });
 
 socket.on("socketDetails", function(data){
@@ -1078,6 +1090,8 @@ var pageLoad = function(){
 
 socket.on("pageLoaded", function(data){
 
+  demo.style.fontSize = "2vmin";
+  demo.innerHTML = "On The Block: " + data.loadData.otbCoach;
   playerData = data.playerData;
   adminCoach = data.loadData.admin;
   numOfCoaches = data.loadData.numOfCoaches;
@@ -1090,10 +1104,12 @@ socket.on("pageLoaded", function(data){
   totalMidSpots = data.loadData.numOfMid;
   totalBenSpots = data.loadData.numOfBen;
 
+
   // Add the coaches array to the roster filter drop down list.
   // Set the default filter value to the current user.
   addRosterFilterOption(data.loadData.coaches);
   teamFilter.value = currentUser;
+
   // Update the draftedPlayers list with the updated results list from the DB.
   // We used ‘JSON.parse(JSON.stringify(data.loadData.results))’ to convert the data.loadData.resutls data into a string and then re-convert it into an object.
   // We do this because if we just assigned data.loadData.results directly to the draftedPlayersList variable then we are passing the value by reference and anything we do to the draftedPlayersList also updates the data.loadData.results variable.
@@ -1220,8 +1236,8 @@ socket.on('playerDrafted', function(data) {
     setMaxBid(data.dbData);
 
     // Updates the 'Sold for' text to say "Selection Pending...".
-    demo.innerHTML = "On The Block: " + data.dbData.otbCoach;
     demo.style.fontSize = "2vmin";
+    demo.innerHTML = "On The Block: " + data.dbData.otbCoach;
 
   } // Close else statement.
 
