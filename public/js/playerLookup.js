@@ -1230,14 +1230,14 @@ socket.on('playerDrafted', function(data) {
     // The below line sets the absentOtbOverride function to be run after 25 seconds, 
     // allowing ample time for the 20 second countdown to elapse if the otb coach is logged in.
     // We need to assign this to the absentOtbOverrideTimeout variable so that we can clear it later when the 'otbUpdate' function is run.
-    absentOtbOverrideTimeout = setTimeout(absentOtbOverride, 25000);
+    absentOtbOverrideTimeout = setTimeout(absentOtbOverride, 21000);
 
     // Set the maxBid variable to the current users Max Bid as per the Budgets pane.
     setMaxBid(data.dbData);
 
     // Updates the 'Sold for' text to say "On The Block..." with a countdown for all coaches other than the currentOtbCoach.
     if(currentUser !== currentOtbCoach){
-      var time = 23;
+      var time = 20;
       demo.innerHTML = "On The Block: " + data.dbData.otbCoach + " (" + time + ")";
 
       otbCounter = setInterval(function(){
