@@ -63,11 +63,11 @@ router.post("/login", function(req, res, next){
 
 		User.findOne({email: req.body.email.toUpperCase()}, function(error, user){
 			if(user == null){
-				return res.render("login", {fail:" User does not exist!"});
+				return res.render("login", {fail:" User does not exist!", email: req.body.email});
 			} else {
 				User.authenticate(req.body.email.toUpperCase(), req.body.password, function(error, user){
 					if (error || !user){
-						return res.render("login",{fail:" Wrong password! Please Try Again."});
+						return res.render("login",{fail:" Wrong password! Please Try Again.", email: req.body.email});
 					} else {
 						req.session.userId = user._id;
 						req.session.name = user.name;
@@ -80,7 +80,7 @@ router.post("/login", function(req, res, next){
 		}); // Close User.find();
 
 	} else {
-		return res.render("login",{fail:" Email and password are required!"});
+		return res.render("login",{fail:" Email and password are required!", email: req.body.email});
 	}
 	});
 
