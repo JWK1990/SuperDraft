@@ -164,7 +164,6 @@ var sppPrice14 = document.getElementById("price14");
 var startValue = document.getElementById("startValue");
 var startingBid;
 var topPlayer;
-var otbTopPlayer;
 
 // On the block variables.
 var otbName = document.getElementById("otbName");
@@ -177,7 +176,7 @@ var currentOtbCoach;
 var currentUser = document.getElementById("currentUser").innerHTML;
 var otbAverage;
 var demo = document.getElementById("demo");
-var absentOtbOverrideTimeout;
+var delayDraftTimeout;
 
 // Bidding variables.
 var currentBid = document.getElementById("currentBid");
@@ -300,6 +299,7 @@ var now;
 
 // Define startCountdown function to start the countdown clock.
 var startCountdown = function(endTime){
+
   // Increase the font size back to normal size after it is reduced for 'On the block:' text.
   demo.style.fontSize = "3vmin";
 
@@ -331,18 +331,6 @@ var startCountdown = function(endTime){
           demo.innerHTML = "Sold for " + currentBid.innerHTML;
           placeBidButton.style.background = "grey";
           placeBidButton.innerHTML = "-";
-
-          // Waits 5 seconds before running the delayDraft() function, this replaces the admin user clicking the next button.
-          // This function checks if the placeBidButton has a '-' which means that drafting has finished.
-          // Previously this only checked the admins screen, however to reduce the reliance on the admin being logged in, we now check the users screen with the firstConnectedSocketID.
-          // We wait 5 seconds to ensure that drafting has completed for all coaches.
-          function delayDraft(){
-            if (placeBidButton.innerHTML === "-" && currentUserSocketID === firstConnectedSocketID){
-             draft();
-            }
-          };
-
-          setTimeout(delayDraft, 5000);
 
       }
   }, 10);
@@ -381,31 +369,6 @@ function getTopPlayer(){
   } // Close catch() statement.
 }; // Close getTopPlayer() function.
 
-// Define getTopPlayer() used to get the top available valid player for the current user from the Player Search pane.
-// If there is an error then we log the error. There shouldn't be though as the otb coach should always have a top available player.
-function otbGetTopPlayer(){
-  try {
-    for (var i = 1; i < searchTableRows.length; i++) {
-        if(Boolean(searchTableRows[i].style.textDecoration === "")){
-
-          // Looks through the avaialble players and performs a benchCheck.
-          // benchCheck() then sets the addToBench variable to 0 or 1 based on whether the currentCoach has availability for that position.
-          otbBenchCheck(searchTableRows[i].getElementsByTagName("td")[2].innerHTML);
-
-          // Update topPlayer variable if there is a spot available in the current coaches team for the current player in the loop.
-          if(otbAddToBench < 1 || otbBenchCount < totalBenSpots){
-            otbTopPlayer = searchTableRows[i].getElementsByTagName("td");
-            break;
-          }
-        }
-    }
-    console.log("OTB TOP PLAYER(): " + otbTopPlayer[1].innerHTML)
-
-  } catch(err){
-      console.log(err);
-  } // Close catch() statement.
-}; // Close otbGetTopPlayer() function.
-
 
 // Define updateSPP() used to update the text in the Selected Player Pane.
 function updateSPP(data){
@@ -429,11 +392,6 @@ function updateSPP(data){
   sppPrice16.innerHTML = selectedPlayerData.draftPrice16;
   sppPrice15.innerHTML = selectedPlayerData.draftPrice15;
   sppPrice14.innerHTML = selectedPlayerData.draftPrice14;
-
-  // Update the otb player details held in the client.
-  otbPlayerID = data[1].innerHTML;
-  otbPos = data[2].innerHTML;
-  otbAverage = data[3].innerHTML;
 
 }; // Close updateSPP() function.
 
@@ -480,14 +438,16 @@ var sppStartCountdown = function(sppEndTime){
           it so that only the coach that is on the block sees the SPP countdown timer. I will probably move this countdown into the existing otb clock
           pane as well. */
 
-          if(currentUser === currentOtbCoach){
-            updateSPP(otbTopPlayer);
-            addToBlock(otbPlayerID, otbPos, otbAverage);
-          }
+            if(currentUser === currentOtbCoach){
+              updateSPP(topPlayer);
+            } // Close if(currentUser === currentOtbCoach) statement.
 
-       }
-      }
-  }, 10);
+          } // Close if(otbName.innerHTML === "-") statement.
+
+      } // Close if(sppDistance <= 0) statement.
+
+  }, 10) // Close sppCounter setInterval() function.
+
 }; // Close sppStartCountdown() function.
 
 
@@ -1026,7 +986,6 @@ var room = draftID;
 
 socket.on('connect', function(){
   // Connected, let's sign up to receive messages for this room.
-  console.log("Joined Coach!");
   pageLoad();
   socket.emit('room', room);
 }); // Close socket.on('connect').
@@ -1035,6 +994,7 @@ socket.on('connect', function(){
 
 // The socket.on("joinedCoach") function updates the Team Names in the budgets pane for all users connected to the room every time a new coach joins the room.
 socket.on("joinedCoach", function(data){
+  console.log("Joined Coach!");
 
   // First we clear the connectedSocketList. Then we loop through the socketList of all connected sockets (across all rooms) and adds them to the current rooms connectedSocketsList if they start with the correct room.
   connectedSocketsList = [];
@@ -1071,7 +1031,10 @@ socket.on('disconnectedCoach', function(data){
     connectedSocketsList = [];
 
   for (var i=0; i < data.socketList.length; i++){
+    console.log("Socket List.");
+    console.log(data.socketList);
     if(data.socketList[i].startsWith(room)){
+      console.log("True");
       connectedSocketsList.push(data.socketList[i]);
     }
   };
@@ -1079,7 +1042,7 @@ socket.on('disconnectedCoach', function(data){
   // Gets the firstConnectedSocketID by getting the first ID from the connectedSocketsList.
   firstConnectedSocketID = connectedSocketsList[0];
 
-}); // Close socket.on('disconnect').
+}); // Close socket.on('disconnectedCoach').
 
 
 
@@ -1139,7 +1102,6 @@ socket.on("pageLoaded", function(data){
   setRosterArray(data.loadData);
   otbSetRosterArray(data.loadData);
   getTopPlayer();
-  otbGetTopPlayer();
 
 
   // Run the updateSPP() function to load the top available valid player for the current user.
@@ -1150,12 +1112,9 @@ socket.on("pageLoaded", function(data){
 
 
 
-// WebSockets draft() function below used to draft a player once bidding is complete.
-var draft = function(){
-  socket.emit('draft', { draftID: draftID, biddingTeam: biddingTeam, price: currentBid.innerHTML});
-};
-
 socket.on('playerDrafted', function(data) {
+  // Clear any exisint delayDraftTimeout. This shouldnt be required because of hte if condiiton of the delayDraft() function but putting in as a safeguard.
+  clearTimeout(delayDraftTimeout);
 
   currentBid.innerHTML = "-";
   otbName.innerHTML = "-";
@@ -1172,6 +1131,7 @@ socket.on('playerDrafted', function(data) {
   // Call updateBudgets() to update the Budgets pane.
   updateBudgets(data.dbData.coaches);
 
+  // Update the player search pane to grey out any drafted players.
   updateSearch();
 
 
@@ -1208,7 +1168,6 @@ socket.on('playerDrafted', function(data) {
     setRosterArray(data.dbData);
     otbSetRosterArray(data.dbData);
     getTopPlayer();
-    otbGetTopPlayer();
 
     // Check the SPP to see if it currently has a previously drafted player and update if required.
     checkSPP(data.dbData.results);
@@ -1219,18 +1178,6 @@ socket.on('playerDrafted', function(data) {
       sppStartCountdown(data.dbData.otbEndTime);
     };
 
-    // The absentOtbOverride waits 25 seconds (allowing a buffer for the 20 second timer to elapse).
-    // It then automatically gets the first connected socket id to add the top otb player onto the block on behalf of the absent coach.
-    function absentOtbOverride(){
-      if(otbName.innerHTML === "-" && currentUserSocketID === firstConnectedSocketID){
-        addToBlock(otbTopPlayer[1].innerHTML, otbTopPlayer[2].innerHTML, otbTopPlayer[3].innerHTML);
-        console.log("ABSENT OTB OVERRIDE!");
-      }
-    };
-    // The below line sets the absentOtbOverride function to be run after 25 seconds, 
-    // allowing ample time for the 20 second countdown to elapse if the otb coach is logged in.
-    // We need to assign this to the absentOtbOverrideTimeout variable so that we can clear it later when the 'otbUpdate' function is run.
-    absentOtbOverrideTimeout = setTimeout(absentOtbOverride, 25000);
 
     // Set the maxBid variable to the current users Max Bid as per the Budgets pane.
     setMaxBid(data.dbData);
@@ -1280,6 +1227,8 @@ var bid = function(){
 
 // Locks the bidding button, clears the countdown timer and displays 'Bid Pending' for all clients every time one user submits a bid.
 socket.on('bidLock', function(){
+  // Clear any exisint delayDraftTimeout. This shouldnt be required because of hte if condiiton of the delayDraft() function but putting in as a safeguard.
+  clearTimeout(delayDraftTimeout);
   placeBidButton.disabled = true;
   clearInterval(counter);
   placeBidButton.innerHTML = 'Bid Pending...';
@@ -1358,10 +1307,6 @@ function addToBlock(player, position, average){
 }; // Close addToBlock() function.
 
 socket.on('otbUpdate', function(data) {
-
-  // First we clear the absentOtbOverride setTimeout.
-  // If we don't do this then it keeps counting in the background and can run the absentOtbOverride when we don' want it to.
-  clearTimeout(absentOtbOverrideTimeout);
 
   clearInterval(sppCounter);
   addToQueue.disabled = true;

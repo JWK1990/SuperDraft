@@ -76,7 +76,7 @@ html(lang='en')
 							h3#selectedPosition -
 						.sppTopRightBottom
 							.sppTopRightBottomLeft
-								button#addToQueue(disabled=true, onclick='addToBlock(otbPlayerID, otbPos, otbAverage)') ADD TO BLOCK
+								button#addToQueue(disabled=true, onclick='addToBlock(selectedPlayerName.innerHTML, selectedPlayerPosition.innerHTML, sppAve.innerHTML)') ADD TO BLOCK
 							.sppTopRightBottomRight
 								input#startValue(type='number', name='startValue', value=1, min=1)
 

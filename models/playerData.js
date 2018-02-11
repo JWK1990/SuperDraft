@@ -94,6 +94,9 @@ var PlayerSchema = new mongoose.Schema({
 	},
 	draftee16: {
 		type: String
+	},
+	drafted: {
+		type: Boolean
 	}
 });
 
