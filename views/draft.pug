@@ -39,7 +39,7 @@ html(lang='en')
 				.otbImgHolderRight
 					h1#currentBid
 			.otbBiddingHolder
-				button#placeBid(onclick="bid()")
+				button#placeBid(onclick="myApp.bid()")
 
 			.clockPane
 				#clock
@@ -76,7 +76,7 @@ html(lang='en')
 							h3#selectedPosition -
 						.sppTopRightBottom
 							.sppTopRightBottomLeft
-								button#addToQueue(disabled=true, onclick='addToBlock(selectedPlayerName.innerHTML, selectedPlayerPosition.innerHTML, sppAve.innerHTML)') ADD TO BLOCK
+								button#addToQueue(disabled=true, onclick='myApp.addToBlock(myApp.selectedPlayerName.innerHTML, myApp.selectedPlayerPosition.innerHTML, myApp.sppAve.innerHTML)') ADD TO BLOCK
 							.sppTopRightBottomRight
 								input#startValue(type='number', name='startValue', value=1, min=1)
 
@@ -108,24 +108,24 @@ html(lang='en')
 
 			.playerFilterPane
 				.pfpLeft
-					select#positionSearch(onchange='updateSearch()')
+					select#positionSearch(onchange='myApp.updateSearch()')
 						option(value='All') All Pos
 						option(value='DEF') DEF
 						option(value='MID') MID
 						option(value='RUC') RUC
 						option(value='FWD') FWD
 				.pfpInnerLeft
-					input#playerSearch(type='text', onkeyup='updateSearch()', placeholder='Search for players...')
+					input#playerSearch(type='text', onkeyup='myApp.updateSearch()', placeholder='Search for players...')
 
 				.pfpInnerRight
 					.pfpInnerRightLeft
-						input#watchlistSearch(type='checkbox', onchange='updateSearch()')
+						input#watchlistSearch(type='checkbox', onchange='myApp.updateSearch()')
 					.pfpInnerRightRight
 						h3 Watchlist
 
 				.pfpRight
 					.pfpRightLeft
-						input#hideDrafted(type='checkbox', onchange='updateSearch()')
+						input#hideDrafted(type='checkbox', onchange='myApp.updateSearch()')
 					.pfpRightRight
 						h3 Hide Drafted
 
@@ -158,7 +158,7 @@ html(lang='en')
 
 			.myRosterPane
 				.myRosterFilterPane
-					select#myRosterFilter(onchange="filterRosterPane()")
+					select#myRosterFilter(onchange="myApp.filterRosterPane()")
 
 				.myRosterTablePane
 					table#myRosterTable
