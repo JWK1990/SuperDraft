@@ -1037,7 +1037,7 @@ socket.on('playerDrafted', function(data) {
       // If the currentUser is logged into the room then the sppStartCountdown will start a 20 second countdown
       // after which it will select the top available player to be automatically put on the block.
       if(myApp.currentUser === myApp.currentOtbCoach){
-        myApp.sppStartCountdown(data.dbData.otbEndTime);
+        myApp.sppStartCountdown(data.sppEndTime);
       };
       // Set the maxBid variable to the current users Max Bid as per the Budgets pane.
       myApp.setMaxBid(data.dbData);
@@ -1061,7 +1061,7 @@ socket.on('bidLock', function(){
 
 
 socket.on('bidUpdate', function(data) {
-  myApp.startCountdown(data.bidData.otbEndTime);
+  myApp.startCountdown(data.otbEndTime);
   myApp.highlightBidder(data.bidData.otbBidder);
   myApp.lockBid(data.bidData.otbBidder, myApp.currentUser);
   myApp.currentBid.innerHTML = "$" + data.bidData.otbBid;
@@ -1100,7 +1100,7 @@ socket.on('otbUpdate', function(data) {
   myApp.addToQueue.disabled = true;
   myApp.placeBidButton.disabled = false;
   myApp.placeBidButton.style.background = "blue";
-  myApp.startCountdown(data.updatedOtbData.otbEndTime);
+  myApp.startCountdown(data.otbEndTime);
   myApp.highlightBidder(data.updatedOtbData.otbBidder);
   myApp.lockBid(data.updatedOtbData.otbBidder, myApp.currentUser);
   myApp.currentBid.innerHTML = "$" + data.updatedOtbData.otbBid;
