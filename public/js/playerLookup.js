@@ -457,12 +457,18 @@ var myApp = {
 
 
     updateBudgets: function(data){
-     var budgetsTable = document.getElementById("budgetsTable");
+      var budgetsTable = document.getElementById("budgetsTable");
       var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
       for (var i = 1; i < budgetsTableRows.length; i++) {
-        budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML = "$" + (data[i-1].budget - (myApp.rosterSize -1 - data[i-1].numOfPlayers));
-        budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML = "$" + data[i-1].budget;
-        budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML = data[i-1].numOfPlayers + "/" + myApp.rosterSize;
+        if(data[i-1].numOfPlayers < myApp.rosterSize){
+          budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML = "$" + (data[i-1].budget - (myApp.rosterSize -1 - data[i-1].numOfPlayers));
+          budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML = "$" + data[i-1].budget;
+          budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML = data[i-1].numOfPlayers + "/" + myApp.rosterSize;
+        } else {
+            budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML = "-";
+            budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML = "-";
+            budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML = "Full";
+        }
       } // Close for() loop.
     }, // Close updateBudgets() function.
 
@@ -930,6 +936,8 @@ socket.on("pageLoaded", function(data){
   var watchlistFilter = document.getElementById("watchlistSearch");
   var watchlistCheckboxes = searchTable.getElementsByTagName("input");
   var hideDrafted = document.getElementById("hideDrafted");
+  var budgetsTable = document.getElementById("budgetsTable");
+  var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
   // Update the player search filters to the default values on the page load.
   watchlistFilter.checked = false;
   watchlistCheckboxes.checked = false;
@@ -967,11 +975,18 @@ socket.on("pageLoaded", function(data){
   myApp.setMaxBid(data.loadData);
   myApp.placeBidButton.disabled = true;
   myApp.placeBidButton.style.background = "grey";
+
   // If the coaches team is full then we want to disable the addToQueue button.
-  if (myApp.numOfPlayersDrafted >= myApp.totalRosterSpots){
+  if(myApp.numOfPlayersDrafted >= myApp.totalRosterSpots){
     myApp.addToQueue.disabled = true;
     myApp.addToQueue.style.backgroundColor = "#DCDCDC";
-  }
+    myApp.demo.innerHTML = "Draft Complete!";
+    // Set budget table rows back to normal.
+    for(var i = 1; i < budgetsTableRows.length; i++) {
+      budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
+      budgetsTableRows[i].style.color = "white";
+    } // Close for() loop.
+  }; // Close if() statement.
   // Set the position validation variables.
   myApp.setBenchCount(data.loadData);
   // myApp.otbSetBenchCount(data.loadData);
@@ -1020,6 +1035,7 @@ socket.on('playerDrafted', function(data) {
   // The functions above relate to updated details for the most recent draftee, so we want to run them regardless.
   if (myApp.numOfPlayersDrafted >= myApp.totalRosterSpots){
     alert("Congratulations! The draft is complete!");
+    myApp.demo.style.fontSize = "2vmin";
     myApp.demo.innerHTML = "Draft Complete!";
     myApp.addToQueue.disabled = true;
     myApp.addToQueue.style.backgroundColor = "#DCDCDC";

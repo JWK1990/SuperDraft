@@ -228,7 +228,9 @@ router.post("/create", function(req, res, next){
 		req.body.numOfRuc &&
 		req.body.numOfMid &&
 		req.body.numOfBen &&
-		req.body.budget){
+		req.body.budget &&
+		req.body.selectCountdown &&
+		req.body.bidCountdown){
 
 			var rosterCount = Number(req.body.numOfDef) + Number(req.body.numOfMid) + Number(req.body.numOfRuc) + Number(req.body.numOfFwd)	+ Number(req.body.numOfBen);
 
@@ -276,7 +278,9 @@ router.post("/create", function(req, res, next){
 				otbAverage: "132",
 				otbBid: 1,
 				otbCoach :req.body.coach1,
-				pickCounter: 1
+				pickCounter: 1,
+				selectCountdown: req.body.selectCountdown,
+				bidCountdown: req.body.bidCountdown
 			};
 
 			// use schema's 'create' method to insert document into Mongo.

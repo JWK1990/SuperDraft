@@ -146,6 +146,12 @@ var DraftSchema = new mongoose.Schema({
 	},
 	results: {
 		type: [ResultsSchema]
+	},
+	selectCountdown: {
+		type: Number
+	},
+	bidCountdown: {
+		type: Number
 	}
 });
 
