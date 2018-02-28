@@ -272,6 +272,8 @@ router.post("/create", function(req, res, next){
 				admin: req.session.teamName,
 				coaches: coachesList,
 				otbPlayer: "Patrick Dangerfield",
+				otbPos: "MID",
+				otbAverage: "132",
 				otbBid: 1,
 				otbCoach :req.body.coach1,
 				pickCounter: 1

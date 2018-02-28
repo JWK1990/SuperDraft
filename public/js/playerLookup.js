@@ -313,6 +313,12 @@ var myApp = {
       myApp.sppPrice16.innerHTML = selectedPlayerData.draftPrice16;
       myApp.sppPrice15.innerHTML = selectedPlayerData.draftPrice15;
       myApp.sppPrice14.innerHTML = selectedPlayerData.draftPrice14;
+      // Update the OTB player details.
+      /*
+      myApp.otbPlayerID = data[1].innerHTML;
+      myApp.otbPos = data[2].innerHTML;
+      myApp.otbAverage = selectedPlayerData.ave16;
+      */
     }, // Close updateSPP() function.
 
     sppStartCountdown: function(sppEndTime){
@@ -441,6 +447,8 @@ var myApp = {
     setDraftedPlayers: function(data){
       // Clear the current myTeam table.
       myApp.myTeamDT.clear();
+
+      console.log(data);
       // Populate the myTeam table with the drafted players details.
       for(var i=0; i < data.length; i++){
         myApp.myTeamDT.row.add([i+1, data[i].name, data[i].position, data[i].team, "$" + data[i].price]).draw(false);
