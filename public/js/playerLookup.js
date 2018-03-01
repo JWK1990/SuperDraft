@@ -439,29 +439,24 @@ var myApp = {
 
     setDraftedPlayers: function(data){
       // Define the myTeamTable variables to hold the data for the myTeamTable.
-      var myTeamTable = document.getElementById("myTeamTable");
       var myTeamTableBody = document.getElementById("myTeamTableBody");
-      var myTeamTableRows = myTeamTable.getElementsByTagName("tr");
       var updatedTableBody = document.createElement('tbody');
-      // If the number of players in the myTeam pane doesnt match the number of players drafted then we need to update the myTeam pane.
-      if(myTeamTableRows.length-1 !== myApp.numOfPlayersDrafted){
-        // Create a new Table Body with the updated drafted player details.
-        for(var i=0; i < data.length; i++){
-          var row = updatedTableBody.insertRow(i);
-          var dataNum = row.insertCell(0);
-          var dataName = row.insertCell(1);
-          var dataPos = row.insertCell(2);
-          var dataTeam = row.insertCell(3);
-          var dataPrice = row.insertCell(4);
-          dataNum.innerHTML = data.length - i;
-          dataName.innerHTML = data[data.length-i-1].name;
-          dataPos.innerHTML = data[data.length-i-1].position;
-          dataTeam.innerHTML = data[data.length-i-1].team;
-          dataPrice.innerHTML = "$" + data[data.length-i-1].price;
-        } // Close for() loop.
-        // Replace the existing tBody with the updated tBody.
-        myTeamTableBody.parentNode.replaceChild(updatedTableBody, myTeamTableBody);
-      }; // Close if() statement.
+      // Create a new Table Body with the updated drafted player details.
+      for(var i=0; i < data.length; i++){
+        var row = updatedTableBody.insertRow(i);
+        var dataNum = row.insertCell(0);
+        var dataName = row.insertCell(1);
+        var dataPos = row.insertCell(2);
+        var dataTeam = row.insertCell(3);
+        var dataPrice = row.insertCell(4);
+        dataNum.innerHTML = data.length - i;
+        dataName.innerHTML = data[data.length-i-1].name;
+        dataPos.innerHTML = data[data.length-i-1].position;
+        dataTeam.innerHTML = data[data.length-i-1].team;
+        dataPrice.innerHTML = "$" + data[data.length-i-1].price;
+      } // Close for() loop.
+      // Replace the existing tBody with the updated tBody.
+      myTeamTableBody.parentNode.replaceChild(updatedTableBody, myTeamTableBody);
     }, // Close setDraftedPlayers() function.
 
 
@@ -955,6 +950,9 @@ socket.on("pageLoaded", function(data){
   var budgetsTable = document.getElementById("budgetsTable");
   var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
   var updatedTeamNames = _.pluck(data.loadData.coaches, "teamName2");
+  var myTeamTable = document.getElementById("myTeamTable");
+  var myTeamTableRows = myTeamTable.getElementsByTagName("tr");
+
   // Update the player search filters to the default values on the page load.
   watchlistFilter.checked = false;
   watchlistCheckboxes.checked = false;
@@ -977,13 +975,15 @@ socket.on("pageLoaded", function(data){
   myApp.addRosterFilterOption(updatedTeamNames);
   myApp.teamFilter.value = myApp.currentUser;
   // Update the draftedPlayers list with the updated results list from the DB.
-  // We used ‘JSON.parse(JSON.stringify(data.loadData.results))’ to convert the data.loadData.resutls data into a string and then re-convert it into an object.
+  // We used ‘JSON.parse(JSON.stringify(data.loadData.results))’ to convert the data.loadData.results data into a string and then re-convert it into an object.
   // We do this because if we just assigned data.loadData.results directly to the draftedPlayersList variable then we are passing the value by reference and anything we do to the draftedPlayersList also updates the data.loadData.results variable.
   myApp.draftedPlayersList = JSON.parse(JSON.stringify(_.pluck(data.loadData.coaches, "players")));
   // Run the filterRosterPane() function to update the roster pane with the selected coaches team.
   myApp.filterRosterPane();
   // Run the relevant functions with the load data as an input.
-  myApp.setDraftedPlayers(data.loadData.results);
+  if(myTeamTableRows.length-1 !== myApp.numOfPlayersDrafted){
+    myApp.setDraftedPlayers(data.loadData.results);
+  }
   myApp.updateBudgets(data.loadData.coaches);
   myApp.highlightSearch(data.loadData.results);
   myApp.highlightOtb(data.loadData.pickCounter);
@@ -1026,6 +1026,8 @@ socket.on("pageLoaded", function(data){
 socket.on('playerDrafted', function(data) {
   var budgetsTable = document.getElementById("budgetsTable");
   var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
+  var myTeamTable = document.getElementById("myTeamTable");
+  var myTeamTableRows = myTeamTable.getElementsByTagName("tr");
   myApp.currentBid.innerHTML = "-";
   myApp.otbName.innerHTML = "-";
   myApp.otbTeamPos.innerHTML = "-";
@@ -1041,10 +1043,26 @@ socket.on('playerDrafted', function(data) {
   // Update the player search pane to grey out any drafted players.
   myApp.updateSearch();
   // Add a row to the myTeamDT data table containing the details of the most recently drafted player.
+  // If the row.add() function doesn't work then we assume that the myTeamDT DataTable is no longer initialised (most likely due to a disconnection).
+  // Where the dataTable is no longer initialised, we assume that the length of the myTeamTable and the number of players drafted does not match, therefore we add a row to the top of the myTeamTable using JavaScript.
   var index = data.dbData.results.length -1;
   myApp.myTeamDT.row.add([data.dbData.results.length, data.dbData.results[index].name, data.dbData.results[index].position, data.dbData.results[index].team, "$" + data.dbData.results[index].price]).draw(false);
+  if(myTeamTableRows.length-1 !== data.dbData.results.length){
+    console.log("DataTable Not Initialised.");
+    var row = myTeamTable.insertRow(1);
+    var dataNum = row.insertCell(0);
+    var dataName = row.insertCell(1);
+    var dataPos = row.insertCell(2);
+    var dataTeam = row.insertCell(3);
+    var dataPrice = row.insertCell(4);
+    dataNum.innerHTML = data.dbData.results.length;
+    dataName.innerHTML = data.dbData.results[index].name;
+    dataPos.innerHTML = data.dbData.results[index].position;
+    dataTeam.innerHTML = data.dbData.results[index].team;
+    dataPrice.innerHTML = "$" + data.dbData.results[index].price;
+  } // Close if() statement.
   // Update the draftedPlayersList with the updated results list from the DB.
-  // We used ‘JSON.parse(JSON.stringify(data.dbData.results))’ to convert the data.dbData.resutls data into a string and then re-convert it into an object.
+  // We used ‘JSON.parse(JSON.stringify(data.dbData.results))’ to convert the data.dbData.results data into a string and then re-convert it into an object.
   // We do this because if we just assigned data.dbData.results directly to the draftedPlayersList variable then we are passing the value by reference and anything we do to the draftedPlayersList also updates the data.dbData.results variable.
   // Run the filterRosterPane() function to update the myRoster pane with the selected coaches data.
   myApp.draftedPlayersList = JSON.parse(JSON.stringify(_.pluck(data.dbData.coaches, "players")));

@@ -5,6 +5,7 @@ var Player = require("../models/playerData");
 var Draft = require("../models/draftData");
 var mid = require("../middleware");
 var path = require("path");
+var fs = require('fs');
 // Require nodemailer to send automated emails to signed up users.
 var nodemailer = require("nodemailer");
 
@@ -159,54 +160,54 @@ router.get('/contact', function(req, res, next) {
 
 // GET /draft
 router.get("/draft", function(req, res, next){
+	// Define the players variable that contains the player data from the playerData.json file in our Sublime files.
+	var players = JSON.parse(fs.readFileSync('./public/js/playerData.json', 'utf8'));
 	User.find({}, function(err, users){
-			Player.find({}, function(err, players){
-				Draft.find({"_id":req.query.draft}, function(err, drafts){
-				if(!err){
-					var currentUser = req.session.teamName;
-					console.log('Current User:' + currentUser);
+		Draft.find({"_id":req.query.draft}, function(err, drafts){
+			if(!err){
+				var currentUser = req.session.teamName;
+				console.log('Current User:' + currentUser);
 
-					/* The below block of code iterates through through the users collection and matches the 'teamName' from the draftData (which is the email the admin entered on signup)
-					with an email in the users collection. It then returns the index of the matching user. We then use this index to get the corresponding team name. We then add that teamName to the relevant object in the draftData array as teamName2.
-					If no matching user is found we just add the email back in as teamName2.
-					We then use this teamName2 in the first column of the budgets pane on the draft page. Previously we passed the draftData emails directly, which meant that the team name
-					entered by the admin on setup directly populated the bugets pane which then had to match the team name of the logged in user. This made it hard to allow the admin to enter
-					emails rather than team names. This has now been fixed. We then save this updated teamName2 into the Database, this occurs when the /drafts page is loaded. So in the DB
-					the teamName1 and teamName2 remain as the email entered by the admin when creating the draft, until the point at which the coaches visits SuperDraftFantasy and signs up, then
-					the first time the /draft page is initiated following this, the teamName2 will update in the DB to the Team Name that the user signs up with.*/
-					var index;
-					var teamName2;
+				/* The below block of code iterates through through the users collection and matches the 'teamName' from the draftData (which is the email the admin entered on signup)
+				with an email in the users collection. It then returns the index of the matching user. We then use this index to get the corresponding team name. We then add that teamName to the relevant object in the draftData array as teamName2.
+				If no matching user is found we just add the email back in as teamName2.
+				We then use this teamName2 in the first column of the budgets pane on the draft page. Previously we passed the draftData emails directly, which meant that the team name
+				entered by the admin on setup directly populated the bugets pane which then had to match the team name of the logged in user. This made it hard to allow the admin to enter
+				emails rather than team names. This has now been fixed. We then save this updated teamName2 into the Database, this occurs when the /drafts page is loaded. So in the DB
+				the teamName1 and teamName2 remain as the email entered by the admin when creating the draft, until the point at which the coaches visits SuperDraftFantasy and signs up, then
+				the first time the /draft page is initiated following this, the teamName2 will update in the DB to the Team Name that the user signs up with.*/
+				var index;
+				var teamName2;
 
-					for (var i=0; i < drafts[0].coaches.length; i++){
+				for (var i=0; i < drafts[0].coaches.length; i++){
 
-						index = users.findIndex(function(data) {
-							  return data.email == drafts[0].coaches[i].teamName;
-						});
+					index = users.findIndex(function(data) {
+						  return data.email == drafts[0].coaches[i].teamName;
+					});
 
-						if (index > -1){
-							teamName2 = users[index].teamName;
-						} else {
-							teamName2 = drafts[0].coaches[i].teamName;
-						}
-
+					if (index > -1){
+						teamName2 = users[index].teamName;
+					} else {
+						teamName2 = drafts[0].coaches[i].teamName;
+					}
 
 
-						drafts[0].coaches[i].teamName2 = teamName2;
-						console.log('TeamName2DB:' + drafts[0].coaches[i].teamName2);
 
-					} // Close for() loop.
-					drafts[0].save(function(err){
-						if (err) console.log(err);
-						else console.log("Success!");
-					}); // Close drafts[0].save() function.
+					drafts[0].coaches[i].teamName2 = teamName2;
+					console.log('TeamName2DB:' + drafts[0].coaches[i].teamName2);
+
+				} // Close for() loop.
+				drafts[0].save(function(err){
+					if (err) console.log(err);
+					else console.log("Success!");
+				}); // Close drafts[0].save() function.
 
 
-					return res.render("draft", {title: "Draft", players: players, drafts: drafts, users: users, currentUser: currentUser, coaches: drafts[0].coaches, results: drafts[0].results});
-				} else {
-					throw err;
-				} // Close else{}statement.
-			}) // Close Draft.find() function.
-		}) // Close Player.find() function.
+				return res.render("draft", {title: "Draft", players: players, drafts: drafts, users: users, currentUser: currentUser, coaches: drafts[0].coaches, results: drafts[0].results});
+			} else {
+				throw err;
+			} // Close else{}statement.
+		}) // Close Draft.find() function.
 	}) // Close User.find() function.
 }); // Close router.get("/draft") function.
 
