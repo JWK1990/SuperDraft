@@ -185,13 +185,13 @@ input, select, textarea{
 
             .sppTopLeft{
               height: 100%;
-              width: 14%;
+              width: 17%;
               float: left;
             }
 
             .sppTopRight{
               height: 100%;
-              width: 86%;
+              width: 83%;
               float: left;
               text-align: left;
               color: white;
@@ -221,9 +221,15 @@ input, select, textarea{
                       float: left;
                     }
 
+                    .sppTopRightBottomMiddle{
+                      width: 10%;
+                      height: 100%;
+                      float: left;
+                      position: relative;
+                    }
 
                     .sppTopRightBottomRight{
-                      width: 57%;
+                      width: 47%;
                       height: 100%;
                       float: left;
                     }
@@ -410,14 +416,35 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   height: 100%;
   width: 100%;
   background-color: #DCDCDC;
-  font-size: 1vmin;
+  font-size: 1.3vmin;
 }
 
 .selectedPlayerPane #startValue{
+  display: block;
+  padding-left: 15px;
   height: 100%;
-  width: 15%;
+  width: 100%;
   font-size: 2vmin;
 }
+
+.unit {
+  position: absolute;
+  display: block;
+  left: 5px;
+  top: 30%;
+  z-index: 9;
+  color: black;
+  font-size: 2vmin;
+}
+
+.selectedPlayerPane #pauseDraft{
+  height: 100%;
+  width: 50%;
+  background-color: #DCDCDC;
+  font-size: 1.3vmin;
+  margin-left: 50%;
+}
+
 
 .selectedPlayerPane table{
   width: 100%;
@@ -426,6 +453,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   border-collapse: collapse;
   color: white;
   background-color: rgba(77,77,77,.6);
+  table-layout: fixed;
 }
 
 .selectedPlayerPane table th{

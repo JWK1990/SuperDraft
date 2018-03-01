@@ -77,8 +77,11 @@ html(lang='en')
 						.sppTopRightBottom
 							.sppTopRightBottomLeft
 								button#addToQueue(disabled=true, onclick='myApp.addToBlock(myApp.selectedPlayerName.innerHTML, myApp.selectedPlayerPosition.innerHTML, myApp.sppAve.innerHTML)') ADD TO BLOCK
-							.sppTopRightBottomRight
+							.sppTopRightBottomMiddle
 								input#startValue(type='number', name='startValue', value=1, min=1)
+								span.unit $
+							.sppTopRightBottomRight
+								button#pauseDraft(disabled=true, style="display: none", onclick='myApp.pauseDraft()') PAUSE DRAFT
 
 
 				.sppBottom
@@ -91,9 +94,7 @@ html(lang='en')
 							th StdDev
 							th Games
 							th Age
-							th Price16
-							th Price15
-							th Price14
+							th Bye
 						tr
 							td#rank -
 							td#ave -
@@ -101,9 +102,7 @@ html(lang='en')
 							td#stdDev -
 							td#games -
 							td#age -
-							td#price16 -
-							td#price15 -
-							td#price14 -
+							td#bye -
 
 
 			.playerFilterPane
@@ -139,7 +138,6 @@ html(lang='en')
 							th Pos
 							th Ave
 							th Team
-							th Price16
 							th Watchlist
 
 						tbody
@@ -148,9 +146,8 @@ html(lang='en')
 									td= result.rank
 									td.name= result.name
 									td= result.position
-									td= result.ave16
+									td= result.ave
 									td= result.team
-									td= result.draftPrice16
 									td
 										input#watchlistCheckbox(type='checkbox')
 

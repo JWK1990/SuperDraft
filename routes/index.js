@@ -194,22 +194,21 @@ router.get("/draft", function(req, res, next){
 						drafts[0].coaches[i].teamName2 = teamName2;
 						console.log('TeamName2DB:' + drafts[0].coaches[i].teamName2);
 
-						drafts[0].save(function(err){
-							if (err) console.log(err);
-							else console.log("Success!");
-						})
-
-					}
+					} // Close for() loop.
+					drafts[0].save(function(err){
+						if (err) console.log(err);
+						else console.log("Success!");
+					}); // Close drafts[0].save() function.
 
 
 					return res.render("draft", {title: "Draft", players: players, drafts: drafts, users: users, currentUser: currentUser, coaches: drafts[0].coaches, results: drafts[0].results.reverse()});
 				} else {
 					throw err;
-				}
-		})
-})
-})
-});
+				} // Close else{}statement.
+			}) // Close Draft.find() function.
+		}) // Close Player.find() function.
+	}) // Close User.find() function.
+}); // Close router.get("/draft") function.
 
 // GET /create
 router.get("/create", function(req, res, next){

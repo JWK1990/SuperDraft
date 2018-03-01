@@ -40,13 +40,13 @@ $(document).ready(function() {
         // Not sure why this isn't 70vh as the pane is 70% of the browser window, just used trial and error to get 72vh.
         // The rough guide for the vh seems to be 4% less than the height of the pane.
         // We need to update this if we're updating the height of the table.
-        scrollY:        '72vh',
+        scrollY: '72vh',
         scrollCollapse: true,
-        paging:         false,
+        paging: false,
         searching: false,
-        ordering: false,
         bInfo: false,
-        autoWidth: true
+        autoWidth: true,
+        "order": [[0, "asc" ]]
 });
 });
 
@@ -66,7 +66,6 @@ $(document).ready(function() {
         oLanguage: {
           sZeroRecords: "-"
         }
-
     });
 
 });
@@ -118,9 +117,7 @@ var myApp = {
   sppStdDev: document.getElementById("stdDev"),
   sppGames: document.getElementById("games"),
   sppAge: document.getElementById("age"),
-  sppPrice16: document.getElementById("price16"),
-  sppPrice15: document.getElementById("price15"),
-  sppPrice14: document.getElementById("price14"),
+  sppBye: document.getElementById("bye"),
   startValue: document.getElementById("startValue"),
   startingBid: {},
   topPlayer: {},
@@ -153,8 +150,10 @@ var myApp = {
   demo: document.getElementById("demo"),
   // SPP countdown timer variables.
   sppCounter: {},
-  // Set the Websocket room ID.
-  room: document.getElementById("draftID").innerHTML,
+  // Define the admin coach variable.
+  admin: {},
+  // Define the pauseDraftButton variable.
+  pauseDraftButton: document.getElementById("pauseDraft"),
 
 
   //!!!!!!!!!!!!!!DEFINE FUNCTIONS!!!!!!!!!!!!!!!
@@ -174,7 +173,7 @@ var myApp = {
       for (var i = 1; i < searchTableRows.length; i++) {
         var td = searchTableRows[i].getElementsByTagName("td")[1];
         var td2 = searchTableRows[i].getElementsByTagName("td")[2];
-        var td3 = searchTableRows[i].getElementsByTagName("td")[6];
+        var td3 = searchTableRows[i].getElementsByTagName("td")[5];
         var watchlistChecked = td3.getElementsByTagName("input")[0].checked;
         var drafted = Boolean(searchTableRows[i].style.textDecoration === "line-through");
 
@@ -218,14 +217,12 @@ var myApp = {
             return (e.name==myApp.selectedPlayerName.innerHTML);
           })[0];
           myApp.sppRank.innerHTML = selectedPlayerData.rank;
-          myApp.sppAve.innerHTML = selectedPlayerData.ave16;
-          myApp.sppPoints.innerHTML = selectedPlayerData.points16;
-          myApp.sppStdDev.innerHTML = selectedPlayerData.sd16;
-          myApp.sppGames.innerHTML = selectedPlayerData.games16;
+          myApp.sppAve.innerHTML = selectedPlayerData.ave;
+          myApp.sppPoints.innerHTML = selectedPlayerData.points;
+          myApp.sppStdDev.innerHTML = selectedPlayerData.stdDev;
+          myApp.sppGames.innerHTML = selectedPlayerData.games;
           myApp.sppAge.innerHTML = selectedPlayerData.age;
-          myApp.sppPrice16.innerHTML = selectedPlayerData.draftPrice16;
-          myApp.sppPrice15.innerHTML = selectedPlayerData.draftPrice15;
-          myApp.sppPrice14.innerHTML = selectedPlayerData.draftPrice14;
+          myApp.sppBye.innerHTML = selectedPlayerData.bye;
           // Update search details.
           myApp.updateSearch();
         });
@@ -305,14 +302,12 @@ var myApp = {
         return (e.name==myApp.selectedPlayerName.innerHTML);
       })[0];
       myApp.sppRank.innerHTML = selectedPlayerData.rank;
-      myApp.sppAve.innerHTML = selectedPlayerData.ave16;
-      myApp.sppPoints.innerHTML = selectedPlayerData.points16;
-      myApp.sppStdDev.innerHTML = selectedPlayerData.sd16;
-      myApp.sppGames.innerHTML = selectedPlayerData.games16;
+      myApp.sppAve.innerHTML = selectedPlayerData.ave;
+      myApp.sppPoints.innerHTML = selectedPlayerData.points;
+      myApp.sppStdDev.innerHTML = selectedPlayerData.stdDev;
+      myApp.sppGames.innerHTML = selectedPlayerData.games;
       myApp.sppAge.innerHTML = selectedPlayerData.age;
-      myApp.sppPrice16.innerHTML = selectedPlayerData.draftPrice16;
-      myApp.sppPrice15.innerHTML = selectedPlayerData.draftPrice15;
-      myApp.sppPrice14.innerHTML = selectedPlayerData.draftPrice14;
+      myApp.sppBye.innerHTML = selectedPlayerData.bye;
       // Update the OTB player details.
       /*
       myApp.otbPlayerID = data[1].innerHTML;
@@ -746,14 +741,6 @@ var myApp = {
 
 
     // DEFINE WEBSOCKETS FUNCTIONS.
-    pageLoad: function(){
-
-      console.log(myApp.draftID);
-    // Define the WebSockets pageLoad() function used to set up the page properly on page load.
-      socket.emit("pageLoad", {draftID: myApp.draftID});
-    }, // Close pageLoad() function.
-
-
     bid: function(){
     // Define the WebSockets bid() function used to log a bid.
       myApp.otbBidValue = Number(myApp.currentBid.innerHTML.replace(/[^0-9\.]+/g,"")) + 1;
@@ -806,7 +793,14 @@ var myApp = {
         clearInterval(myApp.sppCounter);
         socket.emit('addToBlock', {draftID: myApp.draftID, player: player, position: position, average: average, currentUser: myApp.currentOtbCoach, startingBid: myApp.startValue.value});
       }; // Close else statement.
-    } // Close addToBlock() function.
+    }, // Close addToBlock() function.
+
+
+    pauseDraft: function(){
+      myApp.pauseDraftButton.disabled = true;
+      myApp.pauseDraftButton.style.backgroundColor = "#DCDCDC";
+      socket.emit('pauseDraft', myApp.draftID);
+    } // Close pauseDraft() function.
 
 }; // Close NS Namespace.
 
@@ -873,8 +867,7 @@ var socket = io.connect('/');
 
 socket.on('connect', function(){
   // Connected, let's sign up to receive messages for this room.
-  myApp.pageLoad();
-  socket.emit('room', myApp.room);
+  socket.emit('pageLoad', myApp.draftID);
 }); // Close socket.on('connect').
 
 
@@ -888,7 +881,7 @@ socket.on("joinedCoach", function(data){
   myApp.connectedSocketsList = [];
   // Then we loop through the socketList of all connected sockets (across all rooms) and adds them to the current rooms connectedSocketsList if they start with the correct room.
   for (var i=0; i < data.socketList.length; i++){
-    if(data.socketList[i].startsWith(myApp.room)){
+    if(data.socketList[i].startsWith(myApp.draftID)){
       myApp.connectedSocketsList.push(data.socketList[i]);
     }
   };
@@ -908,9 +901,14 @@ socket.on("joinedCoach", function(data){
 
 socket.on("socketDetails", function(data){
   // Sets the current users socket ID to the socket ID returned from the server side combined with the room ID to match the format of the connectedSocketsList.
-  myApp.currentUserSocketID = myApp.room + " - " + data.socketID;
+  myApp.currentUserSocketID = myApp.draftID + " - " + data.socketID;
 }); // Close the socket.on("socketDetails") function.
 
+
+socket.on("draftPaused", function(){
+  clearInterval(myApp.sppCounter);
+  myApp.demo.innerHTML = "Paused - " + myApp.currentOtbCoach + " To Restart"
+});
 
 
 socket.on('disconnectedCoach', function(data){
@@ -922,7 +920,7 @@ socket.on('disconnectedCoach', function(data){
   for (var i=0; i < data.socketList.length; i++){
     console.log("Socket List.");
     console.log(data.socketList);
-    if(data.socketList[i].startsWith(myApp.room)){
+    if(data.socketList[i].startsWith(myApp.draftID)){
       console.log("True");
       myApp.connectedSocketsList.push(data.socketList[i]);
     }
@@ -955,7 +953,7 @@ socket.on("pageLoaded", function(data){
   myApp.totalRucSpots = data.loadData.numOfRuc;
   myApp.totalMidSpots = data.loadData.numOfMid;
   myApp.totalBenSpots = data.loadData.numOfBen;
-
+  myApp.admin = data.loadData.admin;
   // Add the coaches array to the roster filter drop down list.
   // Set the default filter value to the current user.
   myApp.addRosterFilterOption(data.loadData.coaches);
@@ -987,6 +985,10 @@ socket.on("pageLoaded", function(data){
       budgetsTableRows[i].style.color = "white";
     } // Close for() loop.
   }; // Close if() statement.
+  // Show the 'Pause Draft' button if the current user is the admin user.
+  if(myApp.currentUser == myApp.admin){
+    myApp.pauseDraftButton.style.display = "";
+  };
   // Set the position validation variables.
   myApp.setBenchCount(data.loadData);
   // myApp.otbSetBenchCount(data.loadData);
@@ -1039,6 +1041,8 @@ socket.on('playerDrafted', function(data) {
     myApp.demo.innerHTML = "Draft Complete!";
     myApp.addToQueue.disabled = true;
     myApp.addToQueue.style.backgroundColor = "#DCDCDC";
+    myApp.pauseDraftButton.disabled = true;
+    myApp.pauseDraftButton.style.backgroundColor = "#DCDCDC";
   } else {
       // Call highlightOtb() function to underline the on the block coach.
       myApp.highlightOtb(data.dbData.pickCounter);
@@ -1060,6 +1064,11 @@ socket.on('playerDrafted', function(data) {
       // Updates the 'Sold for' text to say "Selection Pending...".
       myApp.demo.style.fontSize = "2vmin";
       myApp.demo.innerHTML = "On The Block: " + data.dbData.otbCoach;
+      // Enable the 'Pause Draft' button if the current user is the admin user.
+      if(myApp.currentUser == myApp.admin){
+        myApp.pauseDraftButton.disabled = false;
+        myApp.pauseDraftButton.style.backgroundColor = "orange";
+      }; // Close if() statement.
     } // Close else statement.
 }); // Close socket.on('playerDrafted') function.
 
@@ -1150,6 +1159,11 @@ socket.on('otbUpdate', function(data) {
     }; // Close if(benchCount) else statement.
   // Updates the start value in the SPP back to $1 for all coaches after a player is added to the block.
   myApp.startValue.value = 1;
+  // Disables the 'Pause Draft' button if the current user is the admin user.
+  if(myApp.currentUser == myApp.admin){
+    myApp.pauseDraftButton.disabled = true;
+    myApp.pauseDraftButton.style.backgroundColor = "#DCDCDC";
+  };
 }); // Close socket.on("otbUpdate") function.
 
 

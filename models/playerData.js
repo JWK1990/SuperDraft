@@ -23,80 +23,26 @@ var PlayerSchema = new mongoose.Schema({
 		required: true
 	},
 	rank: {
-		type: Number,
+		type: String,
 		required: true
 	},
-	scPrice: {
+	points: {
 		type: String
 	},
-	scChange: {
+	games: {
 		type: String
 	},
-	points16: {
+	ave: {
 		type: String
 	},
-	games16: {
-		type: String
-	},
-	ave16: {
-		type: String
-	},
-	sd16: {
-		type: String
-	},
-	min16: {
-		type: String
-	},
-	max16: {
-		type: String
-	},
-	ave1To8: {
-		type: String
-	},
-	ave9To16: {
-		type: String
-	},
-	ave17To23: {
-		type: String
-	},
-	aveSCFinals: {
+	stdDev: {
 		type: String
 	},
 	age: {
 		type: String
 	},
-	draftPrice16: {
+	bye: {
 		type: String
-	},
-	draftTeam16: {
-		type: String
-	},
-	draftPrice15: {
-		type: String
-	},
-	draftTeam15: {
-		type: String
-	},
-	draftPrice14: {
-		type: String
-	},
-	draftTeam14: {
-		type: String
-	},
-	points15: {
-		type: String
-	},
-	ave15: {
-		type: String
-	},
-	nabDraftPick: {
-		type: String
-	},
-	draftee16: {
-		type: String
-	},
-	drafted: {
-		type: Boolean
 	}
 });
 
