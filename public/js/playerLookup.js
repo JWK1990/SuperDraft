@@ -442,8 +442,6 @@ var myApp = {
     setDraftedPlayers: function(data){
       // Clear the current myTeam table.
       myApp.myTeamDT.clear();
-
-      console.log(data);
       // Populate the myTeam table with the drafted players details.
       for(var i=0; i < data.length; i++){
         myApp.myTeamDT.row.add([i+1, data[i].name, data[i].position, data[i].team, "$" + data[i].price]).draw(false);
@@ -549,7 +547,6 @@ var myApp = {
       selectedCoachesPlayers.sort(function (a, b) {
         return b.average - a.average;
       });
-      console.log(selectedCoachesPlayers);
       // Define the selectedCoaches position variables to hold the coaches players from each position.
       var selectedCoachesDef = [];
       var selectedCoachesFwd = [];
@@ -665,7 +662,6 @@ var myApp = {
             // Compare the numer of each position in the testDppArray with the number of available spots in each position.
             // If the testDppArray fits into the avialable spots we then assign it to the successfulyDppArray variable and stop the for() loop.
             if(testDef <= availableSpots[0] && testFwd <= availableSpots[1] && testRuc <= availableSpots[2] && testMid <= availableSpots[3]){
-              console.log("Positon Conditions Satisfied!");
               successfulDppArray = testDppArray;
               break;
             }
@@ -734,7 +730,7 @@ var myApp = {
       // Add in the required filter options.
       for(var i=0; i< data.length; i++){
         var option = document.createElement("option");
-        option.text = data[i].teamName2;
+        option.text = data[i];
         myApp.teamFilter.add(option);
       }
     }, // Close addRosterFilterOption() function.
@@ -804,7 +800,11 @@ var myApp = {
 
 }; // Close NS Namespace.
 
-
+// Set the myApp.playerData variable with the player data from the playerData.json file.
+$.getJSON('./js/playerData.json')
+.done(function (data){
+  myApp.playerData = data;
+});
 
 // COMMENTING OUT OTB POSITION VALIDATIONS AS THESE ARE NOW HANDLED ON THE BACKEND
 /*
@@ -890,7 +890,7 @@ socket.on("joinedCoach", function(data){
   // Updates all of the team names in the budgets pane.
   for (var i = 1; i < budgetsTableRows.length; i++) {
     var td = budgetsTableRows[i].getElementsByTagName("td")[0];
-    td.innerHTML = data.joinedCoaches[i-1].teamName2;
+    td.innerHTML = data.joinedCoaches[i-1];
   }; // Close for() loop.
   // Re-run the addRosterFilterOption() function every time a new coach joins to update the text in the select options from an email to a team name.
   myApp.addRosterFilterOption(data.joinedCoaches);
@@ -918,10 +918,8 @@ socket.on('disconnectedCoach', function(data){
     myApp.connectedSocketsList = [];
 
   for (var i=0; i < data.socketList.length; i++){
-    console.log("Socket List.");
     console.log(data.socketList);
     if(data.socketList[i].startsWith(myApp.draftID)){
-      console.log("True");
       myApp.connectedSocketsList.push(data.socketList[i]);
     }
   };
@@ -931,11 +929,13 @@ socket.on('disconnectedCoach', function(data){
 
 
 socket.on("pageLoaded", function(data){
+  console.log("pageLoaded");
   var watchlistFilter = document.getElementById("watchlistSearch");
   var watchlistCheckboxes = searchTable.getElementsByTagName("input");
   var hideDrafted = document.getElementById("hideDrafted");
   var budgetsTable = document.getElementById("budgetsTable");
   var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
+  var updatedTeamNames = _.pluck(data.loadData.coaches, "teamName2");
   // Update the player search filters to the default values on the page load.
   watchlistFilter.checked = false;
   watchlistCheckboxes.checked = false;
@@ -943,7 +943,6 @@ socket.on("pageLoaded", function(data){
   // Set the relevant variables.
   myApp.demo.style.fontSize = "2vmin";
   myApp.demo.innerHTML = "On The Block: " + data.loadData.otbCoach;
-  myApp.playerData = data.playerData;
   myApp.numOfCoaches = data.loadData.numOfCoaches;
   myApp.rosterSize = data.loadData.rosterSize;
   myApp.totalRosterSpots = myApp.numOfCoaches * myApp.rosterSize;
@@ -956,7 +955,7 @@ socket.on("pageLoaded", function(data){
   myApp.admin = data.loadData.admin;
   // Add the coaches array to the roster filter drop down list.
   // Set the default filter value to the current user.
-  myApp.addRosterFilterOption(data.loadData.coaches);
+  myApp.addRosterFilterOption(updatedTeamNames);
   myApp.teamFilter.value = myApp.currentUser;
   // Update the draftedPlayers list with the updated results list from the DB.
   // We used ‘JSON.parse(JSON.stringify(data.loadData.results))’ to convert the data.loadData.resutls data into a string and then re-convert it into an object.
