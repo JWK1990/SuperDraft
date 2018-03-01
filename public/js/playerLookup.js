@@ -874,7 +874,7 @@ socket.on('connect', function(){
 
 // The socket.on("joinedCoach") function updates the Team Names in the budgets pane for all users connected to the room every time a new coach joins the room.
 socket.on("joinedCoach", function(data){
-  console.log("Joined Coach!");
+  console.log("joinedCoach Started!");
   var budgetsTable = document.getElementById("budgetsTable");
   var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
   // First we clear the connectedSocketList.
@@ -895,6 +895,7 @@ socket.on("joinedCoach", function(data){
   // Re-run the addRosterFilterOption() function every time a new coach joins to update the text in the select options from an email to a team name.
   myApp.addRosterFilterOption(data.joinedCoaches);
   myApp.teamFilter.value = myApp.currentUser;
+  console.log("joinedCoach Finished!");
 }); // Close the socket.on("joinedCoach") function.
 
 
@@ -929,7 +930,7 @@ socket.on('disconnectedCoach', function(data){
 
 
 socket.on("pageLoaded", function(data){
-  console.log("pageLoaded");
+  console.log("pageLoaded Started");
   var watchlistFilter = document.getElementById("watchlistSearch");
   var watchlistCheckboxes = searchTable.getElementsByTagName("input");
   var hideDrafted = document.getElementById("hideDrafted");
@@ -998,6 +999,8 @@ socket.on("pageLoaded", function(data){
   myApp.updateSPP(myApp.topPlayer);
   // Run the selectPlayer() function to add event listeners to the rows of the selected player pane.
   myApp.selectPlayer();
+
+  console.log("pageLoad Complete!");
 }); // Close socket.on("pageLoaded") function.
 
 
