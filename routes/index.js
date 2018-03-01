@@ -201,7 +201,7 @@ router.get("/draft", function(req, res, next){
 					}); // Close drafts[0].save() function.
 
 
-					return res.render("draft", {title: "Draft", players: players, drafts: drafts, users: users, currentUser: currentUser, coaches: drafts[0].coaches, results: drafts[0].results.reverse()});
+					return res.render("draft", {title: "Draft", players: players, drafts: drafts, users: users, currentUser: currentUser, coaches: drafts[0].coaches, results: drafts[0].results});
 				} else {
 					throw err;
 				} // Close else{}statement.

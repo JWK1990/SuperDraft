@@ -209,7 +209,6 @@ html(lang='en')
 
 
 			.myTeamPane
-
 				table#myTeamTable.display(cellspacing='0', width='100%')
 					thead
 						tr
@@ -219,9 +218,17 @@ html(lang='en')
 							th Team
 							th $
 
+					tbody#myTeamTableBody
+						- for(var i=0; i < results.length; i++){
+							tr
+								td= i+1
+								td=results[i].name
+								td=results[i].position
+								td=results[i].team
+								td="$" + results[i].price
+						- }
+
 			
-
-
 		script(src='/js/playerData.json')
 		script(src='/js/playerLookup.js')
 

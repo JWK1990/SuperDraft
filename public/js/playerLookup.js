@@ -46,30 +46,28 @@ $(document).ready(function() {
         searching: false,
         bInfo: false,
         autoWidth: true,
-        "order": [[0, "asc" ]]
-});
+        "order": [[0, "asc" ]],
+        columnDefs: [
+          {orderable: false, targets: '_all'}
+        ]
+  });   
 });
 
 $(document).ready(function() {
-  myApp.myTeamDT = $('#myTeamTable').DataTable( {
-        // ScrollY effectively sets the height of the table. 14vh represents 14% of the height of the browser window.
-        // The rough guide for the vh seems to be 4% less than the height of the pane.
-        // We need to update this if we're updating the height of the table.
-        scrollY: '14vh',
-        scrollCollapse: true,
-        order: [[ 0, "desc" ]],
-        paging: false,
-        searching: false,
-        aaSorting: [],
-        bInfo: false,
-        autoWidth: true,
-        oLanguage: {
-          sZeroRecords: "-"
-        }
-    });
-
+  myApp.myTeamDT = $('#myTeamTable').DataTable({
+    scrollY: '14vh',
+    scrollCollapse: true,
+    order: [[ 0, "desc" ]],
+    paging: false,
+    searching: false,
+    aaSorting: [],
+    bInfo: false,
+    autoWidth: true,
+    oLanguage: {
+      sZeroRecords: "-"
+    }
+  }); // Close myApp.myTeamDT Datatable setup.
 });
-
 
 var myApp = {
   //!!!!!!!!!!!!!!DEFINE VARIABLES!!!!!!!!!!!!!!!
@@ -440,12 +438,30 @@ var myApp = {
 
 
     setDraftedPlayers: function(data){
-      // Clear the current myTeam table.
-      myApp.myTeamDT.clear();
-      // Populate the myTeam table with the drafted players details.
-      for(var i=0; i < data.length; i++){
-        myApp.myTeamDT.row.add([i+1, data[i].name, data[i].position, data[i].team, "$" + data[i].price]).draw(false);
-      } // Close for() loop.
+      // Define the myTeamTable variables to hold the data for the myTeamTable.
+      var myTeamTable = document.getElementById("myTeamTable");
+      var myTeamTableBody = document.getElementById("myTeamTableBody");
+      var myTeamTableRows = myTeamTable.getElementsByTagName("tr");
+      var updatedTableBody = document.createElement('tbody');
+      // If the number of players in the myTeam pane doesnt match the number of players drafted then we need to update the myTeam pane.
+      if(myTeamTableRows.length-1 !== myApp.numOfPlayersDrafted){
+        // Create a new Table Body with the updated drafted player details.
+        for(var i=0; i < data.length; i++){
+          var row = updatedTableBody.insertRow(i);
+          var dataNum = row.insertCell(0);
+          var dataName = row.insertCell(1);
+          var dataPos = row.insertCell(2);
+          var dataTeam = row.insertCell(3);
+          var dataPrice = row.insertCell(4);
+          dataNum.innerHTML = data.length - i;
+          dataName.innerHTML = data[data.length-i-1].name;
+          dataPos.innerHTML = data[data.length-i-1].position;
+          dataTeam.innerHTML = data[data.length-i-1].team;
+          dataPrice.innerHTML = "$" + data[data.length-i-1].price;
+        } // Close for() loop.
+        // Replace the existing tBody with the updated tBody.
+        myTeamTableBody.parentNode.replaceChild(updatedTableBody, myTeamTableBody);
+      }; // Close if() statement.
     }, // Close setDraftedPlayers() function.
 
 
@@ -858,16 +874,16 @@ function otbBenchCheck(position){
 
 */
 
-
-
 //!!!!!!!!!!!!!!DEFINE WEBSOCKETS FUNCTIONS!!!!!!!!!!!!!!!
 // May need to move the below variable out of the global scope.
 var socket = io.connect('/');
 
 
 socket.on('connect', function(){
+  console.log("connect Started!");
   // Connected, let's sign up to receive messages for this room.
   socket.emit('pageLoad', myApp.draftID);
+  console.log("connect Finished!");
 }); // Close socket.on('connect').
 
 
@@ -901,8 +917,10 @@ socket.on("joinedCoach", function(data){
 
 
 socket.on("socketDetails", function(data){
+  console.log("socketDetails Started!");
   // Sets the current users socket ID to the socket ID returned from the server side combined with the room ID to match the format of the connectedSocketsList.
   myApp.currentUserSocketID = myApp.draftID + " - " + data.socketID;
+  console.log("socketDetails Finished!");
 }); // Close the socket.on("socketDetails") function.
 
 
@@ -999,7 +1017,6 @@ socket.on("pageLoaded", function(data){
   myApp.updateSPP(myApp.topPlayer);
   // Run the selectPlayer() function to add event listeners to the rows of the selected player pane.
   myApp.selectPlayer();
-
   console.log("pageLoad Complete!");
 }); // Close socket.on("pageLoaded") function.
 
