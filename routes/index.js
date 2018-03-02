@@ -64,11 +64,11 @@ router.post("/login", function(req, res, next){
 
 		User.findOne({email: req.body.email.toUpperCase()}, function(error, user){
 			if(user == null){
-				return res.render("login", {fail:" User does not exist!", email: req.body.email});
+				return res.render("login", {title: "Log In", fail:" User does not exist!", email: req.body.email});
 			} else {
 				User.authenticate(req.body.email.toUpperCase(), req.body.password, function(error, user){
 					if (error || !user){
-						return res.render("login",{fail:" Wrong password! Please Try Again.", email: req.body.email});
+						return res.render("login",{title: "Log In", fail:" Wrong password! Please Try Again.", email: req.body.email});
 					} else {
 						req.session.userId = user._id;
 						req.session.name = user.name;
@@ -159,7 +159,7 @@ router.get('/contact', function(req, res, next) {
 });
 
 // GET /draft
-router.get("/draft", function(req, res, next){
+router.get("/draft", mid.requiresLogin, function(req, res, next){
 	// Define the players variable that contains the player data from the playerData.json file in our Sublime files.
 	var players = JSON.parse(fs.readFileSync('./public/js/playerData.json', 'utf8'));
 	User.find({}, function(err, users){
@@ -212,7 +212,7 @@ router.get("/draft", function(req, res, next){
 }); // Close router.get("/draft") function.
 
 // GET /create
-router.get("/create", function(req, res, next){
+router.get("/create", mid.requiresLogin, function(req, res, next){
 	return res.render("create", {title: "Create A Draft", currentUserName: req.session.name});
 });
 
@@ -323,7 +323,7 @@ router.post("/create", function(req, res, next){
 		return res.render("create", {fail: " All fields are required.", reqBodyFail: req.body})
 }});
 
-router.get("/myDrafts", function(req, res, next){
+router.get("/myDrafts", mid.requiresLogin, function(req, res, next){
 	// Get the current users email address.
 	var currentUserEmail = req.session.email;
 	var myDraftsList = [];

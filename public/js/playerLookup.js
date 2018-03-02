@@ -874,64 +874,12 @@ socket.on('connect', function(){
 }); // Close socket.on('connect').
 
 
-
-// The socket.on("joinedCoach") function updates the Team Names in the budgets pane for all users connected to the room every time a new coach joins the room.
-socket.on("joinedCoach", function(data){
-  console.log("joinedCoach Started!");
-  var budgetsTable = document.getElementById("budgetsTable");
-  var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
-  // First we clear the connectedSocketList.
-  myApp.connectedSocketsList = [];
-  // Then we loop through the socketList of all connected sockets (across all rooms) and adds them to the current rooms connectedSocketsList if they start with the correct room.
-  for (var i=0; i < data.socketList.length; i++){
-    if(data.socketList[i].startsWith(myApp.draftID)){
-      myApp.connectedSocketsList.push(data.socketList[i]);
-    }
-  };
-  // Gets the firstConnectedSocketID by getting the first ID from the connectedSocketsList.
-  myApp.firstConnectedSocketID = myApp.connectedSocketsList[0];
-  // Updates all of the team names in the budgets pane.
-  for (var i = 1; i < budgetsTableRows.length; i++) {
-    var td = budgetsTableRows[i].getElementsByTagName("td")[0];
-    td.innerHTML = data.joinedCoaches[i-1];
-  }; // Close for() loop.
-  // Re-run the addRosterFilterOption() function every time a new coach joins to update the text in the select options from an email to a team name.
-  myApp.addRosterFilterOption(data.joinedCoaches);
-  myApp.teamFilter.value = myApp.currentUser;
-  console.log("joinedCoach Finished!");
-}); // Close the socket.on("joinedCoach") function.
-
-
-
 socket.on("socketDetails", function(data){
   console.log("socketDetails Started!");
   // Sets the current users socket ID to the socket ID returned from the server side combined with the room ID to match the format of the connectedSocketsList.
   myApp.currentUserSocketID = myApp.draftID + " - " + data.socketID;
   console.log("socketDetails Finished!");
 }); // Close the socket.on("socketDetails") function.
-
-
-socket.on("draftPaused", function(){
-  clearInterval(myApp.sppCounter);
-  myApp.demo.innerHTML = "Paused - " + myApp.currentOtbCoach + " To Restart"
-});
-
-
-socket.on('disconnectedCoach', function(data){
-  console.log("Disconnection!");
-  // Disonnected, let's send a message to the server. We will do a similar process to when we have a connection, clearing and rebuilding the connectedSockets List and setting the firstConnectedSocketID.
-  // First we clear the connectedSocketsList. Then we loop through the socketList of all connected sockets (across all rooms) and adds them to the current rooms connectedSocketsList if they start with the correct room.
-    myApp.connectedSocketsList = [];
-
-  for (var i=0; i < data.socketList.length; i++){
-    console.log(data.socketList);
-    if(data.socketList[i].startsWith(myApp.draftID)){
-      myApp.connectedSocketsList.push(data.socketList[i]);
-    }
-  };
-  // Gets the firstConnectedSocketID by getting the first ID from the connectedSocketsList.
-  myApp.firstConnectedSocketID = myApp.connectedSocketsList[0];
-}); // Close socket.on('disconnectedCoach').
 
 
 socket.on("pageLoaded", function(data){
@@ -978,7 +926,6 @@ socket.on("pageLoaded", function(data){
   myApp.setMaxBid(data.loadData);
   myApp.placeBidButton.disabled = true;
   myApp.placeBidButton.style.background = "grey";
-
   // If the coaches team is full then we want to disable the addToQueue button.
   if(myApp.numOfPlayersDrafted >= myApp.totalRosterSpots){
     myApp.addToQueue.disabled = true;
@@ -1006,8 +953,62 @@ socket.on("pageLoaded", function(data){
   myApp.selectPlayer();
   // Hide and re-display the myTeamTable in an attempt to get it to show updated data if any is missing.
   $('#myTeamTable').hide().show(0);
+  // Run socket.emit("joinRoom") to add the current coach to the draft room on the back end.
+  socket.emit('joinRoom', myApp.draftID);
   console.log("pageLoad Complete!");
 }); // Close socket.on("pageLoaded") function.
+
+
+// The socket.on("joinedCoach") function updates the Team Names in the budgets pane for all users connected to the room every time a new coach joins the room.
+socket.on("joinedCoach", function(data){
+  console.log("joinedCoach Started!");
+  console.log(data.joinedCoaches);
+  var budgetsTable = document.getElementById("budgetsTable");
+  var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
+  // First we clear the connectedSocketList.
+  myApp.connectedSocketsList = [];
+  // Then we loop through the socketList of all connected sockets (across all rooms) and adds them to the current rooms connectedSocketsList if they start with the correct room.
+  for (var i=0; i < data.socketList.length; i++){
+    if(data.socketList[i].startsWith(myApp.draftID)){
+      myApp.connectedSocketsList.push(data.socketList[i]);
+    }
+  };
+  // Gets the firstConnectedSocketID by getting the first ID from the connectedSocketsList.
+  myApp.firstConnectedSocketID = myApp.connectedSocketsList[0];
+  // Updates all of the team names in the budgets pane.
+  for (var i = 1; i < budgetsTableRows.length; i++) {
+    var td = budgetsTableRows[i].getElementsByTagName("td")[0];
+    td.innerHTML = data.joinedCoaches[i-1];
+  }; // Close for() loop.
+  // Re-run the addRosterFilterOption() function every time a new coach joins to update the text in the select options from an email to a team name.
+  myApp.addRosterFilterOption(data.joinedCoaches);
+  myApp.teamFilter.value = myApp.currentUser;
+  console.log("joinedCoach Finished!");
+}); // Close the socket.on("joinedCoach") function.
+
+
+socket.on("draftPaused", function(){
+  clearInterval(myApp.sppCounter);
+  myApp.demo.innerHTML = "Paused - " + myApp.currentOtbCoach + " To Restart"
+});
+
+
+socket.on('disconnectedCoach', function(data){
+  console.log("Disconnection!");
+  // Disonnected, let's send a message to the server. We will do a similar process to when we have a connection, clearing and rebuilding the connectedSockets List and setting the firstConnectedSocketID.
+  // First we clear the connectedSocketsList. Then we loop through the socketList of all connected sockets (across all rooms) and adds them to the current rooms connectedSocketsList if they start with the correct room.
+    myApp.connectedSocketsList = [];
+
+  for (var i=0; i < data.socketList.length; i++){
+    console.log(data.socketList);
+    if(data.socketList[i].startsWith(myApp.draftID)){
+      myApp.connectedSocketsList.push(data.socketList[i]);
+    }
+  };
+  // Gets the firstConnectedSocketID by getting the first ID from the connectedSocketsList.
+  myApp.firstConnectedSocketID = myApp.connectedSocketsList[0];
+}); // Close socket.on('disconnectedCoach').
+
 
 
 
