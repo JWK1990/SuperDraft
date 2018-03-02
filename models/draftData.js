@@ -61,9 +61,6 @@ var CoachSchema = new mongoose.Schema({
 	},
 	rosterSpots: {
 		type: Array
-	},
-	positionCount: {
-		type: Array
 	}
 });
 

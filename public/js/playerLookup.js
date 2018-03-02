@@ -27,6 +27,11 @@ print(message);
 console.log(players.length);
 */
 
+// Set the myApp.playerData variable with the player data from the playerData.json file.
+$.getJSON('./js/playerData.json')
+.done(function (data){
+  myApp.playerData = data;
+});
 
 // Prevent the "Place Bid" button from opening a new page.
 $("#bidForm").submit(function(e){
@@ -35,25 +40,23 @@ $("#bidForm").submit(function(e){
 
 
 $(document).ready(function() {
-    $('#searchTable').DataTable( {
-        // ScrollY effectively sets the height of the table. 72vh represents 72% of the height of the browser window.
-        // Not sure why this isn't 70vh as the pane is 70% of the browser window, just used trial and error to get 72vh.
-        // The rough guide for the vh seems to be 4% less than the height of the pane.
-        // We need to update this if we're updating the height of the table.
-        scrollY: '72vh',
-        scrollCollapse: true,
-        paging: false,
-        searching: false,
-        bInfo: false,
-        autoWidth: true,
-        "order": [[0, "asc" ]],
-        columnDefs: [
-          {orderable: false, targets: '_all'}
-        ]
-  });   
-});
+  $('#searchTable').DataTable({
+      // ScrollY effectively sets the height of the table. 72vh represents 72% of the height of the browser window.
+      // Not sure why this isn't 70vh as the pane is 70% of the browser window, just used trial and error to get 72vh.
+      // The rough guide for the vh seems to be 4% less than the height of the pane.
+      // We need to update this if we're updating the height of the table.
+      scrollY: '72vh',
+      scrollCollapse: true,
+      paging: false,
+      searching: false,
+      bInfo: false,
+      autoWidth: true,
+      "order": [[0, "asc" ]],
+      columnDefs: [
+        {orderable: false, targets: '_all'}
+      ]
+  })  // Close #searchTable DataTable function.
 
-$(document).ready(function() {
   myApp.myTeamDT = $('#myTeamTable').DataTable( {
         // ScrollY effectively sets the height of the table. 14vh represents 14% of the height of the browser window.
         // The rough guide for the vh seems to be 4% less than the height of the pane.
@@ -69,8 +72,13 @@ $(document).ready(function() {
         oLanguage: {
           sZeroRecords: "-"
         }
-    });
-});
+  }) // Close #myTeamTable DataTable function.
+}); // Close $(document).ready() function.
+setTimeout(function(){
+  var draftBody = document.getElementById("draftBody");
+  draftBody.style.visibility = "visible";
+  draftBody.style.opacity = 1;
+}, 1500);
 
 
 var myApp = {
@@ -160,6 +168,8 @@ var myApp = {
   allConnected: {},
   // Define the connectedUsers variable to hold a list of the connected users.
   connectedUsers: [],
+  // Define the soldForTimeout variable to hold the current timeout for the "Sold for" text.
+  soldForTimeout: {},
 
   //!!!!!!!!!!!!!!DEFINE FUNCTIONS!!!!!!!!!!!!!!!
     updateSearch: function(){
@@ -236,6 +246,8 @@ var myApp = {
 
 
     startCountdown: function(endTime){
+      // Clear the myApp.soldForTimeout variable so that we don't display the "Solf for" text.
+      clearTimeout(myApp.soldForTimeout);
       // Increase the font size back to normal size after it is reduced for 'On the block:' text.
       myApp.demo.style.fontSize = "3vmin";
       // Set the date we're counting down to
@@ -257,7 +269,7 @@ var myApp = {
               clearInterval(myApp.counter);
               myApp.placeBidButton.disabled = true;
               myApp.demo.innerHTML = "";
-              setTimeout(function(){myApp.demo.innerHTML = "Sold for " + myApp.currentBid.innerHTML}, 1000);
+              myApp.soldForTimeout = setTimeout(function(){myApp.demo.innerHTML = "Sold for " + myApp.currentBid.innerHTML}, 1000);
               myApp.placeBidButton.style.background = "grey";
               myApp.placeBidButton.innerHTML = "-";
           }
@@ -470,6 +482,7 @@ var myApp = {
             budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML = "-";
             budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML = "-";
             budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML = "Full";
+            budgetsTableRows[i].style.color = "grey";
         }
       } // Close for() loop.
     }, // Close updateBudgets() function.
@@ -814,12 +827,6 @@ var myApp = {
 
 }; // Close NS Namespace.
 
-// Set the myApp.playerData variable with the player data from the playerData.json file.
-$.getJSON('./js/playerData.json')
-.done(function (data){
-  myApp.playerData = data;
-});
-
 // COMMENTING OUT OTB POSITION VALIDATIONS AS THESE ARE NOW HANDLED ON THE BACKEND
 /*
 //OTB POSITION VALIDATIONS FOR OTB COACH.
@@ -887,95 +894,90 @@ socket.on('connect', function(){
 }); // Close socket.on('connect').
 
 
-socket.on("socketDetails", function(data){
-  console.log("socketDetails Started!");
-  // Sets the current users socket ID to the socket ID returned from the server side combined with the room ID to match the format of the connectedSocketsList.
-  myApp.currentUserSocketID = myApp.draftID + " - " + data.socketID;
-  console.log("socketDetails Finished!");
-}); // Close the socket.on("socketDetails") function.
-
-
 socket.on("pageLoaded", function(data){
-  console.log("pageLoaded Started");
-  var watchlistFilter = document.getElementById("watchlistSearch");
-  var watchlistCheckboxes = searchTable.getElementsByTagName("input");
-  var hideDrafted = document.getElementById("hideDrafted");
-  var budgetsTable = document.getElementById("budgetsTable");
-  var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
-  var updatedTeamNames = _.pluck(data.loadData.coaches, "teamName2");
-  // Update the player search filters to the default values on the page load.
-  watchlistFilter.checked = false;
-  watchlistCheckboxes.checked = false;
-  hideDrafted.checked = true;
-  // Set the relevant variables.
-  myApp.demo.style.fontSize = "2vmin";
-  myApp.demo.innerHTML = "On The Block: " + data.loadData.otbCoach;
-  myApp.numOfCoaches = data.loadData.numOfCoaches;
-  myApp.rosterSize = data.loadData.rosterSize;
-  myApp.totalRosterSpots = myApp.numOfCoaches * myApp.rosterSize;
-  myApp.numOfPlayersDrafted = data.loadData.results.length;
-  myApp.totalDefSpots = data.loadData.numOfDef;
-  myApp.totalFwdSpots = data.loadData.numOfFwd;
-  myApp.totalRucSpots = data.loadData.numOfRuc;
-  myApp.totalMidSpots = data.loadData.numOfMid;
-  myApp.totalBenSpots = data.loadData.numOfBen;
-  myApp.admin = data.loadData.admin;
-  // Add the coaches array to the roster filter drop down list.
-  // Set the default filter value to the current user.
-  myApp.addRosterFilterOption(updatedTeamNames);
-  myApp.teamFilter.value = myApp.currentUser;
-  // Update the draftedPlayers list with the updated results list from the DB.
-  // We used ‘JSON.parse(JSON.stringify(data.loadData.results))’ to convert the data.loadData.resutls data into a string and then re-convert it into an object.
-  // We do this because if we just assigned data.loadData.results directly to the draftedPlayersList variable then we are passing the value by reference and anything we do to the draftedPlayersList also updates the data.loadData.results variable.
-  myApp.draftedPlayersList = JSON.parse(JSON.stringify(_.pluck(data.loadData.coaches, "players")));
-  // Run the filterRosterPane() function to update the roster pane with the selected coaches team.
-  myApp.filterRosterPane();
-  // Run the relevant functions with the load data as an input.
-  //myApp.setDraftedPlayers(data.loadData.results);
-  myApp.updateBudgets(data.loadData.coaches);
-  myApp.highlightSearch(data.loadData.results);
-  myApp.highlightOtb(data.loadData.pickCounter);
-  myApp.updateSearch();
-  myApp.setMaxBid(data.loadData);
-  myApp.placeBidButton.disabled = true;
-  myApp.placeBidButton.style.background = "grey";
-  // If the coaches team is full then we want to disable the addToQueue button.
-  if(myApp.numOfPlayersDrafted >= myApp.totalRosterSpots){
-    myApp.addToQueue.disabled = true;
-    myApp.addToQueue.style.backgroundColor = "#DCDCDC";
-    myApp.demo.innerHTML = "Draft Complete!";
-    // Set budget table rows to grey if the draft is complete.
-    for(var i = 1; i < budgetsTableRows.length; i++) {
-      budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
-      budgetsTableRows[i].style.color = "grey";
-    } // Close for() loop.
-  }; // Close if() statement.
-  // Show the 'Pause Draft' button if the current user is the admin user.
-  if(myApp.currentUser == myApp.admin){
-    myApp.pauseDraftButton.style.display = "";
-  };
-  // Set the position validation variables.
-  myApp.setBenchCount(data.loadData);
-  // myApp.otbSetBenchCount(data.loadData);
-  myApp.setRosterArray(data.loadData);
-  // myApp.otbSetRosterArray(data.loadData);
-  myApp.getTopPlayer();
-  // Run the updateSPP() function to load the top available valid player for the current user.
-  myApp.updateSPP(myApp.topPlayer);
-  // Run the selectPlayer() function to add event listeners to the rows of the selected player pane.
-  myApp.selectPlayer();
-  // Hide and re-display the myTeamTable in an attempt to get it to show updated data if any is missing.
-  $('#myTeamTable').hide().show(0);
-  // Run socket.emit("joinRoom") to add the current coach to the draft room on the back end.
-  socket.emit('joinRoom', {draftID: myApp.draftID, currentUser: myApp.currentUser});
-  console.log("pageLoad Complete!");
+  setTimeout(function(){
+    console.log("pageLoaded Started");3
+    var watchlistFilter = document.getElementById("watchlistSearch");
+    var watchlistCheckboxes = searchTable.getElementsByTagName("input");
+    var hideDrafted = document.getElementById("hideDrafted");
+    var budgetsTable = document.getElementById("budgetsTable");
+    var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
+    var updatedTeamNames = _.pluck(data.loadData.coaches, "teamName2");
+    // Update the player search filters to the default values on the page load.
+    watchlistFilter.checked = false;
+    watchlistCheckboxes.checked = false;
+    hideDrafted.checked = true;
+    // Set the relevant variables.
+    myApp.demo.style.fontSize = "2vmin";
+    myApp.demo.innerHTML = "On The Block: " + data.loadData.otbCoach;
+    myApp.numOfCoaches = data.loadData.numOfCoaches;
+    myApp.rosterSize = data.loadData.rosterSize;
+    myApp.totalRosterSpots = myApp.numOfCoaches * myApp.rosterSize;
+    myApp.numOfPlayersDrafted = data.loadData.results.length;
+    myApp.totalDefSpots = data.loadData.numOfDef;
+    myApp.totalFwdSpots = data.loadData.numOfFwd;
+    myApp.totalRucSpots = data.loadData.numOfRuc;
+    myApp.totalMidSpots = data.loadData.numOfMid;
+    myApp.totalBenSpots = data.loadData.numOfBen;
+    myApp.admin = data.loadData.admin;
+    // Add the coaches array to the roster filter drop down list.
+    // Set the default filter value to the current user.
+    myApp.addRosterFilterOption(updatedTeamNames);
+    myApp.teamFilter.value = myApp.currentUser;
+    // Update the draftedPlayers list with the updated results list from the DB.
+    // We used ‘JSON.parse(JSON.stringify(data.loadData.results))’ to convert the data.loadData.resutls data into a string and then re-convert it into an object.
+    // We do this because if we just assigned data.loadData.results directly to the draftedPlayersList variable then we are passing the value by reference and anything we do to the draftedPlayersList also updates the data.loadData.results variable.
+    myApp.draftedPlayersList = JSON.parse(JSON.stringify(_.pluck(data.loadData.coaches, "players")));
+    // Run the filterRosterPane() function to update the roster pane with the selected coaches team.
+    myApp.filterRosterPane();
+    // Run the relevant functions with the load data as an input.
+    //myApp.setDraftedPlayers(data.loadData.results);
+    myApp.updateBudgets(data.loadData.coaches);
+    myApp.highlightSearch(data.loadData.results);
+    myApp.highlightOtb(data.loadData.pickCounter);
+    myApp.updateSearch();
+    myApp.setMaxBid(data.loadData);
+    myApp.placeBidButton.disabled = true;
+    myApp.placeBidButton.style.background = "grey";
+    // If the coaches team is full then we want to disable the addToQueue button.
+    if(myApp.numOfPlayersDrafted >= myApp.totalRosterSpots){
+      myApp.addToQueue.disabled = true;
+      myApp.addToQueue.style.backgroundColor = "#DCDCDC";
+      myApp.demo.innerHTML = "Draft Complete!";
+      myApp.placeBidButton.style.background = "grey";
+      myApp.demo.innerHTML = "-";
+      // Set budget table rows to grey if the draft is complete.
+      for(var i = 1; i < budgetsTableRows.length; i++) {
+        budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
+        budgetsTableRows[i].style.color = "grey";
+      } // Close for() loop.
+    }; // Close if() statement.
+    // Show the 'Pause Draft' button if the current user is the admin user.
+    if(myApp.currentUser == myApp.admin){
+      myApp.pauseDraftButton.style.display = "";
+    };
+    // Set the position validation variables.
+    myApp.setBenchCount(data.loadData);
+    // myApp.otbSetBenchCount(data.loadData);
+    myApp.setRosterArray(data.loadData);
+    // myApp.otbSetRosterArray(data.loadData);
+    myApp.getTopPlayer();
+    // Run the updateSPP() function to load the top available valid player for the current user.
+    myApp.updateSPP(myApp.topPlayer);
+    // Run the selectPlayer() function to add event listeners to the rows of the selected player pane.
+    myApp.selectPlayer();
+    // Hide and re-display the myTeamTable in an attempt to get it to show updated data if any is missing.
+    $('#myTeamTable').hide().show(0);
+    // Run socket.emit("joinRoom") to add the current coach to the draft room on the back end.
+    socket.emit('joinRoom', {draftID: myApp.draftID, currentUser: myApp.currentUser});
+    console.log("pageLoad Complete!");
+  }, 1000);
 }); // Close socket.on("pageLoaded") function.
 
 
 // The socket.on("joinedCoach") function updates the Team Names in the budgets pane for all users connected to the room every time a new coach joins the room.
 socket.on("joinedCoach", function(data){
   console.log("joinedCoach Started!");
-  console.log(data.socketList);
   var budgetsTable = document.getElementById("budgetsTable");
   var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
   var joinedCoachesCount = 0;
@@ -1094,6 +1096,8 @@ socket.on('playerDrafted', function(data) {
     myApp.demo.innerHTML = "Draft Complete!";
     myApp.addToQueue.disabled = true;
     myApp.addToQueue.style.backgroundColor = "#DCDCDC";
+    myApp.placeBidButton.style.background = "grey";
+    myApp.demo.innerHTML = "-";
     myApp.pauseDraftButton.disabled = true;
     myApp.pauseDraftButton.style.backgroundColor = "#DCDCDC";
     // Code to change all team names to grey in the Budgets pane when the draft is complete.

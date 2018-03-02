@@ -4,7 +4,7 @@ body, html {
   height: 100%;
   margin: 0px;
   padding: 0px;
-  background-color: #2CFC0E;;
+  background-color: #2CFC0E;
 }
 
 * {
@@ -72,6 +72,18 @@ input, select, textarea{
     -moz-box-sizing:border-box;
     box-sizing:border-box;
     -webkit-box-sizing:border-box; 
+}
+
+
+#draftBody {
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: opacity 1000ms, visibility 1000ms;
+  transition: opacity 1000ms, visibility 1000ms;
+}
+nav.main ul li:hover ul {
+  visibility: visible;
+  opacity: 1;
 }
 
 
