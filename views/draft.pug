@@ -214,7 +214,6 @@ html(lang='en')
 						tr
 							th#myTeamOrderSort #
 							th#myTeamPlayerSort Player
-							th Pos
 							th Team
 							th $
 
@@ -222,8 +221,10 @@ html(lang='en')
 						- for(var i=0; i < results.length; i++){
 							tr
 								td= i+1
-								td=results[i].name
-								td=results[i].position
+								if results[i].position.length < 4
+									td=results[i].name + " (" + results[i].position.substring(0,1) + ")"
+								else
+									td=results[i].name + " (" + results[i].position.substring(0,1) + "/" + results[i].position.substring(4,5) + ")"
 								td=results[i].team
 								td="$" + results[i].price
 						- }

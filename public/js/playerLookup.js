@@ -156,6 +156,10 @@ var myApp = {
   admin: {},
   // Define the pauseDraftButton variable.
   pauseDraftButton: document.getElementById("pauseDraft"),
+  // Define the allConnected variable to hold a true or false value depending on if all of the coaches are connected.
+  allConnected: {},
+  // Define the connectedUsers variable to hold a list of the connected users.
+  connectedUsers: [],
 
   //!!!!!!!!!!!!!!DEFINE FUNCTIONS!!!!!!!!!!!!!!!
     updateSearch: function(){
@@ -252,7 +256,8 @@ var myApp = {
           if (distance < 0) {
               clearInterval(myApp.counter);
               myApp.placeBidButton.disabled = true;
-              myApp.demo.innerHTML = "Sold for " + myApp.currentBid.innerHTML;
+              myApp.demo.innerHTML = "";
+              setTimeout(function(){myApp.demo.innerHTML = "Sold for " + myApp.currentBid.innerHTML}, 1000);
               myApp.placeBidButton.style.background = "grey";
               myApp.placeBidButton.innerHTML = "-";
           }
@@ -364,12 +369,15 @@ var myApp = {
         if (td.innerHTML === data) {
           budgetsTableRows[i].style.backgroundColor = "yellow";
           budgetsTableRows[i].style.color = "#4d4d4d";
-        } else {
+        } else if(myApp.connectedUsers.indexOf(td.innerHTML) < 0){
             budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
-            budgetsTableRows[i].style.color = "white";
-        }
-        } 
-      }
+            budgetsTableRows[i].style.color = "grey";
+          } else {
+              budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
+              budgetsTableRows[i].style.color = "white";
+          } // Close else{} statement.
+        } // Close if(td) statement. 
+      } // Close for() loop.
     }, // Close highlightBidder() function.
 
     highlightOtb: function(data){
@@ -770,26 +778,31 @@ var myApp = {
 
 
     addToBlock: function(player, position, average){
-      // We run the benchCheck() function to set the addToBench variable to 1 or 0.
-      myApp.benchCheck(position);
-      if(myApp.currentOtbCoach === myApp.currentUser && myApp.benchCount >= myApp.totalBenSpots && myApp.addToBench > 0){
-        $(function(){
-              $("#dialogRoster").dialog({
-                  position: top
-                })
-            });
-      } else if(myApp.currentOtbCoach === myApp.currentUser && myApp.startValue.value > myApp.maxBid){
-         $(function(){
-                $("#dialogOTB").dialog({
+      // If the draft hasn't been started and all users aren't connected then we send an alert, if not, we allow the draft to proceed.
+      if(myApp.numOfPlayersDrafted == 0 && myApp.allConnected == false){
+        alert("Please wait for all coaches to join before starting the draft!");
+      } else{
+        // We run the benchCheck() function to set the addToBench variable to 1 or 0.
+        myApp.benchCheck(position);
+        if(myApp.currentOtbCoach === myApp.currentUser && myApp.benchCount >= myApp.totalBenSpots && myApp.addToBench > 0){
+          $(function(){
+                $("#dialogRoster").dialog({
                     position: top
                   })
               });
-              myApp.startValue.value = 1;
-      } else {
-         // Clears the current sppCountdownTimer for the current user.
-        clearInterval(myApp.sppCounter);
-        socket.emit('addToBlock', {draftID: myApp.draftID, player: player, position: position, average: average, currentUser: myApp.currentOtbCoach, startingBid: myApp.startValue.value});
-      }; // Close else statement.
+        } else if(myApp.currentOtbCoach === myApp.currentUser && myApp.startValue.value > myApp.maxBid){
+           $(function(){
+                  $("#dialogOTB").dialog({
+                      position: top
+                    })
+                });
+                myApp.startValue.value = 1;
+        } else {
+           // Clears the current sppCountdownTimer for the current user.
+          clearInterval(myApp.sppCounter);
+          socket.emit('addToBlock', {draftID: myApp.draftID, player: player, position: position, average: average, currentUser: myApp.currentOtbCoach, startingBid: myApp.startValue.value});
+        } // Close else{} statement relating to if(myApp.currentOtbCoach).
+      } // Close else{} statement relating to if(myApp.numOfPlayersDrafted).
     }, // Close addToBlock() function.
 
 
@@ -931,10 +944,10 @@ socket.on("pageLoaded", function(data){
     myApp.addToQueue.disabled = true;
     myApp.addToQueue.style.backgroundColor = "#DCDCDC";
     myApp.demo.innerHTML = "Draft Complete!";
-    // Set budget table rows back to normal.
+    // Set budget table rows to grey if the draft is complete.
     for(var i = 1; i < budgetsTableRows.length; i++) {
       budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
-      budgetsTableRows[i].style.color = "white";
+      budgetsTableRows[i].style.color = "grey";
     } // Close for() loop.
   }; // Close if() statement.
   // Show the 'Pause Draft' button if the current user is the admin user.
@@ -954,7 +967,7 @@ socket.on("pageLoaded", function(data){
   // Hide and re-display the myTeamTable in an attempt to get it to show updated data if any is missing.
   $('#myTeamTable').hide().show(0);
   // Run socket.emit("joinRoom") to add the current coach to the draft room on the back end.
-  socket.emit('joinRoom', myApp.draftID);
+  socket.emit('joinRoom', {draftID: myApp.draftID, currentUser: myApp.currentUser});
   console.log("pageLoad Complete!");
 }); // Close socket.on("pageLoaded") function.
 
@@ -962,24 +975,39 @@ socket.on("pageLoaded", function(data){
 // The socket.on("joinedCoach") function updates the Team Names in the budgets pane for all users connected to the room every time a new coach joins the room.
 socket.on("joinedCoach", function(data){
   console.log("joinedCoach Started!");
-  console.log(data.joinedCoaches);
+  console.log(data.socketList);
   var budgetsTable = document.getElementById("budgetsTable");
   var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
-  // First we clear the connectedSocketList.
-  myApp.connectedSocketsList = [];
-  // Then we loop through the socketList of all connected sockets (across all rooms) and adds them to the current rooms connectedSocketsList if they start with the correct room.
-  for (var i=0; i < data.socketList.length; i++){
-    if(data.socketList[i].startsWith(myApp.draftID)){
-      myApp.connectedSocketsList.push(data.socketList[i]);
-    }
-  };
-  // Gets the firstConnectedSocketID by getting the first ID from the connectedSocketsList.
-  myApp.firstConnectedSocketID = myApp.connectedSocketsList[0];
+  var joinedCoachesCount = 0;
+  myApp.connectedUsers = [];
+
   // Updates all of the team names in the budgets pane.
-  for (var i = 1; i < budgetsTableRows.length; i++) {
+  for (var i=1; i < budgetsTableRows.length; i++) {
     var td = budgetsTableRows[i].getElementsByTagName("td")[0];
     td.innerHTML = data.joinedCoaches[i-1];
-  }; // Close for() loop.
+    // For each budget table row loop through the socketList and see if we can find a matching team name and draftID.
+    // If we can then the user has joined the draft and we colour their team details white.
+    for(var j=0; j < data.socketList.length; j++){
+      if(data.socketList[j].includes(td.innerHTML + "-" + myApp.draftID)){
+        budgetsTableRows[i].style.color = "white";
+        myApp.connectedUsers.push(td.innerHTML);
+        break;
+      } // Close if()statement.
+    } // Close for(var j=0) loop.
+  }; // Close for(var i=1) loop.
+  // Loop through the socketList and count the number of sockets that are joined to the current draft.
+  for(var i=0; i < data.socketList.length; i++){
+    if(data.socketList[i].includes(myApp.draftID)){
+        joinedCoachesCount += 1;
+      } // Close if()statement.
+  };
+  // If all coaches have joined then we set the myApp.allConnected variable to true, if not, we set it to false.
+  if(joinedCoachesCount == myApp.numOfCoaches){
+    myApp.allConnected = true;
+  } else {
+    myApp.allConnected = false;
+  }
+  // Loop through all of the 
   // Re-run the addRosterFilterOption() function every time a new coach joins to update the text in the select options from an email to a team name.
   myApp.addRosterFilterOption(data.joinedCoaches);
   myApp.teamFilter.value = myApp.currentUser;
@@ -989,28 +1017,28 @@ socket.on("joinedCoach", function(data){
 
 socket.on("draftPaused", function(){
   clearInterval(myApp.sppCounter);
-  myApp.demo.innerHTML = "Paused - " + myApp.currentOtbCoach + " To Restart"
+  myApp.demo.innerHTML = "Paused - " + myApp.currentOtbCoach + " to restart"
 });
 
 
 socket.on('disconnectedCoach', function(data){
   console.log("Disconnection!");
-  // Disonnected, let's send a message to the server. We will do a similar process to when we have a connection, clearing and rebuilding the connectedSockets List and setting the firstConnectedSocketID.
-  // First we clear the connectedSocketsList. Then we loop through the socketList of all connected sockets (across all rooms) and adds them to the current rooms connectedSocketsList if they start with the correct room.
-    myApp.connectedSocketsList = [];
-
-  for (var i=0; i < data.socketList.length; i++){
-    console.log(data.socketList);
-    if(data.socketList[i].startsWith(myApp.draftID)){
-      myApp.connectedSocketsList.push(data.socketList[i]);
+  var budgetsTable = document.getElementById("budgetsTable");
+  var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
+  // We set the myApp.allConnected variable to false as if a coach has disconnected all coaches can't be connected.
+  myApp.allConnected = false;
+  // Updates all of the team names in the budgets pane.
+  for (var i=1; i < budgetsTableRows.length; i++) {
+    var td = budgetsTableRows[i].getElementsByTagName("td")[0];
+    if(data.disconnectedSocket.includes(td.innerHTML + "-" + myApp.draftID)){
+      budgetsTableRows[i].style.color = "grey";
     }
-  };
-  // Gets the firstConnectedSocketID by getting the first ID from the connectedSocketsList.
-  myApp.firstConnectedSocketID = myApp.connectedSocketsList[0];
+  }; // Close for(var i=1) loop.
+  var disconnectedIndex = myApp.connectedUsers.indexOf(td.innerHTML);
+  console.log(myApp.connectedUsers);
+  console.log(disconnectedIndex);
+  myApp.connectedUsers.splice(disconnectedIndex -1, 1);
 }); // Close socket.on('disconnectedCoach').
-
-
-
 
 
 socket.on('playerDrafted', function(data) {
@@ -1020,19 +1048,35 @@ socket.on('playerDrafted', function(data) {
   myApp.otbName.innerHTML = "-";
   myApp.otbTeamPos.innerHTML = "-";
   myApp.otbPic.src = "./images/TBA.png";
+  // Clear any current otb and spp countdown timers.
+  clearInterval(myApp.counter);
+  clearInterval(myApp.sppCounter);
+  // Code to change all team names to white in the Budgets pane when a round of drafting completes except for those that aren't currently connected to the draft.
+  for (var i = 1; i < budgetsTableRows.length; i++) {
+    if(myApp.connectedUsers.indexOf(budgetsTableRows[i].getElementsByTagName("td")[0].innerHTML) < 0){
+      budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
+      budgetsTableRows[i].style.color = "grey";
+    } else {
+        budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
+        budgetsTableRows[i].style.color = "white";
+    } // Close else{} statement.
+  } // Close for() loop.
+
   // Highlight the player search pane with the completed results.
   myApp.highlightSearch(data.dbData.results);
-  // Code to change all team names back to white in the Budgets pane.
-  for (var i = 1; i < budgetsTableRows.length; i++) {
-    budgetsTableRows[i].style.color = "white";
-  }
   // Call updateBudgets() to update the Budgets pane.
   myApp.updateBudgets(data.dbData.coaches);
   // Update the player search pane to grey out any drafted players.
   myApp.updateSearch();
   // Add a row to the myTeamDT data table containing the details of the most recently drafted player.
   var index = data.dbData.results.length -1;
-  myApp.myTeamDT.row.add([data.dbData.results.length, data.dbData.results[index].name, data.dbData.results[index].position, data.dbData.results[index].team, "$" + data.dbData.results[index].price]).draw(false);
+  var concatName;
+  if(data.dbData.results[index].position.length < 4){
+    concatName = data.dbData.results[index].name + " (" + data.dbData.results[index].position.substring(0,1) + ")";
+  } else {
+    concatName = data.dbData.results[index].name + " (" + data.dbData.results[index].position.substring(0,1) + "/" + data.dbData.results[index].position.substring(4,5) + ")";
+    }; // Close if() statement.
+  myApp.myTeamDT.row.add([data.dbData.results.length, concatName, data.dbData.results[index].team, "$" + data.dbData.results[index].price]).draw(false);
   // Update the draftedPlayersList with the updated results list from the DB.
   // We used ‘JSON.parse(JSON.stringify(data.dbData.results))’ to convert the data.dbData.resutls data into a string and then re-convert it into an object.
   // We do this because if we just assigned data.dbData.results directly to the draftedPlayersList variable then we are passing the value by reference and anything we do to the draftedPlayersList also updates the data.dbData.results variable.
@@ -1052,6 +1096,10 @@ socket.on('playerDrafted', function(data) {
     myApp.addToQueue.style.backgroundColor = "#DCDCDC";
     myApp.pauseDraftButton.disabled = true;
     myApp.pauseDraftButton.style.backgroundColor = "#DCDCDC";
+    // Code to change all team names to grey in the Budgets pane when the draft is complete.
+    for (var i = 1; i < budgetsTableRows.length; i++) {
+      budgetsTableRows[i].style.color = "grey";
+    }
   } else {
       // Call highlightOtb() function to underline the on the block coach.
       myApp.highlightOtb(data.dbData.pickCounter);

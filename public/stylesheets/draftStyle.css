@@ -512,10 +512,12 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   border-bottom: 1px white solid;
   font-size: 1.5vmin;
   height: 5%;
+  color: white;
 }
 
 .budgetsPane tr{
   border-bottom: 0.75px grey solid;
+  color: grey;
 }
 
 
