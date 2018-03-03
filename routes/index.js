@@ -213,7 +213,7 @@ router.get("/draft", mid.requiresLogin, function(req, res, next){
 
 // GET /create
 router.get("/create", mid.requiresLogin, function(req, res, next){
-	return res.render("create", {title: "Create A Draft", currentUserName: req.session.name});
+	return res.render("create", {title: "Create A Draft", currentUserName: req.session.name, currentUserEmail: req.session.email});
 });
 
 // POST /create

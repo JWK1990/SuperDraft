@@ -3,7 +3,15 @@ extends layout
 block content
   .main.container.text-xs-center
     h1.display-3 SuperDraft
-    p.lead The only AFL Fantasy Auction Draft software. By the people, for the people, completely free.
-    a.btn.btn-info-outline.btn-lg(href='/register') SIGN UP &amp; DRAFT
-    p.lead#login Already signed up?
+    p.lead The only Australian Football Fantasy Auction Draft Website.
+    p.lead The process is simple:
+    span(style= "font-size: 5vmin; vertical-align: middle") 1.     
+    a.btn.btn-info-outline.btn-lg(href='/register', style="width:220px") SIGN UP
+    div(style= "margin-top: 40px")
+    span(style= "font-size: 5vmin; vertical-align: middle") 2.   
+    a.btn.btn-info-outline.btn-lg(href='/create', style="width:220px") CREATE A DRAFT
+    div(style= "margin-top: 40px")
+    span(style= "font-size: 5vmin; vertical-align: middle") 3.   
+    a.btn.btn-info-outline.btn-lg(href='/create', style="width:220px") RUN YOUR DRAFT
+    p.lead#login(style="margin-bottom: 20px") Already signed up?
     a.btn.btn-info-outline.btn-lg(href='/login') LOGIN

@@ -945,7 +945,7 @@ socket.on("pageLoaded", function(data){
       myApp.addToQueue.style.backgroundColor = "#DCDCDC";
       myApp.demo.innerHTML = "Draft Complete!";
       myApp.placeBidButton.style.background = "grey";
-      myApp.demo.innerHTML = "-";
+      myApp.placeBidButton.innerHTML = "";
       // Set budget table rows to grey if the draft is complete.
       for(var i = 1; i < budgetsTableRows.length; i++) {
         budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
@@ -1097,7 +1097,7 @@ socket.on('playerDrafted', function(data) {
     myApp.addToQueue.disabled = true;
     myApp.addToQueue.style.backgroundColor = "#DCDCDC";
     myApp.placeBidButton.style.background = "grey";
-    myApp.demo.innerHTML = "-";
+    myApp.placeBidButton.innerHTML = "";
     myApp.pauseDraftButton.disabled = true;
     myApp.pauseDraftButton.style.backgroundColor = "#DCDCDC";
     // Code to change all team names to grey in the Budgets pane when the draft is complete.
