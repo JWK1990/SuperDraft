@@ -12,10 +12,10 @@ block content
           form(method='POST' action='/register')
             div.form-group
               label(for='name') Coach Name:
-              input#name.form-control(type='text', placeholder='e.g. Mick Malthouse' name='name' value=reqBodyFail.name)
+              input#name.form-control(type='text', placeholder='Mick Malthouse' name='name' value=reqBodyFail.name)
             div.form-group
               label(for='name') Team Name:
-              input#name.form-control(type='text', placeholder='e.g. The Rat Pack' name='teamName' value=reqBodyFail.teamName)
+              input#name.form-control(type='text', placeholder='The Rat Pack' name='teamName' value=reqBodyFail.teamName)
             if dupEmail
               div.form-group.has-danger
                 label(for='email') Email:
@@ -24,22 +24,24 @@ block content
             else
               div.form-group
                 label(for='email') Email:
-                input#email.form-control(type='email', placeholder='e.g. MickyMalt2010@gmail.com' name='email' value=reqBodyFail.email)
+                input#email.form-control(type='email', placeholder='MickyMalt2010@gmail.com' name='email' value=reqBodyFail.email)
             if passMismatch
               div.form-group.has-danger
                 label(for='pw') Password:
-                input#pw.form-control.form-control-danger(type='password', placeholder='' name='password')
+                input#pw.form-control.form-control-danger(type='password', placeholder='xxxxxxxx' name='password')
               div.form-group.has-danger
                 label(for='pw2') Confirm Password:
-                input#pw2.form-control.form-control-danger(type='password', placeholder='' name='confirmPassword')
+                input#pw2.form-control.form-control-danger(type='password', placeholder='xxxxxxxx' name='confirmPassword')
             else
               div.form-group
                 label(for='pw') Password:
-                input#pw.form-control(type='password', placeholder='' name='password')
+                input#pw.form-control(type='password', placeholder='xxxxxxxx' name='password')
               div.form-group
                 label(for='pw2') Confirm Password:
-                input#pw2.form-control(type='password', placeholder='' name='confirmPassword')
+                input#pw2.form-control(type='password', placeholder='xxxxxxxx' name='confirmPassword')
             button.btn.btn-primary(type='submit') Sign Up
+            div(style="margin-bottom: 20px")
+            p(style="font-style: italic") Already signed up? #[a(href="/login" style="font-style: normal; color: rgb(44,252,14)") Log In]
 
         else
           h1.display-4.m-b-2 Sign Up
@@ -47,13 +49,13 @@ block content
           form(method='POST' action='/register')
             div.form-group
               label(for='name') Coach Name:
-              input#name.form-control(type='text', placeholder='e.g. Mick Malthouse' name='name')
+              input#name.form-control(type='text', placeholder='Mick Malthouse' name='name')
             div.form-group
               label(for='name') Team Name:
-              input#name.form-control(type='text', placeholder='e.g. The Rat Pack' name='teamName')
+              input#name.form-control(type='text', placeholder='The Rat Pack' name='teamName')
             div.form-group
               label(for='email') Email:
-              input#email.form-control(type='email', placeholder='e.g. MickyMalt2010@gmail.com' name='email')
+              input#email.form-control(type='email', placeholder='MickyMalt2010@gmail.com' name='email')
             div.form-group
               label(for='pw') Password:
               input#pw.form-control(type='password', placeholder='xxxxxxxx' name='password')
@@ -61,3 +63,5 @@ block content
               label(for='pw2') Confirm Password:
               input#pw2.form-control(type='password', placeholder='xxxxxxxx' name='confirmPassword')
             button.btn.btn-primary(type='submit') Sign Up
+            div(style="margin-bottom: 20px")
+            p(style="font-style: italic") Already signed up? #[a(href="/login" style="font-style: normal; color: rgb(44,252,14)") Log In]

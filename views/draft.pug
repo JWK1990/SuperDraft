@@ -49,6 +49,7 @@ html(lang='en')
 			.budgetsPane
 				h3#currentUser(style="display: none") #{currentUser}
 				h5#draftID(style="display: none") #{drafts[0]._id}
+				h5#leagueType(style="display: none") #{drafts[0].leagueType}
 				table#budgetsTable
 					tr.header
 						th.budgetName Team
@@ -230,7 +231,8 @@ html(lang='en')
 						- }
 
 			
-		script(src='/js/playerData.json')
+		script(src='/js/scPlayerData.json')
+		script(src='/js/dtPlayerData.json')
 		script(src='/js/playerLookup.js')
 
 	footer

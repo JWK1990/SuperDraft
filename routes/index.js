@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var User = require("../models/user");
-var Player = require("../models/playerData");
 var Draft = require("../models/draftData");
 var mid = require("../middleware");
 var path = require("path");
@@ -160,8 +159,6 @@ router.get('/contact', function(req, res, next) {
 
 // GET /draft
 router.get("/draft", mid.requiresLogin, function(req, res, next){
-	// Define the players variable that contains the player data from the playerData.json file in our Sublime files.
-	var players = JSON.parse(fs.readFileSync('./public/js/playerData.json', 'utf8'));
 	User.find({}, function(err, users){
 		Draft.find({"_id":req.query.draft}, function(err, drafts){
 			if(!err){
@@ -203,6 +200,13 @@ router.get("/draft", mid.requiresLogin, function(req, res, next){
 				}); // Close drafts[0].save() function.
 
 
+			// Define the players variable that contains the player data from the scPlayerData.json file if the leagueType is "Supercoach" or the dtPlayerData.json file if not.
+			if(drafts[0].leagueType == "Supercoach"){
+				var players = JSON.parse(fs.readFileSync('./public/js/scPlayerData.json', 'utf8'));
+			} else {
+				var players = JSON.parse(fs.readFileSync('./public/js/dtPlayerData.json', 'utf8'));
+			}
+
 				return res.render("draft", {title: "Draft", players: players, drafts: drafts, users: users, currentUser: currentUser, coaches: drafts[0].coaches, results: drafts[0].results});
 			} else {
 				throw err;
@@ -230,13 +234,10 @@ router.post("/create", function(req, res, next){
 		req.body.numOfBen &&
 		req.body.budget &&
 		req.body.selectCountdown &&
-		req.body.bidCountdown){
+		req.body.bidCountdown &&
+		req.body.leagueType){
 
-			var rosterCount = Number(req.body.numOfDef) + Number(req.body.numOfMid) + Number(req.body.numOfRuc) + Number(req.body.numOfFwd)	+ Number(req.body.numOfBen);
-
-			if(rosterCount == 0){
-				return res.render("create", {fail: " Roster size cannot be 0 players!", reqBodyFail: req.body, rosterSizeFail: true})
-			};
+		var rosterCount = Number(req.body.numOfDef) + Number(req.body.numOfMid) + Number(req.body.numOfRuc) + Number(req.body.numOfFwd)	+ Number(req.body.numOfBen);
 
 		// First we create a coachesList, which is an array containing objects with all of the relevant coaches details.
 		// We then assign this to the coaches value in the draftData object.
@@ -249,16 +250,6 @@ router.post("/create", function(req, res, next){
 			coachObject = {teamName: req["body"]["coach" + i].toUpperCase(), budget: req.body.budget, numOfPlayers: 0, teamName2: req["body"]["coach" + i].toUpperCase(), benchCount: 0, rosterSpots: [true, true, true, true, true, true, true, true, true, true]};
 			coachesList.push(coachObject);
 		};
-
-		console.log("CoachesList: " + coachesList);
-
-			for(var i=1; i <= req.body.numOfCoaches; i++){
-				if(req["body"]["coach" + i] == ""){
-					return res.render("create", {fail: " All team emails need to be filled!", reqBodyFail: req.body, coachesList: coachesList})
-				}
-			};
-
-
 
 			// create object with form input
 			var draftData = {
@@ -280,7 +271,8 @@ router.post("/create", function(req, res, next){
 				otbCoach :req.body.coach1,
 				pickCounter: 1,
 				selectCountdown: req.body.selectCountdown,
-				bidCountdown: req.body.bidCountdown
+				bidCountdown: req.body.bidCountdown,
+				leagueType: req.body.leagueType
 			};
 
 			// use schema's 'create' method to insert document into Mongo.
@@ -320,7 +312,7 @@ router.post("/create", function(req, res, next){
 			});
 			
 	} else {
-		return res.render("create", {fail: " All fields are required.", reqBodyFail: req.body})
+		return res.render("create", {reqBodyFail: req.body})
 }});
 
 router.get("/myDrafts", mid.requiresLogin, function(req, res, next){

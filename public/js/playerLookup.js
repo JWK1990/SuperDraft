@@ -27,11 +27,18 @@ print(message);
 console.log(players.length);
 */
 
-// Set the myApp.playerData variable with the player data from the playerData.json file.
-$.getJSON('./js/playerData.json')
-.done(function (data){
-  myApp.playerData = data;
-});
+// Set the myApp.playerData variable with the player data from the scPlayerData.json file if the leagueType is "Supercoach" or the dtPlayerData.json file if it isn't.
+if(document.getElementById("leagueType").innerHTML == "Supercoach"){
+  $.getJSON('./js/scPlayerData.json')
+  .done(function (data){
+    myApp.playerData = data;
+  });
+} else {
+    $.getJSON('./js/dtPlayerData.json')
+  .done(function (data){
+    myApp.playerData = data;
+  });
+}
 
 // Prevent the "Place Bid" button from opening a new page.
 $("#bidForm").submit(function(e){

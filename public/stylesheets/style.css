@@ -24,7 +24,8 @@ a:hover {
 }
 .main {
 	/* Main text colour */
-	color: rgb(44,252,14);
+	/* Original green colour is rgb(44,252,14) */
+	color: white;
 	min-height: calc(100vh - 34px);
 }
 .foot {
@@ -32,6 +33,10 @@ a:hover {
 	padding: .5rem 0;
 	/* Footer colour */
 	color: rgba(255,255,255, .6);
+}
+
+h1 {
+	color: rgb(44,252,14);
 }
 
 /* Modifier Styles */
@@ -75,6 +80,7 @@ tr{
 
 #myDraftsTable{
 	text-align: center;
+	width: 100%;
 }
 
 #myDraftsTable th, td, tr{

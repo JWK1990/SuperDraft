@@ -4340,20 +4340,6 @@
     "bye": 10
   },
   {
-    "name": "Kurt Tippett",
-    "team": "SYD",
-    "position": "FWD-RUC",
-    "pos1": "FWD",
-    "pos2": "RUC",
-    "rank": 311,
-    "points": 604,
-    "games": 9,
-    "ave": 67,
-    "stdDev": 26,
-    "age": 30,
-    "bye": 14
-  },
-  {
     "name": "Mark Baguley",
     "team": "ESS",
     "position": "DEF",
@@ -7516,20 +7502,6 @@
     "stdDev": 16,
     "age": 22,
     "bye": 13
-  },
-  {
-    "name": "Ben Griffiths",
-    "team": "RIC",
-    "position": "FWD",
-    "pos1": "FWD",
-    "pos2": "",
-    "rank": 538,
-    "points": 90,
-    "games": 2,
-    "ave": 45,
-    "stdDev": 27,
-    "age": 26,
-    "bye": 14
   },
   {
     "name": "Oliver Florent",

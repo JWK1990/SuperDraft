@@ -1,32 +1,31 @@
 extends layout
 
 block content
-
 	.main.container
 		.row#myDraftsTable
 			.col-md-8.col-md-offset-2
 				h1.display-4.m-b-2 My Drafts
-					table.table
-						tr
-							th League
-							th Year
-							th Coaches
-							th#draftCode Draft Code
-							th Admin
-							th Join
-							each result in results
-								tr
-									td= result.leagueName
-									td= result.draftYear
-									td= result.numOfCoaches
-									td#draftID= result._id
-									td= result.admin
-									td#joinButton.btn.btn-info-outline.btn-lg.m-t-1(onclick='join(this)') Join
+				table.table
+					tr
+						th League
+						th Year
+						th Coaches
+						th#draftCode Draft Code
+						th Admin
+						th Join
+						each result in results
+							tr
+								td= result.leagueName
+								td= result.draftYear
+								td= result.numOfCoaches
+								td#draftID= result._id
+								td= result.admin
+								td#joinButton.btn.btn-info-outline.btn-lg.m-t-1(onclick='join(this)') Join
 
-									script.
-										function join(item){
-											var row = item.closest("tr");
-											var draftID = row.getElementsByTagName("td")[3].innerHTML;
-											window.open('/draft?draft=' + draftID);
-										}
-					a.btn.btn-info-outline.btn-lg(href='/create') CREATE A DRAFT
+								script.
+									function join(item){
+										var row = item.closest("tr");
+										var draftID = row.getElementsByTagName("td")[3].innerHTML;
+										window.open('/draft?draft=' + draftID);
+									}
+				a.btn.btn-info-outline.btn-lg(href='/create') CREATE A DRAFT

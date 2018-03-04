@@ -24,28 +24,36 @@ var myCreate = {
 		label.for = "coachEmails";
 		label.innerHTML = "Invite Teams:";
 		myCreate.coachEmails.appendChild(label);
-
+		var coachesDiv = document.createElement("div");
+		coachesDiv.style.position = "relative";
+		myCreate.coachEmails.appendChild(coachesDiv);
 		// Create and append the admin coaches input element.
 		var input = document.createElement("input");
-		input.id = "email";
+		input.id = "coachEmails";
 		input.className = "form-control coachEmail";
 		input.type = "email";
 		input.placeholder = "Your Email";
 		input.name = "coach" + 1;
 		input.required = true;
 		input.value = document.getElementById("currentUserEmail").innerHTML;
-		myCreate.coachEmails.appendChild(input);
+		input.style.paddingLeft = "65px";
+		coachesDiv.appendChild(input);
+
+		var adminLabel = document.createElement("label");
+		adminLabel.className = "static-value";
+		adminLabel.innerHTML = "Admin: ";
+		coachesDiv.appendChild(adminLabel);
 
 		// Create and append the required number of input elements.
 		for (var i=2; i <= numOfCoaches; i++){
 			var input = document.createElement("input");
-			input.id = "email";
+			input.id = "coachEmails";
 			input.className = "form-control coachEmail";
 			input.type = "email";
 			input.placeholder = "Team #" + i + " Email";
 			input.name = "coach" + i;
 			input.required = true;
-			myCreate.coachEmails.appendChild(input);
+			coachesDiv.appendChild(input);
 		}
 	}, // Close updateCoachFields() function.
 

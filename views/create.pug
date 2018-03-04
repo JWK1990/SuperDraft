@@ -16,27 +16,33 @@ block content
               input.form-control#leagueName(type='text', placeholder='My League' name='leagueName' required='')
 
             div.form-group
-              label(for='numOfCoaches') # of Coaches:
+              label(for='leagueType') League Type:
+              select.form-control#leagueType(name='leagueType')
+                option(value="Supercoach") Supercoach
+                option(value="Fantasy") Fantasy
+
+            div.form-group
+              label(for='numOfCoaches') # of Teams:
               select.form-control#numOfCoaches(name='numOfCoaches' onchange='myCreate.updateCoachFields()')
-                option(value=2) 2 Coaches
-                option(value=3) 3 Coaches
-                option(value=4) 4 Coaches
-                option(value=5) 5 Coaches
-                option(value=6) 6 Coaches
-                option(value=7) 7 Coaches
-                option(value=8) 8 Coaches
-                option(value=9) 9 Coaches
-                option(value=10 selected) 10 Coaches
-                option(value=11) 11 Coaches
-                option(value=12) 12 Coaches
-                option(value=13) 13 Coaches
-                option(value=14) 14 Coaches
-                option(value=15) 15 Coaches
-                option(value=16) 16 Coaches
-                option(value=17) 17 Coaches
-                option(value=18) 18 Coaches
-                option(value=19) 19 Coaches
-                option(value=20) 20 Coaches
+                option(value=2) 2 Teams
+                option(value=3) 3 Teams
+                option(value=4) 4 Teams
+                option(value=5) 5 Teams
+                option(value=6) 6 Teams
+                option(value=7) 7 Teams
+                option(value=8) 8 Teams
+                option(value=9) 9 Teams
+                option(value=10 selected) 10 Teams
+                option(value=11) 11 Teams
+                option(value=12) 12 Teams
+                option(value=13) 13 Teams
+                option(value=14) 14 Teams
+                option(value=15) 15 Teams
+                option(value=16) 16 Teams
+                option(value=17) 17 Teams
+                option(value=18) 18 Teams
+                option(value=19) 19 Teams
+                option(value=20) 20 Teams
 
             div.form-group
               label(for='rosterSize') Roster Size:
@@ -177,7 +183,7 @@ block content
                 option(value=20) 20
 
             div.form-group
-              label(for='selectCountdown') Select Player Timer:
+              label(for='selectCountdown') Selection Timer:
               select.form-control#selectCountdown(name='selectCountdown')
                 option(value=5) 5 seconds
                 option(value=10) 10 seconds
@@ -214,7 +220,7 @@ block content
                 input.form-control#budget(type='text', placeholder='300' name='budget' required='')
                 label.static-value $
 
-            div.form-group#coachEmails
+            div.form-group#coachEmails(style="position:relative")
 
             button.btn.btn-primary#submit(type='submit') Create Draft
 

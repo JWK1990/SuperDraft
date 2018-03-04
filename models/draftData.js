@@ -149,6 +149,9 @@ var DraftSchema = new mongoose.Schema({
 	},
 	bidCountdown: {
 		type: Number
+	},
+	leagueType: {
+		type: String
 	}
 });
 
