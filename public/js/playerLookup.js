@@ -359,6 +359,7 @@ var myApp = {
           // If the count down is over, write some text 
           if (sppDistance <= 0) {
               clearInterval(myApp.sppCounter);
+              myApp.demo.innerHTML = seconds + " secs";
               if(myApp.otbName.innerHTML === "-"){
               // Run updateSPP to update the SPP for the current OTB Coach.
               // THIS CODE SHOULD POTENTIALLY BE UPDATED.
