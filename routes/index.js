@@ -272,7 +272,8 @@ router.post("/create", function(req, res, next){
 				pickCounter: 1,
 				selectCountdown: req.body.selectCountdown,
 				bidCountdown: req.body.bidCountdown,
-				leagueType: req.body.leagueType
+				leagueType: req.body.leagueType,
+				budget: req.body.budget
 			};
 
 			// use schema's 'create' method to insert document into Mongo.

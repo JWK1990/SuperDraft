@@ -105,8 +105,8 @@ nav.main ul li:hover ul {
     .otbTextHolder{
       width: 100%;
       height: 6%;
-      overflow: hidden;
       float: left;
+      white-space: nowrap;
     }
 
     .otbImgHolder{
@@ -233,25 +233,24 @@ nav.main ul li:hover ul {
 
 
                     .sppTopRightBottomLeft{
-                      width: 10%;
+                      width: 15%;
                       height: 100%;
                       float: left;
                       position: relative;
                     }
 
                     .sppTopRightBottomMiddle{
-                      width: 70%;
+                      width: 60%;
                       height: 100%;
                       float: left;
                       display: inline-block;
                       text-align: center;
                       margin-left: 5%;
                       margin-right: 5%;
-
                     }
 
                     .sppTopRightBottomRight{
-                      width: 10%;
+                      width: 15%;
                       height: 100%;
                       float: left;
                     }
@@ -392,12 +391,26 @@ nav.main ul li:hover ul {
       }
 
 
-.otbText{
+.otbTextTop{
   /* text-align should be left if pictures are included*/
     text-align: center;
     margin: 0px;
     color: white;
+    width: 100%;
+    font-size: 14px;
+    font-size: 2vw;
 }
+
+.otbTextBottom{
+  /* text-align should be left if pictures are included*/
+    text-align: center;
+    margin: 0px;
+    color: white;
+    width: 100%;
+    font-size: 6px;
+    font-size: 1.5vmin;
+}
+
 
 
 /* Says that the max width and height of the image can be 100% of the width and height of the container. 
@@ -444,7 +457,7 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 
 .selectedPlayerPane #startValue{
   display: block;
-  padding-left: 15px;
+  padding: 15px;
   height: 100%;
   width: 100%;
   font-size: 2vmin;

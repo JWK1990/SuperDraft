@@ -152,6 +152,9 @@ var DraftSchema = new mongoose.Schema({
 	},
 	leagueType: {
 		type: String
+	},
+	budget: {
+		type: Number
 	}
 });
 

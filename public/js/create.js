@@ -37,6 +37,7 @@ var myCreate = {
 		input.required = true;
 		input.value = document.getElementById("currentUserEmail").innerHTML;
 		input.style.paddingLeft = "65px";
+		input.readOnly = true;
 		coachesDiv.appendChild(input);
 
 		var adminLabel = document.createElement("label");

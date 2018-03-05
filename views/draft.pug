@@ -31,8 +31,8 @@ html(lang='en')
 		.leftColumn
 
 			.otbTextHolder
-				h2#otbName.otbText
-				h4#otbTeamPos.otbText
+				h2#otbName.otbTextTop
+				h4#otbTeamPos.otbTextBottom
 			.otbImgHolder
 				//.otbImgHolderLeft
 					img#otbPic
@@ -77,8 +77,11 @@ html(lang='en')
 							h3#selectedPosition -
 						.sppTopRightBottom
 							.sppTopRightBottomLeft
-								input#startValue(type='number', name='startValue', value=1, min=1)
-								span.unit $
+								select#startValue(type='number', name='startValue', value=1, min=1)
+									option(value=1 selected) $1
+									- for(var i=0; i < drafts[0].budget - drafts[0].rosterSize; i++){
+										option(value=Number(i+2))= "$" + Number(i + 2)
+									- }
 							.sppTopRightBottomMiddle
 								button#addToQueue(disabled=true, onclick='myApp.addToBlock(myApp.selectedPlayerName.innerHTML, myApp.selectedPlayerPosition.innerHTML, myApp.sppAve.innerHTML)') ADD TO BLOCK
 							.sppTopRightBottomRight
