@@ -125,7 +125,7 @@ var myApp = {
   selectedPlayerName: document.getElementById("selectedName"),
   selectedPlayerPosition: document.getElementById("selectedPosition"),
   selectedPlayerPic: document.getElementById("selectedPic"),
-  selectedPlayerImgString: {},
+  //selectedPlayerImgString: {},
   addToQueue: document.getElementById("addToQueue"),
   playerData: {},
   sppRank: document.getElementById("rank"),
@@ -141,7 +141,7 @@ var myApp = {
   // On the block variables.
   otbName: document.getElementById("otbName"),
   otbTeamPos: document.getElementById("otbTeamPos"),
-  otbPic: document.getElementById("otbPic"),
+  //otbPic: document.getElementById("otbPic"),
   draftID: document.getElementById("draftID").innerHTML,
   otbPlayerID: {},
   otbPos: {},
@@ -228,8 +228,8 @@ var myApp = {
           // Update top section with name, position and picture.
           myApp.selectedPlayerName.innerHTML = this.getElementsByTagName("td")[1].innerHTML;
           myApp.selectedPlayerPosition.innerHTML = this.getElementsByTagName("td")[2].innerHTML;
-          myApp.selectedPlayerImgString = "./images/" + this.getElementsByTagName("td")[1].innerHTML.toUpperCase().replace(/\s+/g,"") + ".png";
-          myApp.selectedPlayerPic.src = myApp.selectedPlayerImgString;
+          // myApp.selectedPlayerImgString = "./images/" + this.getElementsByTagName("td")[1].innerHTML.toUpperCase().replace(/\s+/g,"") + ".png";
+          // myApp.selectedPlayerPic.src = myApp.selectedPlayerImgString;
           // Update the otb player details held in the client.
           myApp.otbPlayerID = this.getElementsByTagName("td")[1].innerHTML;
           myApp.otbPos = this.getElementsByTagName("td")[2].innerHTML;
@@ -319,8 +319,8 @@ var myApp = {
     // Define updateSPP() used to update the text in the Selected Player Pane.
       myApp.selectedPlayerName.innerHTML = data[1].innerHTML;
       myApp.selectedPlayerPosition.innerHTML = data[2].innerHTML;
-      myApp.selectedPlayerImgString = "./images/" + data[1].innerHTML.toUpperCase().replace(/\s+/g,"") + ".png";
-      myApp.selectedPlayerPic.src = myApp.selectedPlayerImgString;
+      // myApp.selectedPlayerImgString = "./images/" + data[1].innerHTML.toUpperCase().replace(/\s+/g,"") + ".png";
+      // myApp.selectedPlayerPic.src = myApp.selectedPlayerImgString;
       myApp.startValue.value = 1;
       // Update the SPP Table details.
       var selectedPlayerData = myApp.playerData.filter(function(e){
@@ -1056,7 +1056,7 @@ socket.on('playerDrafted', function(data) {
   myApp.currentBid.innerHTML = "-";
   myApp.otbName.innerHTML = "-";
   myApp.otbTeamPos.innerHTML = "-";
-  myApp.otbPic.src = "./images/TBA.png";
+  //myApp.otbPic.src = "./images/TBA.png";
   // Clear any current otb and spp countdown timers.
   clearInterval(myApp.counter);
   clearInterval(myApp.sppCounter);
@@ -1181,7 +1181,7 @@ socket.on('bidUpdate', function(data) {
   if (myApp.otbName.innerHTML === ""){
     myApp.otbName.innerHTML = data.bidData.otbPlayer;
     myApp.otbTeamPos.innerHTML = data.bidData.otbPos + " - " + data.bidData.otbAverage;
-    myApp.otbPic.src = "./images/" + data.bidData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";
+    //yApp.otbPic.src = "./images/" + data.bidData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";
   }
 }); // Close socket.on("bidUpdate") function.
 
@@ -1199,7 +1199,7 @@ socket.on('otbUpdate', function(data) {
   myApp.currentBid.innerHTML = "$" + data.updatedOtbData.otbBid;
   myApp.otbName.innerHTML = data.updatedOtbData.otbPlayer;
   myApp.otbTeamPos.innerHTML = data.updatedOtbData.otbPos + " - " + data.updatedOtbData.otbAverage;
-  myApp.otbPic.src = "./images/" + data.updatedOtbData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";
+  //myApp.otbPic.src = "./images/" + data.updatedOtbData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";
   // We run the benchCheck() function with the current otb positon to set the addToBench variable.
   // If the coach has no roster spots available and their bench is full, we disable the bid button.
   // Else perform the normal bid button function.

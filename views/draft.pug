@@ -34,7 +34,7 @@ html(lang='en')
 				h2#otbName.otbText
 				h4#otbTeamPos.otbText
 			.otbImgHolder
-				.otbImgHolderLeft
+				//.otbImgHolderLeft
 					img#otbPic
 				.otbImgHolderRight
 					h1#currentBid
@@ -68,7 +68,7 @@ html(lang='en')
 		.middleColumn
 			.selectedPlayerPane
 				.sppTop
-					.sppTopLeft
+					//.sppTopLeft
 						img#selectedPic(src="./images/TBA.png", alt='On The Block', title='On The Block')
 					.sppTopRight
 						.sppTopRightTop
@@ -77,10 +77,10 @@ html(lang='en')
 							h3#selectedPosition -
 						.sppTopRightBottom
 							.sppTopRightBottomLeft
-								button#addToQueue(disabled=true, onclick='myApp.addToBlock(myApp.selectedPlayerName.innerHTML, myApp.selectedPlayerPosition.innerHTML, myApp.sppAve.innerHTML)') ADD TO BLOCK
-							.sppTopRightBottomMiddle
 								input#startValue(type='number', name='startValue', value=1, min=1)
 								span.unit $
+							.sppTopRightBottomMiddle
+								button#addToQueue(disabled=true, onclick='myApp.addToBlock(myApp.selectedPlayerName.innerHTML, myApp.selectedPlayerPosition.innerHTML, myApp.sppAve.innerHTML)') ADD TO BLOCK
 							.sppTopRightBottomRight
 								button#pauseDraft(disabled=true, style="display: none", onclick='myApp.pauseDraft()') PAUSE DRAFT
 
