@@ -359,7 +359,7 @@ var myApp = {
           // If the count down is over, write some text 
           if (sppDistance <= 0) {
               clearInterval(myApp.sppCounter);
-              myApp.demo.innerHTML = seconds + " secs";
+              myApp.demo.innerHTML = "";
               if(myApp.otbName.innerHTML === "-"){
               // Run updateSPP to update the SPP for the current OTB Coach.
               // THIS CODE SHOULD POTENTIALLY BE UPDATED.
@@ -1127,12 +1127,13 @@ socket.on('playerDrafted', function(data) {
       // after which it will select the top available player to be automatically put on the block.
       if(myApp.currentUser === myApp.currentOtbCoach){
         myApp.sppStartCountdown(data.sppEndTime);
-      };
+      } else {
+        // Updates the 'Sold for' text to say "Selection Pending...".
+        myApp.demo.style.fontSize = "2vmin";
+        myApp.demo.innerHTML = "On The Block: " + data.dbData.otbCoach;
+      }
       // Set the maxBid variable to the current users Max Bid as per the Budgets pane.
       myApp.setMaxBid(data.dbData);
-      // Updates the 'Sold for' text to say "Selection Pending...".
-      myApp.demo.style.fontSize = "2vmin";
-      myApp.demo.innerHTML = "On The Block: " + data.dbData.otbCoach;
       // Enable the 'Pause Draft' button if the current user is the admin user.
       if(myApp.currentUser == myApp.admin){
         myApp.pauseDraftButton.disabled = false;
