@@ -1197,7 +1197,13 @@ socket.on('otbUpdate', function(data) {
   myApp.highlightBidder(data.updatedOtbData.otbBidder);
   myApp.lockBid(data.updatedOtbData.otbBidder, myApp.currentUser);
   myApp.currentBid.innerHTML = "$" + data.updatedOtbData.otbBid;
-  myApp.otbName.innerHTML = data.updatedOtbData.otbPlayer;
+  // If the player's name is longer than 18 characters we shorted it and add "...".
+  // If not, we just use the player's full name.
+  if(data.updatedOtbData.otbPlayer.length > 20){
+    myApp.otbName.innerHTML = data.updatedOtbData.otbPlayer.substring(0,17) + "...";
+  } else {
+    myApp.otbName.innerHTML = data.updatedOtbData.otbPlayer
+  }
   myApp.otbTeamPos.innerHTML = data.updatedOtbData.otbPos + " - " + data.updatedOtbData.otbAverage;
   //myApp.otbPic.src = "./images/" + data.updatedOtbData.otbPlayer.toUpperCase().replace(/\s+/g,"") + ".png";
   // We run the benchCheck() function with the current otb positon to set the addToBench variable.

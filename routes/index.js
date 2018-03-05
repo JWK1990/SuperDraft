@@ -12,8 +12,8 @@ var nodemailer = require("nodemailer");
 var transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
-		user: 'jwkumm@gmail.com',
-		pass: 'hollyisho1'
+		user: 'SuperDraftFantasy@gmail.com',
+		pass: 'SuperDuperDraft123'
 	}
 });
 
@@ -136,7 +136,26 @@ router.post("/register", function(req, res, next){
 					}
 				});
 
-			// confirm that the user typed same password twice.
+			// Use nodemailer to send a welcome email to the new coach.
+			// Create the mailing list.
+			var mailingList = req.body.email;
+			// Create the text.
+			var bodyText = 'Welcome to Superdraft ' + req.body.teamName + '! Visit www.superdraftfantasy.com/create to create your first draft and invite your league!';
+			// Define the parameters for the mail to be sent.
+			var mailOptions = {
+				from: 'SuperDraftFantasy@gmail.com',
+				to: mailingList,
+				subject: 'Welcome To SuperDraft!',
+				text: bodyText
+			};
+			// Send the email when the users submits the create draft form.
+			transporter.sendMail(mailOptions, function(error, info){
+				if (error){
+					console.log(error);
+				} else {
+					console.log('Email sent: ' + info.response);
+				}
+			});
 
 	} else {
 		return res.render("register", {fail: " All fields are required.", reqBodyFail: req.body})
@@ -289,16 +308,13 @@ router.post("/create", function(req, res, next){
 			// Create the mailing list.
 			var mailingList = '';
 			for (var i=0; i < draftData.coaches.length; i++){
-				console.log(draftData.coaches[i].teamName);
-				console.log ('Team 1: ' + draftData.coaches[1].teamName);
-				console.log('Team 0: ' + draftData.coaches[0].teamName);
 				mailingList += draftData.coaches[i].teamName + ",";
 			};
 			// Create the text.
 			var bodyText = 'You have been invited to a Superdraft by ' + draftData.admin + '! Visit www.superdraftfantasy.com/register to sign up and get drafting!';
 			// Define the parameters for the mail to be sent.
 			var mailOptions = {
-				from: 'jwkumm@gmail.com',
+				from: 'SuperDraftFantasy@gmail.com',
 				to: mailingList,
 				subject: 'Its Drafting Time!',
 				text: bodyText

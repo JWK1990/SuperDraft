@@ -16,213 +16,224 @@ block content
               input.form-control#leagueName(type='text', placeholder='My League' name='leagueName' required='')
 
             div.form-group
-              label(for='leagueType') League Type:
-              select.form-control#leagueType(name='leagueType')
-                option(value="Supercoach") Supercoach
-                option(value="Fantasy") Fantasy
+                label(for='leagueType') League Type:
+                div.help-tip
+                    p Is your league a Supercoach League or an AFL Fantasy League?
+                select.form-control#leagueType(name='leagueType')
+                    option(value="Supercoach") Supercoach
+                    option(value="Fantasy") Fantasy
 
             div.form-group
-              label(for='numOfCoaches') # of Teams:
-              select.form-control#numOfCoaches(name='numOfCoaches' onchange='myCreate.updateCoachFields()')
-                option(value=2) 2 Teams
-                option(value=3) 3 Teams
-                option(value=4) 4 Teams
-                option(value=5) 5 Teams
-                option(value=6) 6 Teams
-                option(value=7) 7 Teams
-                option(value=8) 8 Teams
-                option(value=9) 9 Teams
-                option(value=10 selected) 10 Teams
-                option(value=11) 11 Teams
-                option(value=12) 12 Teams
-                option(value=13) 13 Teams
-                option(value=14) 14 Teams
-                option(value=15) 15 Teams
-                option(value=16) 16 Teams
-                option(value=17) 17 Teams
-                option(value=18) 18 Teams
-                option(value=19) 19 Teams
-                option(value=20) 20 Teams
+                label(for='numOfCoaches') # of Teams:
+                div.help-tip
+                    p How many teams are in your league?
+                select.form-control#numOfCoaches(name='numOfCoaches' onchange='myCreate.updateCoachFields()')
+                    option(value=2) 2 Teams
+                    option(value=3) 3 Teams
+                    option(value=4) 4 Teams
+                    option(value=5) 5 Teams
+                    option(value=6) 6 Teams
+                    option(value=7) 7 Teams
+                    option(value=8) 8 Teams
+                    option(value=9) 9 Teams
+                    option(value=10 selected) 10 Teams
+                    option(value=11) 11 Teams
+                    option(value=12) 12 Teams
+                    option(value=13) 13 Teams
+                    option(value=14) 14 Teams
+                    option(value=15) 15 Teams
+                    option(value=16) 16 Teams
+                    option(value=17) 17 Teams
+                    option(value=18) 18 Teams
+                    option(value=19) 19 Teams
+                    option(value=20) 20 Teams
 
             div.form-group
-              label(for='rosterSize') Roster Size:
-              select.form-control#rosterSize(name='rosterSize' onchange="myCreate.showPositionCounts()")
-                option(value=1) 12 Players (2D - 2M - 1R - 2F / 5B)
-                option(value=2) 12 Players (2D - 3M - 1R - 2F / 4B)
-                option(value=3) 15 Players (2D - 2M - 1R - 2F / 8B)
-                option(value=4) 15 Players (2D - 3M - 1R - 2F / 7B)
-                option(value=5) 15 Players (3D - 3M - 1R - 3F / 5B)
-                option(value=6) 15 Players (3D - 4M - 1R - 3F / 4B)
-                option(value=7) 19 Players (4D - 5M - 1R - 4F / 5B)
-                option(value=8) 22 Players (5D - 7M - 1R - 5F / 4B)
-                option(value=9) Custom
+                label(for='rosterSize') Roster Size:
+                div.help-tip
+                    p How many players will be on each team?
+                select.form-control#rosterSize(name='rosterSize' onchange="myCreate.showPositionCounts()")
+                    option(value=1) 12 Players (2D - 2M - 1R - 2F / 5B)
+                    option(value=2) 12 Players (2D - 3M - 1R - 2F / 4B)
+                    option(value=3) 15 Players (2D - 2M - 1R - 2F / 8B)
+                    option(value=4) 15 Players (2D - 3M - 1R - 2F / 7B)
+                    option(value=5) 15 Players (3D - 3M - 1R - 3F / 5B)
+                    option(value=6) 15 Players (3D - 4M - 1R - 3F / 4B)
+                    option(value=7) 19 Players (4D - 5M - 1R - 4F / 5B)
+                    option(value=8) 22 Players (5D - 7M - 1R - 5F / 4B)
+                    option(value=9) Custom
 
             div.form-group.positionEntry(style="display:none")
-              label(for='numOfDef') # of Def:
-              select.form-control#numOfDef(name='numOfDef')
-                option(value=0) 0
-                option(value=1) 1
-                option(value=2) 2
-                option(value=3) 3
-                option(value=4) 4
-                option(value=5) 5
-                option(value=6) 6
-                option(value=7) 7
-                option(value=8) 8
-                option(value=9) 9
-                option(value=10) 10
-                option(value=11) 11
-                option(value=12) 12
-                option(value=13) 13
-                option(value=14) 14
-                option(value=15) 15
-                option(value=16) 16
-                option(value=17) 17
-                option(value=18) 18
-                option(value=19) 19
-                option(value=20) 20
+                label(for='numOfDef') # of Def:
+                select.form-control#numOfDef(name='numOfDef')
+                    option(value=0) 0
+                    option(value=1) 1
+                    option(value=2) 2
+                    option(value=3) 3
+                    option(value=4) 4
+                    option(value=5) 5
+                    option(value=6) 6
+                    option(value=7) 7
+                    option(value=8) 8
+                    option(value=9) 9
+                    option(value=10) 10
+                    option(value=11) 11
+                    option(value=12) 12
+                    option(value=13) 13
+                    option(value=14) 14
+                    option(value=15) 15
+                    option(value=16) 16
+                    option(value=17) 17
+                    option(value=18) 18
+                    option(value=19) 19
+                    option(value=20) 20
 
             div.form-group.positionEntry(style="display:none")
-              label(for='numOfMid') # of Mid:
-              select.form-control#numOfMid(name='numOfMid')
-                option(value=0) 0
-                option(value=1) 1
-                option(value=2) 2
-                option(value=3) 3
-                option(value=4) 4
-                option(value=5) 5
-                option(value=6) 6
-                option(value=7) 7
-                option(value=8) 8
-                option(value=9) 9
-                option(value=10) 10
-                option(value=11) 11
-                option(value=12) 12
-                option(value=13) 13
-                option(value=14) 14
-                option(value=15) 15
-                option(value=16) 16
-                option(value=17) 17
-                option(value=18) 18
-                option(value=19) 19
-                option(value=20) 20
+                label(for='numOfMid') # of Mid:
+                select.form-control#numOfMid(name='numOfMid')
+                    option(value=0) 0
+                    option(value=1) 1
+                    option(value=2) 2
+                    option(value=3) 3
+                    option(value=4) 4
+                    option(value=5) 5
+                    option(value=6) 6
+                    option(value=7) 7
+                    option(value=8) 8
+                    option(value=9) 9
+                    option(value=10) 10
+                    option(value=11) 11
+                    option(value=12) 12
+                    option(value=13) 13
+                    option(value=14) 14
+                    option(value=15) 15
+                    option(value=16) 16
+                    option(value=17) 17
+                    option(value=18) 18
+                    option(value=19) 19
+                    option(value=20) 20
 
             div.form-group.positionEntry(style="display:none")
-              label(for='numOfRuc') # of Ruc:
-              select.form-control#numOfRuc(name='numOfRuc')
-                option(value=0) 0
-                option(value=1) 1
-                option(value=2) 2
-                option(value=3) 3
-                option(value=4) 4
-                option(value=5) 5
-                option(value=6) 6
-                option(value=7) 7
-                option(value=8) 8
-                option(value=9) 9
-                option(value=10) 10
-                option(value=11) 11
-                option(value=12) 12
-                option(value=13) 13
-                option(value=14) 14
-                option(value=15) 15
-                option(value=16) 16
-                option(value=17) 17
-                option(value=18) 18
-                option(value=19) 19
-                option(value=20) 20
+                label(for='numOfRuc') # of Ruc:
+                select.form-control#numOfRuc(name='numOfRuc')
+                    option(value=0) 0
+                    option(value=1) 1
+                    option(value=2) 2
+                    option(value=3) 3
+                    option(value=4) 4
+                    option(value=5) 5
+                    option(value=6) 6
+                    option(value=7) 7
+                    option(value=8) 8
+                    option(value=9) 9
+                    option(value=10) 10
+                    option(value=11) 11
+                    option(value=12) 12
+                    option(value=13) 13
+                    option(value=14) 14
+                    option(value=15) 15
+                    option(value=16) 16
+                    option(value=17) 17
+                    option(value=18) 18
+                    option(value=19) 19
+                    option(value=20) 20
 
             div.form-group.positionEntry(style="display:none")
-              label(for='numOfFwd') # of Fwd:
-              select.form-control#numOfFwd(name='numOfFwd')
-                option(value=0) 0
-                option(value=1) 1
-                option(value=2) 2
-                option(value=3) 3
-                option(value=4) 4
-                option(value=5) 5
-                option(value=6) 6
-                option(value=7) 7
-                option(value=8) 8
-                option(value=9) 9
-                option(value=10) 10
-                option(value=11) 11
-                option(value=12) 12
-                option(value=13) 13
-                option(value=14) 14
-                option(value=15) 15
-                option(value=16) 16
-                option(value=17) 17
-                option(value=18) 18
-                option(value=19) 19
-                option(value=20) 20
+                label(for='numOfFwd') # of Fwd:
+                select.form-control#numOfFwd(name='numOfFwd')
+                    option(value=0) 0
+                    option(value=1) 1
+                    option(value=2) 2
+                    option(value=3) 3
+                    option(value=4) 4
+                    option(value=5) 5
+                    option(value=6) 6
+                    option(value=7) 7
+                    option(value=8) 8
+                    option(value=9) 9
+                    option(value=10) 10
+                    option(value=11) 11
+                    option(value=12) 12
+                    option(value=13) 13
+                    option(value=14) 14
+                    option(value=15) 15
+                    option(value=16) 16
+                    option(value=17) 17
+                    option(value=18) 18
+                    option(value=19) 19
+                    option(value=20) 20
 
             div.form-group.positionEntry(style="display:none")
-              label(for='numOf') # of Ben:
-              select.form-control#numOfBen(name='numOfBen')
-                option(value=0) 0
-                option(value=1) 1
-                option(value=2) 2
-                option(value=3) 3
-                option(value=4) 4
-                option(value=5) 5
-                option(value=6) 6
-                option(value=7) 7
-                option(value=8) 8
-                option(value=9) 9
-                option(value=10) 10
-                option(value=11) 11
-                option(value=12) 12
-                option(value=13) 13
-                option(value=14) 14
-                option(value=15) 15
-                option(value=16) 16
-                option(value=17) 17
-                option(value=18) 18
-                option(value=19) 19
-                option(value=20) 20
+                label(for='numOf') # of Ben:
+                select.form-control#numOfBen(name='numOfBen')
+                    option(value=0) 0
+                    option(value=1) 1
+                    option(value=2) 2
+                    option(value=3) 3
+                    option(value=4) 4
+                    option(value=5) 5
+                    option(value=6) 6
+                    option(value=7) 7
+                    option(value=8) 8
+                    option(value=9) 9
+                    option(value=10) 10
+                    option(value=11) 11
+                    option(value=12) 12
+                    option(value=13) 13
+                    option(value=14) 14
+                    option(value=15) 15
+                    option(value=16) 16
+                    option(value=17) 17
+                    option(value=18) 18
+                    option(value=19) 19
+                    option(value=20) 20
 
             div.form-group
-              label(for='selectCountdown') Selection Timer:
-              select.form-control#selectCountdown(name='selectCountdown')
-                option(value=5) 5 seconds
-                option(value=10) 10 seconds
-                option(value=15) 15 seconds
-                option(value=20 selected) 20 seconds
-                option(value=25) 25 seconds
-                option(value=30) 30 seconds
-                option(value=35) 35 seconds
-                option(value=40) 40 seconds
-                option(value=45) 45 seconds
-                option(value=50) 50 seconds
-                option(value=55) 55 seconds
-                option(value=60) 60 seconds
+                label(for='selectCountdown') Selection Timer:
+                div.help-tip
+                    p How long will each coach have to select a player to put up for auction?
+                select.form-control#selectCountdown(name='selectCountdown')
+                    option(value=5) 5 seconds
+                    option(value=10) 10 seconds
+                    option(value=15) 15 seconds
+                    option(value=20 selected) 20 seconds
+                    option(value=25) 25 seconds
+                    option(value=30) 30 seconds
+                    option(value=35) 35 seconds
+                    option(value=40) 40 seconds
+                    option(value=45) 45 seconds
+                    option(value=50) 50 seconds
+                    option(value=55) 55 seconds
+                    option(value=60) 60 seconds
 
             div.form-group
-              label(for='bidCountdown') Bid Timer:
-              select.form-control#bidCountdown(name='bidCountdown')
-                option(value=5) 5 seconds
-                option(value=10 selected) 10 seconds
-                option(value=15) 15 seconds
-                option(value=20) 20 seconds
-                option(value=25) 25 seconds
-                option(value=30) 30 seconds
-                option(value=35) 35 seconds
-                option(value=40) 40 seconds
-                option(value=45) 45 seconds
-                option(value=50) 50 seconds
-                option(value=55) 55 seconds
-                option(value=60) 60 seconds
+                label(for='bidCountdown') Bid Timer:
+                div.help-tip
+                    p How long will a coach have to place a bid before the player is sold? Note: This time resets after every bid.
+                select.form-control#bidCountdown(name='bidCountdown')
+                    option(value=5) 5 seconds
+                    option(value=10 selected) 10 seconds
+                    option(value=15) 15 seconds
+                    option(value=20) 20 seconds
+                    option(value=25) 25 seconds
+                    option(value=30) 30 seconds
+                    option(value=35) 35 seconds
+                    option(value=40) 40 seconds
+                    option(value=45) 45 seconds
+                    option(value=50) 50 seconds
+                    option(value=55) 55 seconds
+                    option(value=60) 60 seconds
 
             div.form-group
-              label(for='budget') Budget:
-              div(style="position:relative")
-                input.form-control#budget(type='text', placeholder='300' name='budget' required='')
-                label.static-value $
+                div.help-tip
+                    p What budget will each coach have to fill their team?
+                label(for='budget') Budget:
+                div(style="position:relative")
+                    input.form-control#budget(type='text', placeholder='300' name='budget' required='')
+                    label.static-value $
 
             div.form-group#coachEmails(style="position:relative")
 
             button.btn.btn-primary#submit(type='submit') Create Draft
-
 
   script(src='/js/create.js')

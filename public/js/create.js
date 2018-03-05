@@ -24,9 +24,18 @@ var myCreate = {
 		label.for = "coachEmails";
 		label.innerHTML = "Invite Teams:";
 		myCreate.coachEmails.appendChild(label);
+		// Create and append the Tooltip element.
+		var tooltip = document.createElement("div");
+		tooltip.className = "help-tip";
+		var tooltipText = document.createElement("p");
+		tooltipText.innerHTML = "Enter your league members' emails. Make sure that these are entered correctly. If your league members already have a SuperDraft account, then be sure to use their registered email. If they aren't registered, they will be sent an invite to the provided email address."
+		tooltip.appendChild(tooltipText);
+		myCreate.coachEmails.appendChild(tooltip);
+		// Create and append the coachesDiv element.
 		var coachesDiv = document.createElement("div");
 		coachesDiv.style.position = "relative";
 		myCreate.coachEmails.appendChild(coachesDiv);
+
 		// Create and append the admin coaches input element.
 		var input = document.createElement("input");
 		input.id = "coachEmails";
