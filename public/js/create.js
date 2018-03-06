@@ -24,13 +24,6 @@ var myCreate = {
 		label.for = "coachEmails";
 		label.innerHTML = "Invite Teams:";
 		myCreate.coachEmails.appendChild(label);
-		// Create and append the Tooltip element.
-		var tooltip = document.createElement("div");
-		tooltip.className = "help-tip";
-		var tooltipText = document.createElement("p");
-		tooltipText.innerHTML = "Enter your league members' emails. Make sure that these are entered correctly. If your league members already have a SuperDraft account, then be sure to use their registered email. If they aren't registered, they will be sent an invite to the provided email address."
-		tooltip.appendChild(tooltipText);
-		myCreate.coachEmails.appendChild(tooltip);
 		// Create and append the coachesDiv element.
 		var coachesDiv = document.createElement("div");
 		coachesDiv.style.position = "relative";
@@ -38,7 +31,7 @@ var myCreate = {
 
 		// Create and append the admin coaches input element.
 		var input = document.createElement("input");
-		input.id = "coachEmails";
+		input.id = "coachEmail1";
 		input.className = "form-control coachEmail";
 		input.type = "email";
 		input.placeholder = "Your Email";
@@ -57,7 +50,7 @@ var myCreate = {
 		// Create and append the required number of input elements.
 		for (var i=2; i <= numOfCoaches; i++){
 			var input = document.createElement("input");
-			input.id = "coachEmails";
+			input.id = "coachEmail" + i;
 			input.className = "form-control coachEmail";
 			input.type = "email";
 			input.placeholder = "Team #" + i + " Email";
@@ -116,27 +109,74 @@ var myCreate = {
 // Prevent the form from being submitted and issue an error message if the total number of roster spots is equal to 0.
 document.getElementById("submit").addEventListener("click", function(event){
 	var rosterCount = Number(myCreate.numOfDefSelect.value) + Number(myCreate.numOfMidSelect.value) + Number(myCreate.numOfRucSelect.value) + Number(myCreate.numOfFwdSelect.value) + Number(myCreate.numOfBenSelect.value);
+	var numOfCoaches = document.getElementById("numOfCoaches").value;
+	var errorDiv = document.getElementById("errorDiv");
 
+   	// Clear the error div.
+	errorDiv.innerHTML = "";
+
+	// Build and sort the coachesArray.
+	var coachesArray = [];
+	for (var i=0; i < numOfCoaches; i++){
+		var id = "coachEmail" + Number(i + 1);
+		console.log(id);
+		coachesArray.push(document.getElementById(id).value.toUpperCase());
+	};
+	coachesArray.sort();
+
+
+	// Check if the total rosterCount is 0 and if so prevent submission of the form.
 	if(rosterCount == 0){
 		// Prevent the submit form from submitting.
    		event.preventDefault();
-
-   		// Create the error div.
-   		var errorDiv = document.createElement("div");
-   		errorDiv.className = "auth_error";
-
-   		// Append the error div to the topColumn.
-   		document.getElementById("topColumn").prepend(errorDiv);
-
+   		// Show the error div.
+   		errorDiv.style.display = "";
    		// Create the "i" element.
    		var iElement = document.createElement("i");
    		iElement.className = "fa fa-times-circle";
    		iElement.innerHTML = " Total roster size cannot be 0 players!";
-
    		// Append the "i" element to the errorDiv.
    		errorDiv.append(iElement);
-
+   		// Scroll the window to the top.
+   		window.scrollTo(0,0);
 	}
+
+	console.log("COACHES ARRAY!");
+	console.log(coachesArray);
+
+	// Check if there are any duplicate coaches and if so prevent submission of the form.
+	for (var i = 0; i < coachesArray.length - 1; i++) {
+		if (coachesArray[i] == ""){
+		    // Prevent the submit form from submitting.
+	   		event.preventDefault();
+	   		// Show the error div.
+   			errorDiv.style.display = "";
+	   		// Create the "i" element.
+	   		var iElement = document.createElement("i");
+	   		iElement.className = "fa fa-times-circle";
+	   		iElement.innerHTML = " All Team Emails must be complete!";
+	   		// Append the "i" element to the errorDiv.
+	   		errorDiv.append(iElement);
+	   		// Scroll the window to the top.
+   			window.scrollTo(0,0);
+	   		return;
+
+		} else if (coachesArray[i + 1] == coachesArray[i]) {
+		    // Prevent the submit form from submitting.
+	   		event.preventDefault();
+	   		// Show the error div.
+   			errorDiv.style.display = "";
+	   		// Create the "i" element.
+	   		var iElement = document.createElement("i");
+	   		iElement.className = "fa fa-times-circle";
+	   		iElement.innerHTML = " All Team Emails must be unique!";
+	   		// Append the "i" element to the errorDiv.
+	   		errorDiv.append(iElement);
+	   		// Scroll the window to the top.
+   			window.scrollTo(0,0);
+	   		return;
+		}
+	};
 });
 
 // Run updateCoachFields() once the document is loaded to make the label and coach fields appear for the default number of coaches.

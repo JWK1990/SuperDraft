@@ -12,7 +12,7 @@ var nodemailer = require("nodemailer");
 var transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
-		user: 'SuperDraftFantasy@gmail.com',
+		user: 'superdraftfantasy@gmail.com',
 		pass: 'SuperDuperDraft123'
 	}
 });
@@ -143,7 +143,7 @@ router.post("/register", function(req, res, next){
 			var bodyText = 'Welcome to Superdraft ' + req.body.teamName + '! Visit www.superdraftfantasy.com/create to create your first draft and invite your league!';
 			// Define the parameters for the mail to be sent.
 			var mailOptions = {
-				from: 'SuperDraftFantasy@gmail.com',
+				from: 'superdraftfantasy@gmail.com',
 				to: mailingList,
 				subject: 'Welcome To SuperDraft!',
 				text: bodyText
@@ -261,14 +261,19 @@ router.post("/create", function(req, res, next){
 		// First we create a coachesList, which is an array containing objects with all of the relevant coaches details.
 		// We then assign this to the coaches value in the draftData object.
 		var coachesList = [];
+		var coachesArray = [];
 		var coachObject;
 		var coachNum = "";
 
 		for (var i=1; i <= req.body.numOfCoaches; i++){
+			coachesArray.push(req["body"]["coach" + i].toUpperCase());
 			coachNum = "coachNum: " + "coach" + i;
 			coachObject = {teamName: req["body"]["coach" + i].toUpperCase(), budget: req.body.budget, numOfPlayers: 0, teamName2: req["body"]["coach" + i].toUpperCase(), benchCount: 0, rosterSpots: [true, true, true, true, true, true, true, true, true, true]};
 			coachesList.push(coachObject);
 		};
+
+
+
 
 			// create object with form input
 			var draftData = {
@@ -314,7 +319,7 @@ router.post("/create", function(req, res, next){
 			var bodyText = 'You have been invited to a Superdraft by ' + draftData.admin + '! Visit www.superdraftfantasy.com/register to sign up and get drafting!';
 			// Define the parameters for the mail to be sent.
 			var mailOptions = {
-				from: 'SuperDraftFantasy@gmail.com',
+				from: 'Superdraftfantasy@gmail.com',
 				to: mailingList,
 				subject: 'Its Drafting Time!',
 				text: bodyText
@@ -360,7 +365,10 @@ router.get("/myDrafts", mid.requiresLogin, function(req, res, next){
 		});
 	});
 
-
+// GET /research
+router.get("/resources", function(req, res, next){
+	return res.render("resources", {title: "Resources"});
+});
 
 /*
 

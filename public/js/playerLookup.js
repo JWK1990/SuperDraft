@@ -102,6 +102,7 @@ var myApp = {
   otbBenchCount: {},
   addToBench: {},
   otbAddToBench: {},
+  otbCoach: {},
   // Position validation variables.
   rosterSpotsArray: {},
   otbRosterSpotsArray: {},
@@ -253,15 +254,24 @@ var myApp = {
 
 
     startCountdown: function(endTime){
-      // Clear the myApp.soldForTimeout variable so that we don't display the "Solf for" text.
+      // Clear the myApp.soldForTimeout variable so that we don't display the "Sold for" text.
       clearTimeout(myApp.soldForTimeout);
-      // Increase the font size back to normal size after it is reduced for 'On the block:' text.
-      myApp.demo.style.fontSize = "3vmin";
       // Set the date we're counting down to
       var countDownDate = Number(endTime);
       // Clear any current timers.
       clearInterval(myApp.counter);
       // Update the count down every 1 second
+
+      // Update the demo text once before the setInterval otherwise it will be delayed by 1 second.
+      // Get todays date and time
+      var now = new Date().getTime();
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+      // Time calculations for days, hours, minutes and seconds
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      myApp.demo.innerHTML = seconds + " secs";
+
+      // Update the countdown every 1 second.
       myApp.counter = setInterval(function() {
           // Get todays date and time
           var now = new Date().getTime();
@@ -269,18 +279,19 @@ var myApp = {
           var distance = countDownDate - now;
           // Time calculations for days, hours, minutes and seconds
           var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-          // Output the result in an element with id="demo"
-          myApp.demo.innerHTML = seconds + " secs";
           // If the count down is over, update the text in the clock pane and wait 5 seconds before putting the next coach on the block.
           if (distance < 0) {
               clearInterval(myApp.counter);
               myApp.placeBidButton.disabled = true;
               myApp.demo.innerHTML = "";
-              myApp.soldForTimeout = setTimeout(function(){myApp.demo.innerHTML = "Sold for " + myApp.currentBid.innerHTML}, 1000);
+              myApp.soldForTimeout = setTimeout(function(){myApp.demo.innerHTML = "Sold for " + myApp.currentBid.innerHTML; myApp.demo.style.color = "#2CFC0E"}, 1000);
               myApp.placeBidButton.style.background = "grey";
               myApp.placeBidButton.innerHTML = "-";
+          } else {
+              // Output the result in an element with id="demo"
+              myApp.demo.innerHTML = seconds + " secs";
           }
-      }, 10);
+      }, 1000);
     }, // Close startCountdown() function.
 
     getTopPlayer: function(){
@@ -342,11 +353,21 @@ var myApp = {
     }, // Close updateSPP() function.
 
     sppStartCountdown: function(sppEndTime){
-      // Set the date we're counting down to
-      var sppCountDownDate = Number(sppEndTime);
       // Clear any current timers.
       clearInterval(myApp.sppCounter);
-      // Update the count down every 1 second
+      // Set the date we're counting down to
+      var sppCountDownDate = Number(sppEndTime);
+
+      // We first set up the timer out of the loop so that it sets up immediately.
+      // Get todays date and time
+      var sppNow = new Date().getTime();
+      // Find the distance between now and the count down date
+      var sppDistance = sppCountDownDate - sppNow;
+      // Time calculations for days, hours, minutes and seconds
+      var seconds = Math.floor((sppDistance % (1000 * 60)) / 1000);
+      myApp.demo.innerHTML = "On The Block: " + myApp.otbCoach + " (" + seconds + " secs)";
+
+      // We then update the count down every 1 second as part of the setInterval loop.
       myApp.sppCounter = setInterval(function() {
           // Get todays date and time
           var sppNow = new Date().getTime();
@@ -354,27 +375,20 @@ var myApp = {
           var sppDistance = sppCountDownDate - sppNow;
           // Time calculations for days, hours, minutes and seconds
           var seconds = Math.floor((sppDistance % (1000 * 60)) / 1000);
-          // Output the result in an element with id="demo"
-          myApp.demo.innerHTML = seconds + " secs";
           // If the count down is over, write some text 
           if (sppDistance <= 0) {
               clearInterval(myApp.sppCounter);
               myApp.demo.innerHTML = "";
               if(myApp.otbName.innerHTML === "-"){
-              // Run updateSPP to update the SPP for the current OTB Coach.
-              // THIS CODE SHOULD POTENTIALLY BE UPDATED.
-              // THE FACT THAT AUTOSPP() AND ADDTOBLOCK() ARE IN THE IF STATEMENTS MEANS THAT THEY ONLY EXECUTE IF THE CURRENT USER IS LOGGED IN.
-              // THE USER CAN LOG IN AND ADD A PLAYER TO THE BLOCK, BUT IT MEANS THAT THE DRAFT IS FROZEN IF THE OTB USER IS LOGGED OUT.
-              /* I'VE REMOVED THE IF STATEMENT FOR NOW SO THAT IT EXECUTES REGARDLESS OF WHETHER THE USER IS LOGGED IN. THE PROBLEM WITH THIS PREVIOUSLY
-              IS THAT THE sppStartCountdown() function was executed for all users when the playerDrafted websockets was emitted. To fix this I've changed
-              it so that only the coach that is on the block sees the SPP countdown timer. I will probably move this countdown into the existing otb clock
-              pane as well. */
                 if(myApp.currentUser === myApp.currentOtbCoach){
                   myApp.updateSPP(myApp.topPlayer);
                 } // Close if(currentUser === currentOtbCoach) statement.
               } // Close if(otbName.innerHTML === "-") statement.
-          } // Close if(sppDistance <= 0) statement.
-      }, 10) // Close sppCounter setInterval() function.
+          } else {
+              // Output the result in an element with id="demo"
+              myApp.demo.innerHTML = "On The Block: " + myApp.otbCoach + " (" + seconds + " secs)"; 
+          }
+      }, 1000) // Close sppCounter setInterval() function.
     }, // Close sppStartCountdown() function.
 
     highlightBidder: function(data){
@@ -387,8 +401,8 @@ var myApp = {
 
         if (td) {
         if (td.innerHTML === data) {
-          budgetsTableRows[i].style.backgroundColor = "yellow";
-          budgetsTableRows[i].style.color = "#4d4d4d";
+          budgetsTableRows[i].style.backgroundColor = "#2CFC0E";
+          budgetsTableRows[i].style.color = "black";
         } else if(myApp.connectedUsers.indexOf(td.innerHTML) < 0){
             budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
             budgetsTableRows[i].style.color = "grey";
@@ -918,6 +932,7 @@ socket.on("pageLoaded", function(data){
     // Set the relevant variables.
     myApp.demo.style.fontSize = "2vmin";
     myApp.demo.innerHTML = "On The Block: " + data.loadData.otbCoach;
+    myApp.otbCoach = data.loadData.otbCoach;
     myApp.numOfCoaches = data.loadData.numOfCoaches;
     myApp.rosterSize = data.loadData.rosterSize;
     myApp.totalRosterSpots = myApp.numOfCoaches * myApp.rosterSize;
@@ -1027,6 +1042,8 @@ socket.on("joinedCoach", function(data){
 
 socket.on("draftPaused", function(){
   clearInterval(myApp.sppCounter);
+  myApp.demo.innerHTML = "";
+  myApp.demo.style.color = "orange";
   myApp.demo.innerHTML = "Paused - " + myApp.currentOtbCoach + " to restart"
 });
 
@@ -1123,15 +1140,13 @@ socket.on('playerDrafted', function(data) {
       myApp.getTopPlayer();
       // Check the SPP to see if it currently has a previously drafted player and update if required.
       myApp.checkSPP(data.dbData.results);
-      // If the currentUser is logged into the room then the sppStartCountdown will start a 20 second countdown
-      // after which it will select the top available player to be automatically put on the block.
-      if(myApp.currentUser === myApp.currentOtbCoach){
-        myApp.sppStartCountdown(data.sppEndTime);
-      } else {
-        // Updates the 'Sold for' text to say "Selection Pending...".
+      // The sppStartCountdown will start a 20 second countdown after which it will select the top available player to be automatically put on the block.
+      // We first clear the innerHTML and make the font size 2vmin. 
+        myApp.demo.innerHTML = "";
         myApp.demo.style.fontSize = "2vmin";
-        myApp.demo.innerHTML = "On The Block: " + data.dbData.otbCoach;
-      }
+        myApp.demo.style.color = "yellow"; 
+        myApp.otbCoach = data.dbData.otbCoach;
+        myApp.sppStartCountdown(data.sppEndTime);
       // Set the maxBid variable to the current users Max Bid as per the Budgets pane.
       myApp.setMaxBid(data.dbData);
       // Enable the 'Pause Draft' button if the current user is the admin user.
@@ -1156,6 +1171,7 @@ socket.on('bidLock', function(){
 
 
 socket.on('bidUpdate', function(data) {
+  myApp.demo.innerHTML = "";
   myApp.startCountdown(data.otbEndTime);
   myApp.highlightBidder(data.bidData.otbBidder);
   myApp.lockBid(data.bidData.otbBidder, myApp.currentUser);
@@ -1195,6 +1211,10 @@ socket.on('otbUpdate', function(data) {
   myApp.addToQueue.disabled = true;
   myApp.placeBidButton.disabled = false;
   myApp.placeBidButton.style.background = "blue";
+  myApp.demo.innerHTML = "";
+  myApp.demo.style.color = "yellow";
+  // Increase the font size back to normal size after it is reduced for 'On the block:' text.
+  myApp.demo.style.fontSize = "3vmin";
   myApp.startCountdown(data.otbEndTime);
   myApp.highlightBidder(data.updatedOtbData.otbBidder);
   myApp.lockBid(data.updatedOtbData.otbBidder, myApp.currentUser);

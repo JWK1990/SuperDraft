@@ -5,6 +5,7 @@ block content
   .main.container
     .row
       .col-md-6.col-md-offset-3#topColumn
+          div.auth_error#errorDiv(style="display: none")
           h1.display-4.m-b-2 Create A Draft
           h1#currentUserEmail(style="display: none") #{currentUserEmail}
 
@@ -17,7 +18,7 @@ block content
 
             div.form-group
                 label(for='leagueType') League Type:
-                div.help-tip
+                div(onclick="").help-tip
                     p Is your league a Supercoach League or an AFL Fantasy League?
                 select.form-control#leagueType(name='leagueType')
                     option(value="Supercoach") Supercoach
@@ -25,7 +26,7 @@ block content
 
             div.form-group
                 label(for='numOfCoaches') # of Teams:
-                div.help-tip
+                div(onclick="").help-tip
                     p How many teams are in your league?
                 select.form-control#numOfCoaches(name='numOfCoaches' onchange='myCreate.updateCoachFields()')
                     option(value=2) 2 Teams
@@ -50,7 +51,7 @@ block content
 
             div.form-group
                 label(for='rosterSize') Roster Size:
-                div.help-tip
+                div(onclick="").help-tip
                     p How many players will be on each team?
                 select.form-control#rosterSize(name='rosterSize' onchange="myCreate.showPositionCounts()")
                     option(value=1) 12 Players (2D - 2M - 1R - 2F / 5B)
@@ -190,7 +191,7 @@ block content
 
             div.form-group
                 label(for='selectCountdown') Selection Timer:
-                div.help-tip
+                div(onclick="").help-tip
                     p How long will each coach have to select a player to put up for auction?
                 select.form-control#selectCountdown(name='selectCountdown')
                     option(value=5) 5 seconds
@@ -208,7 +209,7 @@ block content
 
             div.form-group
                 label(for='bidCountdown') Bid Timer:
-                div.help-tip
+                div(onclick="").help-tip
                     p How long will a coach have to place a bid before the player is sold? Note: This time resets after every bid.
                 select.form-control#bidCountdown(name='bidCountdown')
                     option(value=5) 5 seconds
@@ -225,14 +226,16 @@ block content
                     option(value=60) 60 seconds
 
             div.form-group
-                div.help-tip
+                div(onclick="").help-tip
                     p What budget will each coach have to fill their team?
                 label(for='budget') Budget:
                 div(style="position:relative")
                     input.form-control#budget(type='text', placeholder='300' name='budget' required='')
                     label.static-value $
 
-            div.form-group#coachEmails(style="position:relative")
+            div(onclick="").help-tip
+                p "Enter your league members' emails. Make sure that these are entered correctly. If your league members already have a SuperDraft account, then be sure to use their registered email. If they aren't registered, they will be sent an invite to the provided email address."
+            div.form-group#coachEmails
 
             button.btn.btn-primary#submit(type='submit') Create Draft
 
