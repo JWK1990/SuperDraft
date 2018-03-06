@@ -2,10 +2,10 @@ extends layout
 
 block content
 	.main.container
-		.row#myDraftsTable
-			.col-md-8.col-md-offset-2
-				h1.display-4.m-b-2 My Drafts
-				table.table
+		.row
+			.col-md-8.col-md-offset-2(style="display: inline-block")
+				h1.display-4.m-b-2(style="text-align: center") My Drafts
+				table#myDraftsTable
 					tr
 						th League
 						th Year
@@ -20,7 +20,7 @@ block content
 								td= result.numOfCoaches
 								td#draftID= result._id
 								td= result.admin
-								td#joinButton.btn.btn-info-outline.btn-lg.m-t-1(onclick='join(this)') Join
+								td #[a.btn.btn-info-outline.btn-lg(onclick='join(this)') Join]
 
 								script.
 									function join(item){
@@ -28,4 +28,6 @@ block content
 										var draftID = row.getElementsByTagName("td")[3].innerHTML;
 										window.open('/draft?draft=' + draftID);
 									}
-				a.btn.btn-info-outline.btn-lg(href='/create') CREATE A DRAFT
+
+				div#createDraftDiv(style="text-align: center")
+					a.btn.btn-info-outline.btn-lg(href='/create') CREATE A DRAFT

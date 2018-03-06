@@ -167,11 +167,38 @@ tr{
 #myDraftsTable{
 	text-align: center;
 	width: 100%;
+    table-layout: fixed;
 }
 
-#myDraftsTable th, td, tr{
+
+#myDraftsTable th{
+	text-align: center;
+	border-bottom: 2px solid white;
+	border-top: 1px solid white;
+	padding: 10px;
+	padding-top: 16px;
+	padding-bottom: 16px;
+}
+
+#myDraftsTable tr{
+	border-top: 1px rgba(255,255,255,.3) solid;
+}
+
+#myDraftsTable td{
+	padding: 10px;
+}
+
+#createDraftDiv {
+	width: 100%;
+	display: inline-block;
+}
+
+#createDraftDiv a {
+	display: inline-block;
 	text-align: center;
 }
+
+
 #draftCode{
 	display:none;
 }

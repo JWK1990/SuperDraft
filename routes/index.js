@@ -367,7 +367,7 @@ router.get("/myDrafts", mid.requiresLogin, function(req, res, next){
 
 // GET /research
 router.get("/resources", function(req, res, next){
-	return res.render("resources", {title: "Resources"});
+	return res.render("resources", {title: "Resources", currentUserName: req.session.name});
 });
 
 /*
