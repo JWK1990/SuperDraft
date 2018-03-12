@@ -365,7 +365,7 @@ var myApp = {
       var sppDistance = sppCountDownDate - sppNow;
       // Time calculations for days, hours, minutes and seconds
       var seconds = Math.floor((sppDistance % (1000 * 60)) / 1000);
-      myApp.demo.innerHTML = "On The Block: " + myApp.otbCoach + " (" + seconds + " secs)";
+      myApp.demo.innerHTML = "OTB: " + myApp.otbCoach + " <br>(" + seconds + " secs)";
 
       // We then update the count down every 1 second as part of the setInterval loop.
       myApp.sppCounter = setInterval(function() {
@@ -386,7 +386,7 @@ var myApp = {
               } // Close if(otbName.innerHTML === "-") statement.
           } else {
               // Output the result in an element with id="demo"
-              myApp.demo.innerHTML = "On The Block: " + myApp.otbCoach + " (" + seconds + " secs)"; 
+              myApp.demo.innerHTML = "OTB: " + myApp.otbCoach + " <br>(" + seconds + " secs)"; 
           }
       }, 1000) // Close sppCounter setInterval() function.
     }, // Close sppStartCountdown() function.
@@ -493,17 +493,21 @@ var myApp = {
 */
 
     updateBudgets: function(data){
+      console.log(data);
+      console.log(data.length);
       var budgetsTable = document.getElementById("budgetsTable");
       var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
-      for (var i = 1; i < budgetsTableRows.length; i++) {
+      for (var i = 1; i <= data.length; i++) {
         if(data[i-1].numOfPlayers < myApp.rosterSize){
-          budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML = "$" + (data[i-1].budget - (myApp.rosterSize -1 - data[i-1].numOfPlayers));
-          budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML = "$" + data[i-1].budget;
-          budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML = data[i-1].numOfPlayers + "/" + myApp.rosterSize;
+          budgetsTableRows[i].getElementsByTagName("td")[0].innerHTML =data[i-1].teamName2;
+          budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML ="$" + (data[i-1].budget - (myApp.rosterSize -1 - data[i-1].numOfPlayers));
+          budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML ="$" + data[i-1].budget;
+          budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML =data[i-1].numOfPlayers + "/" + myApp.rosterSize;
         } else {
-            budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML = "-";
-            budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML = "-";
-            budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML = "Full";
+            budgetsTableRows[i].getElementsByTagName("td")[0].innerHTML =data[i-1].teamName2;
+            budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML ="-";
+            budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML ="-";
+            budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML ="Full";
             budgetsTableRows[i].style.color = "grey";
         }
       } // Close for() loop.
@@ -918,7 +922,7 @@ socket.on('connect', function(){
 
 socket.on("pageLoaded", function(data){
   setTimeout(function(){
-    console.log("pageLoaded Started");3
+    console.log("pageLoaded Started");
     var watchlistFilter = document.getElementById("watchlistSearch");
     var watchlistCheckboxes = searchTable.getElementsByTagName("input");
     var hideDrafted = document.getElementById("hideDrafted");
@@ -931,7 +935,7 @@ socket.on("pageLoaded", function(data){
     hideDrafted.checked = true;
     // Set the relevant variables.
     myApp.demo.style.fontSize = "2vmin";
-    myApp.demo.innerHTML = "On The Block: " + data.loadData.otbCoach;
+    myApp.demo.innerHTML = "On The Block: <br>" + data.loadData.otbCoach;
     myApp.otbCoach = data.loadData.otbCoach;
     myApp.numOfCoaches = data.loadData.numOfCoaches;
     myApp.rosterSize = data.loadData.rosterSize;
@@ -1044,7 +1048,7 @@ socket.on("draftPaused", function(){
   clearInterval(myApp.sppCounter);
   myApp.demo.innerHTML = "";
   myApp.demo.style.color = "orange";
-  myApp.demo.innerHTML = "Paused - " + myApp.currentOtbCoach + " to restart"
+  myApp.demo.innerHTML = "Paused:" + "<br> " + myApp.currentOtbCoach + " to restart"
 });
 
 

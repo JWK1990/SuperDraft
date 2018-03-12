@@ -1,20 +1,46 @@
 extends layout
 
 block content
-  .main.container
-    .row
-      .col-md-6.col-md-offset-3
-        if fail
-            div.auth_error
-              i.fa.fa-times-circle #{fail}
-        h1.display-4.m-b-2 Log In
-        form(method='POST' action='/login')
-          div.form-group
-            label(for='email') Email
-            input.form-control(type='email' id='email' placeholder='email' name='email' value=email)
-          div.form-group
-            label(for='password') Password
-            input.form-control(type='password' id='password' placeholder='password' name='password')
-          button.btn.btn-primary(type='submit') Log in
-          div(style="margin-bottom: 20px")
-          p(style="font-style: italic; margin-bottom: 5px; color: white") Don't have an account? #[a(href="/register" style="font-style: normal; color: rgb(44,252,14)") Sign Up]
+  .main.container.text-xs-center
+    #myModal.modal(style="display: block")
+        span.close ×
+        .login-form#modalLogin
+          form(method="post" action="/login")
+            h2.text-center(style="color: rgb(0,0,0)") LOG IN
+            - if (message.length > 0)
+                .alert.alert-danger #{message}
+            .text-center.social-btn
+              a.btn.btn-primary.btn-block(href='/auth/facebook')
+                i.fa.fa-facebook
+                |  Login with 
+                b Facebook
+              a.btn.btn-info.btn-block(href='#')
+                i.fa.fa-twitter
+                |  Login with 
+                b Twitter
+              a.btn.btn-danger.btn-block(href='#')
+                i.fa.fa-google
+                |  Login with 
+                b Google           
+            .or-seperator(style="color: black")
+              i or    
+            .form-group
+              .input-group
+                span.input-group-addon
+                  i.fa.fa-user
+                input#email.form-control(type='email', placeholder='email' name='email' required ='required' value=email)
+            .form-group
+              .input-group
+                span.input-group-addon
+                  i.fa.fa-lock
+                input#pw.form-control(type='password', placeholder='password' name='password' required ='required')
+            .form-group
+              button.btn.btn-success.btn-block.login-btn(type='submit') Login
+            .clearfix
+              label.pull-left.checkbox-inline
+                input(type='checkbox')
+                |  Remember me
+              a.pull-right.text-success(href='#') Forgot Password?
+          .hint-text.small
+            | Don't have an account? 
+            a.text-success(href='#') Register Now!

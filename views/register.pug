@@ -12,33 +12,33 @@ block content
           form(method='POST' action='/register')
             div.form-group
               label(for='name') Coach Name:
-              input#name.form-control(type='text', placeholder='Mick Malthouse' name='name' value=reqBodyFail.name)
+              input#name.form-control(type='text', placeholder='Mick Malthouse' name='name' required ='' value=reqBodyFail.name)
             div.form-group
               label(for='name') Team Name:
-              input#name.form-control(type='text', placeholder='The Rat Pack' name='teamName' value=reqBodyFail.teamName)
+              input#name.form-control(type='text', placeholder='The Rat Pack' name='teamName' required ='' value=reqBodyFail.teamName)
             if dupEmail
               div.form-group.has-danger
                 label(for='email') Email:
-                input#email.form-control.form-control-danger(type='email' name='email' value=dupEmail)
+                input#email.form-control.form-control-danger(type='email' name='email' required ='' value=dupEmail)
                 div.form-control-feedback Sorry, that email is already in use! Please try another.
             else
               div.form-group
                 label(for='email') Email:
-                input#email.form-control(type='email', placeholder='MickyMalt2010@gmail.com' name='email' value=reqBodyFail.email)
+                input#email.form-control(type='email', placeholder='MickyMalt2010@gmail.com' required ='' name='email' value=reqBodyFail.email)
             if passMismatch
               div.form-group.has-danger
                 label(for='pw') Password:
-                input#pw.form-control.form-control-danger(type='password', placeholder='xxxxxxxx' name='password')
+                input#pw.form-control.form-control-danger(type='password', placeholder='' required ='' name='password')
               div.form-group.has-danger
                 label(for='pw2') Confirm Password:
-                input#pw2.form-control.form-control-danger(type='password', placeholder='xxxxxxxx' name='confirmPassword')
+                input#pw2.form-control.form-control-danger(type='password', placeholder='' required ='' name='confirmPassword')
             else
               div.form-group
                 label(for='pw') Password:
-                input#pw.form-control(type='password', placeholder='xxxxxxxx' name='password')
+                input#pw.form-control(type='password', placeholder='' required ='' name='password')
               div.form-group
                 label(for='pw2') Confirm Password:
-                input#pw2.form-control(type='password', placeholder='xxxxxxxx' name='confirmPassword')
+                input#pw2.form-control(type='password', placeholder='' required ='' name='confirmPassword')
             button.btn.btn-primary(type='submit') Sign Up
             div(style="margin-bottom: 20px")
             p(style="font-style: italic") Already signed up? #[a(href="/login" style="font-style: normal; color: rgb(44,252,14)") Log In]
@@ -49,19 +49,19 @@ block content
           form(method='POST' action='/register')
             div.form-group
               label(for='name') Coach Name:
-              input#name.form-control(type='text', placeholder='Mick Malthouse' name='name')
+              input#name.form-control(type='text', placeholder='Mick Malthouse' name='name' required ='')
             div.form-group
               label(for='name') Team Name:
-              input#name.form-control(type='text', placeholder='The Rat Pack' name='teamName')
+              input#name.form-control(type='text', placeholder='The Rat Pack' name='teamName' required ='')
             div.form-group
               label(for='email') Email:
-              input#email.form-control(type='email', placeholder='MickyMalt2010@gmail.com' name='email')
+              input#email.form-control(type='email', placeholder='MickyMalt2010@gmail.com' name='email' required ='')
             div.form-group
               label(for='pw') Password:
-              input#pw.form-control(type='password', placeholder='xxxxxxxx' name='password')
+              input#pw.form-control(type='password', placeholder='xxxxxxxx' name='password' required ='')
             div.form-group
               label(for='pw2') Confirm Password:
-              input#pw2.form-control(type='password', placeholder='xxxxxxxx' name='confirmPassword')
+              input#pw2.form-control(type='password', placeholder='xxxxxxxx' name='confirmPassword' required ='')
             button.btn.btn-primary(type='submit') Sign Up
             div(style="margin-bottom: 20px")
             p(style="font-style: italic") Already signed up? #[a(href="/login" style="font-style: normal; color: rgb(44,252,14)") Log In]

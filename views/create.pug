@@ -16,6 +16,10 @@ block content
               input.form-control#leagueName(type='text', placeholder='My League' name='leagueName' required='')
 
             div.form-group
+              label.control-label(for='myTeamName') My Team Name:
+              input.form-control#myTeamName(type='text', placeholder='My Team' name='myTeamName' required='')
+
+            div.form-group
                 label(for='leagueType') League Type:
                 div(onclick="").help-tip
                     p Is your league a Supercoach League or an AFL Fantasy League?
@@ -231,10 +235,6 @@ block content
                 div(style="position:relative")
                     input.form-control#budget(type='text', placeholder='300' name='budget' required='')
                     label.static-value $
-
-            div(onclick="").help-tip
-                p "Enter your league members' emails. Make sure that these are entered correctly. If your league members already have a SuperDraft account, then be sure to use their registered email. If they aren't registered, they will be sent an invite to the provided email address."
-            div.form-group#coachEmails
 
             button.btn.btn-primary#submit(type='submit') Create Draft
 

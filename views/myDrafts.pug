@@ -3,31 +3,43 @@ extends layout
 block content
 	.main.container
 		.row
-			.col-md-8.col-md-offset-2(style="display: inline-block")
+			.col-md-10.col-md-offset-1
+				- if (createdDraftMessage && createdDraftMessage.length > 0)
+					div.auth_success(style="text-align: center")
+						i.fa.fa-check-circle  Draft Created! Share this Draft Code with your league so they can join:
+						h5(style="font-weight: bold") #{createdDraftMessage}
+				- if (draftNotFound && draftNotFound.length > 0)
+					div.auth_error(style="text-align: center")
+						i.fa.fa-times-circle #{draftNotFound}				
 				h1.display-4.m-b-2(style="text-align: center") My Drafts
 				table#myDraftsTable
-					tr
-						th League
-						th Year
-						th Coaches
-						th#draftCode Draft Code
-						th Admin
-						th Join
+					- if(results.length <= 0)
+						tr
+							th(style="font-size: 2.5vmin") You do not currently have any drafts! Create or Join a draft below!
+					- if(results.length > 0)
+						tr
+							th League
+							th Coaches
+							th Draft Code
+							th Admin
+							th Join
 						each result in results
 							tr
 								td= result.leagueName
-								td= result.draftYear
 								td= result.numOfCoaches
 								td#draftID= result._id
 								td= result.admin
-								td #[a.btn.btn-info-outline.btn-lg(onclick='join(this)') Join]
+								td #[a.btn.btn-info-outline.btn-sm(onclick='join(this)' style="width: 100%; height: 100%; padding:8px") Join]
 
 								script.
 									function join(item){
 										var row = item.closest("tr");
-										var draftID = row.getElementsByTagName("td")[3].innerHTML;
+										var draftID = row.getElementsByTagName("td")[2].innerHTML;
 										window.open('/draft?draft=' + draftID);
 									}
-
+				div(style= "margin-top: 10px")
 				div#createDraftDiv(style="text-align: center")
-					a.btn.btn-info-outline.btn-lg(href='/create') CREATE A DRAFT
+					a.btn.btn-info-outline.btn-lg(href='/create' style="width:220px") CREATE A DRAFT
+				div(style= "margin-top: 10px")
+				div#createDraftDiv(style="text-align: center")
+					a.btn.btn-info-outline.btn-lg(href='/join' style="width:220px") JOIN A DRAFT

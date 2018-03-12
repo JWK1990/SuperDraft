@@ -1,10 +1,9 @@
-var express = require('express');
-var router = express.Router();
+var path = require("path");
+var mid = require("../middleware");
+var fs = require('fs');
 var User = require("../models/user");
 var Draft = require("../models/draftData");
-var mid = require("../middleware");
-var path = require("path");
-var fs = require('fs');
+
 // Require nodemailer to send automated emails to signed up users.
 var nodemailer = require("nodemailer");
 
@@ -18,206 +17,361 @@ var transporter = nodemailer.createTransport({
 });
 
 
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+    // if user is authenticated in the session, carry on 
+    if (req.isAuthenticated()){
+        return next();
+    } else {
+    	// if they aren't, set the returnTo to the page they were trying to visit (so that once they're logged in we redirect to there).
+    	// Then redirect them to the home page.
+    	req.session.returnTo = req.originalUrl;
+    	console.log(req.originalUrl);
+    	req.flash('loginMessage', 'You must be logged in to view this page!');
+    	res.redirect('/');
+   	}
+};
 
 
-// GET /profile
-router.get("/profile", mid.requiresLogin, function(req, res, next){
-	User.findById(req.session.userId)
-		.exec(function (error, user){
-			if (error){
-				return next(error);
-			} else {
-				return res.render("profile", {title: "My Profile", name: user.name, teamName: user.teamName, currentUserName: req.session.name});
-			}
-		});
+
+module.exports = function(app, passport){
+
+
+// FACEBOOK ROUTES
+// route for facebook authentication and login
+app.get('/auth/facebook', passport.authenticate('facebook', { 
+  scope : ['public_profile', 'email']
+}));
+
+// handle the callback after facebook has authenticated the user
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+        successReturnToOrRedirect : '/',
+        failureRedirect : '/'
+    }));
+
+
+// TWITTER ROUTES
+// route for twitter authentication and login
+app.get('/auth/twitter', passport.authenticate('twitter'));
+
+// handle the callback after twitter has authenticated the user
+app.get('/auth/twitter/callback',
+    passport.authenticate('twitter', {
+        successReturnToOrRedirect : '/',
+        failureRedirect : '/'
+    }));
+
+
+// GOOGLE ROUTES
+// send to google to do the authentication
+// profile gets us their basic information including their name
+// email gets their emails
+app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+
+// the callback after google has authenticated the user
+app.get('/auth/google/callback',
+    passport.authenticate('google', {
+            successReturnToOrRedirect : '/',
+            failureRedirect : '/'
+    }));
+
+
+
+// GET /
+app.get('/', function(req, res, next) {
+	console.log("SESSSSSSSIIIIIOOOOOOONNNNNNNN DETAILS!!!!!!!!");
+	console.log(req.user);
+
+	var loginMessage = req.flash('loginMessage');
+	var loginText = loginMessage[0];
+	var loginEmail = loginMessage[1];
+
+	console.log(loginMessage);
+	console.log(loginText);
+	console.log(loginEmail);
+
+	// signupMessage: req.flash('signupMessage'), signupEmail: req.flash('signupEmail')[0], signupName: req.flash('signupName')[0], loginMessageUser: req.flash('loginMessageUser'), loginEmail: req.flash('loginEmail')[0], loginMessagePassword: req.flash('loginMessagePassword')}
+  return res.render('index', {title: 'Home', signupMessage: req.flash('signupMessage'), loginText: loginText, loginEmail: loginEmail});
 });
 
-// GET /logout.
-router.get("/logout", function(req, res, next){
-	if (req.session){
-		// delete session object.
-		req.session.destroy(function(err){
-			if (err){
-				return next(err);
-			} else {
-				return res.redirect("/");
-			}
-		});
-	}
+
+
+app.get('/signup', function(req, res, next){
+	res.render('signup', {title: "Sign Up"});
 });
+app.post('/signup', passport.authenticate('local-signup', {
+    successReturnToOrRedirect : '/myDrafts', // redirect to the secure profile section
+    failureRedirect : '/', // redirect back to the signup page if there is an error
+    failureFlash : true // allow flash messages
+}));
+
 
 
 // GET /login
-router.get("/login", mid.loggedOut, function(req, res, next){
+app.get("/login", function(req, res, next){
 	return res.render("login", {title: "Log In"});
 });
-
 // POST /login
-router.post("/login", function(req, res, next){
-
-	// We first check if both required fields are filled out and if not we issue an "Email and password are required" error message.
-	// If they are filled out, we first check for a matching email address and if there isn't a match we issue an error message.
-	// If there is a matched user we then check if there is a matching password, if not we issue an error message.
-	// If all details are correct then we redirect to the /myDrafts page.
-	if (req.body.email.toUpperCase() && req.body.password){
-
-		User.findOne({email: req.body.email.toUpperCase()}, function(error, user){
-			if(user == null){
-				return res.render("login", {title: "Log In", fail:" User does not exist!", email: req.body.email});
-			} else {
-				User.authenticate(req.body.email.toUpperCase(), req.body.password, function(error, user){
-					if (error || !user){
-						return res.render("login",{title: "Log In", fail:" Wrong password! Please Try Again.", email: req.body.email});
-					} else {
-						req.session.userId = user._id;
-						req.session.name = user.name;
-						req.session.teamName = user.teamName;
-						req.session.email = user.email;
-						return res.redirect ("/myDrafts");
-					}
-				});
-			}
-		}); // Close User.find();
-
-	} else {
-		return res.render("login",{fail:" Email and password are required!", email: req.body.email});
-	}
-	});
+app.post("/login", passport.authenticate('local-login', {
+        successReturnToOrRedirect : '/myDrafts', // redirect to the secure profile section
+        failureRedirect : '/', // redirect back to the login page if there is an error
+        failureFlash : true // allow flash messages
+})); // Close app.post("/login").
 
 
-// GET /register
-router.get("/register", mid.loggedOut, function(req, res, next){
-	return res.render("register", {title: "Sign Up"});
+
+// GET /about
+app.get('/about', function(req, res, next) {
+	req.session.returnTo = "/about";
+  	return res.render('about', { title: 'About'});
 });
 
+
+
+// GET /research
+app.get("/resources", function(req, res, next){
+	req.session.returnTo = "/resources";
+	console.log(req.user);
+	return res.render("resources", {title: "Resources"});
+});
+
+
+
+
+
+app.get("/myDrafts", isLoggedIn, function(req, res, next){
+	// Get the current users email address. If they are FB authenticated it will be held in req.user, if they are email authenticated it will be held in req.session.
+	var currentUserEmail;
+	var currentUserName;
+
+	// Set the currentUserEmail and currentUserName based on the authentication type for the current user.
+	if(req.user.local.email){
+		console.log("Local Authenticated!");
+		currentUserEmail = req.user.local.email.toUpperCase();
+		currentUserName = req.user.local.name.toUpperCase();
+	} else if(req.user.facebook.email){
+		currentUserEmail = req.user.facebook.email.toUpperCase();
+		currentUserName = req.user.facebook.name.toUpperCase();	
+	} else if(req.user.twitter.email){
+		currentUserEmail = req.user.twitter.email.toUpperCase();
+		currentUserName = req.user.twitter.name.toUpperCase();			
+	} else if(req.user.google.email){
+		currentUserEmail = req.user.google.email.toUpperCase();
+		currentUserName = req.user.google.name.toUpperCase();			
+	}
+
+	var myDraftsList = [];
+
+	Draft.find({}, function(err, drafts){
+		// Loops through the draftData and find drafts that contain the current users email address.
+		for(var i = 0; i < drafts.length; i++) {
+			for (var j=0; j < drafts[i].coaches.length; j++){
+				// If we find a draft containing the users email address, we create an addDraft variable and add it to our myDraftsList array.
+				if (drafts[i].coaches[j].teamName == currentUserEmail) {
+					var addDraft = {leagueName: drafts[i].leagueName, draftYear: drafts[i].draftYear, numOfCoaches: drafts[i].numOfCoaches, admin: drafts[i].admin, _id: drafts[i]._id}
+					myDraftsList.push(addDraft);
+					console.log(myDraftsList);
+				} // Close if() statement.
+		    } // Close for(var j = 0) loop.
+		} // Close for(var i = 0) loop.
+		// Reverses the myDraftsList array so that the most recent drafts appear at the top.
+		myDraftsList.reverse();
+
+
+		User.find({}, function(err, users){
+			// We send the myDraftsList array and the users data to the front end to be used in our template.
+			return res.render("myDrafts", {title: "My Drafts", results: myDraftsList, users: users, currentUserName: currentUserName, createdDraftMessage: req.flash('createdDraft'), draftNotFound: req.flash('draftNotFound')});
+		}); // Close User.find() function.
+
+	}); // Close Draft.find() function.
+
+}); // Close app.get("/myDrafts") function.
+
+
+app.get("/join", isLoggedIn, function(req, res, next){
+	return res.render("join", {title: "Join A Draft"});
+}); // Close app.get("/myDrafts") function.
+
+
+app.post("/join", isLoggedIn, function(req, res, next){
+
+	var currentUserEmail;
+
+	if(req.user.local.email){
+		console.log("Local Authenticated!");
+		currentUserEmail = req.user.local.email.toUpperCase();
+	} else if(req.user.facebook.email){
+		currentUserEmail = req.user.facebook.email.toUpperCase();
+	} else if(req.user.twitter.email){
+		currentUserEmail = req.user.twitter.email.toUpperCase();		
+	} else if(req.user.google.email){
+		currentUserEmail = req.user.google.email.toUpperCase();	
+	}
+
+
+	// Find the draft with the matching draftCode to the one entered by the user.
+	Draft.findById(req.body.draftCode, function(err, drafts){
+		if(!err){
+
+			var alreadyEntered;
+			var alreadyEnteredTeamName;
+			var nameTaken;
+			var teamNameTaken;
+
+			// Check if the user has already entered a team in the draft.
+			for(var i=0; i < drafts.coaches.length; i++){
+				if(drafts.coaches[i].teamName == currentUserEmail){
+					alreadyEnteredTeamName = drafts.coaches[i].teamName2;
+					alreadyEntered = true;
+					console.log("ALREADY ENTERED!");
+					console.log(alreadyEntered);
+					break;
+				}
+			}
+
+			for(var i=0; i < drafts.coaches.length; i++){
+				console.log()
+				if(drafts.coaches[i].teamName2 == req.body.myTeamName.toUpperCase()){
+					teamNameTaken = drafts.coaches[i].teamName2;
+					nameTaken = true;
+					console.log("NAME TAKEN!");
+					console.log(nameTaken);
+					break;
+				}
+			}
+
+			// If the user has already entered a team in the draft, return an error.
+			// Else add the user to the draft.
+			if(drafts.coaches.length >= drafts.numOfCoaches){
+				return res.render("join", {title: "Join A Draft", fail: "  Sorry, the selected draft is already full!"});
+			} else if(alreadyEntered){
+				return res.render("join", {title: "Join A Draft", fail: "  You have already joined that draft with the team name " + alreadyEnteredTeamName + "!"});
+			} else if(nameTaken){
+				return res.render("join", {title: "Join A Draft", fail: "  Sorry, the team name " + teamNameTaken + " is already taken in this draft!"});
+			} else {
+				// Create a coach object with the current users details for the current draft.
+				// Add the coach object to the coaches array of the current draft.
+				// Save the updated draft data.
+				// Redirect to the myDrafts page where the draft should now appear as the coaches email is in the coaches list.
+				var coachObject = {teamName: currentUserEmail, budget: drafts.budget, numOfPlayers: 0, teamName2: req.body.myTeamName.toUpperCase(), benchCount: 0, rosterSpots: [true, true, true, true, true, true, true, true, true, true]}
+				drafts.coaches.push(coachObject);
+				drafts.save();
+				res.redirect('/myDrafts');
+			}
+
+		} else {
+			return res.render("join", {title: "Join A Draft", fail: "  That draft code could not be found!"});
+		} // Close else{}statement.
+	}); // Close Draft.find() function.
+
+
+}); // Close app.get("/myDrafts") function.
+
+
+
+// GET /logout.
+app.get("/logout", function(req, res, next){
+	req.logout();
+	res.redirect('/');
+});
+
+
+
+
+/* Comment out email for now.
+
 // POST /register
-router.post("/register", function(req, res, next){
+app.post("/register", function(req, res, next){
+
+
+		// Use nodemailer to send a welcome email to the new coach.
+		// Create the mailing list.
+		var mailingList = userData.email;
+		// Create the text.
+		var bodyText = 'Welcome to Superdraft ' + userData.name + '! Visit www.superdraftfantasy.com/create to create your first draft and invite your league!';
+		// Define the parameters for the mail to be sent.
+		var mailOptions = {
+			from: 'superdraftfantasy@gmail.com',
+			to: mailingList,
+			subject: 'Welcome To SuperDraft!',
+			text: bodyText
+		};
+		// Send the email when the users submits the create draft form.
+		transporter.sendMail(mailOptions, function(error, info){
+			if (error){
+				console.log(error);
+			} else {
+				console.log('Email sent: ' + info.response);
+			}
+		}) // Close transporter.sendMail() function.
+
+
+
+
+	/*
 	if (req.body.email &&
 		req.body.name &&
 		req.body.teamName &&
 		req.body.password &&
 		req.body.confirmPassword){
 
-
-			User.findOne({email:req.body.email.toUpperCase()}, function(err, user){
-				if(user != null){
-					return res.render("register", {fail: " Email already in use!", dupEmail: req.body.email, reqBodyFail: req.body})
-				} 
-			}); // Close User.findOne() function.
-
-			User.findOne({teamName:req.body.teamName}, function(err, user){
-				if(user != null){
+			User.findOne({teamName:req.body.teamName}, function(err, teamName){
+				if(teamName != null){
 					return res.render("register", {fail: " Team Name is already taken!", reqBodyFail: req.body})
-				}
-			}); // Close User.findOne() function.
-
-				if(req.body.password !== req.body.confirmPassword){
+				} else if(req.body.password !== req.body.confirmPassword){
 					return res.render("register", {fail: " Passwords did not match.", passMismatch: true, reqBodyFail: req.body})
-				}
-
-				// create object with form input
-				var userData = {
-					email: req.body.email.toUpperCase(),
-					name: req.body.name,
-					teamName: req.body.teamName,
-					password: req.body.password
-				};
-
-				// use schema's 'create' method to insert document into Mongo.
-				User.create(userData, function (error, user){
-					if (error){
-						return next(error);
-					} else {
-						req.session.userId = user._id;
-						req.session.name = user.name;
-						req.session.teamName = user.teamName;
-						req.session.email = user.email;
-						return res.redirect("/myDrafts");
-					}
-				});
-
-			// Use nodemailer to send a welcome email to the new coach.
-			// Create the mailing list.
-			var mailingList = req.body.email;
-			// Create the text.
-			var bodyText = 'Welcome to Superdraft ' + req.body.teamName + '! Visit www.superdraftfantasy.com/create to create your first draft and invite your league!';
-			// Define the parameters for the mail to be sent.
-			var mailOptions = {
-				from: 'superdraftfantasy@gmail.com',
-				to: mailingList,
-				subject: 'Welcome To SuperDraft!',
-				text: bodyText
-			};
-			// Send the email when the users submits the create draft form.
-			transporter.sendMail(mailOptions, function(error, info){
-				if (error){
-					console.log(error);
+				} else if(teamName == null && req.body.password == req.body.confirmPassword){
+					User.findOne({email:req.body.email.toUpperCase()}, function(err,email){
+						if(email != null){
+							return res.render("register", {fail: " Email already in use!", dupEmail: req.body.email, reqBodyFail: req.body})
+						}
+					}); // Close User.findOne(email).
 				} else {
-					console.log('Email sent: ' + info.response);
-				}
-			});
-
+				} // Close else{} statement.
+			}); // Close User.findOne() statement.
 	} else {
 		return res.render("register", {fail: " All fields are required.", reqBodyFail: req.body})
-}});
-
-// GET /
-router.get('/', function(req, res, next) {
-  return res.render('index', { title: 'Home', currentUserName: req.session.name});
+	}
 });
 
-// GET /about
-router.get('/about', function(req, res, next) {
-  return res.render('about', { title: 'About', currentUserName: req.session.name});
-});
+*/
 
-// GET /contact
-router.get('/contact', function(req, res, next) {
-  return res.render('contact', { title: 'Contact', currentUserName: req.session.name});
-});
+
 
 // GET /draft
-router.get("/draft", mid.requiresLogin, function(req, res, next){
+app.get("/draft", isLoggedIn, function(req, res, next){
 	User.find({}, function(err, users){
 		Draft.find({"_id":req.query.draft}, function(err, drafts){
 			if(!err){
-				var currentUser = req.session.teamName;
-				console.log('Current User:' + currentUser);
 
-				/* The below block of code iterates through through the users collection and matches the 'teamName' from the draftData (which is the email the admin entered on signup)
-				with an email in the users collection. It then returns the index of the matching user. We then use this index to get the corresponding team name. We then add that teamName to the relevant object in the draftData array as teamName2.
-				If no matching user is found we just add the email back in as teamName2.
-				We then use this teamName2 in the first column of the budgets pane on the draft page. Previously we passed the draftData emails directly, which meant that the team name
-				entered by the admin on setup directly populated the bugets pane which then had to match the team name of the logged in user. This made it hard to allow the admin to enter
-				emails rather than team names. This has now been fixed. We then save this updated teamName2 into the Database, this occurs when the /drafts page is loaded. So in the DB
-				the teamName1 and teamName2 remain as the email entered by the admin when creating the draft, until the point at which the coaches visits SuperDraftFantasy and signs up, then
-				the first time the /draft page is initiated following this, the teamName2 will update in the DB to the Team Name that the user signs up with.*/
-				var index;
-				var teamName2;
+				var currentUserEmail;
+				var currentUserTeam;
 
-				for (var i=0; i < drafts[0].coaches.length; i++){
+				// Set the currentUserEmail based on the authentication type of the current user.
+				if(req.user.local.email){
+					console.log("Local Authenticated!");
+					currentUserEmail = req.user.local.email.toUpperCase();
+				} else if(req.user.facebook.email){
+					currentUserEmail = req.user.facebook.email.toUpperCase();
+				} else if(req.user.twitter.email){
+					currentUserEmail = req.user.twitter.email.toUpperCase();		
+				} else if(req.user.google.email){
+					currentUserEmail = req.user.google.email.toUpperCase();			
+				}
 
-					index = users.findIndex(function(data) {
-						  return data.email == drafts[0].coaches[i].teamName;
-					});
 
-					if (index > -1){
-						teamName2 = users[index].teamName;
-					} else {
-						teamName2 = drafts[0].coaches[i].teamName;
+				// Loop through the coaches array for the selected draft.
+				// Find the coach with an email (teamName) matching the current user.
+				// Return the team name (teamName2) corresponding with that coach.
+				for(var i=0; i < drafts[0].coaches.length; i++){
+					if(drafts[0].coaches[i].teamName == currentUserEmail){
+						currentUserTeam = drafts[0].coaches[i].teamName2;
+						break;
 					}
+				}
 
-
-
-					drafts[0].coaches[i].teamName2 = teamName2;
-					console.log('TeamName2DB:' + drafts[0].coaches[i].teamName2);
-
-				} // Close for() loop.
-				drafts[0].save(function(err){
-					if (err) console.log(err);
-					else console.log("Success!");
-				}); // Close drafts[0].save() function.
-
+				console.log(currentUserTeam);
 
 			// Define the players variable that contains the player data from the scPlayerData.json file if the leagueType is "Supercoach" or the dtPlayerData.json file if not.
 			if(drafts[0].leagueType == "Supercoach"){
@@ -226,22 +380,23 @@ router.get("/draft", mid.requiresLogin, function(req, res, next){
 				var players = JSON.parse(fs.readFileSync('./public/js/dtPlayerData.json', 'utf8'));
 			}
 
-				return res.render("draft", {title: "Draft", players: players, drafts: drafts, users: users, currentUser: currentUser, coaches: drafts[0].coaches, results: drafts[0].results});
+				return res.render("draft", {title: "Draft", players: players, drafts: drafts, users: users, currentUser: currentUserTeam, coaches: drafts[0].coaches, results: drafts[0].results});
 			} else {
-				throw err;
+				req.flash("draftNotFound", " Sorry, the selected draft could not be found!");
+				return res.redirect("/myDrafts");
 			} // Close else{}statement.
 		}) // Close Draft.find() function.
 	}) // Close User.find() function.
 }); // Close router.get("/draft") function.
 
 // GET /create
-router.get("/create", mid.requiresLogin, function(req, res, next){
-	return res.render("create", {title: "Create A Draft", currentUserName: req.session.name, currentUserEmail: req.session.email});
+app.get("/create", isLoggedIn, function(req, res, next){
+	return res.render("create", {title: "Create A Draft"});
 });
 
 // POST /create
 
-router.post("/create", function(req, res, next){
+app.post("/create", function(req, res, next){
 
 	if (req.body.leagueName &&
 		req.body.numOfCoaches &&
@@ -254,227 +409,158 @@ router.post("/create", function(req, res, next){
 		req.body.budget &&
 		req.body.selectCountdown &&
 		req.body.bidCountdown &&
-		req.body.leagueType){
+		req.body.leagueType &&
+		req.body.myTeamName){
+
+
+
+		var currentUserEmail;
+
+		// Set the currentUserEmail based on the authentication type for the current coach.
+		if(req.user.local.email){
+			console.log("Local Authenticated!");
+			currentUserEmail = req.user.local.email.toUpperCase();
+		} else if(req.user.facebook.email){
+			currentUserEmail = req.user.facebook.email.toUpperCase();
+		} else if(req.user.twitter.email){
+			currentUserEmail = req.user.twitter.email.toUpperCase();		
+		} else if(req.user.google.email){
+			currentUserEmail = req.user.google.email.toUpperCase();		
+		}
+
 
 		var rosterCount = Number(req.body.numOfDef) + Number(req.body.numOfMid) + Number(req.body.numOfRuc) + Number(req.body.numOfFwd)	+ Number(req.body.numOfBen);
 
 		// First we create a coachesList, which is an array containing objects with all of the relevant coaches details.
 		// We then assign this to the coaches value in the draftData object.
 		var coachesList = [];
-		var coachesArray = [];
-		var coachObject;
-		var coachNum = "";
+		var coachObject = {teamName: currentUserEmail, budget: req.body.budget, numOfPlayers: 0, teamName2: req.body.myTeamName.toUpperCase(), benchCount: 0, rosterSpots: [true, true, true, true, true, true, true, true, true, true]}
+		coachesList.push(coachObject);
 
-		for (var i=1; i <= req.body.numOfCoaches; i++){
-			coachesArray.push(req["body"]["coach" + i].toUpperCase());
-			coachNum = "coachNum: " + "coach" + i;
-			coachObject = {teamName: req["body"]["coach" + i].toUpperCase(), budget: req.body.budget, numOfPlayers: 0, teamName2: req["body"]["coach" + i].toUpperCase(), benchCount: 0, rosterSpots: [true, true, true, true, true, true, true, true, true, true]};
-			coachesList.push(coachObject);
+		// create object with form input.
+		var draftData = {
+			leagueName: req.body.leagueName,
+			draftYear: 2018,
+			numOfCoaches: req.body.numOfCoaches,
+			rosterSize: rosterCount,
+			numOfDef: req.body.numOfDef,
+			numOfFwd: req.body.numOfFwd,
+			numOfRuc: req.body.numOfRuc,
+			numOfMid: req.body.numOfMid,
+			numOfBen: req.body.numOfBen,
+			admin: req.body.myTeamName,
+			coaches: coachesList,
+			otbPlayer: "Patrick Dangerfield",
+			otbPos: "MID",
+			otbAverage: "132",
+			otbBid: 1,
+			otbCoach :req.body.myTeamName,
+			pickCounter: 1,
+			selectCountdown: req.body.selectCountdown,
+			bidCountdown: req.body.bidCountdown,
+			leagueType: req.body.leagueType,
+			budget: req.body.budget
 		};
 
+		// use schema's 'create' method to insert document into Mongo.
+		Draft.create(draftData, function (error, draft){
+			if (error){
+				return next(error);
+			} else {
+				var draftID = draft._id;
+				req.flash('createdDraft', draftID);
+				return res.redirect("/myDrafts");
+			}
+			});
 
-
-
-			// create object with form input
-			var draftData = {
-				leagueName: req.body.leagueName,
-				draftYear: 2018,
-				numOfCoaches: req.body.numOfCoaches,
-				rosterSize: rosterCount,
-				numOfDef: req.body.numOfDef,
-				numOfFwd: req.body.numOfFwd,
-				numOfRuc: req.body.numOfRuc,
-				numOfMid: req.body.numOfMid,
-				numOfBen: req.body.numOfBen,
-				admin: req.session.teamName,
-				coaches: coachesList,
-				otbPlayer: "Patrick Dangerfield",
-				otbPos: "MID",
-				otbAverage: "132",
-				otbBid: 1,
-				otbCoach :req.body.coach1,
-				pickCounter: 1,
-				selectCountdown: req.body.selectCountdown,
-				bidCountdown: req.body.bidCountdown,
-				leagueType: req.body.leagueType,
-				budget: req.body.budget
+		/* Comment out the email part of the code for now.
+			// Define the parameters for the coachesMail to be sent.
+			var coachesMailOptions = {
+				from: 'Superdraftfantasy@gmail.com',
+				to: coachesMailingList,
+				subject: draftData.leagueName + " It's Drafting Time!",
+				text: coachesBodyText
 			};
-
-			// use schema's 'create' method to insert document into Mongo.
-			Draft.create(draftData, function (error, draft){
-				if (error){
-					return next(error);
-				} else {
-					return res.redirect("/myDrafts");
-				}
-				});
-
 			// Use nodemailer to send an invite to all coaches in the coaches list when the create draft form is submitted.
-			// Create the mailing list.
-			var mailingList = '';
-			for (var i=0; i < draftData.coaches.length; i++){
-				mailingList += draftData.coaches[i].teamName + ",";
+			// Create the mailing list and define the HTML for the email list to be sent to the coaches.
+			var coachesMailingList = '';
+			var emailListHTML = '';
+			for (var i=1; i < draftData.coaches.length; i++){
+				coachesMailingList += draftData.coaches[i].teamName + ",";
+				emailListHTML += "<li>" + draftData.coaches[i].teamName + "</li>";
 			};
 			// Create the text.
-			var bodyText = 'You have been invited to a Superdraft by ' + draftData.admin + '! Visit www.superdraftfantasy.com/register to sign up and get drafting!';
-			// Define the parameters for the mail to be sent.
-			var mailOptions = {
-				from: 'Superdraftfantasy@gmail.com',
-				to: mailingList,
-				subject: 'Its Drafting Time!',
-				text: bodyText
-			};
+			var coachesBodyText = "<h1>You have been invited to a Superdraft by " + draftData.admin + "!</h1><br>" +
+							"<h2>Visit www.superdraftfantasy.com/register to sign up and get drafting!</h2><br>" +
+							"<h3>IMPORTANT: Please ensure that you sign up with the email address that received this invite!</h3><br>" +
+								"<ul>" +
+								"<li> League Name: " + draftData.leagueName + "</li>" +
+								"<li> League Type: " + draftData.leagueType + "</li>" +
+								"<li> Admin: " + draftData.admin + "</li>" +
+								"<li> Roster Size: " + draftData.rosterSize + " (" + draftData.numOfDef + "D, " + draftData.numOfMid + "M, " + draftData.numOfRuc + "R, " + draftData.numOfFwd + "F, " + draftData.numOfBen + "Bench) </li>" +
+								"<li> Budget: $" + draftData.budget + "</li>" +
+								"<li> Select Countdown: " + draftData.selectCountdown + " seconds per selection</li>" +
+								"<li> Bid Countdown: " + draftData.bidCountdown + " seconds per bid</li>" +
+								"</ul>" +
+								"<h3>Your draft can't start until all coaches haved signed up with the below email addresses and joined the draft!</h3><br>" +
+								"<ul>" +
+								emailListHTML +
+								"</ul>" +
+								"<h4> *Important Note: SuperDraft is not designed for running your fantasy football competition, it is simply intended to allow you to conduct your draft in an Auction format! As a result, your drafted teams will need to be input into the Supercoach/AFL Fantasy website after your draft is complete. In order to do this, you simply run a normal Snake Draft and plug in the teams manually.</h4><br>"
+								"<p> For any enquries please feel free to respond to this email (SuperDraftFantasy@gmail.com)! We'd be happy to hear from you with any feedback, issues, improvements or questions!</p>"
 			// Send the email when the users submits the create draft form.
-			transporter.sendMail(mailOptions, function(error, info){
+			transporter.sendMail(coachesMailOptions, function(error, info){
 				if (error){
 					console.log(error);
 				} else {
-					console.log('Email sent: ' + info.response);
+					console.log('Coaches Email Sent: ' + info.response);
 				}
-			});
-			
+			}); // Close transporter.sendMail(adminMailOptions).
+
+
+
+			// Define the parameters for the adminMail to be sent.
+			var adminMailOptions = {
+				from: 'Superdraftfantasy@gmail.com',
+				to: adminMailingList,
+				subject: draftData.leagueName + " It's Drafting Time!",
+				text: adminBodyText
+			};
+			// Use nodemailer to send an email to the admin coach when they create a draft.
+			var adminMailingList = draftData.coaches[0].teamName;
+			// Create the text.
+			var adminBodyText = "<h1>You have successfully created a SuperDraft! </h1><br>" + 
+								"<h2>Get your league members to sign-up with the email addresses below and visit www.superdraftfantasy.com/myDrafts to get drafting!</h2><br>" +
+								"<h3>IMPORTANT: Please ensure that all users sign up with the email addresses that you invited below!</h3><br>" +
+								"<ul>" +
+								"<li> League Name: " + draftData.leagueName + "</li>" +
+								"<li> League Type: " + draftData.leagueType + "</li>" +
+								"<li> Admin: " + draftData.admin + "</li>" +
+								"<li> Roster Size: " + draftData.rosterSize + " (" + draftData.numOfDef + "D, " + draftData.numOfMid + "M, " + draftData.numOfRuc + "R, " + draftData.numOfFwd + "F, " + draftData.numOfBen + "Bench) </li>" +
+								"<li> Budget: $" + draftData.budget + "</li>" +
+								"<li> Select Countdown: " + draftData.selectCountdown + " seconds per selection</li>" +
+								"<li> Bid Countdown: " + draftData.bidCountdown + " seconds per bid</li>" +
+								"</ul>" +
+								"<h3>Your draft can't start until all coaches sign up with the below email addresses and join the draft!</h3><br>" +
+								"<ul>" +
+								emailListHTML +
+								"</ul>" +
+								"<h4> *Important Note: SuperDraft is not designed for running your fantasy football competition, it is simply intended to allow you to conduct your draft in an Auction format! As a result, your drafted teams will need to be input into the Supercoach/AFL Fantasy website after your draft is complete. In order to do this, you simply run a normal Snake Draft and plug in the teams manually.</h4><br>"
+								"<p> For any enquries please feel free to respond to this email (SuperDraftFantasy@gmail.com)! We'd be happy to hear from you with any feedback, issues, improvements or questions!</p>"
+			// Send the email when the users submits the create draft form.
+			transporter.sendMail(adminMailOptions, function(error, info){
+				if (error){
+					console.log(error);
+				} else {
+					console.log('Admin Email Sent: ' + info.response);
+				}
+			}); // Close transporter.sendMail(adminMailOptions).
+	*/
 	} else {
 		return res.render("create", {reqBodyFail: req.body})
-}});
-
-router.get("/myDrafts", mid.requiresLogin, function(req, res, next){
-	// Get the current users email address.
-	var currentUserEmail = req.session.email;
-	var myDraftsList = [];
-	console.log(currentUserEmail);
-
-	Draft.find({}, function(err, drafts){
-		// Loops through the draftData and find drafts that contain the current users email address.
-		for(var i = 0; i < drafts.length; i++) {
-			for (var j=0; j < drafts[i].coaches.length; j++){
-				// If we find a draft containing the users email address, we create an addDraft variable and add it to our myDraftsList array.
-				if (drafts[i].coaches[j].teamName == currentUserEmail) {
-					var addDraft = {leagueName: drafts[i].leagueName, draftYear: drafts[i].draftYear, numOfCoaches: drafts[i].numOfCoaches, admin: drafts[i].admin, _id: drafts[i]._id}
-					myDraftsList.push(addDraft);
-					console.log(myDraftsList);
-			}
-		    }
-		};
-		// Reverses the myDraftsList array so that the most recent drafts appear at the top.
-		myDraftsList.reverse();
-
-		User.find({}, function(err, users){
-			// We send the myDraftsList array and the users data to the front end to be used in our template.
-			return res.render("myDrafts", {title: "My Drafts", results: myDraftsList, users: users, currentUserName: req.session.name});
-			});
-		});
-	});
-
-// GET /research
-router.get("/resources", function(req, res, next){
-	return res.render("resources", {title: "Resources", currentUserName: req.session.name});
-});
-
-/*
-
-// ROUTERS THAT LINK UP WITH AJAX REQUESTS IN THE PLAYERLOOKUP.JS FILE.
-
-// PUT /draftData/:dID/otbPlayer/:pID used for updating the current otbPlayer.
-router.put("/draftData/:dID/otbPlayer/:pID/:posID", function(req, res, next){
-	Draft.findById(req.params.dID, function(err, data){
-		if(err) return next(err);
-		data.otbPlayer = req.params.pID;
-		data.otbPos = req.params.posID;
-		data.otbBid = 1;
-
-	    var now = new Date();
-	    now.setSeconds(now.getSeconds() + 12);
-	    var endTime = now.getTime();
-		data.otbEndTime = endTime;
-
-		data.save();
-		res.json(data);
-
-
-	})
-});
-
-
-
-
-// PUT /draftData/:dID/otbBid/:bID used for updating the current otbBid used in the logBid() function.
-router.put("/draftData/:dID/otbBid/:bID", function(req, res, next){
-	Draft.findById(req.params.dID, function(err, data){
-		if(err) return next(err);
-
-		// If statement to check if bid is valid.
-		if (req.params.bID > data.otbBid){
-
-		data.otbBid = req.params.bID;
-		data.otbBidder = req.session.teamName;
-		// Code to add 11 seconds to the current end time.
-	    var now = new Date();
-	    now.setSeconds(now.getSeconds() + 11);
-	    var endTime = now.getTime();
-		data.otbEndTime = endTime;
-		data.save();
-		res.json(data);
-
-	} else {
-		// Code to send an error to the browser if the bid value is less than the current bid.
-		res.send(500, "showAlert");
 	}
-
-
-	})
 });
 
 
 
-
-
-// PUT /draftData/:dID/coaches used for adding a drafted player to the relevant coaches team.
-router.put("/draftData/:dID/coaches", function(req, res, next){
-
-
-	// Returns the relevant draft based on the dID parameter provided in the URL.
-	Draft.findById(req.params.dID, function(err, data){
-
-		// The newPlayer variable defines the player details to be added to the relevant coaches players array below.
-		var newPlayer = {name: data.otbPlayer, position: data.otbPos, price: data.otbBid};
-		var newResult = {name: data.otbPlayer, position: data.otbPos, price: data.otbBid, team: data.otbBidder};
-
-		data.results.push(newResult);
-
-		// The update $inc function incremenents the budget and numOfPlayers fields by the provided number.
-		Draft.update({"_id": req.params.dID, "coaches.teamName": data.otbBidder}, {"$inc":{
-			"coaches.$.budget" : -data.otbBid,
-			"coaches.$.numOfPlayers": 1
-
-		}}, function(err){
-			if(err) throw err
-		});
-
-		// The update $push function adds the newPlayer variable defined above to the relevant coaches players array.
-		Draft.update({"_id": req.params.dID, "coaches.teamName": data.otbBidder}, {"$push":{
-			"coaches.$.players" : newPlayer
-
-		}}, function(err){
-			if(err) throw err
-		});
-
-		data.otbCoach = data.coaches[data.pickCounter].teamName;
-		console.log(data.otbCoach);
-
-		if (data.pickCounter === 9){
-			data.pickCounter = 0;
-		} else {
-			data.pickCounter += 1;
-		}
-		console.log(data.pickCounter);
-
-		data.save();
-		res.json(data);
-	
-	});
-
-});
-
-*/
-
-module.exports = router;
+}; // Close module.exports.

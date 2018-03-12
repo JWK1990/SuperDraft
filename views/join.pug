@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  .main.container
+    .row
+      .col-md-6.col-md-offset-3#topColumn
+        if fail
+          div.auth_error(style="display: block; text-align: center")
+            i.fa.fa-times-circle #{fail}
+        h1.display-4.m-b-2 Join A Draft
+        h1#currentUserEmail(style="display: none") #{currentUserEmail}
+
+        // Create form.
+        form#createForm(method='POST' action='/join')
+
+          div.form-group
+            label.control-label(for='draftCode') Unique Draft Code:
+            input.form-control(type='text', placeholder='Draft Code' name='draftCode' required='')
+
+          div.form-group
+            label.control-label(for='myTeamName') My Team Name:
+            input.form-control(type='text', placeholder='My Team' name='myTeamName' required='')
+
+          button.btn.btn-primary#submit(type='submit') Join Draft

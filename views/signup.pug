@@ -1,0 +1,77 @@
+extends layout
+
+block content
+  .main.container.text-xs-center
+    h1.display-3 SuperDraft
+    p.lead The only Australian Fantasy Football Auction Draft Website.
+    p.lead The process is simple:
+    span(style= "font-size: 5vmin; vertical-align: middle; color: rgb(44,252,14)") 1.     
+    a.btn.btn-info-outline.btn-lg#myBtn(style="width:220px") SIGN UP
+    #myModal.modal(style="display: block")
+        span.close ×
+        .login-form#signupForm
+          form(method="post" action="/signup")
+            h2.text-center(style="color: rgb(0,0,0)") SIGN UP
+            - if (message.length > 0)
+                .alert.alert-danger #{message}
+            .text-center.social-btn
+              a.btn.btn-primary.btn-block(href='/auth/facebook')
+                i.fa.fa-facebook
+                | Sign up with 
+                b Facebook
+              a.btn.btn-info.btn-block(href='#')
+                i.fa.fa-twitter
+                |  Sign up with 
+                b Twitter
+              a.btn.btn-danger.btn-block(href='#')
+                i.fa.fa-google
+                |  Sign up with 
+                b Google           
+            .or-seperator(style="color: black")
+              i or
+            .form-group
+              .input-group
+                span.input-group-addon
+                  i.fa.fa-user
+                input#name.form-control(type='text', placeholder='full name' name='name' required ='required' value=name)     
+            .form-group
+              .input-group
+                span.input-group-addon
+                  i.fa.fa-user
+                input#email.form-control(type='email', placeholder='email' name='email' required ='required' value=email)
+            .form-group
+              .input-group
+                span.input-group-addon
+                  i.fa.fa-lock
+                input#pw.form-control(type='password', placeholder='' name='password' required ='required')
+            .form-group
+              button.btn.btn-success.btn-block.login-btn(type='submit') Sign Up
+            .clearfix
+              label.pull-left.checkbox-inline
+                input(type='checkbox')
+                |  Remember me
+              a.pull-right.text-success(href='#') Forgot Password?
+          .hint-text.small
+            | Don't have an account? 
+            a.text-success(href='#') Register Now!
+    div(style= "margin-top: 40px")
+    span(style= "font-size: 5vmin; vertical-align: middle; color: rgb(44,252,14)") 2.   
+    a.btn.btn-info-outline.btn-lg(href='/create', style="width:220px") CREATE DRAFT
+    div(style= "margin-top: 40px")
+    span(style= "font-size: 5vmin; vertical-align: middle; color: rgb(44,252,14)") 3.   
+    a.btn.btn-info-outline.btn-lg(href='/create', style="width:220px") RUN DRAFT
+    div(style= "margin-top: 40px")
+    span(style= "font-size: 5vmin; vertical-align: middle; color: rgb(44,252,14)") 4.  
+    a.btn.btn-info-outline.btn-lg(onclick="$('.z')[0].focus()" style="width:220px" value="test") PLUG IN TEAMS*
+    div(style="margin-bottom: 30px")
+    p.lead#login(style="margin-bottom: 10px") Already signed up?
+    a.btn.btn-info-outline.btn-lg(href='/login') LOGIN
+    div(style="margin-bottom: 30px")
+    div.z(tabindex="1")
+        p(style="font-size: 2.5vmin; color: rgb(44,252,14)") * SuperDraft is not designed for running your fantasy football competition, it is simply intended to allow you to conduct your draft in an Auction format! After your Draft is complete, your teams will need to be plugged into the Supercoach/AFL Fantasy website. Your league commissioner can do this by running a 'Live One Computer' Snake Draft and selecting the teams.
+
+    div(style="margin-bottom: 40px")
+
+    p(style="font-size: 1.5vmin; color: white") This website is not endorsed, affiliated with or sponsored in any way by the Herald Sun, The Herald and Weekly Times Pty Ltd or the Australian Football League (AFL).
+
+    script(src='/js/signUpModal.js')

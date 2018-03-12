@@ -1,0 +1,37 @@
+nav.main-nav
+	ul
+		// all your main menu links here
+		li
+			a.cd-signin(href='#0') Sign in
+		li
+			a.cd-signup(href='#0') Sign up
+
+
+	.cd-user-modal
+		// this is the entire modal form, including the background
+		.cd-user-modal-container
+			// this is the container wrapper
+			ul.cd-switcher
+				li
+					a(href='#0') Sign in
+				li
+					a(href='#0') New account
+
+
+	.cd-user-modal
+		.cd-user-modal-container
+			// switcher tab here
+			#cd-login
+				// form here
+				p.cd-form-bottom-message
+					a(href='#0') Forgot your password?
+			#cd-signup
+				// form here
+			#cd-reset-password
+				// form here
+				p.cd-form-bottom-message
+					a(href='#0') Back to log-in
+		a.cd-close-form(href='#0') Close
+
+
+script(src='/js/signUpModal.js')
