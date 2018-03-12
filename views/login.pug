@@ -7,8 +7,8 @@ block content
         .login-form#modalLogin
           form(method="post" action="/login")
             h2.text-center(style="color: rgb(0,0,0)") LOG IN
-            - if (message.length > 0)
-                .alert.alert-danger #{message}
+           - if (loginText && loginText.length > 0)
+            .alert.alert-danger#loginError(style="text-align: center") #{loginText}
             .text-center.social-btn
               a.btn.btn-primary.btn-block(href='/auth/facebook')
                 i.fa.fa-facebook

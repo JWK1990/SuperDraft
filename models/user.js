@@ -28,6 +28,10 @@ var UserSchema = new mongoose.Schema({
         token		: String,
         email		: String,
         name		: String
+    },
+
+    drafts: {
+    	type		: Array
     }
 
 /* Original UserSchema.

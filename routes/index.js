@@ -19,6 +19,7 @@ var transporter = nodemailer.createTransport({
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
+
     // if user is authenticated in the session, carry on 
     if (req.isAuthenticated()){
         return next();
@@ -45,7 +46,7 @@ app.get('/auth/facebook', passport.authenticate('facebook', {
 // handle the callback after facebook has authenticated the user
 app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-        successReturnToOrRedirect : '/',
+        successReturnToOrRedirect : '/myDrafts',
         failureRedirect : '/'
     }));
 
@@ -57,7 +58,7 @@ app.get('/auth/twitter', passport.authenticate('twitter'));
 // handle the callback after twitter has authenticated the user
 app.get('/auth/twitter/callback',
     passport.authenticate('twitter', {
-        successReturnToOrRedirect : '/',
+        successReturnToOrRedirect : '/myDrafts',
         failureRedirect : '/'
     }));
 
@@ -71,7 +72,7 @@ app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'e
 // the callback after google has authenticated the user
 app.get('/auth/google/callback',
     passport.authenticate('google', {
-            successReturnToOrRedirect : '/',
+            successReturnToOrRedirect : '/myDrafts',
             failureRedirect : '/'
     }));
 
@@ -259,6 +260,36 @@ app.post("/join", isLoggedIn, function(req, res, next){
 				var coachObject = {teamName: currentUserEmail, budget: drafts.budget, numOfPlayers: 0, teamName2: req.body.myTeamName.toUpperCase(), benchCount: 0, rosterSpots: [true, true, true, true, true, true, true, true, true, true]}
 				drafts.coaches.push(coachObject);
 				drafts.save();
+
+
+				// Find the current user in the database based on their authentication type.
+				// Add the joined draft to the current users drafts array.
+				if(req.user.local.email){
+					console.log("Local Authenticated!");
+					User.findOne({"local.email":currentUserEmail}, function(err, user){
+						user.drafts.push(req.body.draftCode);
+						user.save();
+					})
+				} else if(req.user.facebook.email){
+					console.log("Facebook Authenticated!");
+					User.findOne({"facebook.email":currentUserEmail}, function(err, user){
+						user.drafts.push(req.body.draftCode);
+						user.save();
+					})
+				} else if(req.user.twitter.email){
+					console.log("Twitter Authenticated!");
+					User.findOne({"twitter.email":currentUserEmail}, function(err, user){
+						user.drafts.push(req.body.draftCode);
+						user.save();
+					})		
+				} else if(req.user.google.email){
+					console.log("Twitter Authenticated!");
+					User.findOne({"google.email":currentUserEmail}, function(err, user){
+						user.drafts.push(req.body.draftCode);
+						user.save();
+					})				
+				} // Close else if().
+
 				res.redirect('/myDrafts');
 			}
 
@@ -464,16 +495,50 @@ app.post("/create", function(req, res, next){
 			budget: req.body.budget
 		};
 
+
+
+
+
+
 		// use schema's 'create' method to insert document into Mongo.
 		Draft.create(draftData, function (error, draft){
 			if (error){
 				return next(error);
 			} else {
-				var draftID = draft._id;
+				var draftID = draft._id.toString();
 				req.flash('createdDraft', draftID);
+
+				// Find the current user in the database based on their authentication type.
+				// Add the created draft to the current users drafts array.
+				if(req.user.local.email){
+					console.log("Local Authenticated!");
+					User.findOne({"local.email":currentUserEmail}, function(err, user){
+						user.drafts.push(draftID);
+						user.save();
+					})
+				} else if(req.user.facebook.email){
+					console.log("Facebook Authenticated!");
+					User.findOne({"facebook.email":currentUserEmail}, function(err, user){
+						user.drafts.push(draftID);
+						user.save();
+					})
+				} else if(req.user.twitter.email){
+					console.log("Twitter Authenticated!");
+					User.findOne({"twitter.email":currentUserEmail}, function(err, user){
+						user.drafts.push(draftID);
+						user.save();
+					})		
+				} else if(req.user.google.email){
+					console.log("Twitter Authenticated!");
+					User.findOne({"google.email":currentUserEmail}, function(err, user){
+						user.drafts.push(draftID);
+						user.save();
+					})				
+				} // Close else if().
+
 				return res.redirect("/myDrafts");
-			}
-			});
+			} // Close else{}.
+		}); // Close Draft.create() function.
 
 		/* Comment out the email part of the code for now.
 			// Define the parameters for the coachesMail to be sent.

@@ -1013,7 +1013,11 @@ socket.on("joinedCoach", function(data){
   // Updates all of the team names in the budgets pane.
   for (var i=1; i < budgetsTableRows.length; i++) {
     var td = budgetsTableRows[i].getElementsByTagName("td")[0];
-    td.innerHTML = data.joinedCoaches[i-1];
+    if(data.joinedCoaches[i-1] == null){
+      td.innerHTML = "Waiting for coach...";
+    } else {
+      td.innerHTML = data.joinedCoaches[i-1];
+    }
     // For each budget table row loop through the socketList and see if we can find a matching team name and draftID.
     // If we can then the user has joined the draft and we colour their team details white.
     for(var j=0; j < data.socketList.length; j++){
