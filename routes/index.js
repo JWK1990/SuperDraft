@@ -36,7 +36,6 @@ function isLoggedIn(req, res, next) {
 
 module.exports = function(app, passport){
 
-
 // FACEBOOK ROUTES
 // route for facebook authentication and login
 app.get('/auth/facebook', passport.authenticate('facebook', { 
@@ -136,6 +135,9 @@ app.get("/resources", function(req, res, next){
 	return res.render("resources", {title: "Resources"});
 });
 
+app.get("/privacy", function(req,res,next){
+	return res.render("privacy");
+}); // Close app.get("/privacy");
 
 
 
