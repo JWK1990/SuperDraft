@@ -519,6 +519,7 @@ app.post("/create", function(req, res, next){
 				} else if(req.user.facebook.email){
 					console.log("Facebook Authenticated!");
 					User.findOne({"facebook.email":currentUserEmail}, function(err, user){
+						console.log(user);
 						user.drafts.push(draftID);
 						user.save();
 					})

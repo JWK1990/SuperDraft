@@ -55,6 +55,33 @@ a:hover {
     cursor: pointer;
 }
 
+#facebookButton {
+	background-color: #3b5999;
+	border: #3b5999 1px solid;
+}
+
+#facebookButton:hover{
+	border-color: rgb(44,252,14);
+}
+
+#twitterButton {
+	background-color: #55acee; 
+	border: #55acee 1px solid;
+}
+
+#twitterButton:hover{
+	border-color: rgb(44,252,14);
+}
+
+#googleButton {
+	background-color: #dd4b39;
+	border: #dd4b39 1px solid;
+}
+
+#googleButton:hover {
+	border-color: rgb(44,252,14);	
+}
+
 /* Social Modal */
 .login-form {
 /* Sets the width of the modal popup */
@@ -490,3 +517,22 @@ padding:5px;
 		padding-top: 8rem;
 	}
 }
+
+@media (max-width: 946px){
+	/* Social Modal */
+	.login-form {
+	/* Sets the width of the modal popup */
+	width: 50%;
+	margin: 30px auto;
+	}
+}
+
+@media (max-width: 550px){
+	/* Social Modal */
+	.login-form {
+	/* Sets the width of the modal popup */
+	width: 85%;
+	margin: 30px auto;
+	}
+}
+

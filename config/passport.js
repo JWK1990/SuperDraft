@@ -137,7 +137,7 @@ module.exports = function(passport) {
                     newUser.facebook.id = profile.id; // set the users facebook id                   
                     newUser.facebook.token = token; // we will save the token that facebook provides to the user                    
                     newUser.facebook.name = profile.displayName;
-                    newUser.facebook.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
+                    newUser.facebook.email = profile.emails[0].value.toUpperCase(); // facebook can return multiple emails so we'll take the first
 
                     // save our user to the database
                     newUser.save(function(err) {
@@ -189,7 +189,7 @@ module.exports = function(passport) {
                     // set all of the user data that we need
                     newUser.twitter.id = profile.id;
                     newUser.twitter.token = token;
-                    newUser.twitter.email = profile.username; //profile.emails[0].value;
+                    newUser.twitter.email = profile.username.toUpperCase(); //profile.emails[0].value;
                     newUser.twitter.name = profile.displayName;
 
                     // save our user into the database
@@ -238,7 +238,7 @@ module.exports = function(passport) {
                     newUser.google.id = profile.id;
                     newUser.google.token = token;
                     newUser.google.name = profile.displayName;
-                    newUser.google.email = profile.emails[0].value; // pull the first email
+                    newUser.google.email = profile.emails[0].value.toUpperCase(); // pull the first email
 
                     // save the user
                     newUser.save(function(err) {

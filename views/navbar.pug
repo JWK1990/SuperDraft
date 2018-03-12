@@ -27,22 +27,22 @@ nav.navbar.navbar-fixed-top.navbar-dark.bg-inverse
 
 
 #loginModal.modal
-  span.close#loginClose ×
   .login-form
+    span.close#loginClose(style="margin-top: 4%; margin-right: 4%") ×
     form(method="post" action="/login")
       h2.text-center(style="color: rgb(0,0,0); text-align:center") LOG IN
       - if (loginText && loginText.length > 0)
         .alert.alert-danger#loginError(style="text-align: center") #{loginText}
       .text-center.social-btn
-        a.btn.btn-primary.btn-block(href='/auth/facebook')
+        a.btn.btn-primary.btn-block#facebookButton(href='/auth/facebook')
           i.fa.fa-facebook
           |  Login with 
           b Facebook
-        a.btn.btn-info.btn-block(href='/auth/twitter')
+        a.btn.btn-info.btn-block#twitterButton(href='/auth/twitter')
           i.fa.fa-twitter
           |  Login with 
           b Twitter
-        a.btn.btn-danger.btn-block(href='/auth/google')
+        a.btn.btn-danger.btn-block#googleButton(href='/auth/google')
           i.fa.fa-google
           |  Login with 
           b Google           
@@ -62,31 +62,31 @@ nav.navbar.navbar-fixed-top.navbar-dark.bg-inverse
         button.btn.btn-success.btn-block.login-btn(type='submit') Log In
       .clearfix
         label.pull-left.checkbox-inline
-          input(type='checkbox')
-          |  Remember me
-        a.pull-right.text-success(href='#') Forgot Password?
+          input(type='checkbox' style="display:none")
+          h4(style="display:none")  Remember me
+        a.pull-right.text-success(href='#' style="display:none") Forgot Password?
     .hint-text.small
       | Don't have an account? 
       a.text-success(href='#') Sign Up!
 
 
 #signupModal.modal
-  span.close#signupClose ×
   .login-form
+    span.close#signupClose(style="margin-top: 4%; margin-right: 4%") ×
     form(method="post" action="/signup")
       h2.text-center(style="color: rgb(0,0,0); text-align:center") SIGN UP
       - if (signupMessage && signupMessage.length > 0)
         .alert.alert-danger#signupError(style="text-align: center") #{signupMessage}
       .text-center.social-btn
-        a.btn.btn-primary.btn-block(href='/auth/facebook')
+        a.btn.btn-primary.btn-block#facebookButton(href='/auth/facebook')
           i.fa.fa-facebook
           |  Sign up with 
           b Facebook
-        a.btn.btn-info.btn-block(href='/auth/twitter')
+        a.btn.btn-info.btn-block#twitterButton(href='/auth/twitter')
           i.fa.fa-twitter
           |  Sign up with 
           b Twitter
-        a.btn.btn-danger.btn-block(href='/auth/google')
+        a.btn.btn-danger.btn-block#googleButton(href='/auth/google')
           i.fa.fa-google
           |  Sign up with 
           b Google           
@@ -111,9 +111,9 @@ nav.navbar.navbar-fixed-top.navbar-dark.bg-inverse
         button.btn.btn-success.btn-block.login-btn(type='submit') Sign Up
       .clearfix
         label.pull-left.checkbox-inline
-          input(type='checkbox')
-          |  Remember me
-        a.pull-right.text-success(href='#') Forgot Password?
+          input(type='checkbox' style="display:none")
+          h4(style="display:none")
+        a.pull-right.text-success(href='#' style="display:none") Forgot Password?
     .hint-text.small
       | Already have an account? 
       a.text-success(href='#') Login!
