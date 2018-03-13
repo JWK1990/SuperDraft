@@ -853,9 +853,6 @@ var myApp = {
 
     addToBlock: function(player, position, average){
       // If the draft hasn't been started and all users aren't connected then we send an alert, if not, we allow the draft to proceed.
-      if(myApp.numOfPlayersDrafted == 0 && myApp.allConnected == false){
-        alert("Please wait for all coaches to join before starting the draft!");
-      } else{
         // We run the benchCheck() function to set the addToBench variable to 1 or 0.
         myApp.benchCheck(position);
         if(myApp.currentOtbCoach === myApp.currentUser && myApp.benchCount >= myApp.totalBenSpots && myApp.addToBench > 0){
@@ -876,7 +873,6 @@ var myApp = {
           clearInterval(myApp.sppCounter);
           socket.emit('addToBlock', {draftID: myApp.draftID, player: player, position: position, average: average, currentUser: myApp.currentOtbCoach, startingBid: myApp.startValue.value});
         } // Close else{} statement relating to if(myApp.currentOtbCoach).
-      } // Close else{} statement relating to if(myApp.numOfPlayersDrafted).
     }, // Close addToBlock() function.
 
 
@@ -1073,7 +1069,7 @@ socket.on("joinedCoach", function(data){
   if(joinedCoachesCount == myApp.numOfCoaches){
     myApp.allConnected = true;
   } else {
-    myApp.allConnected = false;
+    myApp.allConnected = true;
   }
   // Loop through all of the 
   // Re-run the addRosterFilterOption() function every time a new coach joins to update the text in the select options from an email to a team name.
@@ -1099,7 +1095,7 @@ socket.on('disconnectedCoach', function(data){
   var budgetsTable = document.getElementById("budgetsTable");
   var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
   // We set the myApp.allConnected variable to false as if a coach has disconnected all coaches can't be connected.
-  myApp.allConnected = false;
+  myApp.allConnected = true;
   // Updates all of the team names in the budgets pane.
   for (var i=1; i < budgetsTableRows.length; i++) {
     var td = budgetsTableRows[i].getElementsByTagName("td")[0];
