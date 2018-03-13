@@ -254,40 +254,42 @@ var myApp = {
 
 
     startCountdown: function(endTime){
-      // Clear any current timers.
-      clearInterval(myApp.sppCounter);
+      // Clear the myApp.soldForTimeout variable so that we don't display the "Sold for" text.
+      clearTimeout(myApp.soldForTimeout);
       // Set the date we're counting down to
-      var sppCountDownDate = Number(sppEndTime);
+      var countDownDate = Number(endTime);
+      // Clear any current timers.
+      clearInterval(myApp.counter);
+      // Update the count down every 1 second
 
-      // We first set up the timer out of the loop so that it sets up immediately.
+      // Update the demo text once before the setInterval otherwise it will be delayed by 1 second.
       // Get todays date and time
-      var sppNow = new Date().getTime();
+      var now = new Date().getTime();
       // Find the distance between now and the count down date
-      var sppDistance = sppCountDownDate - sppNow;
+      var distance = countDownDate - now;
       // Time calculations for days, hours, minutes and seconds
-      var seconds = Math.floor((sppDistance % (1000 * 60)) / 1000);
-      myApp.demo.innerHTML = "On The Block: " + myApp.otbCoach + " (" + seconds + " secs)";
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      myApp.demo.innerHTML = seconds + " secs";
 
-      // We then update the count down every 1 second as part of the setInterval loop.
-      myApp.sppCounter = setInterval(function() {
+      // Update the countdown every 1 second.
+      myApp.counter = setInterval(function() {
           // Get todays date and time
-          var sppNow = new Date().getTime();
+          var now = new Date().getTime();
           // Find the distance between now and the count down date
-          var sppDistance = sppCountDownDate - sppNow;
+          var distance = countDownDate - now;
           // Time calculations for days, hours, minutes and seconds
-          var seconds = Math.floor((sppDistance % (1000 * 60)) / 1000);
-          // If the count down is over, write some text 
-          if (sppDistance <= 0) {
-              clearInterval(myApp.sppCounter);
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          // If the count down is over, update the text in the clock pane and wait 5 seconds before putting the next coach on the block.
+          if (distance < 0) {
+              clearInterval(myApp.counter);
+              myApp.placeBidButton.disabled = true;
               myApp.demo.innerHTML = "";
-              if(myApp.otbName.innerHTML === "-"){
-                if(myApp.currentUser === myApp.currentOtbCoach){
-                  myApp.updateSPP(myApp.topPlayer);
-                } // Close if(currentUser === currentOtbCoach) statement.
-              } // Close if(otbName.innerHTML === "-") statement.
+              myApp.soldForTimeout = setTimeout(function(){myApp.demo.innerHTML = "Sold for " + myApp.currentBid.innerHTML; myApp.demo.style.color = "#2CFC0E"}, 1000);
+              myApp.placeBidButton.style.background = "grey";
+              myApp.placeBidButton.innerHTML = "-";
           } else {
               // Output the result in an element with id="demo"
-              myApp.demo.innerHTML = "On The Block: " + myApp.otbCoach + " (" + seconds + " secs)"; 
+              myApp.demo.innerHTML = seconds + " secs";
           }
       }, 1000);
     }, // Close startCountdown() function.
@@ -351,14 +353,11 @@ var myApp = {
     }, // Close updateSPP() function.
 
     sppStartCountdown: function(sppEndTime){
-      // Clear any current timers.
+            // Clear any current timers.
       clearInterval(myApp.sppCounter);
-
-      var sppDistance = sppEndTime;
-
-      /*
       // Set the date we're counting down to
       var sppCountDownDate = Number(sppEndTime);
+
       // We first set up the timer out of the loop so that it sets up immediately.
       // Get todays date and time
       var sppNow = new Date().getTime();
@@ -366,20 +365,16 @@ var myApp = {
       var sppDistance = sppCountDownDate - sppNow;
       // Time calculations for days, hours, minutes and seconds
       var seconds = Math.floor((sppDistance % (1000 * 60)) / 1000);
-      */
-
-      myApp.demo.innerHTML = "OTB: " + myApp.otbCoach + " <br>(" + sppDistance + " secs)";
+      myApp.demo.innerHTML = "On The Block: " + myApp.otbCoach + " (" + seconds + " secs)";
 
       // We then update the count down every 1 second as part of the setInterval loop.
       myApp.sppCounter = setInterval(function() {
-          /*
           // Get todays date and time
           var sppNow = new Date().getTime();
           // Find the distance between now and the count down date
           var sppDistance = sppCountDownDate - sppNow;
           // Time calculations for days, hours, minutes and seconds
           var seconds = Math.floor((sppDistance % (1000 * 60)) / 1000);
-          */
           // If the count down is over, write some text 
           if (sppDistance <= 0) {
               clearInterval(myApp.sppCounter);
@@ -390,9 +385,8 @@ var myApp = {
                 } // Close if(currentUser === currentOtbCoach) statement.
               } // Close if(otbName.innerHTML === "-") statement.
           } else {
-              sppDistance -= 1;
               // Output the result in an element with id="demo"
-              myApp.demo.innerHTML = "OTB: " + myApp.otbCoach + " <br>(" + sppDistance + " secs)"; 
+              myApp.demo.innerHTML = "On The Block: " + myApp.otbCoach + " (" + seconds + " secs)"; 
           }
       }, 1000) // Close sppCounter setInterval() function.
     }, // Close sppStartCountdown() function.
