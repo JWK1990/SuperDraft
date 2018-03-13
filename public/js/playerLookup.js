@@ -509,25 +509,43 @@ var myApp = {
     }, // Close setDraftedPlayers() function.
 */
 
-    updateBudgets: function(data){
-      console.log(data);
-      console.log(data.length);
+    updateBudgets: function(data, teams, budgets, playerCount){
       var budgetsTable = document.getElementById("budgetsTable");
       var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
-      for (var i = 1; i <= data.length; i++) {
-        if(data[i-1].numOfPlayers < myApp.rosterSize){
-          budgetsTableRows[i].getElementsByTagName("td")[0].innerHTML =data[i-1].teamName2;
-          budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML ="$" + (data[i-1].budget - (myApp.rosterSize -1 - data[i-1].numOfPlayers));
-          budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML ="$" + data[i-1].budget;
-          budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML =data[i-1].numOfPlayers + "/" + myApp.rosterSize;
-        } else {
+      if(data){
+        for (var i = 1; i <= data.length; i++) {
+          if(data[i-1].numOfPlayers < myApp.rosterSize){
             budgetsTableRows[i].getElementsByTagName("td")[0].innerHTML =data[i-1].teamName2;
-            budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML ="-";
-            budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML ="-";
-            budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML ="Full";
-            budgetsTableRows[i].style.color = "grey";
-        }
-      } // Close for() loop.
+            budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML ="$" + (data[i-1].budget - (myApp.rosterSize -1 - data[i-1].numOfPlayers));
+            budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML ="$" + data[i-1].budget;
+            budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML =data[i-1].numOfPlayers + "/" + myApp.rosterSize;
+          } else {
+              budgetsTableRows[i].getElementsByTagName("td")[0].innerHTML =data[i-1].teamName2;
+              budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML ="-";
+              budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML ="-";
+              budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML ="Full";
+              budgetsTableRows[i].style.color = "grey";
+          }
+        } // Close for() loop.
+
+      } else {
+          for (var i = 1; i <= teams.length; i++) {
+            if(playerCount[i-1] < myApp.rosterSize){
+              budgetsTableRows[i].getElementsByTagName("td")[0].innerHTML = teams[i-1];
+              budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML = "$" + (budgets[i-1] - (myApp.rosterSize -1 - playerCount[i-1]));
+              budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML = "$" + budgets[i-1];
+              budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML = playerCount[i-1] + "/" + myApp.rosterSize;
+            } else {
+                budgetsTableRows[i].getElementsByTagName("td")[0].innerHTML = teams[i-1];
+                budgetsTableRows[i].getElementsByTagName("td")[1].innerHTML = "-";
+                budgetsTableRows[i].getElementsByTagName("td")[2].innerHTML = "-";
+                budgetsTableRows[i].getElementsByTagName("td")[3].innerHTML = "Full";
+                budgetsTableRows[i].style.color = "grey";
+            }
+          } // Close for() loop.
+      }
+
+
     }, // Close updateBudgets() function.
 
 
@@ -1061,6 +1079,9 @@ socket.on("joinedCoach", function(data){
   // Re-run the addRosterFilterOption() function every time a new coach joins to update the text in the select options from an email to a team name.
   myApp.addRosterFilterOption(data.joinedCoaches);
   myApp.teamFilter.value = myApp.currentUser;
+
+  myApp.updateBudgets(null, data.joinedCoaches, data.joinedCoachBudgets, data.joinedCoachRosterCounts);
+
   console.log("joinedCoach Finished!");
 }); // Close the socket.on("joinedCoach") function.
 

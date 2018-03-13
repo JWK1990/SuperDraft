@@ -21,102 +21,98 @@ nav.navbar.navbar-fixed-top.navbar-dark.bg-inverse
           a.nav-item.nav-link(href="join") Join
           a.nav-item.nav-link(href='resources') Resources
           a.nav-item.nav-link(href='about') About
-        a.btn.btn-info.pull-md-right.click-to-open(data-modal="loginModal") Login
+        a.btn.btn-info.pull-md-right.click-to-open(data-modal="signupModal") Login
 
-
-
-
-#loginModal.modal
-  .login-form
-    span.close#loginClose(style="margin-top: 4%; margin-right: 4%") ×
-    form(method="post" action="/login")
-      h2.text-center(style="color: rgb(0,0,0); text-align:center") LOG IN
-      - if (loginText && loginText.length > 0)
-        .alert.alert-danger#loginError(style="text-align: center") #{loginText}
-      .text-center.social-btn
-        a.btn.btn-primary.btn-block#facebookButton(href='/auth/facebook')
-          i.fa.fa-facebook
-          |  Login with 
-          b Facebook
-        a.btn.btn-info.btn-block#twitterButton(href='/auth/twitter')
-          i.fa.fa-twitter
-          |  Login with 
-          b Twitter
-        a.btn.btn-danger.btn-block#googleButton(href='/auth/google')
-          i.fa.fa-google
-          |  Login with 
-          b Google           
-      .or-seperator(style="color: black")
-        i or 
-      .form-group
-        .input-group
-          span.input-group-addon
-            i.fa.fa-user
-          input#email.form-control(type='email', placeholder='email' name='email' required ='required')
-      .form-group
-        .input-group
-          span.input-group-addon
-            i.fa.fa-lock
-          input#pw.form-control(type='password', placeholder='password' name='password' required ='required')
-      .form-group
-        button.btn.btn-success.btn-block.login-btn(type='submit') Log In
-      .clearfix
-        label.pull-left.checkbox-inline
-          input(type='checkbox' style="display:none")
-          h4(style="display:none")  Remember me
-        a.pull-right.text-success(href='#' style="display:none") Forgot Password?
-    .hint-text.small
-      | Don't have an account? 
-      a.text-success(href='#') Sign Up!
 
 
 #signupModal.modal
   .login-form
-    span.close#signupClose(style="margin-top: 4%; margin-right: 4%") ×
+    span.close#signupClose(style="margin-top: 2%; margin-right: 4%") ×
     form(method="post" action="/signup")
       h2.text-center(style="color: rgb(0,0,0); text-align:center") SIGN UP
       - if (signupMessage && signupMessage.length > 0)
         .alert.alert-danger#signupError(style="text-align: center") #{signupMessage}
+      - if (loginText && loginText.length > 0)
+        .alert.alert-danger#loginError(style="text-align: center") #{loginText}
       .text-center.social-btn
-        a.btn.btn-primary.btn-block#facebookButton(href='/auth/facebook')
+        a.btn.btn-info.btn-block#facebookButton(href='/auth/facebook')
           i.fa.fa-facebook
-          |  Sign up with 
+          |  Connect with 
           b Facebook
         a.btn.btn-info.btn-block#twitterButton(href='/auth/twitter')
           i.fa.fa-twitter
-          |  Sign up with 
+          |  Connect with 
           b Twitter
-        a.btn.btn-danger.btn-block#googleButton(href='/auth/google')
+        a.btn.btn-info.btn-block#googleButton(href='/auth/google')
           i.fa.fa-google
+          |  Connect with 
+          b Google
+        a.btn.btn-info.btn-block#emailButton(href='#')
+          i.fa.fa-envelope
           |  Sign up with 
-          b Google           
-      .or-seperator(style="color: black")
-        i or
-      .form-group
-        .input-group
-          span.input-group-addon
-            i.fa.fa-user
-          input#name.form-control(type='text', placeholder='full name' name='name' required ='required')      
-      .form-group
-        .input-group
-          span.input-group-addon
-            i.fa.fa-user
-          input#email.form-control(type='email', placeholder='email' name='email' required ='required')
-      .form-group
-        .input-group
-          span.input-group-addon
-            i.fa.fa-lock
-          input#pw.form-control(type='password', placeholder='password' name='password' required ='required')
-      .form-group
-        button.btn.btn-success.btn-block.login-btn(type='submit') Sign Up
-      .clearfix
-        label.pull-left.checkbox-inline
-          input(type='checkbox' style="display:none")
-          h4(style="display:none")
-        a.pull-right.text-success(href='#' style="display:none") Forgot Password?
-    .hint-text.small
-      | Already have an account? 
-      a.text-success(href='#') Login!
+          b Email
+
+
+      div#signupDiv(style="display:none")
+        form(method="post" action="/signup")
+          div(style="margin-top: 15%")    
+          .or-seperator(style="color: black")
+            i(style="font-weight: bold") Sign Up
+          .form-group
+            .input-group
+              span.input-group-addon
+                i(style="font-size: 18px").fa.fa-user
+              input#name.form-control(type='text', placeholder='full name' name='name' required ='required') 
+          .form-group
+            .input-group
+              span.input-group-addon
+                i(style="font-size: 13px").fa.fa-envelope
+              input#email.form-control(type='email', placeholder='email' name='email' required ='required')
+          .form-group
+            .input-group
+              span.input-group-addon
+                i(style="font-size: 18px").fa.fa-lock
+              input#pw.form-control(type='password', placeholder='password' name='password' required ='required')
+          .form-group
+            button.btn.btn-success.btn-block.login-btn(type='submit') Sign Up
+          .clearfix
+            label.pull-left.checkbox-inline
+              input(type='checkbox' style="display:none")
+              h4(style="display:none")
+            a.pull-right.text-success(href='#' style="display:none") Forgot Password?
+          .hint-text.small(style="display:none")
+            | Already have an account? 
+            a.text-success#loginLink(href='#') Login!
+
+
+
+
+      div#loginDiv(style="display:block; margin-top: 0px")
+        form(method="post" action="/login" style="padding-top: 0px; margin-top: 0px")     
+          .or-seperator(style="color: black")
+            i(style="font-weight: bold;") Login
+          .form-group
+            .input-group
+              span.input-group-addon
+                i(style="font-size: 13px").fa.fa-envelope
+              input#email.form-control(type='email', placeholder='email' name='email' required ='required')
+          .form-group
+            .input-group
+              span.input-group-addon
+                i.fa.fa-lock
+              input#pw.form-control(type='password', placeholder='password' name='password' required ='required')
+          .form-group
+            button.btn.btn-success.btn-block.login-btn(type='submit') Login
+          .clearfix
+            label.pull-left.checkbox-inline
+              input(type='checkbox' style="display:none")
+              h4(style="display:none")  Remember me
+            a.pull-right.text-success(href='#' style="display:none") Forgot Password?
+          .hint-text.small(style="display:none")
+            | Don't have an account? 
+            a.text-success(href='#') Sign Up!
+
+
 
 script(src='/js/navbar.js')
 script(src='/js/signUpModal.js')
