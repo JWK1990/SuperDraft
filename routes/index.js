@@ -3,6 +3,7 @@ var mid = require("../middleware");
 var fs = require('fs');
 var User = require("../models/user");
 var Draft = require("../models/draftData");
+var decode = require('unescape');
 
 // Require nodemailer to send automated emails to signed up users.
 var nodemailer = require("nodemailer");
@@ -200,6 +201,8 @@ app.get("/join", isLoggedIn, function(req, res, next){
 app.post("/join", isLoggedIn, function(req, res, next){
 
 	var currentUserEmail;
+	var selectedTeamName = decode(req.body.myTeamName.trim().toUpperCase().replace(/ +(?= )/g,''));
+
 
 	if(req.user.local.email){
 		console.log("Local Authenticated!");
@@ -209,7 +212,7 @@ app.post("/join", isLoggedIn, function(req, res, next){
 	} else if(req.user.twitter.email){
 		currentUserEmail = req.user.twitter.email.toUpperCase();		
 	} else if(req.user.google.email){
-		currentUserEmail = req.user.google.email.toUpperCase();	
+		currentUserEmail = req.user.google.email.toUpperCase();
 	}
 
 
@@ -235,7 +238,7 @@ app.post("/join", isLoggedIn, function(req, res, next){
 
 			for(var i=0; i < drafts.coaches.length; i++){
 				console.log()
-				if(drafts.coaches[i].teamName2 == req.body.myTeamName.toUpperCase()){
+				if(drafts.coaches[i].teamName2 == selectedTeamName){
 					teamNameTaken = drafts.coaches[i].teamName2;
 					nameTaken = true;
 					console.log("NAME TAKEN!");
@@ -257,7 +260,7 @@ app.post("/join", isLoggedIn, function(req, res, next){
 				// Add the coach object to the coaches array of the current draft.
 				// Save the updated draft data.
 				// Redirect to the myDrafts page where the draft should now appear as the coaches email is in the coaches list.
-				var coachObject = {teamName: currentUserEmail, budget: drafts.budget, numOfPlayers: 0, teamName2: req.body.myTeamName.toUpperCase(), benchCount: 0, rosterSpots: [true, true, true, true, true, true, true, true, true, true]}
+				var coachObject = {teamName: currentUserEmail, budget: drafts.budget, numOfPlayers: 0, teamName2: selectedTeamName, benchCount: 0, rosterSpots: [true, true, true, true, true, true, true, true, true, true]}
 				drafts.coaches.push(coachObject);
 				drafts.save();
 
@@ -289,7 +292,6 @@ app.post("/join", isLoggedIn, function(req, res, next){
 						user.save();
 					})				
 				} // Close else if().
-
 				res.redirect('/myDrafts');
 			}
 
@@ -399,7 +401,7 @@ app.get("/draft", isLoggedIn, function(req, res, next){
 				// Return the team name (teamName2) corresponding with that coach.
 				for(var i=0; i < drafts[0].coaches.length; i++){
 					if(drafts[0].coaches[i].teamName == currentUserEmail){
-						currentUserTeam = drafts[0].coaches[i].teamName2;
+						currentUserTeam = decode(drafts[0].coaches[i].teamName2.trim().toUpperCase().replace(/ +(?= )/g,''));
 						break;
 					}
 				}
@@ -448,6 +450,7 @@ app.post("/create", function(req, res, next){
 
 
 		var currentUserEmail;
+		var selectedTeamName = decode(req.body.myTeamName.trim().toUpperCase().replace(/ +(?= )/g,''));
 
 		// Set the currentUserEmail based on the authentication type for the current coach.
 		if(req.user.local.email){
@@ -467,7 +470,7 @@ app.post("/create", function(req, res, next){
 		// First we create a coachesList, which is an array containing objects with all of the relevant coaches details.
 		// We then assign this to the coaches value in the draftData object.
 		var coachesList = [];
-		var coachObject = {teamName: currentUserEmail, budget: req.body.budget, numOfPlayers: 0, teamName2: req.body.myTeamName.toUpperCase(), benchCount: 0, rosterSpots: [true, true, true, true, true, true, true, true, true, true]}
+		var coachObject = {teamName: currentUserEmail, budget: req.body.budget, numOfPlayers: 0, teamName2: selectedTeamName, benchCount: 0, rosterSpots: [true, true, true, true, true, true, true, true, true, true]}
 		coachesList.push(coachObject);
 
 		// create object with form input.
@@ -481,13 +484,13 @@ app.post("/create", function(req, res, next){
 			numOfRuc: req.body.numOfRuc,
 			numOfMid: req.body.numOfMid,
 			numOfBen: req.body.numOfBen,
-			admin: req.body.myTeamName,
+			admin: selectedTeamName,
 			coaches: coachesList,
 			otbPlayer: "Patrick Dangerfield",
 			otbPos: "MID",
 			otbAverage: "132",
 			otbBid: 1,
-			otbCoach :req.body.myTeamName,
+			otbCoach : selectedTeamName,
 			pickCounter: 1,
 			selectCountdown: req.body.selectCountdown,
 			bidCountdown: req.body.bidCountdown,
