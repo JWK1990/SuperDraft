@@ -377,42 +377,65 @@ var myApp = {
     }, // Close updateSPP() function.
 
     sppStartCountdown: function(sppEndTime){
-            // Clear any current timers.
+      // Clear any current spp countdown timers.
       clearInterval(myApp.sppCounter);
-      // Set the date we're counting down to
-      var sppCountDownDate = Number(sppEndTime);
+      // Clear any current bid counters as well.
+      // This line may not be required but it is in as an extra safeguard.
+      clearInterval(myApp.counter);
 
-      // We first set up the timer out of the loop so that it sets up immediately.
-      // Get todays date and time
-      var sppNow = new Date().getTime();
-      // Find the distance between now and the count down date
-      var sppDistance = sppCountDownDate - sppNow;
-      // Time calculations for days, hours, minutes and seconds
-      var seconds = Math.floor((sppDistance % (1000 * 60)) / 1000);
-      myApp.demo.innerHTML = "On The Block: " + myApp.otbCoach + " (" + seconds + " secs)";
+      // Set the demo pane at the start of the countdown.
+      // Set the serverTime variable using the ServerDate object created by our ServerDate script on page load.
+      var serverTime = ServerDate;
+      // Set the client time.
+      var clientTime = new Date();
+      clientTime.setTime(clientTime.getTime());
+      // Calculate the timeLeft in the countdown by subtracting the serverTime from the endTime.
+      var timeLeft = sppEndTime - serverTime;
+      var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      myApp.demo.innerHTML = "OTB: " + myApp.otbCoach + " <br>(" + seconds + " secs)";
+      // Console log the results.
+      console.log("Client Time!");
+      console.log(clientTime.toString());
+      console.log("Server Time!");
+      console.log(serverTime.toString());
+      console.log("Time Left!");
+      console.log(seconds);
 
-      // We then update the count down every 1 second as part of the setInterval loop.
+      // After initially updating the demo pane, we then run a setInterval to update it every 1 second.
+      // The code to update the demo pane is the same as above, except now we update the variable instead of creating it.
       myApp.sppCounter = setInterval(function() {
-          // Get todays date and time
-          var sppNow = new Date().getTime();
-          // Find the distance between now and the count down date
-          var sppDistance = sppCountDownDate - sppNow;
-          // Time calculations for days, hours, minutes and seconds
-          var seconds = Math.floor((sppDistance % (1000 * 60)) / 1000);
-          // If the count down is over, write some text 
-          if (sppDistance <= 0) {
-              clearInterval(myApp.sppCounter);
-              myApp.demo.innerHTML = "";
-              if(myApp.otbName.innerHTML === "-"){
-                if(myApp.currentUser === myApp.currentOtbCoach){
-                  myApp.updateSPP(myApp.topPlayer);
-                } // Close if(currentUser === currentOtbCoach) statement.
-              } // Close if(otbName.innerHTML === "-") statement.
-          } else {
-              // Output the result in an element with id="demo"
-              myApp.demo.innerHTML = "On The Block: " + myApp.otbCoach + " (" + seconds + " secs)"; 
-          }
-      }, 1000) // Close sppCounter setInterval() function.
+
+        // Update the serverTime by getting an updated ServerDate.
+        serverTime = ServerDate;
+        // Update the client time by getting an updated time.
+        clientTime = new Date();
+        clientTime.setTime(clientTime.getTime());
+        // Update the time left and the seconds left.
+        timeLeft = sppEndTime - serverTime;
+        seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        // Console log the results.
+        console.log("Client Time!");
+        console.log(clientTime.toString());
+        console.log("Server Time!");
+        console.log(serverTime.toString());
+        console.log("Time Left!");
+        console.log(seconds);
+
+        // If timeLeft is less than 0 then stop the countdown and clear the text in the demo pane.
+        // Also if the currentUser is the currentOtbCoach then update the selected player pane with the topPlayer (who will have been automatically put on the block for them by the back end).
+        if (timeLeft < 0) {
+            clearInterval(myApp.sppCounter);
+            myApp.demo.innerHTML = "";
+            if(myApp.currentUser === myApp.currentOtbCoach){
+              myApp.updateSPP(myApp.topPlayer);
+            } // Close if(currentUser === currentOtbCoach) statement.
+        } else {
+            // Update the text in the demo pane to contain an updated spp countdown timer.
+            myApp.demo.innerHTML = "OTB: " + myApp.otbCoach + " <br>(" + seconds + " secs)";
+        }
+
+      }, 1000); // 1000 ms = timer may be off by 500ms.
+
     }, // Close sppStartCountdown() function.
 
     highlightBidder: function(data){
@@ -1231,8 +1254,8 @@ socket.on('playerDrafted', function(data) {
 
 // Locks the bidding button, clears the countdown timer and displays 'Bid Pending' for all clients every time one user submits a bid.
 socket.on('bidLock', function(){
-  myApp.placeBidButton.disabled = true;
   clearInterval(myApp.counter);
+  myApp.placeBidButton.disabled = true;
   myApp.placeBidButton.innerHTML = 'Bid Pending...';
   myApp.placeBidButton.style.background = "grey";
   myApp.demo.innerHTML = "-";
