@@ -28,16 +28,6 @@ console.log(players.length);
 */
 
 
-// after window.onload, you're sync with the server
-
-var performance;
-var performanceOffset;
-
-window.onload = function() {
-    performance = window.performance || window.mozPerformance || window.msPerformance || window.webkitPerformance || {};
-    performanceOffset = performance.timing.loadEventStart - performance.timing.navigationStart;
-    console.log(performanceOffset);
-};
 
 
 
@@ -267,21 +257,23 @@ var myApp = {
 
 
     startCountdown: function(endTime){
+
       // Clear the myApp.soldForTimeout variable so that we don't display the "Sold for" text.
       clearTimeout(myApp.soldForTimeout);
       // Clear any current myApp.counter timers for any existing bid timers.
       clearInterval(myApp.counter);
 
       // Set the demo pane at the start of the countdown.
-      // Get the curent server time.
-      var serverTime = new Date();
-      serverTime.setTime(serverTime.getTime() + performanceOffset);
+      // Set the serverTime variable using the ServerDate object created by our ServerDate script on page load.
+      var serverTime = ServerDate;
+      // Set the client time.
       var clientTime = new Date();
       clientTime.setTime(clientTime.getTime());
+      // Calculate the timeLeft in the countdown by subtracting the serverTime from the endTime.
       var timeLeft = endTime - serverTime;
       var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
       myApp.demo.innerHTML = seconds + " secs";
-
+      // Console log the results.
       console.log("Client Time!");
       console.log(clientTime.toString());
       console.log("Server Time!");
@@ -289,32 +281,27 @@ var myApp = {
       console.log("Time Left!");
       console.log(seconds);
 
-      // Update the demo pane every second for the set interval.
-      // Example of timer:
+      // After initially updating the demo pane, we then run a setInterval to update it every 1 second.
+      // The code to update the demo pane is the same as above, except now we update the variable instead of creating it.
       myApp.counter = setInterval(function() {
 
-        // Get the curent server time.
-        serverTime = new Date();
-        serverTime.setTime(serverTime.getTime() + performanceOffset);
-
+        // Update the serverTime by getting an updated ServerDate.
+        serverTime = ServerDate;
+        // Update the client time by getting an updated time.
         clientTime = new Date();
         clientTime.setTime(clientTime.getTime());
-
-
+        // Update the time left and the seconds left.
+        timeLeft = endTime - serverTime;
+        seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        // Console log the results.
         console.log("Client Time!");
         console.log(clientTime.toString());
         console.log("Server Time!");
         console.log(serverTime.toString());
-
-
-        timeLeft = endTime - serverTime;
-        seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-
         console.log("Time Left!");
         console.log(seconds);
 
-
+        // If the amount of timeLeft is less than 0, then we stop the countdown and update the demo pane to say "Sold for" after 1 second.
         if (timeLeft < 0) {
           clearInterval(myApp.counter);
           myApp.placeBidButton.disabled = true;
@@ -323,52 +310,11 @@ var myApp = {
           myApp.placeBidButton.style.background = "grey";
           myApp.placeBidButton.innerHTML = "-";
         } else {
-          // Output the result in an element with id="demo"
+          // Update the demo pane with the number of seconds left in the countdown.
           myApp.demo.innerHTML = seconds + " secs";
         }
 
       }, 1000); // 1000 ms = timer may be off by 500ms.
-
-      /*
-        // Clear the myApp.soldForTimeout variable so that we don't display the "Sold for" text.
-        clearTimeout(myApp.soldForTimeout);
-        // Set the date we're counting down to
-        var countDownDate = Number(endTime);
-        // Clear any current timers.
-        clearInterval(myApp.counter);
-        // Update the count down every 1 second
-
-        // Update the demo text once before the setInterval otherwise it will be delayed by 1 second.
-        // Get todays date and time
-        var now = new Date().getTime();
-        // Find the distance between now and the count down date
-        var distance = countDownDate - now;
-        // Time calculations for days, hours, minutes and seconds
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        myApp.demo.innerHTML = seconds + " secs";
-
-        // Update the countdown every 1 second.
-        myApp.counter = setInterval(function() {
-            // Get todays date and time
-            var now = new Date().getTime();
-            // Find the distance between now and the count down date
-            var distance = countDownDate - now;
-            // Time calculations for days, hours, minutes and seconds
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            // If the count down is over, update the text in the clock pane and wait 5 seconds before putting the next coach on the block.
-            if (distance < 0) {
-                clearInterval(myApp.counter);
-                myApp.placeBidButton.disabled = true;
-                myApp.demo.innerHTML = "";
-                myApp.soldForTimeout = setTimeout(function(){myApp.demo.innerHTML = "Sold for " + myApp.currentBid.innerHTML; myApp.demo.style.color = "#2CFC0E"}, 1000);
-                myApp.placeBidButton.style.background = "grey";
-                myApp.placeBidButton.innerHTML = "-";
-            } else {
-                // Output the result in an element with id="demo"
-                myApp.demo.innerHTML = seconds + " secs";
-            }
-        }, 1000);
-        */
 
     }, // Close startCountdown() function.
 
