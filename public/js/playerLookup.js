@@ -1238,19 +1238,11 @@ socket.on('playerDrafted', function(data) {
       myApp.checkSPP(data.dbData.results);
       // The sppStartCountdown will start a 20 second countdown after which it will select the top available player to be automatically put on the block.
       // We first clear the innerHTML and make the font size 2vmin. 
-        myApp.demo.innerHTML = "";
-        myApp.demo.style.fontSize = "2vmin";
-        myApp.demo.style.color = "yellow"; 
-        myApp.otbCoach = data.dbData.otbCoach;
-
-        // We use delay to calculate the number of milliseconds between the current serverTime and the start of the next second.
-        // We then use this delay variable to delay the startCountdown function until the start of the next whole second.
-        // This is aimed to ensure that we start the countdown at the same point for all users.
-        // This is done with the aim of keeping the timers in sync as currently they can be out by up to 500 milliseconds due to them starting at different times.
-        var delay = 1000 - ServerDate % 1000;
-        console.log("DELAY");
-        console.log(delay);
-        setTimeout(function(){myApp.sppStartCountdown(data.sppEndTime)}, delay);
+      myApp.demo.innerHTML = "";
+      myApp.demo.style.fontSize = "2vmin";
+      myApp.demo.style.color = "yellow"; 
+      myApp.otbCoach = data.dbData.otbCoach;
+      myApp.sppStartCountdown(data.sppEndTime);
       // Set the maxBid variable to the current users Max Bid as per the Budgets pane.
       myApp.setMaxBid(data.dbData);
       // Enable the 'Pause Draft' button if the current user is the admin user.
@@ -1280,15 +1272,7 @@ socket.on('bidLock', function(){
 
 socket.on('bidUpdate', function(data) {
   myApp.demo.innerHTML = "";
-  // We use delay to calculate the number of milliseconds between the current serverTime and the start of the next second.
-  // We then use this delay variable to delay the startCountdown function until the start of the next whole second.
-  // This is aimed to ensure that we start the countdown at the same point for all users.
-  // This is done with the aim of keeping the timers in sync as currently they can be out by up to 500 milliseconds due to them starting at different times.
-  var delay = 1000 - ServerDate % 1000;
-  console.log("DELAY");
-  console.log(delay);
-  setTimeout(function(){myApp.startCountdown(data.otbEndTime)}, delay);
-
+  myApp.startCountdown(data.otbEndTime);
   myApp.highlightBidder(data.bidData.otbBidder);
   myApp.lockBid(data.bidData.otbBidder, myApp.currentUser);
   myApp.currentBid.innerHTML = "$" + data.bidData.otbBid;
@@ -1346,16 +1330,7 @@ socket.on('otbUpdate', function(data) {
   myApp.demo.style.color = "yellow";
   // Increase the font size back to normal size after it is reduced for 'On the block:' text.
   myApp.demo.style.fontSize = "3vmin";
-
-  // We use delay to calculate the number of milliseconds between the current serverTime and the start of the next second.
-  // We then use this delay variable to delay the startCountdown function until the start of the next whole second.
-  // This is aimed to ensure that we start the countdown at the same point for all users.
-  // This is done with the aim of keeping the timers in sync as currently they can be out by up to 500 milliseconds due to them starting at different times.
-  var delay = 1000 - ServerDate % 1000;
-  console.log("DELAY");
-  console.log(delay);
-  setTimeout(function(){myApp.startCountdown(data.otbEndTime)}, delay);
-
+  myApp.startCountdown(data.otbEndTime);
   myApp.highlightBidder(data.updatedOtbData.otbBidder);
   myApp.lockBid(data.updatedOtbData.otbBidder, myApp.currentUser);
   myApp.currentBid.innerHTML = "$" + data.updatedOtbData.otbBid;
