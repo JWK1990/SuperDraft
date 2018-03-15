@@ -181,6 +181,8 @@ var myApp = {
   connectedUsers: [],
   // Define the soldForTimeout variable to hold the current timeout for the "Sold for" text.
   soldForTimeout: {},
+  // Define the latencyList variable to hold a list of the average latencies for each client.
+  // latencyList: [],
 
   //!!!!!!!!!!!!!!DEFINE FUNCTIONS!!!!!!!!!!!!!!!
     updateSearch: function(){
@@ -266,6 +268,7 @@ var myApp = {
       // Set the demo pane at the start of the countdown.
       // Set the serverTime variable using the ServerDate object created by our ServerDate script on page load.
       var serverTime = ServerDate;
+
       // Set the client time.
       var clientTime = new Date();
       clientTime.setTime(clientTime.getTime());
@@ -1239,7 +1242,15 @@ socket.on('playerDrafted', function(data) {
         myApp.demo.style.fontSize = "2vmin";
         myApp.demo.style.color = "yellow"; 
         myApp.otbCoach = data.dbData.otbCoach;
-        myApp.sppStartCountdown(data.sppEndTime);
+
+        // We use delay to calculate the number of milliseconds between the current serverTime and the start of the next second.
+        // We then use this delay variable to delay the startCountdown function until the start of the next whole second.
+        // This is aimed to ensure that we start the countdown at the same point for all users.
+        // This is done with the aim of keeping the timers in sync as currently they can be out by up to 500 milliseconds due to them starting at different times.
+        var delay = 1000 - ServerDate % 1000;
+        console.log("DELAY");
+        console.log(delay);
+        setTimeout(function(){myApp.sppStartCountdown(data.sppEndTime)}, delay);
       // Set the maxBid variable to the current users Max Bid as per the Budgets pane.
       myApp.setMaxBid(data.dbData);
       // Enable the 'Pause Draft' button if the current user is the admin user.
@@ -1248,6 +1259,10 @@ socket.on('playerDrafted', function(data) {
         myApp.pauseDraftButton.style.backgroundColor = "orange";
       }; // Close if() statement.
     } // Close else statement.
+  // Update the latencyList with the most recent latencyArray sent from the server as part of the "playerDrafted" event.
+  // myApp.latencyList = [];
+  // myApp.latencyList = data.latencyArray;
+  // console.log(myApp.latencyList);
 }); // Close socket.on('playerDrafted') function.
 
 
@@ -1258,14 +1273,22 @@ socket.on('bidLock', function(){
   myApp.placeBidButton.disabled = true;
   myApp.placeBidButton.innerHTML = 'Bid Pending...';
   myApp.placeBidButton.style.background = "grey";
-  myApp.demo.innerHTML = "-";
+  myApp.demo.innerHTML = "";
 });
 
 
 
 socket.on('bidUpdate', function(data) {
   myApp.demo.innerHTML = "";
-  myApp.startCountdown(data.otbEndTime);
+  // We use delay to calculate the number of milliseconds between the current serverTime and the start of the next second.
+  // We then use this delay variable to delay the startCountdown function until the start of the next whole second.
+  // This is aimed to ensure that we start the countdown at the same point for all users.
+  // This is done with the aim of keeping the timers in sync as currently they can be out by up to 500 milliseconds due to them starting at different times.
+  var delay = 1000 - ServerDate % 1000;
+  console.log("DELAY");
+  console.log(delay);
+  setTimeout(function(){myApp.startCountdown(data.otbEndTime)}, delay);
+
   myApp.highlightBidder(data.bidData.otbBidder);
   myApp.lockBid(data.bidData.otbBidder, myApp.currentUser);
   myApp.currentBid.innerHTML = "$" + data.bidData.otbBid;
@@ -1306,6 +1329,8 @@ socket.on("waitingOnCoaches", function(data){
 
 socket.on('otbUpdate', function(data) {
   clearInterval(myApp.sppCounter);
+  // Send back a latencyResponse which will be used to calculate the latency for each client.
+  // socket.emit("latencyResponse", {currentUser: myApp.currentUser, sendTime: data.sendTime});
   // If this is the first player on the block, we update the roster filter pane options.
   // They may be inaccurate as we may have a coach that has joined the draft but hasn't yet opened the draft page.
   // If the admin coach starts the draft when this is the case, we update the roster filter options to add the coach that has not yet opened the draft.
@@ -1321,7 +1346,16 @@ socket.on('otbUpdate', function(data) {
   myApp.demo.style.color = "yellow";
   // Increase the font size back to normal size after it is reduced for 'On the block:' text.
   myApp.demo.style.fontSize = "3vmin";
-  myApp.startCountdown(data.otbEndTime);
+
+  // We use delay to calculate the number of milliseconds between the current serverTime and the start of the next second.
+  // We then use this delay variable to delay the startCountdown function until the start of the next whole second.
+  // This is aimed to ensure that we start the countdown at the same point for all users.
+  // This is done with the aim of keeping the timers in sync as currently they can be out by up to 500 milliseconds due to them starting at different times.
+  var delay = 1000 - ServerDate % 1000;
+  console.log("DELAY");
+  console.log(delay);
+  setTimeout(function(){myApp.startCountdown(data.otbEndTime)}, delay);
+
   myApp.highlightBidder(data.updatedOtbData.otbBidder);
   myApp.lockBid(data.updatedOtbData.otbBidder, myApp.currentUser);
   myApp.currentBid.innerHTML = "$" + data.updatedOtbData.otbBid;
