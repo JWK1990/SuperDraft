@@ -276,13 +276,6 @@ var myApp = {
       var timeLeft = endTime - serverTime;
       var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
       myApp.demo.innerHTML = seconds + " secs";
-      // Console log the results.
-      console.log("Client Time!");
-      console.log(clientTime.toString());
-      console.log("Server Time!");
-      console.log(serverTime.toString());
-      console.log("Time Left!");
-      console.log(seconds);
 
       // After initially updating the demo pane, we then run a setInterval to update it every 1 second.
       // The code to update the demo pane is the same as above, except now we update the variable instead of creating it.
@@ -296,13 +289,6 @@ var myApp = {
         // Update the time left and the seconds left.
         timeLeft = endTime - serverTime;
         seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-        // Console log the results.
-        console.log("Client Time!");
-        console.log(clientTime.toString());
-        console.log("Server Time!");
-        console.log(serverTime.toString());
-        console.log("Time Left!");
-        console.log(seconds);
 
         // If the amount of timeLeft is less than 0, then we stop the countdown and update the demo pane to say "Sold for" after 1 second.
         if (timeLeft < 0) {
@@ -396,13 +382,6 @@ var myApp = {
       var timeLeft = sppEndTime - serverTime;
       var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
       myApp.demo.innerHTML = "OTB: " + myApp.otbCoach + " <br>(" + seconds + " secs)";
-      // Console log the results.
-      console.log("Client Time!");
-      console.log(clientTime.toString());
-      console.log("Server Time!");
-      console.log(serverTime.toString());
-      console.log("Time Left!");
-      console.log(seconds);
 
       // After initially updating the demo pane, we then run a setInterval to update it every 1 second.
       // The code to update the demo pane is the same as above, except now we update the variable instead of creating it.
@@ -416,13 +395,6 @@ var myApp = {
         // Update the time left and the seconds left.
         timeLeft = sppEndTime - serverTime;
         seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-        // Console log the results.
-        console.log("Client Time!");
-        console.log(clientTime.toString());
-        console.log("Server Time!");
-        console.log(serverTime.toString());
-        console.log("Time Left!");
-        console.log(seconds);
 
         // If timeLeft is less than 0 then stop the countdown and clear the text in the demo pane.
         // Also if the currentUser is the currentOtbCoach then update the selected player pane with the topPlayer (who will have been automatically put on the block for them by the back end).
@@ -546,8 +518,6 @@ var myApp = {
 */
 
     updateBudgets: function(data, teams, budgets, playerCount){
-      console.log(data);
-      console.log(teams);
       var budgetsTable = document.getElementById("budgetsTable");
       var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
       if(data){
@@ -656,7 +626,7 @@ var myApp = {
     filterRosterPane: function(){
       var myRosterTable = document.getElementById("myRosterTable");
       var myRosterTableRows = myRosterTable.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-    // Define the filterRosterPane() function used to filter the roster pane with the currently selected coaches team.
+      // Define the filterRosterPane() function used to filter the roster pane with the currently selected coaches team.
       var selectedCoachIndex = myApp.teamFilter.selectedIndex;
       // Get a list of the currently selected coaches players and assign it to the selectedCoachesPlayers variable.
       var selectedCoachesPlayers = JSON.parse(JSON.stringify(myApp.draftedPlayersList[selectedCoachIndex]));
@@ -664,10 +634,13 @@ var myApp = {
       selectedCoachesPlayers.sort(function (a, b) {
         return b.position < a.position;
       });
-     // Then we sort the selectedCoachesPlayers array from highest average to lowest average.
+      /* Have commented out this second sort as we now sort the position arrays by average once all players have been assigned to an array.
+      // Then we sort the selectedCoachesPlayers array from highest average to lowest average.
       selectedCoachesPlayers.sort(function (a, b) {
         return b.average - a.average;
       });
+      */
+      console.log(selectedCoachesPlayers);
       // Define the selectedCoaches position variables to hold the coaches players from each position.
       var selectedCoachesDef = [];
       var selectedCoachesFwd = [];
@@ -809,7 +782,34 @@ var myApp = {
             selectedCoachesMid.push(selectedCoachesDpp[i]);
           }
         }; // Close for() loop.
-    }; // Close if(selectedCoachesDpp.length) statement.
+      }; // Close if(selectedCoachesDpp.length) statement.
+
+      // Once all players have been assigned to their relevant position arrays, sort the array by average from highest to lowest.
+      function averageSort(ascending){
+        return function(a,b){
+          if(a.average == "-"){
+            return 1;
+          }
+          else if(b.average == "-"){
+            return -1;
+          }
+          else if(Number(a.average) == Number(b.average)){
+            return 0;
+          }
+          else if(ascending) {
+            return Number(a.average) < Number(b.average) ? -1 : 1;
+          }
+          else if(!ascending) {
+            return Number(a.average) < Number(b.average) ? 1 : -1;
+          }
+        }; // Close return.
+      }; // Close averageSort() function.
+      // Run the average sort function on each position array to sort them from highest to lowest.
+      selectedCoachesDef.sort(averageSort(false));
+      selectedCoachesFwd.sort(averageSort(false));
+      selectedCoachesRuc.sort(averageSort(false));
+      selectedCoachesMid.sort(averageSort(false));
+      selectedCoachesBen.sort(averageSort(false));
 
       // Define the updateMyRosterTable() function used to update the data in the rosterTable.
       function updateMyRosterTable(array, indexAdd, classAdd){
@@ -860,7 +860,6 @@ var myApp = {
       // The joinedCoach portion won't run for that coach as by the time we get to joinedCoach function the options are already complete due to the pageLoad function).
       // If they aren't incomplete, then we leave them as they are.
       if(rosterFilterOptions.length < myApp.numOfCoaches){
-        console.log("UPDATED ROSTER FILTERS!");
         // Clear any current filter options.
         $('#myRosterFilter').html('');
         // Add in the required filter options.
@@ -1016,7 +1015,6 @@ socket.on("pageLoaded", function(data){
     var budgetsTable = document.getElementById("budgetsTable");
     var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
     var updatedTeamNames = _.pluck(data.loadData.coaches, "teamName2");
-    console.log(updatedTeamNames);
     // Update the player search filters to the default values on the page load.
     watchlistFilter.checked = false;
     watchlistCheckboxes.checked = false;
@@ -1067,7 +1065,14 @@ socket.on("pageLoaded", function(data){
         budgetsTableRows[i].style.color = "grey";
         budgetsTableRows[i].getElementsByTagName("td")[0].style.textDecoration = "";
       } // Close for() loop.
+    } else if (data.biddingUnderway == true){
+      // If the current draft isnt finished but there is bidding underway then we disable the addToQueue button.
+      // This stops a coach from refrehsing the page and putting another player on the block to replace one already on there.
+      myApp.addToQueue.disabled = true;
+      myApp.addToQueue.style.backgroundColor = "#DCDCDC";
+      myApp.demo.innerHTML = "Reconnecting: <br> Waiting for next round!";
     }; // Close if() statement.
+
     // Show the 'Pause Draft' button if the current user is the admin user.
     if(myApp.currentUser == myApp.admin){
       myApp.pauseDraftButton.style.display = "";
@@ -1096,49 +1101,95 @@ socket.on("joinedCoach", function(data){
   console.log("joinedCoach Started!");
   var budgetsTable = document.getElementById("budgetsTable");
   var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
-  var joinedCoachesCount = 0;
-
+  var budgetsNeedUpdating;
   myApp.connectedUsers = [];
-
-  // Updates all of the team names in the budgets pane.
-  for (var i=1; i < budgetsTableRows.length; i++) {
-    var td = budgetsTableRows[i].getElementsByTagName("td")[0];
-    if(data.joinedCoaches[i-1] == null){
-      td.innerHTML = "Waiting for coach...";
+  // Loop through each row of the budgets table and check if the team name field contains "Waiting for coach...".
+  // If we find this, then we need to update the budgets table rows, so we set the budgets need updating variable to true.
+  // If not, then we set the budgetsNeedUpdating variable to false to save us from unneccessarily updating the text in the budgets pane.
+  for(var i=0; i < budgetsTableRows.length; i++){
+    var teamNames = budgetsTableRows[i].getElementsByTagName("td")[0];
+    if (teamNames == "-"){
+      budgetsNeedUpdating = true;
     } else {
-      td.innerHTML = data.joinedCoaches[i-1];
-      console.log(td.innerHTML);
+      budgetsNeedUpdating = false;
     }
-    // For each budget table row loop through the socketList and see if we can find a matching team name and draftID.
-    // If we can then the user has joined the draft and we colour their team details white.
-    for(var j=0; j < data.socketList.length; j++){
-      console.log(td.innerHTML);
-      console.log(td.firstChild.nodeValue);
-      console.log(data.socketList[j]);
-      if(data.socketList[j].includes(td.firstChild.nodeValue + "-" + myApp.draftID)){
-        budgetsTableRows[i].style.color = "white";
-        myApp.connectedUsers.push(td.firstChild.nodeValue);
-        break;
-      } // Close if()statement.
-    } // Close for(var j=0) loop.
-  }; // Close for(var i=1) loop.
-  // Loop through the socketList and count the number of sockets that are joined to the current draft.
-  for(var i=0; i < data.socketList.length; i++){
-    if(data.socketList[i].includes(myApp.draftID)){
-        joinedCoachesCount += 1;
-      } // Close if()statement.
   };
-
-  // Loop through all of the 
+  // If the budgetsNeedUpdating variable is true then we loop through the budgets table and update the names.
+  // We also update the colouring if the coach is currently connected to the room.
+  if(budgetsNeedUpdating == true){
+    // Updates all of the team names in the budgets pane.
+    for (var i=1; i < budgetsTableRows.length; i++) {
+      var td = budgetsTableRows[i].getElementsByTagName("td")[0];
+      if(data.joinedCoaches[i-1] == null){
+        td.innerHTML = "Waiting for coach...";
+      } else {
+        td.innerHTML = data.joinedCoaches[i-1];
+      }
+      // For each budget table row loop through the socketList and see if we can find a matching team name and draftID.
+      // If we can then the user has joined the draft and we colour their team details white.
+      for(var j=0; j < data.socketList.length; j++){
+        if(data.socketList[j].includes(td.firstChild.nodeValue + "-" + myApp.draftID)){
+          budgetsTableRows[i].style.color = "white";
+          myApp.connectedUsers.push(td.firstChild.nodeValue);
+          break;
+        } // Close if()statement.
+      } // Close for(var j=0) loop.
+    }; // Close for(var i=1) loop.
+    myApp.updateBudgets(null, data.joinedCoaches, data.joinedCoachBudgets, data.joinedCoachRosterCounts);
+  } else {
+    // If the budgetsNeedUpdating variable is false, we just update the colouring without updating the text.
+    for (var i=1; i < budgetsTableRows.length; i++) {
+      // For each budget table row loop through the socketList and see if we can find a matching team name and draftID.
+      // If we can then the user has joined the draft and we colour their team details white.
+      var td = budgetsTableRows[i].getElementsByTagName("td")[0];
+      for(var j=0; j < data.socketList.length; j++){
+        if(data.socketList[j].includes(td.firstChild.nodeValue + "-" + myApp.draftID)){
+          budgetsTableRows[i].style.color = "white";
+          myApp.connectedUsers.push(td.firstChild.nodeValue);
+          break;
+        } // Close if()statement.
+      } // Close for(var j=0) loop.
+    }; // Close for(var i=1) loop.
+  }; // Close else{} statement.
   // Re-run the addRosterFilterOption() function every time a new coach joins.
   // If the filter roster options are less than the total number of coaches we will update the roster options to include the joined coach.
   // If the filter roster options are already complete, then we will leave them as is.
   myApp.addRosterFilterOption(data.joinedCoaches);
-
-  myApp.updateBudgets(null, data.joinedCoaches, data.joinedCoachBudgets, data.joinedCoachRosterCounts);
-
   console.log("joinedCoach Finished!");
 }); // Close the socket.on("joinedCoach") function.
+
+
+socket.on("successfullyJoined", function(biddingUnderway){
+  console.log("successfullyJoined Started!");
+  // If bidding is currently underway then we clear the otb pane and update it with the "Reconnecting" message.
+  if(biddingUnderway == true){
+    // Clear any existing countdown timer intervals.
+    clearInterval(myApp.counter);
+    clearInterval(myApp.sppCounter);
+    // Disable the bid button.
+    myApp.placeBidButton.disabled = true;
+    // Clear the text in the OTB pane.
+    myApp.otbName.innerHTML = "";
+    myApp.otbTeamPos.innerHTML = "";
+    myApp.placeBidButton.style.background = "grey";
+    myApp.placeBidButton.innerHTML = "-";
+    // Display the "Reconnecting: Waiting for next round text".
+    myApp.demo.innerHTML = "Reconnecting: <br>Waiting for next round!";
+    // Hide and redisplay the draft body to try and update any outdated elements.
+    document.getElementById("draftBody").style.display = "none";
+    document.getElementById("draftBody").style.display = "";
+  } else if (myApp.numOfPlayersDrafted > 0){
+      // Else if the coach is rejoining a draft that has already started, we clear any existing intervals as these may be out of time.
+      clearInterval(myApp.counter);
+      clearInterval(myApp.sppCounter);
+      // We update the demo text to say the On The Block coach without a countdown timer.
+      myApp.demo.innerHTML = "On The Block: <br>" + data.loadData.otbCoach;
+      // We hide and redisplay the draft body to try and update any outdated elements.
+      document.getElementById("draftBody").style.display = "none";
+      document.getElementById("draftBody").style.display = "";
+  }
+  console.log("successfullyJoined Finished!");
+}); // Close the socket.on("successfullyJoined").
 
 
 socket.on("draftPaused", function(){
@@ -1161,8 +1212,6 @@ socket.on('disconnectedCoach', function(data){
     }
   }; // Close for(var i=1) loop.
   var disconnectedIndex = myApp.connectedUsers.indexOf(td.firstChild.nodeValue);
-  console.log(myApp.connectedUsers);
-  console.log(disconnectedIndex);
   myApp.connectedUsers.splice(disconnectedIndex -1, 1);
 }); // Close socket.on('disconnectedCoach').
 
