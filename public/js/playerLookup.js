@@ -1124,6 +1124,7 @@ socket.on("joinedCoach", function(data){
     // Updates all of the team names in the budgets pane.
     for (var i=1; i < budgetsTableRows.length; i++) {
       var td = budgetsTableRows[i].getElementsByTagName("td")[0];
+      var tdRoster = budgetsTableRows[i].getElementsByTagName("td")[3].firstChild.nodeValue;
       if(data.joinedCoaches[i-1] == null){
         td.innerHTML = "Waiting for coach...";
       } else {
@@ -1132,7 +1133,10 @@ socket.on("joinedCoach", function(data){
       // For each budget table row loop through the socketList and see if we can find a matching team name and draftID.
       // If we can then the user has joined the draft and we colour their team details white.
       for(var j=0; j < data.socketList.length; j++){
-        if(data.socketList[j].includes(td.firstChild.nodeValue + "-" + myApp.draftID)){
+        console.log("tdRoster");
+        console.log(tdRoster);
+        console.log(tdRoster != "Full");
+        if(data.socketList[j].includes(td.firstChild.nodeValue + "-" + myApp.draftID) && tdRoster != "Full"){
           budgetsTableRows[i].style.color = "white";
           myApp.connectedUsers.push(td.firstChild.nodeValue);
           break;
@@ -1146,8 +1150,12 @@ socket.on("joinedCoach", function(data){
       // For each budget table row loop through the socketList and see if we can find a matching team name and draftID.
       // If we can then the user has joined the draft and we colour their team details white.
       var td = budgetsTableRows[i].getElementsByTagName("td")[0];
+      var tdRoster = budgetsTableRows[i].getElementsByTagName("td")[3].firstChild.nodeValue;
+        console.log("tdRoster");
+        console.log(tdRoster);
+        console.log(tdRoster != "Full");
       for(var j=0; j < data.socketList.length; j++){
-        if(data.socketList[j].includes(td.firstChild.nodeValue + "-" + myApp.draftID)){
+        if(data.socketList[j].includes(td.firstChild.nodeValue + "-" + myApp.draftID) && tdRoster != "Full"){
           budgetsTableRows[i].style.color = "white";
           myApp.connectedUsers.push(td.firstChild.nodeValue);
           break;
@@ -1165,8 +1173,9 @@ socket.on("joinedCoach", function(data){
 
 socket.on("successfullyJoined", function(data){
   console.log("successfullyJoined Started!");
-  // If bidding is currently underway then we clear the otb pane and update it with the "Reconnecting" message.
-  if(data.biddingUnderway == true){
+  // If bidding is currently underway then we clear any existing intervals, update the otb text and hide and reshow the draftBody.
+  // If the draft isn't already underway then we don't need to do anything here and we will leave the data as it was after the pageLoad() function.
+  if(myApp.numOfPlayersDrafted > 0 && myApp.numOfPlayersDrafted < myApp.totalRosterSpots){
     // Clear any existing countdown timer intervals.
     clearInterval(myApp.counter);
     clearInterval(myApp.sppCounter);
@@ -1177,20 +1186,17 @@ socket.on("successfullyJoined", function(data){
     myApp.otbTeamPos.innerHTML = "";
     myApp.placeBidButton.style.background = "grey";
     myApp.placeBidButton.innerHTML = "-";
-    // Display the "Reconnecting: Waiting for next round text".
-    myApp.demo.innerHTML = "Reconnecting: <br>Waiting for next round!";
+    myApp.currentBid.innerHTML = "";
+    // If bidding is underway then display the "Reconnecting: Waiting for next round text".
+    if(data.biddingUnderway == true){
+      myApp.demo.innerHTML = "Reconnecting: <br>Waiting for next round!";
+    } else {
+      // Else display the "On The Block" text.
+      myApp.demo.innerHTML = "On The Block: <br>" + data.otbCoach;
+    }
     // Hide and redisplay the draft body to try and update any outdated elements.
     document.getElementById("draftBody").style.display = "none";
     document.getElementById("draftBody").style.display = "";
-  } else if (myApp.numOfPlayersDrafted > 0){
-      // Else if the coach is rejoining a draft that has already started, we clear any existing intervals as these may be out of time.
-      clearInterval(myApp.counter);
-      clearInterval(myApp.sppCounter);
-      // We update the demo text to say the On The Block coach without a countdown timer.
-      myApp.demo.innerHTML = "On The Block: <br>" + data.otbCoach;
-      // We hide and redisplay the draft body to try and update any outdated elements.
-      document.getElementById("draftBody").style.display = "none";
-      document.getElementById("draftBody").style.display = "";
   }
   console.log("successfullyJoined Finished!");
 }); // Close the socket.on("successfullyJoined").
