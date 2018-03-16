@@ -1106,14 +1106,18 @@ socket.on("joinedCoach", function(data){
   // Loop through each row of the budgets table and check if the team name field contains "Waiting for coach...".
   // If we find this, then we need to update the budgets table rows, so we set the budgets need updating variable to true.
   // If not, then we set the budgetsNeedUpdating variable to false to save us from unneccessarily updating the text in the budgets pane.
-  for(var i=0; i < budgetsTableRows.length; i++){
-    var teamNames = budgetsTableRows[i].getElementsByTagName("td")[0];
-    if (teamNames == "-"){
+  for(var i=1; i < budgetsTableRows.length; i++){
+    var teamName = budgetsTableRows[i].getElementsByTagName("td")[0].firstChild.nodeValue;
+    console.log(teamName);
+    if (teamName == "Waiting for coach..."){
       budgetsNeedUpdating = true;
     } else {
       budgetsNeedUpdating = false;
     }
   };
+
+  console.log("BUDGETS NEED UPDATING!");
+  console.log(budgetsNeedUpdating);
   // If the budgetsNeedUpdating variable is true then we loop through the budgets table and update the names.
   // We also update the colouring if the coach is currently connected to the room.
   if(budgetsNeedUpdating == true){
@@ -1159,10 +1163,10 @@ socket.on("joinedCoach", function(data){
 }); // Close the socket.on("joinedCoach") function.
 
 
-socket.on("successfullyJoined", function(biddingUnderway){
+socket.on("successfullyJoined", function(data){
   console.log("successfullyJoined Started!");
   // If bidding is currently underway then we clear the otb pane and update it with the "Reconnecting" message.
-  if(biddingUnderway == true){
+  if(data.biddingUnderway == true){
     // Clear any existing countdown timer intervals.
     clearInterval(myApp.counter);
     clearInterval(myApp.sppCounter);
@@ -1183,7 +1187,7 @@ socket.on("successfullyJoined", function(biddingUnderway){
       clearInterval(myApp.counter);
       clearInterval(myApp.sppCounter);
       // We update the demo text to say the On The Block coach without a countdown timer.
-      myApp.demo.innerHTML = "On The Block: <br>" + data.loadData.otbCoach;
+      myApp.demo.innerHTML = "On The Block: <br>" + data.otbCoach;
       // We hide and redisplay the draft body to try and update any outdated elements.
       document.getElementById("draftBody").style.display = "none";
       document.getElementById("draftBody").style.display = "";
