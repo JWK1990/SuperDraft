@@ -229,12 +229,20 @@ block content
                     option(value=60) 60 seconds
 
             div.form-group
+                label(for='budget') Budget:
                 div(onclick="").help-tip
                     p What budget will each coach have to fill their team?
-                label(for='budget') Budget:
-                div(style="position:relative")
-                    input.form-control#budget(type='text', placeholder='300' name='budget' required='')
-                    label.static-value $
+                select.form-control#budget(name='budget')
+                    option(value=100) $100
+                    option(value=200) $200
+                    option(value=300) $300
+                    option(value=400) $400
+                    option(value=500) $500
+                    option(value=600) $600
+                    option(value=700) $700
+                    option(value=800) $800
+                    option(value=900) $900
+                    option(value=1000) $1000
 
             button.btn.btn-primary#submit(type='submit') Create Draft
 

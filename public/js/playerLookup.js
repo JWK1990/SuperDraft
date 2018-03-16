@@ -476,16 +476,18 @@ var myApp = {
       } else {
         myApp.currentOtbIndex = data;
       }
-      // Clears underline on all team names in Budgets Table.
+      // Sets styling on all team names in Budgets Table back to default.
       for (var i = 1; i < budgetsTableRows.length; i++) {
         budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
+        budgetsTableRows[i].getElementsByTagName("td")[0].style.textDecoration = "";
         if(budgetsTableRows[i].getElementsByTagName("td")[0].firstChild.nodeValue === myApp.currentUser){
           budgetsTableRows[i].style.fontWeight = "bold";
           budgetsTableRows[i].style.fontSize = "1.7vmin";
         }
       };
-      // Adds an underline to the coach currently on the block as determined by the pick counter.
+      // Adds an underline and a blue background color to the coach currently on the block as determined by the pick counter.
       budgetsTableRows[myApp.currentOtbIndex].style.backgroundColor = "rgba(0,0,255,0.5)";
+      budgetsTableRows[myApp.currentOtbIndex].getElementsByTagName("td")[0].style.textDecoration = "underline";
       // Updates the value of the currentOtbCoach based on the pick counter.
       myApp.currentOtbCoach = budgetsTableRows[myApp.currentOtbIndex].getElementsByTagName("td")[0].firstChild.nodeValue;
         if(myApp.currentOtbCoach === myApp.currentUser){
@@ -1063,6 +1065,7 @@ socket.on("pageLoaded", function(data){
       for(var i = 1; i < budgetsTableRows.length; i++) {
         budgetsTableRows[i].style.backgroundColor = "#4d4d4d";
         budgetsTableRows[i].style.color = "grey";
+        budgetsTableRows[i].getElementsByTagName("td")[0].style.textDecoration = "";
       } // Close for() loop.
     }; // Close if() statement.
     // Show the 'Pause Draft' button if the current user is the admin user.
@@ -1224,6 +1227,7 @@ socket.on('playerDrafted', function(data) {
     // Code to change all team names to grey in the Budgets pane when the draft is complete.
     for (var i = 1; i < budgetsTableRows.length; i++) {
       budgetsTableRows[i].style.color = "grey";
+      budgetsTableRows[i].getElementsByTagName("td")[0].style.textDecoration = "";
     }
   } else {
       // Call highlightOtb() function to underline the on the block coach.
