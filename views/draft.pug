@@ -166,7 +166,7 @@ html(lang='en')
 					table#myRosterTable
 						thead
 							tr
-								th Pos
+								th.posData Pos
 								th Player
 								th Ave
 								th $
@@ -174,7 +174,7 @@ html(lang='en')
 							tbody
 								- for(var i=0; i < drafts[0].numOfDef; i++){
 									tr(style='border-left: RGB(255,105,180) 4px solid')
-										td.emptyDef="DEF"
+										td.emptyDef.posData="DEF"
 										td=""
 										td=""
 										td=""
@@ -182,7 +182,7 @@ html(lang='en')
 
 								- for(var i=0; i < drafts[0].numOfMid; i++){
 									tr(style='border-left: RGB(30,144,255) 4px solid')
-										td.emptyMid="MID"
+										td.emptyMid.posData="MID"
 										td=""
 										td=""
 										td=""
@@ -190,7 +190,7 @@ html(lang='en')
 
 								- for(var i=0; i < drafts[0].numOfRuc; i++){
 									tr(style='border-left: RGB(250,159,6) 4px solid')
-										td.emptyRuc="RUC"
+										td.emptyRuc.posData="RUC"
 										td=""
 										td=""
 										td=""
@@ -198,7 +198,7 @@ html(lang='en')
 
 								- for(var i=0; i < drafts[0].numOfFwd; i++){
 									tr(style='border-left: RGB(22,193,114) 4px solid')
-										td.emptyFwd="FWD"
+										td.emptyFwd.posData="FWD"
 										td=""
 										td=""
 										td=""
@@ -206,13 +206,26 @@ html(lang='en')
 
 								- for(var i=0; i < drafts[0].numOfBen; i++){
 									tr(style='border-left: RGB(169,169,169) 4px solid')
-										td.emptyBen="BEN"
+										td.emptyBen.posData="BEN"
 										td=""
 										td=""
 										td=""
 								- }
 
+			.chatPane
+				.messagesPane
+					table#chatTable.display(cellspacing='0', width='100%')
+						thead(style="display: none")
+							tr
+								th Garbagè Chat
+						tbody#chatTableBody
+				.inputPane
+					input#chatInput(placeholder="Dump garbagé here...")
+					button#chatButton(onclick="myApp.sendChat(myApp.currentUser)") Send
 
+
+			
+		// Commenting out original myTeamPane as i try and implement chat functionality. 
 			.myTeamPane
 				table#myTeamTable.display(cellspacing='0', width='100%')
 					thead
@@ -233,7 +246,6 @@ html(lang='en')
 								td=results[i].team
 								td="$" + results[i].price
 						- }
-
 			
 		script(src='/js/scPlayerData.json')
 		script(src='/js/dtPlayerData.json')

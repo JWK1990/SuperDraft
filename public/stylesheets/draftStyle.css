@@ -385,6 +385,8 @@ nav.main ul li:hover ul {
             height: 95%;
             display: inline-block;
             text-align: middle;
+            overflow-y: scroll;
+            overflow-x: hidden;
           }
 
       .myTeamPane{
@@ -395,6 +397,27 @@ nav.main ul li:hover ul {
         text-align: center;
         overflow: hidden;
       }
+
+      .chatPane{
+        width: 100%;
+        height: 18%;
+        background-color: #4d4d4d;
+        display: inline-block;
+        text-align: center;
+        overflow: hidden;
+      }
+
+        .messagesPane{
+          width: 100%;
+          height: 80%;
+          overflow: hidden;
+          overflow-y: scroll;
+        }
+
+        .inputPane{
+          width: 100%;
+          height: 20%;
+        }
 
 
 .otbTextTop{
@@ -688,6 +711,10 @@ As any overflow of the container is cut off, this crops out the bottom of the im
   color: white;
 }
 
+.posData {
+  text-align: left;
+}
+
 .myTeamPane table{
   font-size: 1.2vmin;
   background-color: #4d4d4d;
@@ -702,6 +729,53 @@ As any overflow of the container is cut off, this crops out the bottom of the im
 .myTeamPane td{
   background-color: #4d4d4d;
   color: white;
+}
+
+
+.messagesPane table{
+  font-size: 1.2vmin;
+  background-color: #4d4d4d;
+  height: 100%;
+  width: 100%;
+  border-collapse: collapse;
+  vertical-align: middle;
+  table-layout: fixed;
+  color: white;
+}
+
+.messagesPane th{
+  background-color: #4d4d4d;
+  color: white;
+  font-size: 1vmin;
+  text-align: center;
+  height: 5%:
+}
+
+.messagesPane tr{
+  vertical-align: middle;
+  text-align: left;
+  height: 22px;
+  border-bottom: grey 1px solid;
+}
+
+.messagesPane td{
+  vertical-align: middle;
+  text-align: left;
+  padding-left: 10px;
+  word-wrap: break-word;
+  font-size: 10px;
+}
+
+.inputPane input{
+  background-color: white;
+  width: 80%;
+  height: 100%;
+  border-top: 1px solid black;
+}
+
+.inputPane button{
+  width: 20%;
+  height: 100%;
 }
 
 

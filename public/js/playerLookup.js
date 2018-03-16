@@ -69,6 +69,7 @@ $(document).ready(function() {
       ]
   })  // Close #searchTable DataTable function.
 
+/*
   myApp.myTeamDT = $('#myTeamTable').DataTable( {
         // ScrollY effectively sets the height of the table. 14vh represents 14% of the height of the browser window.
         // The rough guide for the vh seems to be 4% less than the height of the pane.
@@ -85,6 +86,8 @@ $(document).ready(function() {
           sZeroRecords: "-"
         }
   }) // Close #myTeamTable DataTable function.
+*/
+
 }); // Close $(document).ready() function.
 setTimeout(function(){
   var draftBody = document.getElementById("draftBody");
@@ -167,7 +170,7 @@ var myApp = {
   // Drafted Players variables.
   teamFilter: document.getElementById("myRosterFilter"),
   posFilter: document.getElementById("myTeamPosFilter"),
-  myTeamDT: {},
+  // myTeamDT: {},
   // Bid countdown timer variables.
   counter: {},
   demo: document.getElementById("demo"),
@@ -183,6 +186,16 @@ var myApp = {
   soldForTimeout: {},
   // Define the latencyList variable to hold a list of the average latencies for each client.
   // latencyList: [],
+  // Define the chatTable variables.
+  chatTable: document.getElementById("chatTable"),
+  chatTableBody: document.getElementById("chatTableBody"),
+  chatTableRows: chatTableBody.getElementsByTagName("tr"),
+  chatInput: document.getElementById("chatInput"),
+  // Define the chatColours array to hold the potential chat colours that a coach can be assigned.
+  // We hold 20 colours (for the max number of coaches in a draft).
+  // There are 12 unique colours. The last 8 double up. We use these to colour the message in the broadcastChat() function based on the index of the coach in coaches array.
+  //#FF6EFF = Shocking Pink (pink), #66FF66 = Screaming Green (green) , #FDFF00 = Lemon Glacier (yellow), #50BFE6 = Blizzard Blue (blue), #FD5B78 = Wild Watermelon (red), #FF6037 = Outragous Orange (orange), #FFD3F8 = Bubblegum (light pink), #4F86F7 = Blueberry (medium blue), #44D7A8 = Eucalyptus (aqua), #FFFF31 = Daffodil (yellow), #FFFFFF = white, #AAF0D1 = Magic Mint (light green).
+  chatColours: ['#FF6EFF', '#66FF66', '#FDFF00',  '#50BFE6', '#FD5B78', '#FF6037', '#FFD3F8', '#4F86F7', '#44D7A8', '#FFFF31', '#FFFFFF', '#AAF0D1', '#FF6EFF', '#66FF66', '#FDFF00',  '#50BFE6', '#FD5B78', '#FF6037', '#FFD3F8', '#4F86F7'],
 
   //!!!!!!!!!!!!!!DEFINE FUNCTIONS!!!!!!!!!!!!!!!
     updateSearch: function(){
@@ -935,7 +948,31 @@ var myApp = {
       myApp.pauseDraftButton.disabled = true;
       myApp.pauseDraftButton.style.backgroundColor = "#DCDCDC";
       socket.emit('pauseDraft', myApp.draftID);
-    } // Close pauseDraft() function.
+    }, // Close pauseDraft() function.
+
+
+    sendChat: function(currentUser){
+      // Get the vaue of the chat input.
+      var text = myApp.chatInput.value;
+      console.log("CHAT TEXT: " + text);
+      // Clear the chatInput.
+      myApp.chatInput.value = "";
+      // Send the chat input to the back end to be broadcast to all clients in the current room.
+      socket.emit('sendChat', {text: text, user: myApp.currentUser});
+    }, // Close sendChat() function.
+
+
+    addChat: function(text, user, color, backgroundColor){
+      // Add a new chat line to the chatPane showing the broadcast text.
+      var newRow = myApp.chatTableBody.insertRow(0);
+      var newData = document.createElement("td");
+      newData.innerHTML = "<strong style='color: " + color + "'>" + user + ": </strong>" + text;
+      newRow.appendChild(newData);
+      if(backgroundColor){
+        newRow.style.backgroundColor = backgroundColor;
+        newRow.style.color = "black";
+      }
+    } // Close the addChat() function.
 
 }; // Close NS Namespace.
 
@@ -1087,8 +1124,6 @@ socket.on("pageLoaded", function(data){
     myApp.updateSPP(myApp.topPlayer);
     // Run the selectPlayer() function to add event listeners to the rows of the selected player pane.
     myApp.selectPlayer();
-    // Hide and re-display the myTeamTable in an attempt to get it to show updated data if any is missing.
-    $('#myTeamTable').hide().show(0);
     // Run socket.emit("joinRoom") to add the current coach to the draft room on the back end.
     socket.emit('joinRoom', {draftID: myApp.draftID, currentUser: myApp.currentUser});
     console.log("pageLoad Complete!");
@@ -1108,16 +1143,12 @@ socket.on("joinedCoach", function(data){
   // If not, then we set the budgetsNeedUpdating variable to false to save us from unneccessarily updating the text in the budgets pane.
   for(var i=1; i < budgetsTableRows.length; i++){
     var teamName = budgetsTableRows[i].getElementsByTagName("td")[0].firstChild.nodeValue;
-    console.log(teamName);
     if (teamName == "Waiting for coach..."){
       budgetsNeedUpdating = true;
     } else {
       budgetsNeedUpdating = false;
     }
   };
-
-  console.log("BUDGETS NEED UPDATING!");
-  console.log(budgetsNeedUpdating);
   // If the budgetsNeedUpdating variable is true then we loop through the budgets table and update the names.
   // We also update the colouring if the coach is currently connected to the room.
   if(budgetsNeedUpdating == true){
@@ -1133,9 +1164,6 @@ socket.on("joinedCoach", function(data){
       // For each budget table row loop through the socketList and see if we can find a matching team name and draftID.
       // If we can then the user has joined the draft and we colour their team details white.
       for(var j=0; j < data.socketList.length; j++){
-        console.log("tdRoster");
-        console.log(tdRoster);
-        console.log(tdRoster != "Full");
         if(data.socketList[j].includes(td.firstChild.nodeValue + "-" + myApp.draftID) && tdRoster != "Full"){
           budgetsTableRows[i].style.color = "white";
           myApp.connectedUsers.push(td.firstChild.nodeValue);
@@ -1151,9 +1179,6 @@ socket.on("joinedCoach", function(data){
       // If we can then the user has joined the draft and we colour their team details white.
       var td = budgetsTableRows[i].getElementsByTagName("td")[0];
       var tdRoster = budgetsTableRows[i].getElementsByTagName("td")[3].firstChild.nodeValue;
-        console.log("tdRoster");
-        console.log(tdRoster);
-        console.log(tdRoster != "Full");
       for(var j=0; j < data.socketList.length; j++){
         if(data.socketList[j].includes(td.firstChild.nodeValue + "-" + myApp.draftID) && tdRoster != "Full"){
           budgetsTableRows[i].style.color = "white";
@@ -1167,6 +1192,12 @@ socket.on("joinedCoach", function(data){
   // If the filter roster options are less than the total number of coaches we will update the roster options to include the joined coach.
   // If the filter roster options are already complete, then we will leave them as is.
   myApp.addRosterFilterOption(data.joinedCoaches);
+
+  // Add a new line to the chat pane to show that the coach has joined.
+  myApp.addChat("has joined the draft!", data.newCoach, data.color, "#2CFC0E")
+
+
+
   console.log("joinedCoach Finished!");
 }); // Close the socket.on("joinedCoach") function.
 
@@ -1190,9 +1221,11 @@ socket.on("successfullyJoined", function(data){
     // If bidding is underway then display the "Reconnecting: Waiting for next round text".
     if(data.biddingUnderway == true){
       myApp.demo.innerHTML = "Reconnecting: <br>Waiting for next round!";
+      myApp.demo.style.color = "yellow";
     } else {
       // Else display the "On The Block" text.
       myApp.demo.innerHTML = "On The Block: <br>" + data.otbCoach;
+      myApp.demo.style.color = "yellow";
     }
     // Hide and redisplay the draft body to try and update any outdated elements.
     document.getElementById("draftBody").style.display = "none";
@@ -1223,7 +1256,22 @@ socket.on('disconnectedCoach', function(data){
   }; // Close for(var i=1) loop.
   var disconnectedIndex = myApp.connectedUsers.indexOf(td.firstChild.nodeValue);
   myApp.connectedUsers.splice(disconnectedIndex -1, 1);
+
+  // Get the disconnectedTeamName.
+  var disconnectedTeamName = data.disconnectedSocket.slice(0, data.disconnectedSocket.indexOf("-"));
+  // Add a new line to the chat pane to show that the coach has joined.
+  myApp.addChat(" has left the draft!", disconnectedTeamName, "black", "pink")
+
+
+
 }); // Close socket.on('disconnectedCoach').
+
+
+socket.on('broadcastChat', function(data){
+
+  myApp.addChat(data.text, data.user, data.color);
+
+}); // Close socket.on('broadcastChat') function.
 
 
 socket.on('playerDrafted', function(data) {
@@ -1253,15 +1301,6 @@ socket.on('playerDrafted', function(data) {
   myApp.updateBudgets(data.dbData.coaches);
   // Update the player search pane to grey out any drafted players.
   myApp.updateSearch();
-  // Add a row to the myTeamDT data table containing the details of the most recently drafted player.
-  var index = data.dbData.results.length -1;
-  var concatName;
-  if(data.dbData.results[index].position.length < 4){
-    concatName = data.dbData.results[index].name + " (" + data.dbData.results[index].position.substring(0,1) + ")";
-  } else {
-    concatName = data.dbData.results[index].name + " (" + data.dbData.results[index].position.substring(0,1) + "/" + data.dbData.results[index].position.substring(4,5) + ")";
-    }; // Close if() statement.
-  myApp.myTeamDT.row.add([data.dbData.results.length, concatName, data.dbData.results[index].team, "$" + data.dbData.results[index].price]).draw(false);
   // Update the draftedPlayersList with the updated results list from the DB.
   // We used ‘JSON.parse(JSON.stringify(data.dbData.results))’ to convert the data.dbData.resutls data into a string and then re-convert it into an object.
   // We do this because if we just assigned data.dbData.results directly to the draftedPlayersList variable then we are passing the value by reference and anything we do to the draftedPlayersList also updates the data.dbData.results variable.
@@ -1318,6 +1357,26 @@ socket.on('playerDrafted', function(data) {
   // myApp.latencyList = [];
   // myApp.latencyList = data.latencyArray;
   // console.log(myApp.latencyList);
+  
+  // Add a row to the myTeamDT data table containing the details of the most recently drafted player.
+  var index = data.dbData.results.length -1;
+  var concatName;
+  if(data.dbData.results[index].position.length < 4){
+    concatName = data.dbData.results[index].name + " (" + data.dbData.results[index].position.substring(0,1) + ")";
+  } else {
+      concatName = data.dbData.results[index].name + " (" + data.dbData.results[index].position.substring(0,1) + "/" + data.dbData.results[index].position.substring(4,5) + ")";
+    }; // Close if() statement.
+  // myApp.myTeamDT.row.add([data.dbData.results.length, concatName, data.dbData.results[index].team, "$" + data.dbData.results[index].price]).draw(false);
+
+  // Add a new chat line to the chatPane showing the broadcast text.
+  var newRow = myApp.chatTableBody.insertRow(0);
+  var newData = document.createElement("td");
+  newData.innerHTML = "<strong>" + data.dbData.results[index].team + "</strong>: " + concatName + " for $" + data.dbData.results[index].price;
+  newRow.appendChild(newData);
+  newRow.style.backgroundColor = "rgba(0,0,255,0.5)";
+  newRow.style.color = "#2CFC0E";
+
+
 }); // Close socket.on('playerDrafted') function.
 
 
