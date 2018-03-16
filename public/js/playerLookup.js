@@ -191,6 +191,7 @@ var myApp = {
   chatTableBody: document.getElementById("chatTableBody"),
   chatTableRows: chatTableBody.getElementsByTagName("tr"),
   chatInput: document.getElementById("chatInput"),
+  chatButton: document.getElementById("chatButton"),
   // Define the chatColours array to hold the potential chat colours that a coach can be assigned.
   // We hold 20 colours (for the max number of coaches in a draft).
   // There are 12 unique colours. The last 8 double up. We use these to colour the message in the broadcastChat() function based on the index of the coach in coaches array.
@@ -962,17 +963,27 @@ var myApp = {
     }, // Close sendChat() function.
 
 
-    addChat: function(text, user, color, backgroundColor){
+    addChat: function(text, user, color, secondaryColor){
       // Add a new chat line to the chatPane showing the broadcast text.
       var newRow = myApp.chatTableBody.insertRow(0);
       var newData = document.createElement("td");
       newData.innerHTML = "<strong style='color: " + color + "'>" + user + ": </strong>" + text;
       newRow.appendChild(newData);
-      if(backgroundColor){
-        newRow.style.backgroundColor = backgroundColor;
-        newRow.style.color = "black";
+      if(secondaryColor){
+        newRow.style.color = secondaryColor;
+        newRow.style.fontStyle = "italic";
       }
-    } // Close the addChat() function.
+    }, // Close the addChat() function.
+
+    // Add an event listener to the chat input so that we run the sendChat message when a user hits the enter key while in the input.
+    addChatEventListener: function(){
+      myApp.chatInput.addEventListener("keyup", function(event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            myApp.chatButton.click();
+        }
+      }); // Close addEventListener("keyup") function.
+    }
 
 }; // Close NS Namespace.
 
@@ -1124,6 +1135,8 @@ socket.on("pageLoaded", function(data){
     myApp.updateSPP(myApp.topPlayer);
     // Run the selectPlayer() function to add event listeners to the rows of the selected player pane.
     myApp.selectPlayer();
+    // Run the addChatEventListener() function to add an event listener to the chatInput field for the user pressing the Enter key.
+    myApp.addChatEventListener();
     // Run socket.emit("joinRoom") to add the current coach to the draft room on the back end.
     socket.emit('joinRoom', {draftID: myApp.draftID, currentUser: myApp.currentUser});
     console.log("pageLoad Complete!");
@@ -1222,9 +1235,13 @@ socket.on("successfullyJoined", function(data){
     if(data.biddingUnderway == true){
       myApp.demo.innerHTML = "Reconnecting: <br>Waiting for next round!";
       myApp.demo.style.color = "yellow";
-    } else {
-      // Else display the "On The Block" text.
+    } else if(myApp.numOfPlayersDrafted < myApp.totalRosterSpots){
+      // Else if the draft is underway but bidding isn't display the "On The Block" text.
       myApp.demo.innerHTML = "On The Block: <br>" + data.otbCoach;
+      myApp.demo.style.color = "yellow";
+    } else if(myApp.numOfPlayersDrafted >= myApp.totalRosterSpots){
+      // Else if the draft is complete display the "Draft Complete" text.
+      myApp.demo.innerHTML = "Draft Complete!";
       myApp.demo.style.color = "yellow";
     }
     // Hide and redisplay the draft body to try and update any outdated elements.
@@ -1260,7 +1277,7 @@ socket.on('disconnectedCoach', function(data){
   // Get the disconnectedTeamName.
   var disconnectedTeamName = data.disconnectedSocket.slice(0, data.disconnectedSocket.indexOf("-"));
   // Add a new line to the chat pane to show that the coach has joined.
-  myApp.addChat(" has left the draft!", disconnectedTeamName, "black", "pink")
+  myApp.addChat(" has left the draft!", disconnectedTeamName, "pink", "pink");
 
 
 
@@ -1371,10 +1388,9 @@ socket.on('playerDrafted', function(data) {
   // Add a new chat line to the chatPane showing the broadcast text.
   var newRow = myApp.chatTableBody.insertRow(0);
   var newData = document.createElement("td");
-  newData.innerHTML = "<strong>" + data.dbData.results[index].team + "</strong>: " + concatName + " for $" + data.dbData.results[index].price;
+  newData.innerHTML = "<strong style='color: #2CFC0E'>" + concatName + ": </strong>" + "Sold to " + data.dbData.results[index].team + " for $" + data.dbData.results[index].price;
   newRow.appendChild(newData);
-  newRow.style.backgroundColor = "rgba(0,0,255,0.5)";
-  newRow.style.color = "#2CFC0E";
+  newRow.style.color = "white";
 
 
 }); // Close socket.on('playerDrafted') function.
