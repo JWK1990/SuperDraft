@@ -1310,6 +1310,19 @@ socket.on('broadcastChat', function(data){
 }); // Close socket.on('broadcastChat') function.
 
 
+socket.on('broadcastFunFact', function(data){
+
+  // Add a new chat line to the chatPane showing the fun fact text.
+  var newRow = myApp.chatTableBody.insertRow(0);
+  var newData = document.createElement("td");
+  newData.innerHTML = data;
+  newRow.appendChild(newData);
+
+  newRow.style.color = "yellow";
+
+}); // Close socket.on('broadcastChat') function.
+
+
 socket.on('playerDrafted', function(data) {
   var budgetsTable = document.getElementById("budgetsTable");
   var budgetsTableRows = budgetsTable.getElementsByTagName("tr");

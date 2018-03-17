@@ -11,7 +11,9 @@
     "ave": 136,
     "stdDev": 27,
     "age": 27,
-    "bye": 14
+    "bye": 14,
+    "max": 196,
+    "min": 65
   },
   {
     "name": "Dustin Martin",
@@ -25,7 +27,9 @@
     "ave": 119,
     "stdDev": 27,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 165,
+    "min": 54
   },
   {
     "name": "Tom Mitchell",
@@ -39,7 +43,9 @@
     "ave": 119,
     "stdDev": 18,
     "age": 24,
-    "bye": 12
+    "bye": 12,
+    "max": 161,
+    "min": 85
   },
   {
     "name": "Gary Ablett",
@@ -53,7 +59,9 @@
     "ave": 115,
     "stdDev": 36,
     "age": 33,
-    "bye": 14
+    "bye": 14,
+    "max": 210,
+    "min": 73
   },
   {
     "name": "Josh Kelly",
@@ -67,7 +75,9 @@
     "ave": 114,
     "stdDev": 21,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 176,
+    "min": 88
   },
   {
     "name": "Clayton Oliver",
@@ -81,7 +91,9 @@
     "ave": 112,
     "stdDev": 19,
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": 170,
+    "min": 80
   },
   {
     "name": "Dayne Zorko",
@@ -95,7 +107,9 @@
     "ave": 111,
     "stdDev": 32,
     "age": 29,
-    "bye": 13
+    "bye": 13,
+    "max": 196,
+    "min": 51
   },
   {
     "name": "Matt Crouch",
@@ -109,7 +123,9 @@
     "ave": 111,
     "stdDev": 20,
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 146,
+    "min": 76
   },
   {
     "name": "Matthew Kreuzer",
@@ -123,7 +139,9 @@
     "ave": 110,
     "stdDev": 26,
     "age": 28,
-    "bye": 12
+    "bye": 12,
+    "max": 146,
+    "min": 43
   },
   {
     "name": "Mitch Duncan",
@@ -137,7 +155,9 @@
     "ave": 110,
     "stdDev": 17,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 144,
+    "min": 70
   },
   {
     "name": "Rory Sloane",
@@ -151,7 +171,9 @@
     "ave": 110,
     "stdDev": 39,
     "age": 27,
-    "bye": 14
+    "bye": 14,
+    "max": 177,
+    "min": 36
   },
   {
     "name": "Lachie Neale",
@@ -165,7 +187,9 @@
     "ave": 109,
     "stdDev": 28,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 156,
+    "min": 44
   },
   {
     "name": "Nat Fyfe",
@@ -179,7 +203,9 @@
     "ave": 109,
     "stdDev": 21,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 142,
+    "min": 62
   },
   {
     "name": "Zach Merrett",
@@ -193,7 +219,9 @@
     "ave": 109,
     "stdDev": 20,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 141,
+    "min": 67
   },
   {
     "name": "Marc Murphy",
@@ -207,7 +235,9 @@
     "ave": 108,
     "stdDev": 23,
     "age": 30,
-    "bye": 12
+    "bye": 12,
+    "max": 158,
+    "min": 69
   },
   {
     "name": "Taylor Adams",
@@ -221,7 +251,9 @@
     "ave": 108,
     "stdDev": 20,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 144,
+    "min": 64
   },
   {
     "name": "Jack Macrae",
@@ -235,7 +267,9 @@
     "ave": 107,
     "stdDev": 23,
     "age": 23,
-    "bye": 12
+    "bye": 12,
+    "max": 162,
+    "min": 61
   },
   {
     "name": "Scott Pendlebury",
@@ -249,7 +283,9 @@
     "ave": 107,
     "stdDev": 25,
     "age": 30,
-    "bye": 13
+    "bye": 13,
+    "max": 149,
+    "min": 67
   },
   {
     "name": "Marcus Bontempelli",
@@ -263,7 +299,9 @@
     "ave": 105,
     "stdDev": 24,
     "age": 22,
-    "bye": 12
+    "bye": 12,
+    "max": 141,
+    "min": 45
   },
   {
     "name": "Josh P. Kennedy",
@@ -277,7 +315,9 @@
     "ave": 103,
     "stdDev": 20,
     "age": 29,
-    "bye": 14
+    "bye": 14,
+    "max": 136,
+    "min": 50
   },
   {
     "name": "Michael Hurley",
@@ -291,7 +331,9 @@
     "ave": 103,
     "stdDev": 18,
     "age": 27,
-    "bye": 13
+    "bye": 13,
+    "max": 133,
+    "min": 73
   },
   {
     "name": "Patrick Ryder",
@@ -305,7 +347,9 @@
     "ave": 103,
     "stdDev": 21,
     "age": 29,
-    "bye": 10
+    "bye": 10,
+    "max": 139,
+    "min": 69
   },
   {
     "name": "Bryce Gibbs",
@@ -319,7 +363,9 @@
     "ave": 102,
     "stdDev": 33,
     "age": 28,
-    "bye": 14
+    "bye": 14,
+    "max": 208,
+    "min": 45
   },
   {
     "name": "Elliot Yeo",
@@ -333,7 +379,9 @@
     "ave": 102,
     "stdDev": 23,
     "age": 24,
-    "bye": 12
+    "bye": 12,
+    "max": 150,
+    "min": 59
   },
   {
     "name": "Joel Selwood",
@@ -347,7 +395,9 @@
     "ave": 102,
     "stdDev": 36,
     "age": 29,
-    "bye": 14
+    "bye": 14,
+    "max": 154,
+    "min": 3
   },
   {
     "name": "Adam Treloar",
@@ -361,7 +411,9 @@
     "ave": 101,
     "stdDev": 21,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 141,
+    "min": 61
   },
   {
     "name": "Brad Ebert",
@@ -375,7 +427,9 @@
     "ave": 101,
     "stdDev": 23,
     "age": 27,
-    "bye": 10
+    "bye": 10,
+    "max": 148,
+    "min": 58
   },
   {
     "name": "Dayne Beams",
@@ -389,7 +443,9 @@
     "ave": 101,
     "stdDev": 34,
     "age": 27,
-    "bye": 13
+    "bye": 13,
+    "max": 148,
+    "min": 12
   },
   {
     "name": "Nathan Jones",
@@ -403,7 +459,9 @@
     "ave": 101,
     "stdDev": 25,
     "age": 30,
-    "bye": 13
+    "bye": 13,
+    "max": 133,
+    "min": 57
   },
   {
     "name": "Sebastian Ross",
@@ -417,7 +475,9 @@
     "ave": 101,
     "stdDev": 25,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 151,
+    "min": 36
   },
   {
     "name": "Trent Cotchin",
@@ -431,7 +491,9 @@
     "ave": 101,
     "stdDev": 18,
     "age": 27,
-    "bye": 14
+    "bye": 14,
+    "max": 135,
+    "min": 64
   },
   {
     "name": "Callan Ward",
@@ -445,7 +507,9 @@
     "ave": 100,
     "stdDev": 19,
     "age": 27,
-    "bye": 13
+    "bye": 13,
+    "max": 136,
+    "min": 62
   },
   {
     "name": "Dyson Heppell",
@@ -459,7 +523,9 @@
     "ave": 100,
     "stdDev": 22,
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": 152,
+    "min": 54
   },
   {
     "name": "Rory Laird",
@@ -473,7 +539,9 @@
     "ave": 100,
     "stdDev": 23,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 147,
+    "min": 59
   },
   {
     "name": "Sam Menegola",
@@ -487,7 +555,9 @@
     "ave": 100,
     "stdDev": 22,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 143,
+    "min": 42
   },
   {
     "name": "Luke Parker",
@@ -501,7 +571,9 @@
     "ave": 99,
     "stdDev": 18,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 134,
+    "min": 72
   },
   {
     "name": "Michael Hibberd",
@@ -515,7 +587,9 @@
     "ave": 99,
     "stdDev": 22,
     "age": 28,
-    "bye": 13
+    "bye": 13,
+    "max": 140,
+    "min": 56
   },
   {
     "name": "Ollie Wines",
@@ -529,7 +603,9 @@
     "ave": 99,
     "stdDev": 20,
     "age": 23,
-    "bye": 10
+    "bye": 10,
+    "max": 145,
+    "min": 56
   },
   {
     "name": "Dylan Shiel",
@@ -543,7 +619,9 @@
     "ave": 98,
     "stdDev": 19,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 143,
+    "min": 66
   },
   {
     "name": "Isaac Heeney",
@@ -557,7 +635,9 @@
     "ave": 98,
     "stdDev": 18,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 131,
+    "min": 69
   },
   {
     "name": "Jacob Townsend",
@@ -571,7 +651,9 @@
     "ave": 98,
     "stdDev": 15,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 118,
+    "min": 77
   },
   {
     "name": "Lachie Whitfield",
@@ -585,7 +667,9 @@
     "ave": 98,
     "stdDev": 19,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 134,
+    "min": 66
   },
   {
     "name": "Lance Franklin",
@@ -599,7 +683,9 @@
     "ave": 98,
     "stdDev": 30,
     "age": 31,
-    "bye": 14
+    "bye": 14,
+    "max": 183,
+    "min": 42
   },
   {
     "name": "Patrick Cripps",
@@ -613,7 +699,9 @@
     "ave": 98,
     "stdDev": 32,
     "age": 22,
-    "bye": 12
+    "bye": 12,
+    "max": 157,
+    "min": 25
   },
   {
     "name": "Stefan Martin",
@@ -627,7 +715,9 @@
     "ave": 98,
     "stdDev": 22,
     "age": 31,
-    "bye": 13
+    "bye": 13,
+    "max": 131,
+    "min": 57
   },
   {
     "name": "Brendon Goddard",
@@ -641,7 +731,9 @@
     "ave": 97,
     "stdDev": 15,
     "age": 32,
-    "bye": 13
+    "bye": 13,
+    "max": 133,
+    "min": 73
   },
   {
     "name": "Brodie Grundy",
@@ -655,7 +747,9 @@
     "ave": 97,
     "stdDev": 19,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 135,
+    "min": 58
   },
   {
     "name": "Dan Hannebery",
@@ -669,7 +763,9 @@
     "ave": 97,
     "stdDev": 22,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 137,
+    "min": 52
   },
   {
     "name": "Brad Crouch",
@@ -683,7 +779,9 @@
     "ave": 96,
     "stdDev": 22,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 149,
+    "min": 54
   },
   {
     "name": "Luke Shuey",
@@ -697,7 +795,9 @@
     "ave": 96,
     "stdDev": 20,
     "age": 27,
-    "bye": 12
+    "bye": 12,
+    "max": 141,
+    "min": 53
   },
   {
     "name": "Sam Jacobs",
@@ -711,7 +811,9 @@
     "ave": 96,
     "stdDev": 24,
     "age": 29,
-    "bye": 14
+    "bye": 14,
+    "max": 141,
+    "min": 59
   },
   {
     "name": "Steele Sidebottom",
@@ -725,7 +827,9 @@
     "ave": 96,
     "stdDev": 19,
     "age": 27,
-    "bye": 13
+    "bye": 13,
+    "max": 125,
+    "min": 64
   },
   {
     "name": "Toby Greene",
@@ -739,7 +843,9 @@
     "ave": 96,
     "stdDev": 18,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 138,
+    "min": 70
   },
   {
     "name": "Tom Rockliff",
@@ -753,7 +859,9 @@
     "ave": 96,
     "stdDev": 34,
     "age": 27,
-    "bye": 10
+    "bye": 10,
+    "max": 176,
+    "min": 53
   },
   {
     "name": "Ben McEvoy",
@@ -767,7 +875,9 @@
     "ave": 95,
     "stdDev": 20,
     "age": 28,
-    "bye": 12
+    "bye": 12,
+    "max": 138,
+    "min": 61
   },
   {
     "name": "Todd Goldstein",
@@ -781,7 +891,9 @@
     "ave": 95,
     "stdDev": 25,
     "age": 29,
-    "bye": 13
+    "bye": 13,
+    "max": 135,
+    "min": 32
   },
   {
     "name": "Bachar Houli",
@@ -795,7 +907,9 @@
     "ave": 94,
     "stdDev": 26,
     "age": 29,
-    "bye": 14
+    "bye": 14,
+    "max": 139,
+    "min": 43
   },
   {
     "name": "Jarrod Witts",
@@ -809,7 +923,9 @@
     "ave": 94,
     "stdDev": 13,
     "age": 25,
-    "bye": 10
+    "bye": 10,
+    "max": 115,
+    "min": 72
   },
   {
     "name": "Jeremy Howe",
@@ -823,7 +939,9 @@
     "ave": 94,
     "stdDev": 23,
     "age": 27,
-    "bye": 13
+    "bye": 13,
+    "max": 131,
+    "min": 60
   },
   {
     "name": "Josh J. Kennedy",
@@ -837,7 +955,9 @@
     "ave": 94,
     "stdDev": 28,
     "age": 30,
-    "bye": 12
+    "bye": 12,
+    "max": 174,
+    "min": 49
   },
   {
     "name": "Kade Simpson",
@@ -851,7 +971,9 @@
     "ave": 94,
     "stdDev": 22,
     "age": 33,
-    "bye": 12
+    "bye": 12,
+    "max": 148,
+    "min": 57
   },
   {
     "name": "Andrew Gaff",
@@ -865,7 +987,9 @@
     "ave": 93,
     "stdDev": 22,
     "age": 25,
-    "bye": 12
+    "bye": 12,
+    "max": 128,
+    "min": 44
   },
   {
     "name": "Chad Wingard",
@@ -879,7 +1003,9 @@
     "ave": 93,
     "stdDev": 24,
     "age": 24,
-    "bye": 10
+    "bye": 10,
+    "max": 157,
+    "min": 58
   },
   {
     "name": "Dylan Roberton",
@@ -893,7 +1019,9 @@
     "ave": 93,
     "stdDev": 20,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 149,
+    "min": 31
   },
   {
     "name": "Jack Billings",
@@ -907,7 +1035,9 @@
     "ave": 93,
     "stdDev": 24,
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 136,
+    "min": 53
   },
   {
     "name": "Aaron Hall",
@@ -921,7 +1051,9 @@
     "ave": 92,
     "stdDev": 25,
     "age": 27,
-    "bye": 10
+    "bye": 10,
+    "max": 134,
+    "min": 41
   },
   {
     "name": "Daniel Rich",
@@ -935,7 +1067,9 @@
     "ave": 92,
     "stdDev": 24,
     "age": 27,
-    "bye": 13
+    "bye": 13,
+    "max": 137,
+    "min": 49
   },
   {
     "name": "Max Gawn",
@@ -949,7 +1083,9 @@
     "ave": 92,
     "stdDev": 33,
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 160,
+    "min": 27
   },
   {
     "name": "Robbie Gray",
@@ -963,7 +1099,9 @@
     "ave": 92,
     "stdDev": 34,
     "age": 29,
-    "bye": 10
+    "bye": 10,
+    "max": 164,
+    "min": 30
   },
   {
     "name": "Shaun Higgins",
@@ -977,7 +1115,9 @@
     "ave": 92,
     "stdDev": 20,
     "age": 29,
-    "bye": 13
+    "bye": 13,
+    "max": 130,
+    "min": 58
   },
   {
     "name": "Tom Bellchambers",
@@ -991,7 +1131,9 @@
     "ave": 92,
     "stdDev": 22,
     "age": 28,
-    "bye": 13
+    "bye": 13,
+    "max": 150,
+    "min": 48
   },
   {
     "name": "Ben Cunnington",
@@ -1005,7 +1147,9 @@
     "ave": 91,
     "stdDev": 31,
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 137,
+    "min": 34
   },
   {
     "name": "Brandon Ellis",
@@ -1019,7 +1163,9 @@
     "ave": 91,
     "stdDev": 20,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 147,
+    "min": 62
   },
   {
     "name": "Charlie Dixon",
@@ -1033,7 +1179,9 @@
     "ave": 91,
     "stdDev": 31,
     "age": 27,
-    "bye": 10
+    "bye": 10,
+    "max": 167,
+    "min": 41
   },
   {
     "name": "David Zaharakis",
@@ -1047,7 +1195,9 @@
     "ave": 91,
     "stdDev": 25,
     "age": 27,
-    "bye": 13
+    "bye": 13,
+    "max": 137,
+    "min": 43
   },
   {
     "name": "Jack Steele",
@@ -1061,7 +1211,9 @@
     "ave": 91,
     "stdDev": 21,
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 137,
+    "min": 53
   },
   {
     "name": "Jack Steven",
@@ -1075,7 +1227,9 @@
     "ave": 91,
     "stdDev": 21,
     "age": 27,
-    "bye": 14
+    "bye": 14,
+    "max": 153,
+    "min": 63
   },
   {
     "name": "Jeremy McGovern",
@@ -1089,7 +1243,9 @@
     "ave": 91,
     "stdDev": 22,
     "age": 25,
-    "bye": 12
+    "bye": 12,
+    "max": 126,
+    "min": 47
   },
   {
     "name": "Luke Dahlhaus",
@@ -1103,7 +1259,9 @@
     "ave": 91,
     "stdDev": 20,
     "age": 25,
-    "bye": 12
+    "bye": 12,
+    "max": 145,
+    "min": 60
   },
   {
     "name": "Scott Selwood",
@@ -1117,7 +1275,9 @@
     "ave": 91,
     "stdDev": 23,
     "age": 27,
-    "bye": 14
+    "bye": 14,
+    "max": 128,
+    "min": 44
   },
   {
     "name": "Stephen Coniglio",
@@ -1131,7 +1291,9 @@
     "ave": 91,
     "stdDev": 14,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 120,
+    "min": 71
   },
   {
     "name": "Zac Smith",
@@ -1145,7 +1307,9 @@
     "ave": 91,
     "stdDev": 28,
     "age": 27,
-    "bye": 14
+    "bye": 14,
+    "max": 136,
+    "min": 37
   },
   {
     "name": "Alex Rance",
@@ -1159,7 +1323,9 @@
     "ave": 90,
     "stdDev": 20,
     "age": 28,
-    "bye": 14
+    "bye": 14,
+    "max": 121,
+    "min": 55
   },
   {
     "name": "Jack Viney",
@@ -1173,7 +1339,9 @@
     "ave": 90,
     "stdDev": 21,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 130,
+    "min": 59
   },
   {
     "name": "Jack Ziebell",
@@ -1187,7 +1355,9 @@
     "ave": 90,
     "stdDev": 19,
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 124,
+    "min": 54
   },
   {
     "name": "Jarryd Lyons",
@@ -1201,7 +1371,9 @@
     "ave": 90,
     "stdDev": 23,
     "age": 25,
-    "bye": 10
+    "bye": 10,
+    "max": 138,
+    "min": 43
   },
   {
     "name": "Connor Blakely",
@@ -1215,7 +1387,9 @@
     "ave": 89,
     "stdDev": 36,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 130,
+    "min": 7
   },
   {
     "name": "David Mundy",
@@ -1229,7 +1403,9 @@
     "ave": 89,
     "stdDev": 24,
     "age": 32,
-    "bye": 14
+    "bye": 14,
+    "max": 143,
+    "min": 38
   },
   {
     "name": "Jeremy Cameron",
@@ -1243,7 +1419,9 @@
     "ave": 89,
     "stdDev": 24,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 139,
+    "min": 50
   },
   {
     "name": "Shannon Hurn",
@@ -1257,7 +1435,9 @@
     "ave": 89,
     "stdDev": 30,
     "age": 30,
-    "bye": 12
+    "bye": 12,
+    "max": 165,
+    "min": 24
   },
   {
     "name": "Shaun Grigg",
@@ -1271,7 +1451,9 @@
     "ave": 89,
     "stdDev": 19,
     "age": 29,
-    "bye": 14
+    "bye": 14,
+    "max": 130,
+    "min": 54
   },
   {
     "name": "Toby Nankervis",
@@ -1285,7 +1467,9 @@
     "ave": 89,
     "stdDev": 21,
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": 127,
+    "min": 54
   },
   {
     "name": "Dawson Simpson",
@@ -1299,7 +1483,9 @@
     "ave": 88,
     "stdDev": 3,
     "age": 28,
-    "bye": 13
+    "bye": 13,
+    "max": 91,
+    "min": 85
   },
   {
     "name": "Luke Dunstan",
@@ -1313,7 +1499,9 @@
     "ave": 88,
     "stdDev": 22,
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": 140,
+    "min": 53
   },
   {
     "name": "Mitch Wallis",
@@ -1327,7 +1515,9 @@
     "ave": 88,
     "stdDev": 26,
     "age": 25,
-    "bye": 12
+    "bye": 12,
+    "max": 132,
+    "min": 37
   },
   {
     "name": "Shaun Burgoyne",
@@ -1341,7 +1531,9 @@
     "ave": 88,
     "stdDev": 22,
     "age": 35,
-    "bye": 12
+    "bye": 12,
+    "max": 144,
+    "min": 42
   },
   {
     "name": "Tom Scully",
@@ -1355,7 +1547,9 @@
     "ave": 88,
     "stdDev": 17,
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 117,
+    "min": 55
   },
   {
     "name": "Zach Tuohy",
@@ -1369,7 +1563,9 @@
     "ave": 88,
     "stdDev": 16,
     "age": 28,
-    "bye": 14
+    "bye": 14,
+    "max": 116,
+    "min": 55
   },
   {
     "name": "Aaron Sandilands",
@@ -1383,7 +1579,9 @@
     "ave": 87,
     "stdDev": 28,
     "age": 35,
-    "bye": 14
+    "bye": 14,
+    "max": 107,
+    "min": 12
   },
   {
     "name": "Alex Witherden",
@@ -1397,7 +1595,9 @@
     "ave": 87,
     "stdDev": 13,
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": 109,
+    "min": 69
   },
   {
     "name": "Jake Lloyd",
@@ -1411,7 +1611,9 @@
     "ave": 87,
     "stdDev": 23,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 114,
+    "min": 4
   },
   {
     "name": "Jarryd Roughead",
@@ -1425,7 +1627,9 @@
     "ave": 87,
     "stdDev": 18,
     "age": 31,
-    "bye": 12
+    "bye": 12,
+    "max": 140,
+    "min": 53
   },
   {
     "name": "Jordan Lewis",
@@ -1439,7 +1643,9 @@
     "ave": 87,
     "stdDev": 21,
     "age": 31,
-    "bye": 13
+    "bye": 13,
+    "max": 119,
+    "min": 34
   },
   {
     "name": "Justin Westhoff",
@@ -1453,7 +1659,9 @@
     "ave": 87,
     "stdDev": 24,
     "age": 31,
-    "bye": 10
+    "bye": 10,
+    "max": 136,
+    "min": 42
   },
   {
     "name": "Michael Walters",
@@ -1467,7 +1675,9 @@
     "ave": 87,
     "stdDev": 38,
     "age": 27,
-    "bye": 14
+    "bye": 14,
+    "max": 172,
+    "min": 28
   },
   {
     "name": "Shane Savage",
@@ -1481,7 +1691,9 @@
     "ave": 87,
     "stdDev": 22,
     "age": 27,
-    "bye": 14
+    "bye": 14,
+    "max": 125,
+    "min": 52
   },
   {
     "name": "Cameron Pedersen",
@@ -1495,7 +1707,9 @@
     "ave": 86,
     "stdDev": 28,
     "age": 30,
-    "bye": 13
+    "bye": 13,
+    "max": 137,
+    "min": 38
   },
   {
     "name": "Ed Curnow",
@@ -1509,7 +1723,9 @@
     "ave": 86,
     "stdDev": 23,
     "age": 28,
-    "bye": 12
+    "bye": 12,
+    "max": 118,
+    "min": 51
   },
   {
     "name": "Jack Gunston",
@@ -1523,7 +1739,9 @@
     "ave": 86,
     "stdDev": 28,
     "age": 26,
-    "bye": 12
+    "bye": 12,
+    "max": 146,
+    "min": 27
   },
   {
     "name": "Joe Daniher",
@@ -1537,7 +1755,9 @@
     "ave": 86,
     "stdDev": 20,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 124,
+    "min": 40
   },
   {
     "name": "Kane Lambert",
@@ -1551,7 +1771,9 @@
     "ave": 86,
     "stdDev": 23,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 133,
+    "min": 42
   },
   {
     "name": "Taylor Walker",
@@ -1565,7 +1787,9 @@
     "ave": 86,
     "stdDev": 31,
     "age": 27,
-    "bye": 14
+    "bye": 14,
+    "max": 142,
+    "min": 24
   },
   {
     "name": "Toby McLean",
@@ -1579,7 +1803,9 @@
     "ave": 86,
     "stdDev": 21,
     "age": 22,
-    "bye": 12
+    "bye": 12,
+    "max": 129,
+    "min": 51
   },
   {
     "name": "Tom Hawkins",
@@ -1593,7 +1819,9 @@
     "ave": 86,
     "stdDev": 33,
     "age": 29,
-    "bye": 14
+    "bye": 14,
+    "max": 192,
+    "min": 36
   },
   {
     "name": "Tom Lynch",
@@ -1607,7 +1835,9 @@
     "ave": 86,
     "stdDev": 21,
     "age": 27,
-    "bye": 14
+    "bye": 14,
+    "max": 121,
+    "min": 36
   },
   {
     "name": "David Swallow",
@@ -1621,7 +1851,9 @@
     "ave": 85,
     "stdDev": 22,
     "age": 25,
-    "bye": 10
+    "bye": 10,
+    "max": 132,
+    "min": 46
   },
   {
     "name": "Hugh Greenwood",
@@ -1635,7 +1867,9 @@
     "ave": 85,
     "stdDev": 22,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 127,
+    "min": 51
   },
   {
     "name": "Isaac Smith",
@@ -1649,7 +1883,9 @@
     "ave": 85,
     "stdDev": 20,
     "age": 29,
-    "bye": 12
+    "bye": 12,
+    "max": 118,
+    "min": 52
   },
   {
     "name": "Jack Newnes",
@@ -1663,7 +1899,9 @@
     "ave": 85,
     "stdDev": 24,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 138,
+    "min": 11
   },
   {
     "name": "Tom J. Lynch",
@@ -1677,7 +1915,9 @@
     "ave": 85,
     "stdDev": 32,
     "age": 25,
-    "bye": 10
+    "bye": 10,
+    "max": 161,
+    "min": 29
   },
   {
     "name": "Tom McDonald",
@@ -1691,7 +1931,9 @@
     "ave": 85,
     "stdDev": 23,
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": 139,
+    "min": 38
   },
   {
     "name": "Travis Boak",
@@ -1705,7 +1947,9 @@
     "ave": 85,
     "stdDev": 19,
     "age": 29,
-    "bye": 10
+    "bye": 10,
+    "max": 134,
+    "min": 49
   },
   {
     "name": "Dom Sheed",
@@ -1719,7 +1963,9 @@
     "ave": 84,
     "stdDev": 20,
     "age": 22,
-    "bye": 12
+    "bye": 12,
+    "max": 127,
+    "min": 48
   },
   {
     "name": "Jack Sinclair",
@@ -1733,7 +1979,9 @@
     "ave": 84,
     "stdDev": 18,
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 109,
+    "min": 47
   },
   {
     "name": "Luke Hodge",
@@ -1747,7 +1995,9 @@
     "ave": 84,
     "stdDev": 18,
     "age": 33,
-    "bye": 13
+    "bye": 13,
+    "max": 116,
+    "min": 52
   },
   {
     "name": "Luke McDonald",
@@ -1761,7 +2011,9 @@
     "ave": 84,
     "stdDev": 15,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 112,
+    "min": 58
   },
   {
     "name": "Michael Barlow",
@@ -1775,7 +2027,9 @@
     "ave": 84,
     "stdDev": 21,
     "age": 30,
-    "bye": 10
+    "bye": 10,
+    "max": 112,
+    "min": 27
   },
   {
     "name": "Ryan Burton",
@@ -1789,7 +2043,9 @@
     "ave": 84,
     "stdDev": 16,
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": 112,
+    "min": 57
   },
   {
     "name": "Steven May",
@@ -1803,7 +2059,9 @@
     "ave": 84,
     "stdDev": 23,
     "age": 26,
-    "bye": 10
+    "bye": 10,
+    "max": 123,
+    "min": 15
   },
   {
     "name": "Dion Prestia",
@@ -1817,7 +2075,9 @@
     "ave": 83,
     "stdDev": 24,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 126,
+    "min": 52
   },
   {
     "name": "Heath Shaw",
@@ -1831,7 +2091,9 @@
     "ave": 83,
     "stdDev": 16,
     "age": 32,
-    "bye": 13
+    "bye": 13,
+    "max": 118,
+    "min": 50
   },
   {
     "name": "Jack Crisp",
@@ -1845,7 +2107,9 @@
     "ave": 83,
     "stdDev": 22,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 129,
+    "min": 37
   },
   {
     "name": "Jack Riewoldt",
@@ -1859,7 +2123,9 @@
     "ave": 83,
     "stdDev": 20,
     "age": 29,
-    "bye": 14
+    "bye": 14,
+    "max": 122,
+    "min": 44
   },
   {
     "name": "Jarrad McVeigh",
@@ -1873,7 +2139,9 @@
     "ave": 83,
     "stdDev": 16,
     "age": 32,
-    "bye": 14
+    "bye": 14,
+    "max": 113,
+    "min": 54
   },
   {
     "name": "Nic Newman",
@@ -1887,7 +2155,9 @@
     "ave": 83,
     "stdDev": 25,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 151,
+    "min": 24
   },
   {
     "name": "Zak Jones",
@@ -1901,7 +2171,9 @@
     "ave": 83,
     "stdDev": 26,
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 143,
+    "min": 36
   },
   {
     "name": "Jack Graham",
@@ -1915,7 +2187,9 @@
     "ave": 82,
     "stdDev": 4,
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": 87,
+    "min": 76
   },
   {
     "name": "Jack Martin",
@@ -1929,7 +2203,9 @@
     "ave": 82,
     "stdDev": 24,
     "age": 23,
-    "bye": 10
+    "bye": 10,
+    "max": 133,
+    "min": 38
   },
   {
     "name": "Jared Polec",
@@ -1943,7 +2219,9 @@
     "ave": 82,
     "stdDev": 20,
     "age": 25,
-    "bye": 10
+    "bye": 10,
+    "max": 128,
+    "min": 32
   },
   {
     "name": "Jarrad Waite",
@@ -1957,7 +2235,9 @@
     "ave": 82,
     "stdDev": 46,
     "age": 35,
-    "bye": 13
+    "bye": 13,
+    "max": 190,
+    "min": 31
   },
   {
     "name": "Jason Johannisen",
@@ -1971,7 +2251,9 @@
     "ave": 82,
     "stdDev": 21,
     "age": 25,
-    "bye": 12
+    "bye": 12,
+    "max": 126,
+    "min": 21
   },
   {
     "name": "Lachie Hunter",
@@ -1985,7 +2267,9 @@
     "ave": 82,
     "stdDev": 21,
     "age": 23,
-    "bye": 12
+    "bye": 12,
+    "max": 126,
+    "min": 39
   },
   {
     "name": "Mark Blicavs",
@@ -1999,7 +2283,9 @@
     "ave": 82,
     "stdDev": 28,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 137,
+    "min": 43
   },
   {
     "name": "Mitch Robinson",
@@ -2013,7 +2299,9 @@
     "ave": 82,
     "stdDev": 27,
     "age": 28,
-    "bye": 13
+    "bye": 13,
+    "max": 116,
+    "min": 29
   },
   {
     "name": "Richard Douglas",
@@ -2027,7 +2315,9 @@
     "ave": 82,
     "stdDev": 21,
     "age": 31,
-    "bye": 14
+    "bye": 14,
+    "max": 124,
+    "min": 43
   },
   {
     "name": "Sam Gibson",
@@ -2041,7 +2331,9 @@
     "ave": 82,
     "stdDev": 17,
     "age": 31,
-    "bye": 14
+    "bye": 14,
+    "max": 113,
+    "min": 51
   },
   {
     "name": "Tom Langdon",
@@ -2055,7 +2347,9 @@
     "ave": 82,
     "stdDev": 18,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 103,
+    "min": 41
   },
   {
     "name": "Tom Papley",
@@ -2069,7 +2363,9 @@
     "ave": 82,
     "stdDev": 25,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 121,
+    "min": 23
   },
   {
     "name": "Dom Tyson",
@@ -2083,7 +2379,9 @@
     "ave": 81,
     "stdDev": 15,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 102,
+    "min": 43
   },
   {
     "name": "Jonathon Patton",
@@ -2097,7 +2395,9 @@
     "ave": 81,
     "stdDev": 29,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 156,
+    "min": 46
   },
   {
     "name": "Will Hoskin-Elliott",
@@ -2111,7 +2411,9 @@
     "ave": 81,
     "stdDev": 20,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 125,
+    "min": 51
   },
   {
     "name": "Aaron Mullett",
@@ -2125,7 +2427,9 @@
     "ave": 80,
     "stdDev": 18,
     "age": 25,
-    "bye": 12
+    "bye": 12,
+    "max": 118,
+    "min": 51
   },
   {
     "name": "Callum Sinclair",
@@ -2139,7 +2443,9 @@
     "ave": 80,
     "stdDev": 28,
     "age": 28,
-    "bye": 14
+    "bye": 14,
+    "max": 148,
+    "min": 40
   },
   {
     "name": "Christian Salem",
@@ -2153,7 +2459,9 @@
     "ave": 80,
     "stdDev": 22,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 134,
+    "min": 43
   },
   {
     "name": "Devon Smith",
@@ -2167,7 +2475,9 @@
     "ave": 80,
     "stdDev": 16,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 101,
+    "min": 39
   },
   {
     "name": "Jack Redden",
@@ -2181,7 +2491,9 @@
     "ave": 80,
     "stdDev": 21,
     "age": 27,
-    "bye": 12
+    "bye": 12,
+    "max": 114,
+    "min": 41
   },
   {
     "name": "Jarrod Harbrow",
@@ -2195,7 +2507,9 @@
     "ave": 80,
     "stdDev": 26,
     "age": 29,
-    "bye": 10
+    "bye": 10,
+    "max": 119,
+    "min": 21
   },
   {
     "name": "Lewis Taylor",
@@ -2209,7 +2523,9 @@
     "ave": 80,
     "stdDev": 21,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 129,
+    "min": 31
   },
   {
     "name": "Sam Mayes",
@@ -2223,7 +2539,9 @@
     "ave": 80,
     "stdDev": 17,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 112,
+    "min": 43
   },
   {
     "name": "Stephen Hill",
@@ -2237,7 +2555,9 @@
     "ave": 80,
     "stdDev": 20,
     "age": 27,
-    "bye": 14
+    "bye": 14,
+    "max": 124,
+    "min": 48
   },
   {
     "name": "Bradley Hill",
@@ -2251,7 +2571,9 @@
     "ave": 79,
     "stdDev": 23,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 130,
+    "min": 34
   },
   {
     "name": "Cale Hooker",
@@ -2265,7 +2587,9 @@
     "ave": 79,
     "stdDev": 26,
     "age": 29,
-    "bye": 13
+    "bye": 13,
+    "max": 140,
+    "min": 40
   },
   {
     "name": "Caleb Daniel",
@@ -2279,7 +2603,9 @@
     "ave": 79,
     "stdDev": 18,
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": 116,
+    "min": 45
   },
   {
     "name": "Christian Petracca",
@@ -2293,7 +2619,9 @@
     "ave": 79,
     "stdDev": 18,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 121,
+    "min": 51
   },
   {
     "name": "Eddie Betts",
@@ -2307,7 +2635,9 @@
     "ave": 79,
     "stdDev": 24,
     "age": 31,
-    "bye": 14
+    "bye": 14,
+    "max": 150,
+    "min": 34
   },
   {
     "name": "Harry Morrison",
@@ -2321,7 +2651,9 @@
     "ave": 79,
     "stdDev": "-",
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": 79,
+    "min": 79
   },
   {
     "name": "Jake Lever",
@@ -2335,7 +2667,9 @@
     "ave": 79,
     "stdDev": 17,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 121,
+    "min": 51
   },
   {
     "name": "Jasper Pittard",
@@ -2349,7 +2683,9 @@
     "ave": 79,
     "stdDev": 15,
     "age": 26,
-    "bye": 10
+    "bye": 10,
+    "max": 111,
+    "min": 58
   },
   {
     "name": "Jordan de Goey",
@@ -2363,7 +2699,9 @@
     "ave": 79,
     "stdDev": 26,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 130,
+    "min": 46
   },
   {
     "name": "Josh Jenkins",
@@ -2377,7 +2715,9 @@
     "ave": 79,
     "stdDev": 29,
     "age": 29,
-    "bye": 14
+    "bye": 14,
+    "max": 122,
+    "min": 2
   },
   {
     "name": "Koby Stevens",
@@ -2391,7 +2731,9 @@
     "ave": 79,
     "stdDev": 25,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 110,
+    "min": 17
   },
   {
     "name": "Marcus Adams",
@@ -2405,7 +2747,9 @@
     "ave": 79,
     "stdDev": 16,
     "age": 24,
-    "bye": 12
+    "bye": 12,
+    "max": 121,
+    "min": 61
   },
   {
     "name": "Robbie Tarrant",
@@ -2419,7 +2763,9 @@
     "ave": 79,
     "stdDev": 17,
     "age": 28,
-    "bye": 13
+    "bye": 13,
+    "max": 124,
+    "min": 52
   },
   {
     "name": "Rory Atkins",
@@ -2433,7 +2779,9 @@
     "ave": 79,
     "stdDev": 23,
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": 130,
+    "min": 46
   },
   {
     "name": "Ryan Bastinac",
@@ -2447,7 +2795,9 @@
     "ave": 79,
     "stdDev": 20,
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 122,
+    "min": 50
   },
   {
     "name": "Ryan Lester",
@@ -2461,7 +2811,9 @@
     "ave": 79,
     "stdDev": 25,
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": 134,
+    "min": 33
   },
   {
     "name": "Sean Darcy",
@@ -2475,7 +2827,9 @@
     "ave": 79,
     "stdDev": 17,
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": 99,
+    "min": 50
   },
   {
     "name": "Shane Biggs",
@@ -2489,7 +2843,9 @@
     "ave": 79,
     "stdDev": 17,
     "age": 26,
-    "bye": 12
+    "bye": 12,
+    "max": 115,
+    "min": 49
   },
   {
     "name": "Shaun McKernan",
@@ -2503,7 +2859,9 @@
     "ave": 79,
     "stdDev": 22,
     "age": 27,
-    "bye": 13
+    "bye": 13,
+    "max": 97,
+    "min": 49
   },
   {
     "name": "Tom Liberatore",
@@ -2517,7 +2875,9 @@
     "ave": 79,
     "stdDev": 24,
     "age": 25,
-    "bye": 12
+    "bye": 12,
+    "max": 131,
+    "min": 34
   },
   {
     "name": "Billy Longer",
@@ -2531,7 +2891,9 @@
     "ave": 78,
     "stdDev": 29,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 123,
+    "min": 21
   },
   {
     "name": "Dane Rampe",
@@ -2545,7 +2907,9 @@
     "ave": 78,
     "stdDev": 21,
     "age": 27,
-    "bye": 14
+    "bye": 14,
+    "max": 126,
+    "min": 55
   },
   {
     "name": "Lachie Henderson",
@@ -2559,7 +2923,9 @@
     "ave": 78,
     "stdDev": 19,
     "age": 28,
-    "bye": 14
+    "bye": 14,
+    "max": 120,
+    "min": 40
   },
   {
     "name": "Liam Jones",
@@ -2573,7 +2939,9 @@
     "ave": 78,
     "stdDev": 18,
     "age": 26,
-    "bye": 12
+    "bye": 12,
+    "max": 117,
+    "min": 48
   },
   {
     "name": "Liam Shiels",
@@ -2587,7 +2955,9 @@
     "ave": 78,
     "stdDev": 23,
     "age": 26,
-    "bye": 12
+    "bye": 12,
+    "max": 121,
+    "min": 35
   },
   {
     "name": "Matthew Suckling",
@@ -2601,7 +2971,9 @@
     "ave": 78,
     "stdDev": 11,
     "age": 29,
-    "bye": 12
+    "bye": 12,
+    "max": 99,
+    "min": 63
   },
   {
     "name": "Nick Vlastuin",
@@ -2615,7 +2987,9 @@
     "ave": 78,
     "stdDev": 23,
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": 118,
+    "min": 39
   },
   {
     "name": "Paul Seedsman",
@@ -2629,7 +3003,9 @@
     "ave": 78,
     "stdDev": 11,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 94,
+    "min": 62
   },
   {
     "name": "Pearce Hanley",
@@ -2643,7 +3019,9 @@
     "ave": 78,
     "stdDev": 26,
     "age": 29,
-    "bye": 10
+    "bye": 10,
+    "max": 119,
+    "min": 31
   },
   {
     "name": "Riley Bonner",
@@ -2657,7 +3035,9 @@
     "ave": 78,
     "stdDev": 2,
     "age": 20,
-    "bye": 10
+    "bye": 10,
+    "max": 81,
+    "min": 75
   },
   {
     "name": "Sam Kerridge",
@@ -2671,7 +3051,9 @@
     "ave": 78,
     "stdDev": 23,
     "age": 24,
-    "bye": 12
+    "bye": 12,
+    "max": 107,
+    "min": 22
   },
   {
     "name": "Ben Brown",
@@ -2685,7 +3067,9 @@
     "ave": 77,
     "stdDev": 28,
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": 134,
+    "min": 12
   },
   {
     "name": "Brett Deledio",
@@ -2699,7 +3083,9 @@
     "ave": 77,
     "stdDev": 15,
     "age": 30,
-    "bye": 13
+    "bye": 13,
+    "max": 96,
+    "min": 57
   },
   {
     "name": "Jamie Macmillan",
@@ -2713,7 +3099,9 @@
     "ave": 77,
     "stdDev": 17,
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 114,
+    "min": 51
   },
   {
     "name": "Luke Ryan",
@@ -2727,7 +3115,9 @@
     "ave": 77,
     "stdDev": 31,
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 136,
+    "min": 32
   },
   {
     "name": "Nick Graham",
@@ -2741,7 +3131,9 @@
     "ave": 77,
     "stdDev": 11,
     "age": 23,
-    "bye": 12
+    "bye": 12,
+    "max": 100,
+    "min": 49
   },
   {
     "name": "Ricky Henderson",
@@ -2755,7 +3147,9 @@
     "ave": 77,
     "stdDev": 16,
     "age": 29,
-    "bye": 12
+    "bye": 12,
+    "max": 113,
+    "min": 51
   },
   {
     "name": "Alex Neal-Bullen",
@@ -2769,7 +3163,9 @@
     "ave": 76,
     "stdDev": 22,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 127,
+    "min": 41
   },
   {
     "name": "Brandon Matera",
@@ -2783,7 +3179,9 @@
     "ave": 76,
     "stdDev": 31,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 159,
+    "min": 44
   },
   {
     "name": "Darcy Parish",
@@ -2797,7 +3195,9 @@
     "ave": 76,
     "stdDev": 14,
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": 96,
+    "min": 43
   },
   {
     "name": "George Horlin-Smith",
@@ -2811,7 +3211,9 @@
     "ave": 76,
     "stdDev": 18,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 102,
+    "min": 52
   },
   {
     "name": "Hamish Hartlett",
@@ -2825,7 +3227,9 @@
     "ave": 76,
     "stdDev": 18,
     "age": 27,
-    "bye": 10
+    "bye": 10,
+    "max": 116,
+    "min": 42
   },
   {
     "name": "Jack Watts",
@@ -2839,7 +3243,9 @@
     "ave": 76,
     "stdDev": 22,
     "age": 26,
-    "bye": 10
+    "bye": 10,
+    "max": 118,
+    "min": 43
   },
   {
     "name": "Josh Caddy",
@@ -2853,7 +3259,9 @@
     "ave": 76,
     "stdDev": 25,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 137,
+    "min": 14
   },
   {
     "name": "Matthew Leuenberger",
@@ -2867,7 +3275,9 @@
     "ave": 76,
     "stdDev": 16,
     "age": 29,
-    "bye": 13
+    "bye": 13,
+    "max": 98,
+    "min": 55
   },
   {
     "name": "Matthew Wright",
@@ -2881,7 +3291,9 @@
     "ave": 76,
     "stdDev": 18,
     "age": 28,
-    "bye": 12
+    "bye": 12,
+    "max": 112,
+    "min": 42
   },
   {
     "name": "Michael Johnson",
@@ -2895,7 +3307,9 @@
     "ave": 76,
     "stdDev": 21,
     "age": 33,
-    "bye": 14
+    "bye": 14,
+    "max": 109,
+    "min": 35
   },
   {
     "name": "Nathan Wilson",
@@ -2909,7 +3323,9 @@
     "ave": 76,
     "stdDev": 22,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 127,
+    "min": 29
   },
   {
     "name": "Nick Haynes",
@@ -2923,7 +3339,9 @@
     "ave": 76,
     "stdDev": 24,
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": 113,
+    "min": 25
   },
   {
     "name": "Sam Gray",
@@ -2937,7 +3355,9 @@
     "ave": 76,
     "stdDev": 21,
     "age": 26,
-    "bye": 10
+    "bye": 10,
+    "max": 126,
+    "min": 42
   },
   {
     "name": "Sam Reid",
@@ -2951,7 +3371,9 @@
     "ave": 76,
     "stdDev": 28,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 127,
+    "min": 13
   },
   {
     "name": "Tom Phillips",
@@ -2965,7 +3387,9 @@
     "ave": 76,
     "stdDev": 13,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 97,
+    "min": 50
   },
   {
     "name": "Touk Miller",
@@ -2979,7 +3403,9 @@
     "ave": 76,
     "stdDev": 17,
     "age": 21,
-    "bye": 10
+    "bye": 10,
+    "max": 117,
+    "min": 43
   },
   {
     "name": "Blake Acres",
@@ -2993,7 +3419,9 @@
     "ave": 75,
     "stdDev": 22,
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 116,
+    "min": 36
   },
   {
     "name": "Liam Picken",
@@ -3007,7 +3435,9 @@
     "ave": 75,
     "stdDev": 22,
     "age": 31,
-    "bye": 12
+    "bye": 12,
+    "max": 115,
+    "min": 30
   },
   {
     "name": "Rhys Stanley",
@@ -3021,7 +3451,9 @@
     "ave": 75,
     "stdDev": 12,
     "age": 27,
-    "bye": 14
+    "bye": 14,
+    "max": 95,
+    "min": 55
   },
   {
     "name": "Shane Edwards",
@@ -3035,7 +3467,9 @@
     "ave": 75,
     "stdDev": 14,
     "age": 29,
-    "bye": 14
+    "bye": 14,
+    "max": 97,
+    "min": 43
   },
   {
     "name": "Tim Membrey",
@@ -3049,7 +3483,9 @@
     "ave": 75,
     "stdDev": 18,
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": 114,
+    "min": 42
   },
   {
     "name": "Trent Dumont",
@@ -3063,7 +3499,9 @@
     "ave": 75,
     "stdDev": 18,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 116,
+    "min": 42
   },
   {
     "name": "Anthony McDonald-Tipungwuti",
@@ -3077,7 +3515,9 @@
     "ave": 74,
     "stdDev": 24,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 144,
+    "min": 36
   },
   {
     "name": "Bernie Vince",
@@ -3091,7 +3531,9 @@
     "ave": 74,
     "stdDev": 20,
     "age": 32,
-    "bye": 13
+    "bye": 13,
+    "max": 114,
+    "min": 41
   },
   {
     "name": "Cameron Guthrie",
@@ -3105,7 +3547,9 @@
     "ave": 74,
     "stdDev": 17,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 110,
+    "min": 32
   },
   {
     "name": "Charlie Curnow",
@@ -3119,7 +3563,9 @@
     "ave": 74,
     "stdDev": 24,
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": 122,
+    "min": 37
   },
   {
     "name": "Chris Masten",
@@ -3133,7 +3579,9 @@
     "ave": 74,
     "stdDev": 18,
     "age": 28,
-    "bye": 12
+    "bye": 12,
+    "max": 103,
+    "min": 42
   },
   {
     "name": "Daniel Howe",
@@ -3147,7 +3595,9 @@
     "ave": 74,
     "stdDev": 18,
     "age": 22,
-    "bye": 12
+    "bye": 12,
+    "max": 107,
+    "min": 42
   },
   {
     "name": "George Hewett",
@@ -3161,7 +3611,9 @@
     "ave": 74,
     "stdDev": 19,
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 107,
+    "min": 47
   },
   {
     "name": "Harry Taylor",
@@ -3175,7 +3627,9 @@
     "ave": 74,
     "stdDev": 25,
     "age": 31,
-    "bye": 14
+    "bye": 14,
+    "max": 117,
+    "min": 24
   },
   {
     "name": "Jamie Elliott",
@@ -3189,7 +3643,9 @@
     "ave": 74,
     "stdDev": 19,
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": 107,
+    "min": 28
   },
   {
     "name": "Kieren Jack",
@@ -3203,7 +3659,9 @@
     "ave": 74,
     "stdDev": 23,
     "age": 30,
-    "bye": 14
+    "bye": 14,
+    "max": 124,
+    "min": 35
   },
   {
     "name": "Matt Rosa",
@@ -3217,7 +3675,9 @@
     "ave": 74,
     "stdDev": 16,
     "age": 31,
-    "bye": 10
+    "bye": 10,
+    "max": 98,
+    "min": 34
   },
   {
     "name": "Orazio Fantasia",
@@ -3231,7 +3691,9 @@
     "ave": 74,
     "stdDev": 26,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 115,
+    "min": 7
   },
   {
     "name": "Tom Hickey",
@@ -3245,7 +3707,9 @@
     "ave": 74,
     "stdDev": 26,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 112,
+    "min": 44
   },
   {
     "name": "Adam Saad",
@@ -3259,7 +3723,9 @@
     "ave": 73,
     "stdDev": 11,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 102,
+    "min": 54
   },
   {
     "name": "Andy Otten",
@@ -3273,7 +3739,9 @@
     "ave": 73,
     "stdDev": 25,
     "age": 28,
-    "bye": 14
+    "bye": 14,
+    "max": 121,
+    "min": 36
   },
   {
     "name": "Billy Hartung",
@@ -3287,7 +3755,9 @@
     "ave": 73,
     "stdDev": 18,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 117,
+    "min": 37
   },
   {
     "name": "Callum Mills",
@@ -3301,7 +3771,9 @@
     "ave": 73,
     "stdDev": 14,
     "age": 20,
-    "bye": 14
+    "bye": 14,
+    "max": 105,
+    "min": 54
   },
   {
     "name": "Dan Houston",
@@ -3315,7 +3787,9 @@
     "ave": 73,
     "stdDev": 12,
     "age": 20,
-    "bye": 10
+    "bye": 10,
+    "max": 111,
+    "min": 51
   },
   {
     "name": "David Astbury",
@@ -3329,7 +3803,9 @@
     "ave": 73,
     "stdDev": 15,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 105,
+    "min": 44
   },
   {
     "name": "Dougal Howard",
@@ -3343,7 +3819,9 @@
     "ave": 73,
     "stdDev": 9,
     "age": 21,
-    "bye": 10
+    "bye": 10,
+    "max": 84,
+    "min": 63
   },
   {
     "name": "Heath Grundy",
@@ -3357,7 +3835,9 @@
     "ave": 73,
     "stdDev": 20,
     "age": 31,
-    "bye": 14
+    "bye": 14,
+    "max": 117,
+    "min": 43
   },
   {
     "name": "James Harmes",
@@ -3371,7 +3851,9 @@
     "ave": 73,
     "stdDev": 19,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 105,
+    "min": 37
   },
   {
     "name": "James Sicily",
@@ -3385,7 +3867,9 @@
     "ave": 73,
     "stdDev": 30,
     "age": 23,
-    "bye": 12
+    "bye": 12,
+    "max": 130,
+    "min": 25
   },
   {
     "name": "Kade Kolodjashnij",
@@ -3399,7 +3883,9 @@
     "ave": 73,
     "stdDev": 16,
     "age": 22,
-    "bye": 10
+    "bye": 10,
+    "max": 96,
+    "min": 43
   },
   {
     "name": "Lin Jong",
@@ -3413,7 +3899,9 @@
     "ave": 73,
     "stdDev": 21,
     "age": 24,
-    "bye": 12
+    "bye": 12,
+    "max": 103,
+    "min": 19
   },
   {
     "name": "Rhys Mathieson",
@@ -3427,7 +3915,9 @@
     "ave": 73,
     "stdDev": 20,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 122,
+    "min": 28
   },
   {
     "name": "Steven Motlop",
@@ -3441,7 +3931,9 @@
     "ave": 73,
     "stdDev": 19,
     "age": 26,
-    "bye": 10
+    "bye": 10,
+    "max": 123,
+    "min": 36
   },
   {
     "name": "Angus Brayshaw",
@@ -3455,7 +3947,9 @@
     "ave": 72,
     "stdDev": 16,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 91,
+    "min": 46
   },
   {
     "name": "Ben Reid",
@@ -3469,7 +3963,9 @@
     "ave": 72,
     "stdDev": 24,
     "age": 28,
-    "bye": 13
+    "bye": 13,
+    "max": 130,
+    "min": 38
   },
   {
     "name": "Brayden Maynard",
@@ -3483,7 +3979,9 @@
     "ave": 72,
     "stdDev": 18,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 109,
+    "min": 41
   },
   {
     "name": "Corey Maynard",
@@ -3497,7 +3995,9 @@
     "ave": 72,
     "stdDev": "-",
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 72,
+    "min": 72
   },
   {
     "name": "Jack Darling",
@@ -3511,7 +4011,9 @@
     "ave": 72,
     "stdDev": 23,
     "age": 25,
-    "bye": 12
+    "bye": 12,
+    "max": 138,
+    "min": 32
   },
   {
     "name": "Jordan Roughead",
@@ -3525,7 +4027,9 @@
     "ave": 72,
     "stdDev": 22,
     "age": 27,
-    "bye": 12
+    "bye": 12,
+    "max": 127,
+    "min": 31
   },
   {
     "name": "Lachie Weller",
@@ -3539,7 +4043,9 @@
     "ave": 72,
     "stdDev": 18,
     "age": 21,
-    "bye": 10
+    "bye": 10,
+    "max": 118,
+    "min": 37
   },
   {
     "name": "Lee Spurr",
@@ -3553,7 +4059,9 @@
     "ave": 72,
     "stdDev": 20,
     "age": 30,
-    "bye": 14
+    "bye": 14,
+    "max": 110,
+    "min": 44
   },
   {
     "name": "Marley Williams",
@@ -3567,7 +4075,9 @@
     "ave": 72,
     "stdDev": 18,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 105,
+    "min": 37
   },
   {
     "name": "Matt Dea",
@@ -3581,7 +4091,9 @@
     "ave": 72,
     "stdDev": 21,
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 95,
+    "min": 28
   },
   {
     "name": "Matthew Scharenberg",
@@ -3595,7 +4107,9 @@
     "ave": 72,
     "stdDev": 15,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 99,
+    "min": 46
   },
   {
     "name": "Rory Lobb",
@@ -3609,7 +4123,9 @@
     "ave": 72,
     "stdDev": 16,
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": 114,
+    "min": 45
   },
   {
     "name": "Andrew McGrath",
@@ -3623,7 +4139,9 @@
     "ave": 71,
     "stdDev": 16,
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": 101,
+    "min": 45
   },
   {
     "name": "Anthony Miles",
@@ -3637,7 +4155,9 @@
     "ave": 71,
     "stdDev": 29,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 107,
+    "min": 32
   },
   {
     "name": "Billy Stretch",
@@ -3651,7 +4171,9 @@
     "ave": 71,
     "stdDev": 26,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 109,
+    "min": 34
   },
   {
     "name": "Brayden Fiorini",
@@ -3665,7 +4187,9 @@
     "ave": 71,
     "stdDev": 22,
     "age": 20,
-    "bye": 10
+    "bye": 10,
+    "max": 97,
+    "min": 18
   },
   {
     "name": "Daniel Menzel",
@@ -3679,7 +4203,9 @@
     "ave": 71,
     "stdDev": 16,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 108,
+    "min": 35
   },
   {
     "name": "Daniel Wells",
@@ -3693,7 +4219,9 @@
     "ave": 71,
     "stdDev": 33,
     "age": 33,
-    "bye": 13
+    "bye": 13,
+    "max": 130,
+    "min": 15
   },
   {
     "name": "David Armitage",
@@ -3707,7 +4235,9 @@
     "ave": 71,
     "stdDev": 4,
     "age": 29,
-    "bye": 14
+    "bye": 14,
+    "max": 74,
+    "min": 67
   },
   {
     "name": "Jayden Hunt",
@@ -3721,7 +4251,9 @@
     "ave": 71,
     "stdDev": 22,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 114,
+    "min": 24
   },
   {
     "name": "Jimmy Webster",
@@ -3735,7 +4267,9 @@
     "ave": 71,
     "stdDev": 20,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 99,
+    "min": 16
   },
   {
     "name": "Jordan Murdoch",
@@ -3749,7 +4283,9 @@
     "ave": 71,
     "stdDev": 15,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 110,
+    "min": 44
   },
   {
     "name": "Luke Breust",
@@ -3763,7 +4299,9 @@
     "ave": 71,
     "stdDev": 24,
     "age": 27,
-    "bye": 12
+    "bye": 12,
+    "max": 115,
+    "min": 24
   },
   {
     "name": "Thomas Barrass",
@@ -3777,7 +4315,9 @@
     "ave": 71,
     "stdDev": 14,
     "age": 22,
-    "bye": 12
+    "bye": 12,
+    "max": 96,
+    "min": 49
   },
   {
     "name": "Tom Cutler",
@@ -3791,7 +4331,9 @@
     "ave": 71,
     "stdDev": 25,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 103,
+    "min": 8
   },
   {
     "name": "Tom Jonas",
@@ -3805,7 +4347,9 @@
     "ave": 71,
     "stdDev": 18,
     "age": 27,
-    "bye": 10
+    "bye": 10,
+    "max": 116,
+    "min": 37
   },
   {
     "name": "Darcy Lang",
@@ -3819,7 +4363,9 @@
     "ave": 70,
     "stdDev": 21,
     "age": 22,
-    "bye": 12
+    "bye": 12,
+    "max": 106,
+    "min": 35
   },
   {
     "name": "Jesse Hogan",
@@ -3833,7 +4379,9 @@
     "ave": 70,
     "stdDev": 28,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 120,
+    "min": 17
   },
   {
     "name": "Lewis Jetta",
@@ -3847,7 +4395,9 @@
     "ave": 70,
     "stdDev": 17,
     "age": 28,
-    "bye": 12
+    "bye": 12,
+    "max": 101,
+    "min": 42
   },
   {
     "name": "Martin Gleeson",
@@ -3861,7 +4411,9 @@
     "ave": 70,
     "stdDev": 23,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 111,
+    "min": 29
   },
   {
     "name": "Oscar McDonald",
@@ -3875,7 +4427,9 @@
     "ave": 70,
     "stdDev": 19,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 111,
+    "min": 38
   },
   {
     "name": "Peter Wright",
@@ -3889,7 +4443,9 @@
     "ave": 70,
     "stdDev": 17,
     "age": 21,
-    "bye": 10
+    "bye": 10,
+    "max": 100,
+    "min": 28
   },
   {
     "name": "Reece Conca",
@@ -3903,7 +4459,9 @@
     "ave": 70,
     "stdDev": 18,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 102,
+    "min": 41
   },
   {
     "name": "Scott D. Thompson",
@@ -3917,7 +4475,9 @@
     "ave": 70,
     "stdDev": 21,
     "age": 31,
-    "bye": 13
+    "bye": 13,
+    "max": 123,
+    "min": 27
   },
   {
     "name": "Tom Campbell",
@@ -3931,7 +4491,9 @@
     "ave": 70,
     "stdDev": 25,
     "age": 26,
-    "bye": 12
+    "bye": 12,
+    "max": 120,
+    "min": 41
   },
   {
     "name": "Trent McKenzie",
@@ -3945,7 +4507,9 @@
     "ave": 70,
     "stdDev": 25,
     "age": 25,
-    "bye": 10
+    "bye": 10,
+    "max": 132,
+    "min": 45
   },
   {
     "name": "Ben Keays",
@@ -3959,7 +4523,9 @@
     "ave": 69,
     "stdDev": 16,
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": 94,
+    "min": 40
   },
   {
     "name": "Caleb Marchbank",
@@ -3973,7 +4539,9 @@
     "ave": 69,
     "stdDev": 18,
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": 108,
+    "min": 43
   },
   {
     "name": "Gary Rohan",
@@ -3987,7 +4555,9 @@
     "ave": 69,
     "stdDev": 25,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 128,
+    "min": 16
   },
   {
     "name": "Harris Andrews",
@@ -4001,7 +4571,9 @@
     "ave": 69,
     "stdDev": 15,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 96,
+    "min": 34
   },
   {
     "name": "Jeff Garlett",
@@ -4015,7 +4587,9 @@
     "ave": 69,
     "stdDev": 29,
     "age": 28,
-    "bye": 13
+    "bye": 13,
+    "max": 131,
+    "min": 7
   },
   {
     "name": "Matthew Broadbent",
@@ -4029,7 +4603,9 @@
     "ave": 69,
     "stdDev": 22,
     "age": 27,
-    "bye": 10
+    "bye": 10,
+    "max": 114,
+    "min": 33
   },
   {
     "name": "Mitch McGovern",
@@ -4043,7 +4619,9 @@
     "ave": 69,
     "stdDev": 16,
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": 100,
+    "min": 50
   },
   {
     "name": "Paul Puopolo",
@@ -4057,7 +4635,9 @@
     "ave": 69,
     "stdDev": 18,
     "age": 30,
-    "bye": 12
+    "bye": 12,
+    "max": 130,
+    "min": 38
   },
   {
     "name": "Alex Silvagni",
@@ -4071,7 +4651,9 @@
     "ave": 68,
     "stdDev": 28,
     "age": 30,
-    "bye": 12
+    "bye": 12,
+    "max": 88,
+    "min": 3
   },
   {
     "name": "Charlie Cameron",
@@ -4085,7 +4667,9 @@
     "ave": 68,
     "stdDev": 21,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 119,
+    "min": 29
   },
   {
     "name": "Jake Carlisle",
@@ -4099,7 +4683,9 @@
     "ave": 68,
     "stdDev": 18,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 107,
+    "min": 37
   },
   {
     "name": "Josh Bruce",
@@ -4113,7 +4699,9 @@
     "ave": 68,
     "stdDev": 16,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 94,
+    "min": 41
   },
   {
     "name": "Lynden Dunn",
@@ -4127,7 +4715,9 @@
     "ave": 68,
     "stdDev": 17,
     "age": 30,
-    "bye": 13
+    "bye": 13,
+    "max": 102,
+    "min": 33
   },
   {
     "name": "Michael Hartley",
@@ -4141,7 +4731,9 @@
     "ave": 68,
     "stdDev": 20,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 100,
+    "min": 42
   },
   {
     "name": "Mitch Brown",
@@ -4155,7 +4747,9 @@
     "ave": 68,
     "stdDev": 19,
     "age": 27,
-    "bye": 13
+    "bye": 13,
+    "max": 86,
+    "min": 37
   },
   {
     "name": "Nathan Vardy",
@@ -4169,7 +4763,9 @@
     "ave": 68,
     "stdDev": 25,
     "age": 26,
-    "bye": 12
+    "bye": 12,
+    "max": 125,
+    "min": 21
   },
   {
     "name": "Neville Jetta",
@@ -4183,7 +4779,9 @@
     "ave": 68,
     "stdDev": 14,
     "age": 27,
-    "bye": 13
+    "bye": 13,
+    "max": 98,
+    "min": 48
   },
   {
     "name": "Sam Petrevski-Seton",
@@ -4197,7 +4795,9 @@
     "ave": 68,
     "stdDev": 28,
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": 134,
+    "min": 26
   },
   {
     "name": "Shaun Atley",
@@ -4211,7 +4811,9 @@
     "ave": 68,
     "stdDev": 12,
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": 91,
+    "min": 44
   },
   {
     "name": "Bailey Dale",
@@ -4225,7 +4827,9 @@
     "ave": 67,
     "stdDev": 17,
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": 99,
+    "min": 32
   },
   {
     "name": "Fraser McInnes",
@@ -4239,7 +4843,9 @@
     "ave": 67,
     "stdDev": 1,
     "age": 24,
-    "bye": 12
+    "bye": 12,
+    "max": 67,
+    "min": 66
   },
   {
     "name": "James Stewart",
@@ -4253,7 +4859,9 @@
     "ave": 67,
     "stdDev": 18,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 105,
+    "min": 35
   },
   {
     "name": "Josh Smith",
@@ -4267,7 +4875,9 @@
     "ave": 67,
     "stdDev": 24,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 107,
+    "min": 18
   },
   {
     "name": "Karl Amon",
@@ -4281,7 +4891,9 @@
     "ave": 67,
     "stdDev": 21,
     "age": 22,
-    "bye": 10
+    "bye": 10,
+    "max": 101,
+    "min": 27
   },
   {
     "name": "Mark Baguley",
@@ -4295,7 +4907,9 @@
     "ave": 67,
     "stdDev": 20,
     "age": 30,
-    "bye": 13
+    "bye": 13,
+    "max": 117,
+    "min": 24
   },
   {
     "name": "Mitch Honeychurch",
@@ -4309,7 +4923,9 @@
     "ave": 67,
     "stdDev": 13,
     "age": 22,
-    "bye": 12
+    "bye": 12,
+    "max": 81,
+    "min": 48
   },
   {
     "name": "Nathan Hrovat",
@@ -4323,7 +4939,9 @@
     "ave": 67,
     "stdDev": 16,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 107,
+    "min": 44
   },
   {
     "name": "Ryan Clarke",
@@ -4337,7 +4955,9 @@
     "ave": 67,
     "stdDev": 15,
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": 111,
+    "min": 37
   },
   {
     "name": "Taylor Garner",
@@ -4351,7 +4971,9 @@
     "ave": 67,
     "stdDev": 19,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 119,
+    "min": 36
   },
   {
     "name": "Tim Taranto",
@@ -4365,7 +4987,9 @@
     "ave": 67,
     "stdDev": 15,
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": 86,
+    "min": 44
   },
   {
     "name": "Tom Stewart",
@@ -4379,7 +5003,9 @@
     "ave": 67,
     "stdDev": 19,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 102,
+    "min": 22
   },
   {
     "name": "Will Langford",
@@ -4393,7 +5019,9 @@
     "ave": 67,
     "stdDev": 15,
     "age": 25,
-    "bye": 12
+    "bye": 12,
+    "max": 96,
+    "min": 45
   },
   {
     "name": "Aaron Black",
@@ -4407,7 +5035,9 @@
     "ave": 66,
     "stdDev": 22,
     "age": 27,
-    "bye": 14
+    "bye": 14,
+    "max": 101,
+    "min": 47
   },
   {
     "name": "Alex Fasolo",
@@ -4421,7 +5051,9 @@
     "ave": 66,
     "stdDev": 23,
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": 115,
+    "min": 29
   },
   {
     "name": "Conor McKenna",
@@ -4435,7 +5067,9 @@
     "ave": 66,
     "stdDev": 17,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 105,
+    "min": 40
   },
   {
     "name": "Daniel Talia",
@@ -4449,7 +5083,9 @@
     "ave": 66,
     "stdDev": 27,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 109,
+    "min": 5
   },
   {
     "name": "Jade Gresham",
@@ -4463,7 +5099,9 @@
     "ave": 66,
     "stdDev": 15,
     "age": 20,
-    "bye": 14
+    "bye": 14,
+    "max": 105,
+    "min": 22
   },
   {
     "name": "Jake Neade",
@@ -4477,7 +5115,9 @@
     "ave": 66,
     "stdDev": 14,
     "age": 23,
-    "bye": 10
+    "bye": 10,
+    "max": 93,
+    "min": 41
   },
   {
     "name": "James Frawley",
@@ -4491,7 +5131,9 @@
     "ave": 66,
     "stdDev": 13,
     "age": 29,
-    "bye": 12
+    "bye": 12,
+    "max": 85,
+    "min": 47
   },
   {
     "name": "Jarryn Geary",
@@ -4505,7 +5147,9 @@
     "ave": 66,
     "stdDev": 16,
     "age": 29,
-    "bye": 14
+    "bye": 14,
+    "max": 98,
+    "min": 3
   },
   {
     "name": "Kaiden Brand",
@@ -4519,7 +5163,9 @@
     "ave": 66,
     "stdDev": 14,
     "age": 23,
-    "bye": 12
+    "bye": 12,
+    "max": 86,
+    "min": 31
   },
   {
     "name": "Levi Casboult",
@@ -4533,7 +5179,9 @@
     "ave": 66,
     "stdDev": 16,
     "age": 27,
-    "bye": 12
+    "bye": 12,
+    "max": 117,
+    "min": 37
   },
   {
     "name": "Majak Daw",
@@ -4547,7 +5195,9 @@
     "ave": 66,
     "stdDev": 20,
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 98,
+    "min": 41
   },
   {
     "name": "Mark LeCras",
@@ -4561,7 +5211,9 @@
     "ave": 66,
     "stdDev": 19,
     "age": 31,
-    "bye": 12
+    "bye": 12,
+    "max": 108,
+    "min": 43
   },
   {
     "name": "Phil Davis",
@@ -4575,7 +5227,9 @@
     "ave": 66,
     "stdDev": 20,
     "age": 27,
-    "bye": 13
+    "bye": 13,
+    "max": 127,
+    "min": 31
   },
   {
     "name": "Dale Thomas",
@@ -4589,7 +5243,9 @@
     "ave": 65,
     "stdDev": 18,
     "age": 30,
-    "bye": 12
+    "bye": 12,
+    "max": 98,
+    "min": 34
   },
   {
     "name": "Danyle Pearce",
@@ -4603,7 +5259,9 @@
     "ave": 65,
     "stdDev": 17,
     "age": 31,
-    "bye": 14
+    "bye": 14,
+    "max": 85,
+    "min": 42
   },
   {
     "name": "Dean Towers",
@@ -4617,7 +5275,9 @@
     "ave": 65,
     "stdDev": 25,
     "age": 27,
-    "bye": 14
+    "bye": 14,
+    "max": 116,
+    "min": 23
   },
   {
     "name": "Ed Langdon",
@@ -4631,7 +5291,9 @@
     "ave": 65,
     "stdDev": 14,
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 90,
+    "min": 46
   },
   {
     "name": "Jack Lonie",
@@ -4645,7 +5307,9 @@
     "ave": 65,
     "stdDev": 15,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 92,
+    "min": 34
   },
   {
     "name": "Jake Melksham",
@@ -4659,7 +5323,9 @@
     "ave": 65,
     "stdDev": 21,
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 122,
+    "min": 34
   },
   {
     "name": "Jake Stringer",
@@ -4673,7 +5339,9 @@
     "ave": 65,
     "stdDev": 32,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 118,
+    "min": 4
   },
   {
     "name": "Jamie Cripps",
@@ -4687,7 +5355,9 @@
     "ave": 65,
     "stdDev": 16,
     "age": 25,
-    "bye": 12
+    "bye": 12,
+    "max": 95,
+    "min": 39
   },
   {
     "name": "Josh Thomas",
@@ -4701,7 +5371,9 @@
     "ave": 65,
     "stdDev": 19,
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 96,
+    "min": 43
   },
   {
     "name": "Kamdyn McIntosh",
@@ -4715,7 +5387,9 @@
     "ave": 65,
     "stdDev": 13,
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": 92,
+    "min": 44
   },
   {
     "name": "Lachie Plowman",
@@ -4729,7 +5403,9 @@
     "ave": 65,
     "stdDev": 20,
     "age": 23,
-    "bye": 12
+    "bye": 12,
+    "max": 103,
+    "min": 32
   },
   {
     "name": "Liam Duggan",
@@ -4743,7 +5419,9 @@
     "ave": 65,
     "stdDev": 23,
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": 129,
+    "min": 35
   },
   {
     "name": "Matthew Kennedy",
@@ -4757,7 +5435,9 @@
     "ave": 65,
     "stdDev": 16,
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": 93,
+    "min": 37
   },
   {
     "name": "Sam Frost",
@@ -4771,7 +5451,9 @@
     "ave": 65,
     "stdDev": 19,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 104,
+    "min": 25
   },
   {
     "name": "Sam Gilbert",
@@ -4785,7 +5467,9 @@
     "ave": 65,
     "stdDev": 22,
     "age": 31,
-    "bye": 14
+    "bye": 14,
+    "max": 109,
+    "min": 30
   },
   {
     "name": "Sam Powell-Pepper",
@@ -4799,7 +5483,9 @@
     "ave": 65,
     "stdDev": 20,
     "age": 20,
-    "bye": 10
+    "bye": 10,
+    "max": 97,
+    "min": 17
   },
   {
     "name": "Taylor Duryea",
@@ -4813,7 +5499,9 @@
     "ave": 65,
     "stdDev": 17,
     "age": 26,
-    "bye": 12
+    "bye": 12,
+    "max": 99,
+    "min": 32
   },
   {
     "name": "Zaine Cordy",
@@ -4827,7 +5515,9 @@
     "ave": 65,
     "stdDev": 16,
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": 100,
+    "min": 41
   },
   {
     "name": "Blake Hardwick",
@@ -4841,7 +5531,9 @@
     "ave": 64,
     "stdDev": 16,
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": 101,
+    "min": 32
   },
   {
     "name": "Cyril Rioli",
@@ -4855,7 +5547,9 @@
     "ave": 64,
     "stdDev": 14,
     "age": 28,
-    "bye": 12
+    "bye": 12,
+    "max": 81,
+    "min": 38
   },
   {
     "name": "Darcy Byrne-Jones",
@@ -4869,7 +5563,9 @@
     "ave": 64,
     "stdDev": 19,
     "age": 22,
-    "bye": 10
+    "bye": 10,
+    "max": 111,
+    "min": 31
   },
   {
     "name": "Easton Wood",
@@ -4883,7 +5579,9 @@
     "ave": 64,
     "stdDev": 24,
     "age": 28,
-    "bye": 12
+    "bye": 12,
+    "max": 106,
+    "min": 10
   },
   {
     "name": "Jacob Weitering",
@@ -4897,7 +5595,9 @@
     "ave": 64,
     "stdDev": 23,
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": 113,
+    "min": 19
   },
   {
     "name": "Jaeger O'Meara",
@@ -4911,7 +5611,9 @@
     "ave": 64,
     "stdDev": 18,
     "age": 23,
-    "bye": 12
+    "bye": 12,
+    "max": 91,
+    "min": 39
   },
   {
     "name": "Mason Wood",
@@ -4925,7 +5627,9 @@
     "ave": 64,
     "stdDev": 24,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 117,
+    "min": 36
   },
   {
     "name": "Maverick Weller",
@@ -4939,7 +5643,9 @@
     "ave": 64,
     "stdDev": 10,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 86,
+    "min": 46
   },
   {
     "name": "Tim Broomhead",
@@ -4953,7 +5659,9 @@
     "ave": 64,
     "stdDev": 14,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 86,
+    "min": 30
   },
   {
     "name": "Braydon Preuss",
@@ -4967,7 +5675,9 @@
     "ave": 63,
     "stdDev": 26,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 111,
+    "min": 32
   },
   {
     "name": "David Mackay",
@@ -4981,7 +5691,9 @@
     "ave": 63,
     "stdDev": 23,
     "age": 29,
-    "bye": 14
+    "bye": 14,
+    "max": 110,
+    "min": 4
   },
   {
     "name": "Grant Birchall",
@@ -4995,7 +5707,9 @@
     "ave": 63,
     "stdDev": 32,
     "age": 30,
-    "bye": 12
+    "bye": 12,
+    "max": 102,
+    "min": 6
   },
   {
     "name": "Harry Cunningham",
@@ -5009,7 +5723,9 @@
     "ave": 63,
     "stdDev": 16,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 93,
+    "min": 45
   },
   {
     "name": "Jackson Trengove",
@@ -5023,7 +5739,9 @@
     "ave": 63,
     "stdDev": 17,
     "age": 27,
-    "bye": 12
+    "bye": 12,
+    "max": 96,
+    "min": 36
   },
   {
     "name": "Jake Barrett",
@@ -5037,7 +5755,9 @@
     "ave": 63,
     "stdDev": 19,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 97,
+    "min": 28
   },
   {
     "name": "Jesse Lonergan",
@@ -5051,7 +5771,9 @@
     "ave": 63,
     "stdDev": 21,
     "age": 23,
-    "bye": 10
+    "bye": 10,
+    "max": 92,
+    "min": 22
   },
   {
     "name": "Joel Hamling",
@@ -5065,7 +5787,9 @@
     "ave": 63,
     "stdDev": 22,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 119,
+    "min": 29
   },
   {
     "name": "Marco Paparone",
@@ -5079,7 +5803,9 @@
     "ave": 63,
     "stdDev": 22,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 95,
+    "min": 31
   },
   {
     "name": "Nathan Broad",
@@ -5093,7 +5819,9 @@
     "ave": 63,
     "stdDev": 13,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 84,
+    "min": 47
   },
   {
     "name": "Sam Lloyd",
@@ -5107,7 +5835,9 @@
     "ave": 63,
     "stdDev": 15,
     "age": 27,
-    "bye": 14
+    "bye": 14,
+    "max": 95,
+    "min": 38
   },
   {
     "name": "Scott Lycett",
@@ -5121,7 +5851,9 @@
     "ave": 63,
     "stdDev": "-",
     "age": 25,
-    "bye": 12
+    "bye": 12,
+    "max": 63,
+    "min": 63
   },
   {
     "name": "Travis Colyer",
@@ -5135,7 +5867,9 @@
     "ave": 63,
     "stdDev": 23,
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 119,
+    "min": 34
   },
   {
     "name": "Brad Sheppard",
@@ -5149,7 +5883,9 @@
     "ave": 62,
     "stdDev": 17,
     "age": 26,
-    "bye": 12
+    "bye": 12,
+    "max": 90,
+    "min": 25
   },
   {
     "name": "Daniel Rioli",
@@ -5163,7 +5899,9 @@
     "ave": 62,
     "stdDev": 22,
     "age": 20,
-    "bye": 14
+    "bye": 14,
+    "max": 131,
+    "min": 24
   },
   {
     "name": "Darcy Moore",
@@ -5177,7 +5915,9 @@
     "ave": 62,
     "stdDev": 24,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 108,
+    "min": 15
   },
   {
     "name": "Ethan Hughes",
@@ -5191,7 +5931,9 @@
     "ave": 62,
     "stdDev": 22,
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": 131,
+    "min": 35
   },
   {
     "name": "Hayden Crozier",
@@ -5205,7 +5947,9 @@
     "ave": 62,
     "stdDev": 12,
     "age": 24,
-    "bye": 12
+    "bye": 12,
+    "max": 84,
+    "min": 42
   },
   {
     "name": "Jacob Hopper",
@@ -5219,7 +5963,9 @@
     "ave": 62,
     "stdDev": 16,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 90,
+    "min": 36
   },
   {
     "name": "Jarrod Berry",
@@ -5233,7 +5979,9 @@
     "ave": 62,
     "stdDev": 22,
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": 94,
+    "min": 14
   },
   {
     "name": "Kayne Turner",
@@ -5247,7 +5995,9 @@
     "ave": 62,
     "stdDev": 14,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 87,
+    "min": 41
   },
   {
     "name": "Levi Greenwood",
@@ -5261,7 +6011,9 @@
     "ave": 62,
     "stdDev": 14,
     "age": 28,
-    "bye": 13
+    "bye": 13,
+    "max": 89,
+    "min": 40
   },
   {
     "name": "Luke Brown",
@@ -5275,7 +6027,9 @@
     "ave": 62,
     "stdDev": 18,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 103,
+    "min": 22
   },
   {
     "name": "Matt de Boer",
@@ -5289,7 +6043,9 @@
     "ave": 62,
     "stdDev": 25,
     "age": 27,
-    "bye": 13
+    "bye": 13,
+    "max": 97,
+    "min": 2
   },
   {
     "name": "Sam Skinner",
@@ -5303,7 +6059,9 @@
     "ave": 62,
     "stdDev": "-",
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": 62,
+    "min": 62
   },
   {
     "name": "Tom Boyd",
@@ -5317,7 +6075,9 @@
     "ave": 62,
     "stdDev": 28,
     "age": 22,
-    "bye": 12
+    "bye": 12,
+    "max": 109,
+    "min": 3
   },
   {
     "name": "Aidan Corr",
@@ -5331,7 +6091,9 @@
     "ave": 61,
     "stdDev": 20,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 98,
+    "min": 5
   },
   {
     "name": "Alex Sexton",
@@ -5345,7 +6107,9 @@
     "ave": 61,
     "stdDev": 23,
     "age": 24,
-    "bye": 10
+    "bye": 10,
+    "max": 99,
+    "min": 11
   },
   {
     "name": "Ben Ainsworth",
@@ -5359,7 +6123,9 @@
     "ave": 61,
     "stdDev": 20,
     "age": 19,
-    "bye": 10
+    "bye": 10,
+    "max": 99,
+    "min": 23
   },
   {
     "name": "Cameron Sutcliffe",
@@ -5373,7 +6139,9 @@
     "ave": 61,
     "stdDev": 13,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 90,
+    "min": 33
   },
   {
     "name": "Dan Butler",
@@ -5387,7 +6155,9 @@
     "ave": 61,
     "stdDev": 21,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 97,
+    "min": 14
   },
   {
     "name": "Daniel McStay",
@@ -5401,7 +6171,9 @@
     "ave": 61,
     "stdDev": 19,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 110,
+    "min": 39
   },
   {
     "name": "David Cuningham",
@@ -5415,7 +6187,9 @@
     "ave": 61,
     "stdDev": 20,
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": 92,
+    "min": 25
   },
   {
     "name": "Jack Leslie",
@@ -5429,7 +6203,9 @@
     "ave": 61,
     "stdDev": 18,
     "age": 22,
-    "bye": 10
+    "bye": 10,
+    "max": 94,
+    "min": 30
   },
   {
     "name": "Jacob Allison",
@@ -5443,7 +6219,9 @@
     "ave": 61,
     "stdDev": 6,
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": 68,
+    "min": 52
   },
   {
     "name": "Jarman Impey",
@@ -5457,7 +6235,9 @@
     "ave": 61,
     "stdDev": 16,
     "age": 22,
-    "bye": 12
+    "bye": 12,
+    "max": 99,
+    "min": 31
   },
   {
     "name": "Jed Lamb",
@@ -5471,7 +6251,9 @@
     "ave": 61,
     "stdDev": 16,
     "age": 25,
-    "bye": 12
+    "bye": 12,
+    "max": 93,
+    "min": 26
   },
   {
     "name": "Josh Walker",
@@ -5485,7 +6267,9 @@
     "ave": 61,
     "stdDev": 23,
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": 94,
+    "min": 3
   },
   {
     "name": "Lincoln McCarthy",
@@ -5499,7 +6283,9 @@
     "ave": 61,
     "stdDev": 22,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 92,
+    "min": 42
   },
   {
     "name": "Max Spencer",
@@ -5513,7 +6299,9 @@
     "ave": 61,
     "stdDev": 10,
     "age": 20,
-    "bye": 10
+    "bye": 10,
+    "max": 77,
+    "min": 47
   },
   {
     "name": "Nick Robertson",
@@ -5527,7 +6315,9 @@
     "ave": 61,
     "stdDev": 18,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 102,
+    "min": 21
   },
   {
     "name": "Tomas Bugg",
@@ -5541,7 +6331,9 @@
     "ave": 61,
     "stdDev": 17,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 86,
+    "min": 25
   },
   {
     "name": "Curtly Hampton",
@@ -5555,7 +6347,9 @@
     "ave": 60,
     "stdDev": 19,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 103,
+    "min": 41
   },
   {
     "name": "Dean Kent",
@@ -5569,7 +6363,9 @@
     "ave": 60,
     "stdDev": 21,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 102,
+    "min": 39
   },
   {
     "name": "Jarryd Blair",
@@ -5583,7 +6379,9 @@
     "ave": 60,
     "stdDev": 19,
     "age": 27,
-    "bye": 13
+    "bye": 13,
+    "max": 95,
+    "min": 31
   },
   {
     "name": "Jesse Joyce",
@@ -5597,7 +6395,9 @@
     "ave": 60,
     "stdDev": 10,
     "age": 20,
-    "bye": 10
+    "bye": 10,
+    "max": 84,
+    "min": 39
   },
   {
     "name": "Josh Dunkley",
@@ -5611,7 +6411,9 @@
     "ave": 60,
     "stdDev": 21,
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": 94,
+    "min": 23
   },
   {
     "name": "Robbie Fox",
@@ -5625,7 +6427,9 @@
     "ave": 60,
     "stdDev": 14,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 78,
+    "min": 44
   },
   {
     "name": "Tim O'Brien",
@@ -5639,7 +6443,9 @@
     "ave": 60,
     "stdDev": 20,
     "age": 23,
-    "bye": 12
+    "bye": 12,
+    "max": 98,
+    "min": 33
   },
   {
     "name": "Brandon White",
@@ -5653,7 +6459,9 @@
     "ave": 59,
     "stdDev": 2,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 61,
+    "min": 57
   },
   {
     "name": "Darcy Gardiner",
@@ -5667,7 +6475,9 @@
     "ave": 59,
     "stdDev": 20,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 90,
+    "min": 5
   },
   {
     "name": "Darren Minchington",
@@ -5681,7 +6491,9 @@
     "ave": 59,
     "stdDev": 20,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 87,
+    "min": 33
   },
   {
     "name": "Declan Mountford",
@@ -5695,7 +6507,9 @@
     "ave": 59,
     "stdDev": 14,
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": 82,
+    "min": 41
   },
   {
     "name": "Jack Redpath",
@@ -5709,7 +6523,9 @@
     "ave": 59,
     "stdDev": 22,
     "age": 27,
-    "bye": 12
+    "bye": 12,
+    "max": 90,
+    "min": 20
   },
   {
     "name": "Jake Kelly",
@@ -5723,7 +6539,9 @@
     "ave": 59,
     "stdDev": 21,
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": 104,
+    "min": 24
   },
   {
     "name": "Jed Anderson",
@@ -5737,7 +6555,9 @@
     "ave": 59,
     "stdDev": 15,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 80,
+    "min": 36
   },
   {
     "name": "Kyle Langford",
@@ -5751,7 +6571,9 @@
     "ave": 59,
     "stdDev": 9,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 67,
+    "min": 45
   },
   {
     "name": "Matt Taberner",
@@ -5765,7 +6587,9 @@
     "ave": 59,
     "stdDev": 35,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 119,
+    "min": 15
   },
   {
     "name": "Rory Thompson",
@@ -5779,7 +6603,9 @@
     "ave": 59,
     "stdDev": 14,
     "age": 26,
-    "bye": 10
+    "bye": 10,
+    "max": 80,
+    "min": 32
   },
   {
     "name": "Stewart Crameri",
@@ -5793,7 +6619,9 @@
     "ave": 59,
     "stdDev": 11,
     "age": 29,
-    "bye": 14
+    "bye": 14,
+    "max": 69,
+    "min": 48
   },
   {
     "name": "Tom Clurey",
@@ -5807,7 +6635,9 @@
     "ave": 59,
     "stdDev": 14,
     "age": 23,
-    "bye": 10
+    "bye": 10,
+    "max": 86,
+    "min": 23
   },
   {
     "name": "Wayne Milera",
@@ -5821,7 +6651,9 @@
     "ave": 59,
     "stdDev": 16,
     "age": 20,
-    "bye": 14
+    "bye": 14,
+    "max": 93,
+    "min": 38
   },
   {
     "name": "Adam Tomlinson",
@@ -5835,7 +6667,9 @@
     "ave": 58,
     "stdDev": 16,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 92,
+    "min": 34
   },
   {
     "name": "Bailey Williams",
@@ -5849,7 +6683,9 @@
     "ave": 58,
     "stdDev": 14,
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": 94,
+    "min": 42
   },
   {
     "name": "Brendan Whitecross",
@@ -5863,7 +6699,9 @@
     "ave": 58,
     "stdDev": 15,
     "age": 28,
-    "bye": 12
+    "bye": 12,
+    "max": 88,
+    "min": 41
   },
   {
     "name": "Brendon Ah Chee",
@@ -5877,7 +6715,9 @@
     "ave": 58,
     "stdDev": 20,
     "age": 24,
-    "bye": 12
+    "bye": 12,
+    "max": 89,
+    "min": 28
   },
   {
     "name": "Chris Mayne",
@@ -5891,7 +6731,9 @@
     "ave": 58,
     "stdDev": 8,
     "age": 29,
-    "bye": 13
+    "bye": 13,
+    "max": 65,
+    "min": 47
   },
   {
     "name": "Clay Smith",
@@ -5905,7 +6747,9 @@
     "ave": 58,
     "stdDev": 18,
     "age": 24,
-    "bye": 12
+    "bye": 12,
+    "max": 88,
+    "min": 28
   },
   {
     "name": "David Myers",
@@ -5919,7 +6763,9 @@
     "ave": 58,
     "stdDev": 11,
     "age": 28,
-    "bye": 13
+    "bye": 13,
+    "max": 76,
+    "min": 41
   },
   {
     "name": "Eric Mackenzie",
@@ -5933,7 +6779,9 @@
     "ave": 58,
     "stdDev": 15,
     "age": 29,
-    "bye": 12
+    "bye": 12,
+    "max": 74,
+    "min": 21
   },
   {
     "name": "Harley Balic",
@@ -5947,7 +6795,9 @@
     "ave": 58,
     "stdDev": 18,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 78,
+    "min": 38
   },
   {
     "name": "Jayden Short",
@@ -5961,7 +6811,9 @@
     "ave": 58,
     "stdDev": 18,
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 87,
+    "min": 30
   },
   {
     "name": "Jed Bews",
@@ -5975,7 +6827,9 @@
     "ave": 58,
     "stdDev": 17,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 94,
+    "min": 28
   },
   {
     "name": "Lewis Melican",
@@ -5989,7 +6843,9 @@
     "ave": 58,
     "stdDev": 13,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 80,
+    "min": 31
   },
   {
     "name": "Riley Knight",
@@ -6003,7 +6859,9 @@
     "ave": 58,
     "stdDev": 19,
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 86,
+    "min": 16
   },
   {
     "name": "Rohan Bewick",
@@ -6017,7 +6875,9 @@
     "ave": 58,
     "stdDev": 17,
     "age": 28,
-    "bye": 13
+    "bye": 13,
+    "max": 77,
+    "min": 31
   },
   {
     "name": "Tom Bell",
@@ -6031,7 +6891,9 @@
     "ave": 58,
     "stdDev": 7,
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 66,
+    "min": 47
   },
   {
     "name": "Aaron Young",
@@ -6045,7 +6907,9 @@
     "ave": 57,
     "stdDev": 20,
     "age": 25,
-    "bye": 10
+    "bye": 10,
+    "max": 103,
+    "min": 28
   },
   {
     "name": "Aliir Aliir",
@@ -6059,7 +6923,9 @@
     "ave": 57,
     "stdDev": 7,
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": 67,
+    "min": 51
   },
   {
     "name": "Claye Beams",
@@ -6073,7 +6939,9 @@
     "ave": 57,
     "stdDev": 23,
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 94,
+    "min": 13
   },
   {
     "name": "Ed Vickers-Willis",
@@ -6087,7 +6955,9 @@
     "ave": 57,
     "stdDev": 14,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 79,
+    "min": 35
   },
   {
     "name": "Jake Kolodjashnij",
@@ -6101,7 +6971,9 @@
     "ave": 57,
     "stdDev": 16,
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 104,
+    "min": 33
   },
   {
     "name": "James Aish",
@@ -6115,7 +6987,9 @@
     "ave": 57,
     "stdDev": 18,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 84,
+    "min": 23
   },
   {
     "name": "Jordan Gallucci",
@@ -6129,7 +7003,9 @@
     "ave": 57,
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": 57,
+    "min": 57
   },
   {
     "name": "Josh Wagner",
@@ -6143,7 +7019,9 @@
     "ave": 57,
     "stdDev": 12,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 77,
+    "min": 40
   },
   {
     "name": "Michael Rischitelli",
@@ -6157,7 +7035,9 @@
     "ave": 57,
     "stdDev": 15,
     "age": 32,
-    "bye": 10
+    "bye": 10,
+    "max": 82,
+    "min": 42
   },
   {
     "name": "Rowan Marshall",
@@ -6171,7 +7051,9 @@
     "ave": 57,
     "stdDev": "-",
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 57,
+    "min": 57
   },
   {
     "name": "Ben Stratton",
@@ -6185,7 +7067,9 @@
     "ave": 56,
     "stdDev": 17,
     "age": 28,
-    "bye": 12
+    "bye": 12,
+    "max": 77,
+    "min": 21
   },
   {
     "name": "Josh Green",
@@ -6199,7 +7083,9 @@
     "ave": 56,
     "stdDev": 13,
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": 88,
+    "min": 37
   },
   {
     "name": "Lukas Webb",
@@ -6213,7 +7099,9 @@
     "ave": 56,
     "stdDev": 19,
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": 77,
+    "min": 25
   },
   {
     "name": "Nick Smith",
@@ -6227,7 +7115,9 @@
     "ave": 56,
     "stdDev": 11,
     "age": 29,
-    "bye": 14
+    "bye": 14,
+    "max": 84,
+    "min": 41
   },
   {
     "name": "Patrick Ambrose",
@@ -6241,7 +7131,9 @@
     "ave": 56,
     "stdDev": 15,
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 79,
+    "min": 32
   },
   {
     "name": "Ryan Griffen",
@@ -6255,7 +7147,9 @@
     "ave": 56,
     "stdDev": 16,
     "age": 31,
-    "bye": 13
+    "bye": 13,
+    "max": 77,
+    "min": 39
   },
   {
     "name": "Travis Varcoe",
@@ -6269,7 +7163,9 @@
     "ave": 56,
     "stdDev": 9,
     "age": 29,
-    "bye": 13
+    "bye": 13,
+    "max": 70,
+    "min": 42
   },
   {
     "name": "Alex Keath",
@@ -6283,7 +7179,9 @@
     "ave": 55,
     "stdDev": 17,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 87,
+    "min": 27
   },
   {
     "name": "Ben McNiece",
@@ -6297,7 +7195,9 @@
     "ave": 55,
     "stdDev": 7,
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": 61,
+    "min": 48
   },
   {
     "name": "Connor Menadue",
@@ -6311,7 +7211,9 @@
     "ave": 55,
     "stdDev": 11,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 73,
+    "min": 35
   },
   {
     "name": "Conor Glass",
@@ -6325,7 +7227,9 @@
     "ave": 55,
     "stdDev": 15,
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": 84,
+    "min": 39
   },
   {
     "name": "Dylan Grimes",
@@ -6339,7 +7243,9 @@
     "ave": 55,
     "stdDev": 20,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 95,
+    "min": 22
   },
   {
     "name": "Harrison Marsh",
@@ -6353,7 +7259,9 @@
     "ave": 55,
     "stdDev": 18,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 81,
+    "min": 30
   },
   {
     "name": "Jack Hombsch",
@@ -6367,7 +7275,9 @@
     "ave": 55,
     "stdDev": 15,
     "age": 24,
-    "bye": 10
+    "bye": 10,
+    "max": 80,
+    "min": 33
   },
   {
     "name": "Jay Kennedy-Harris",
@@ -6381,7 +7291,9 @@
     "ave": 55,
     "stdDev": 20,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 88,
+    "min": 24
   },
   {
     "name": "Joshua Begley",
@@ -6395,7 +7307,9 @@
     "ave": 55,
     "stdDev": 10,
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": 69,
+    "min": 40
   },
   {
     "name": "Mason Cox",
@@ -6409,7 +7323,9 @@
     "ave": 55,
     "stdDev": 18,
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 95,
+    "min": 33
   },
   {
     "name": "Mitch Hannan",
@@ -6423,7 +7339,9 @@
     "ave": 55,
     "stdDev": 22,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 96,
+    "min": 21
   },
   {
     "name": "Ryan Nyhuis",
@@ -6437,7 +7355,9 @@
     "ave": 55,
     "stdDev": 16,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 78,
+    "min": 35
   },
   {
     "name": "Ryan Schoenmakers",
@@ -6451,7 +7371,9 @@
     "ave": 55,
     "stdDev": 19,
     "age": 27,
-    "bye": 12
+    "bye": 12,
+    "max": 79,
+    "min": 12
   },
   {
     "name": "Brandan Parfitt",
@@ -6465,7 +7387,9 @@
     "ave": 54,
     "stdDev": 18,
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": 99,
+    "min": 34
   },
   {
     "name": "Cam McCarthy",
@@ -6479,7 +7403,9 @@
     "ave": 54,
     "stdDev": 24,
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 109,
+    "min": 21
   },
   {
     "name": "Darcy Tucker",
@@ -6493,7 +7419,9 @@
     "ave": 54,
     "stdDev": 19,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 107,
+    "min": 33
   },
   {
     "name": "Harry McKay",
@@ -6507,7 +7435,9 @@
     "ave": 54,
     "stdDev": 18,
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": 72,
+    "min": 36
   },
   {
     "name": "Hugh McCluggage",
@@ -6521,7 +7451,9 @@
     "ave": 54,
     "stdDev": 17,
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": 95,
+    "min": 19
   },
   {
     "name": "Jackson Thurlow",
@@ -6535,7 +7467,9 @@
     "ave": 54,
     "stdDev": 12,
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": 79,
+    "min": 38
   },
   {
     "name": "James Cousins",
@@ -6549,7 +7483,9 @@
     "ave": 54,
     "stdDev": 11,
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": 67,
+    "min": 40
   },
   {
     "name": "Jason Castagna",
@@ -6563,7 +7499,9 @@
     "ave": 54,
     "stdDev": 22,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 97,
+    "min": 18
   },
   {
     "name": "Jayden Laverde",
@@ -6577,7 +7515,9 @@
     "ave": 54,
     "stdDev": 20,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 92,
+    "min": 33
   },
   {
     "name": "Jimmy Toumpas",
@@ -6591,7 +7531,9 @@
     "ave": 54,
     "stdDev": 8,
     "age": 24,
-    "bye": 10
+    "bye": 10,
+    "max": 61,
+    "min": 46
   },
   {
     "name": "Kurt Heatherley",
@@ -6605,7 +7547,9 @@
     "ave": 54,
     "stdDev": 5,
     "age": 23,
-    "bye": 12
+    "bye": 12,
+    "max": 59,
+    "min": 47
   },
   {
     "name": "Lindsay Thomas",
@@ -6619,7 +7563,9 @@
     "ave": 54,
     "stdDev": 16,
     "age": 29,
-    "bye": 10
+    "bye": 10,
+    "max": 80,
+    "min": 12
   },
   {
     "name": "Malcolm Karpany",
@@ -6633,7 +7579,9 @@
     "ave": 54,
     "stdDev": 17,
     "age": 22,
-    "bye": 12
+    "bye": 12,
+    "max": 88,
+    "min": 33
   },
   {
     "name": "Sam Rowe",
@@ -6647,7 +7595,9 @@
     "ave": 54,
     "stdDev": 24,
     "age": 30,
-    "bye": 12
+    "bye": 12,
+    "max": 93,
+    "min": 6
   },
   {
     "name": "Callum Ah Chee",
@@ -6661,7 +7611,9 @@
     "ave": 53,
     "stdDev": 21,
     "age": 20,
-    "bye": 10
+    "bye": 10,
+    "max": 87,
+    "min": 14
   },
   {
     "name": "Daniel McKenzie",
@@ -6675,7 +7627,9 @@
     "ave": 53,
     "stdDev": 19,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 81,
+    "min": 29
   },
   {
     "name": "Fletcher Roberts",
@@ -6689,7 +7643,9 @@
     "ave": 53,
     "stdDev": 8,
     "age": 24,
-    "bye": 12
+    "bye": 12,
+    "max": 68,
+    "min": 42
   },
   {
     "name": "Nakia Cockatoo",
@@ -6703,7 +7659,9 @@
     "ave": 53,
     "stdDev": 23,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 92,
+    "min": 14
   },
   {
     "name": "Patrick Lipinski",
@@ -6717,7 +7675,9 @@
     "ave": 53,
     "stdDev": "-",
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": 53,
+    "min": 53
   },
   {
     "name": "Sam Durdin",
@@ -6731,7 +7691,9 @@
     "ave": 53,
     "stdDev": 16,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 99,
+    "min": 24
   },
   {
     "name": "Wylie Buzza",
@@ -6745,7 +7707,9 @@
     "ave": 53,
     "stdDev": 13,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 81,
+    "min": 38
   },
   {
     "name": "Brennan Cox",
@@ -6759,7 +7723,9 @@
     "ave": 52,
     "stdDev": 9,
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": 67,
+    "min": 30
   },
   {
     "name": "Harley Bennell",
@@ -6773,7 +7739,9 @@
     "ave": 52,
     "stdDev": 7,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 62,
+    "min": 41
   },
   {
     "name": "Hayden Ballantyne",
@@ -6787,7 +7755,9 @@
     "ave": 52,
     "stdDev": 14,
     "age": 30,
-    "bye": 14
+    "bye": 14,
+    "max": 74,
+    "min": 25
   },
   {
     "name": "Jack Silvagni",
@@ -6801,7 +7771,9 @@
     "ave": 52,
     "stdDev": 22,
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": 96,
+    "min": 6
   },
   {
     "name": "Sean Lemmens",
@@ -6815,7 +7787,9 @@
     "ave": 52,
     "stdDev": 14,
     "age": 23,
-    "bye": 10
+    "bye": 10,
+    "max": 76,
+    "min": 25
   },
   {
     "name": "Shane Kersten",
@@ -6829,7 +7803,9 @@
     "ave": 52,
     "stdDev": 23,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 92,
+    "min": 16
   },
   {
     "name": "Andrew Phillips",
@@ -6843,7 +7819,9 @@
     "ave": 51,
     "stdDev": "-",
     "age": 26,
-    "bye": 12
+    "bye": 12,
+    "max": 51,
+    "min": 51
   },
   {
     "name": "Callum Brown",
@@ -6857,7 +7835,9 @@
     "ave": 51,
     "stdDev": 8,
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": 63,
+    "min": 40
   },
   {
     "name": "Kyle Hartigan",
@@ -6871,7 +7851,9 @@
     "ave": 51,
     "stdDev": 19,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 83,
+    "min": 1
   },
   {
     "name": "Mark Hutchings",
@@ -6885,7 +7867,9 @@
     "ave": 51,
     "stdDev": 20,
     "age": 26,
-    "bye": 12
+    "bye": 12,
+    "max": 91,
+    "min": 19
   },
   {
     "name": "Matt Buntine",
@@ -6899,7 +7883,9 @@
     "ave": 51,
     "stdDev": 7,
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 57,
+    "min": 44
   },
   {
     "name": "Rupert Wills",
@@ -6913,7 +7899,9 @@
     "ave": 51,
     "stdDev": "-",
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 51,
+    "min": 51
   },
   {
     "name": "Todd Marshall",
@@ -6927,7 +7915,9 @@
     "ave": 51,
     "stdDev": "-",
     "age": 19,
-    "bye": 10
+    "bye": 10,
+    "max": 51,
+    "min": 50
   },
   {
     "name": "Aaron Francis",
@@ -6941,7 +7931,9 @@
     "ave": 50,
     "stdDev": 7,
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": 57,
+    "min": 43
   },
   {
     "name": "Ben McKay",
@@ -6955,7 +7947,9 @@
     "ave": 50,
     "stdDev": "-",
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": 50,
+    "min": 50
   },
   {
     "name": "Dale Morris",
@@ -6969,7 +7963,9 @@
     "ave": 50,
     "stdDev": 14,
     "age": 35,
-    "bye": 12
+    "bye": 12,
+    "max": 65,
+    "min": 26
   },
   {
     "name": "Harry Perryman",
@@ -6983,7 +7979,9 @@
     "ave": 50,
     "stdDev": 16,
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": 81,
+    "min": 32
   },
   {
     "name": "Josh Daicos",
@@ -6997,7 +7995,9 @@
     "ave": 50,
     "stdDev": 10,
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": 64,
+    "min": 35
   },
   {
     "name": "Luke Partington",
@@ -7011,7 +8011,9 @@
     "ave": 50,
     "stdDev": 15,
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": 77,
+    "min": 28
   },
   {
     "name": "Tim Mohr",
@@ -7025,7 +8027,9 @@
     "ave": 50,
     "stdDev": "-",
     "age": 29,
-    "bye": 13
+    "bye": 13,
+    "max": 50,
+    "min": 50
   },
   {
     "name": "Tom Williamson",
@@ -7039,7 +8043,9 @@
     "ave": 50,
     "stdDev": 16,
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": 81,
+    "min": 29
   },
   {
     "name": "Eric Hipwood",
@@ -7053,7 +8059,9 @@
     "ave": 49,
     "stdDev": 24,
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": 93,
+    "min": 1
   },
   {
     "name": "Harrison Himmelberg",
@@ -7067,7 +8075,9 @@
     "ave": 49,
     "stdDev": 14,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 77,
+    "min": 35
   },
   {
     "name": "Jack Bowes",
@@ -7081,7 +8091,9 @@
     "ave": 49,
     "stdDev": 16,
     "age": 20,
-    "bye": 10
+    "bye": 10,
+    "max": 74,
+    "min": 24
   },
   {
     "name": "James Parsons",
@@ -7095,7 +8107,9 @@
     "ave": 49,
     "stdDev": 19,
     "age": 20,
-    "bye": 14
+    "bye": 14,
+    "max": 98,
+    "min": 10
   },
   {
     "name": "Jordan Cunico",
@@ -7109,7 +8123,9 @@
     "ave": 49,
     "stdDev": "-",
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 49,
+    "min": 49
   },
   {
     "name": "Sam J. Reid",
@@ -7123,7 +8139,9 @@
     "ave": 49,
     "stdDev": 25,
     "age": 28,
-    "bye": 13
+    "bye": 13,
+    "max": 83,
+    "min": 4
   },
   {
     "name": "Shai Bolton",
@@ -7137,7 +8155,9 @@
     "ave": 49,
     "stdDev": 12,
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": 67,
+    "min": 38
   },
   {
     "name": "Tory Dickson",
@@ -7151,7 +8171,9 @@
     "ave": 49,
     "stdDev": 23,
     "age": 30,
-    "bye": 12
+    "bye": 12,
+    "max": 81,
+    "min": 19
   },
   {
     "name": "Will Hayward",
@@ -7165,7 +8187,9 @@
     "ave": 49,
     "stdDev": 20,
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": 97,
+    "min": 17
   },
   {
     "name": "Daniel Robinson",
@@ -7179,7 +8203,9 @@
     "ave": 48,
     "stdDev": 17,
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": 76,
+    "min": 22
   },
   {
     "name": "Joshua Schoenfeld",
@@ -7193,7 +8219,9 @@
     "ave": 48,
     "stdDev": 14,
     "age": 20,
-    "bye": 10
+    "bye": 10,
+    "max": 62,
+    "min": 26
   },
   {
     "name": "Lewis Young",
@@ -7207,7 +8235,9 @@
     "ave": 48,
     "stdDev": 17,
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": 79,
+    "min": 23
   },
   {
     "name": "Tommy Sheridan",
@@ -7221,7 +8251,9 @@
     "ave": 48,
     "stdDev": 13,
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": 72,
+    "min": 33
   },
   {
     "name": "Zac Fisher",
@@ -7235,7 +8267,9 @@
     "ave": 48,
     "stdDev": 14,
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": 74,
+    "min": 21
   },
   {
     "name": "Darcy MacPherson",
@@ -7249,7 +8283,9 @@
     "ave": 47,
     "stdDev": 10,
     "age": 20,
-    "bye": 10
+    "bye": 10,
+    "max": 61,
+    "min": 31
   },
   {
     "name": "Joe Atley",
@@ -7263,7 +8299,9 @@
     "ave": 47,
     "stdDev": 14,
     "age": 19,
-    "bye": 10
+    "bye": 10,
+    "max": 65,
+    "min": 31
   },
   {
     "name": "Jy Simpkin",
@@ -7277,7 +8315,9 @@
     "ave": 47,
     "stdDev": 20,
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": 83,
+    "min": 5
   },
   {
     "name": "Paddy McCartin",
@@ -7291,7 +8331,9 @@
     "ave": 47,
     "stdDev": 10,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 61,
+    "min": 33
   },
   {
     "name": "Teia Miles",
@@ -7305,7 +8347,9 @@
     "ave": 47,
     "stdDev": 22,
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": 81,
+    "min": 21
   },
   {
     "name": "Brady Grey",
@@ -7319,7 +8363,9 @@
     "ave": 46,
     "stdDev": 19,
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 92,
+    "min": 5
   },
   {
     "name": "Cedric Cox",
@@ -7333,7 +8379,9 @@
     "ave": 46,
     "stdDev": 27,
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": 95,
+    "min": 8
   },
   {
     "name": "Ciaran Byrne",
@@ -7347,7 +8395,9 @@
     "ave": 46,
     "stdDev": 14,
     "age": 23,
-    "bye": 12
+    "bye": 12,
+    "max": 71,
+    "min": 24
   },
   {
     "name": "Corey Ellis",
@@ -7361,7 +8411,9 @@
     "ave": 46,
     "stdDev": 18,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 74,
+    "min": 23
   },
   {
     "name": "Ivan Soldo",
@@ -7375,7 +8427,9 @@
     "ave": 46,
     "stdDev": 11,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 62,
+    "min": 32
   },
   {
     "name": "Jack Scrimshaw",
@@ -7389,7 +8443,9 @@
     "ave": 46,
     "stdDev": 18,
     "age": 19,
-    "bye": 10
+    "bye": 10,
+    "max": 64,
+    "min": 17
   },
   {
     "name": "Jarrod Pickett",
@@ -7403,7 +8459,9 @@
     "ave": 46,
     "stdDev": 17,
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": 91,
+    "min": 28
   },
   {
     "name": "Aidyn Johnson",
@@ -7417,7 +8475,9 @@
     "ave": 45,
     "stdDev": 18,
     "age": 20,
-    "bye": 10
+    "bye": 10,
+    "max": 70,
+    "min": 15
   },
   {
     "name": "Archie Smith",
@@ -7431,7 +8491,9 @@
     "ave": 45,
     "stdDev": 16,
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 69,
+    "min": 20
   },
   {
     "name": "Oliver Florent",
@@ -7445,7 +8507,9 @@
     "ave": 45,
     "stdDev": 8,
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": 63,
+    "min": 33
   },
   {
     "name": "Will Setterfield",
@@ -7459,7 +8523,9 @@
     "ave": 45,
     "stdDev": 19,
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": 63,
+    "min": 26
   },
   {
     "name": "Adam Kennedy",
@@ -7473,7 +8539,9 @@
     "ave": 44,
     "stdDev": 23,
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": 90,
+    "min": 10
   },
   {
     "name": "Jackson Nelson",
@@ -7487,7 +8555,9 @@
     "ave": 44,
     "stdDev": 19,
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": 91,
+    "min": 16
   },
   {
     "name": "Ben Crocker",
@@ -7501,7 +8571,9 @@
     "ave": 43,
     "stdDev": 7,
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": 52,
+    "min": 34
   },
   {
     "name": "Cameron Zurhaar",
@@ -7515,7 +8587,9 @@
     "ave": 43,
     "stdDev": 16,
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": 70,
+    "min": 30
   },
   {
     "name": "Daniel Lloyd",
@@ -7529,7 +8603,9 @@
     "ave": 43,
     "stdDev": 10,
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": 54,
+    "min": 26
   },
   {
     "name": "Griffin Logue",
@@ -7543,7 +8619,9 @@
     "ave": 43,
     "stdDev": 18,
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": 65,
+    "min": 17
   },
   {
     "name": "Josh Williams",
@@ -7557,7 +8635,9 @@
     "ave": 43,
     "stdDev": 15,
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": 58,
+    "min": 28
   },
   {
     "name": "Sam Simpson",
@@ -7571,7 +8651,9 @@
     "ave": 43,
     "stdDev": 9,
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": 54,
+    "min": 32
   },
   {
     "name": "Will Brodie",
@@ -7585,7 +8667,9 @@
     "ave": 43,
     "stdDev": 9,
     "age": 19,
-    "bye": 10
+    "bye": 10,
+    "max": 64,
+    "min": 32
   },
   {
     "name": "Will Schofield",
@@ -7599,7 +8683,9 @@
     "ave": 43,
     "stdDev": 15,
     "age": 29,
-    "bye": 12
+    "bye": 12,
+    "max": 76,
+    "min": 24
   },
   {
     "name": "Josh Schache",
@@ -7613,7 +8699,9 @@
     "ave": 42,
     "stdDev": 14,
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": 64,
+    "min": 25
   },
   {
     "name": "Kurt Mutimer",
@@ -7627,7 +8715,9 @@
     "ave": 42,
     "stdDev": 14,
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": 58,
+    "min": 23
   },
   {
     "name": "Logan Austin",
@@ -7641,7 +8731,9 @@
     "ave": 42,
     "stdDev": 16,
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 57,
+    "min": 26
   },
   {
     "name": "Nathan Wright",
@@ -7655,7 +8747,9 @@
     "ave": 42,
     "stdDev": 22,
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": 72,
+    "min": 23
   },
   {
     "name": "Oleg Markov",
@@ -7669,7 +8763,9 @@
     "ave": 42,
     "stdDev": 17,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 72,
+    "min": 18
   },
   {
     "name": "Matt Shaw",
@@ -7683,7 +8779,9 @@
     "ave": 41,
     "stdDev": 15,
     "age": 26,
-    "bye": 12
+    "bye": 12,
+    "max": 56,
+    "min": 26
   },
   {
     "name": "Harrison Macreadie",
@@ -7697,7 +8795,9 @@
     "ave": 39,
     "stdDev": 9,
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": 55,
+    "min": 27
   },
   {
     "name": "Jordan Foote",
@@ -7711,7 +8811,9 @@
     "ave": 39,
     "stdDev": 12,
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": 53,
+    "min": 19
   },
   {
     "name": "Mitchell Hibberd",
@@ -7725,7 +8827,9 @@
     "ave": 39,
     "stdDev": 26,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 74,
+    "min": 7
   },
   {
     "name": "Thomas Cole",
@@ -7739,7 +8843,9 @@
     "ave": 39,
     "stdDev": 8,
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": 50,
+    "min": 30
   },
   {
     "name": "Tyson Stengle",
@@ -7753,7 +8859,9 @@
     "ave": 39,
     "stdDev": 9,
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": 47,
+    "min": 30
   },
   {
     "name": "Zach Guthrie",
@@ -7767,7 +8875,9 @@
     "ave": 39,
     "stdDev": 13,
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": 55,
+    "min": 17
   },
   {
     "name": "Ben Long",
@@ -7781,7 +8891,9 @@
     "ave": 38,
     "stdDev": 14,
     "age": 20,
-    "bye": 14
+    "bye": 14,
+    "max": 58,
+    "min": 22
   },
   {
     "name": "Daniel Nielson",
@@ -7795,7 +8907,9 @@
     "ave": 38,
     "stdDev": 15,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 59,
+    "min": 14
   },
   {
     "name": "Mackenzie Willis",
@@ -7809,7 +8923,9 @@
     "ave": 38,
     "stdDev": 9,
     "age": 22,
-    "bye": 10
+    "bye": 10,
+    "max": 46,
+    "min": 29
   },
   {
     "name": "Nathan J. Brown",
@@ -7823,7 +8939,9 @@
     "ave": 38,
     "stdDev": 13,
     "age": 29,
-    "bye": 14
+    "bye": 14,
+    "max": 74,
+    "min": 19
   },
   {
     "name": "Jack Trengove",
@@ -7837,7 +8955,9 @@
     "ave": 37,
     "stdDev": 17,
     "age": 26,
-    "bye": 10
+    "bye": 10,
+    "max": 54,
+    "min": 20
   },
   {
     "name": "Brad Scheer",
@@ -7851,7 +8971,9 @@
     "ave": 36,
     "stdDev": 7,
     "age": 19,
-    "bye": 10
+    "bye": 10,
+    "max": 45,
+    "min": 27
   },
   {
     "name": "Dallas Willsmore",
@@ -7865,7 +8987,9 @@
     "ave": 36,
     "stdDev": 10,
     "age": 22,
-    "bye": 12
+    "bye": 12,
+    "max": 46,
+    "min": 26
   },
   {
     "name": "Joel Smith",
@@ -7879,7 +9003,9 @@
     "ave": 35,
     "stdDev": 10,
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": 47,
+    "min": 23
   },
   {
     "name": "Sam Weideman",
@@ -7893,7 +9019,9 @@
     "ave": 35,
     "stdDev": 17,
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": 59,
+    "min": 14
   },
   {
     "name": "Timothy English",
@@ -7907,7 +9035,9 @@
     "ave": 35,
     "stdDev": 2,
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": 37,
+    "min": 33
   },
   {
     "name": "Cameron Polson",
@@ -7921,7 +9051,9 @@
     "ave": 34,
     "stdDev": "-",
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": 34,
+    "min": 34
   },
   {
     "name": "Dylan Buckley",
@@ -7935,7 +9067,9 @@
     "ave": 32,
     "stdDev": "-",
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": 32,
+    "min": 32
   },
   {
     "name": "Jordan Dawson",
@@ -7949,7 +9083,9 @@
     "ave": 32,
     "stdDev": "-",
     "age": 20,
-    "bye": 14
+    "bye": 14,
+    "max": 32,
+    "min": 32
   },
   {
     "name": "Kayle Kirby",
@@ -7963,7 +9099,9 @@
     "ave": 32,
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": 32,
+    "min": 32
   },
   {
     "name": "Mark O'Connor",
@@ -7977,7 +9115,9 @@
     "ave": 32,
     "stdDev": 4,
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 35,
+    "min": 28
   },
   {
     "name": "Jack Frost",
@@ -7991,7 +9131,9 @@
     "ave": 31,
     "stdDev": 10,
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": 40,
+    "min": 21
   },
   {
     "name": "James Rose",
@@ -8005,7 +9147,9 @@
     "ave": 29,
     "stdDev": "-",
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": 29,
+    "min": 29
   },
   {
     "name": "Timothy Smith",
@@ -8019,7 +9163,9 @@
     "ave": 26,
     "stdDev": 4,
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": 29,
+    "min": 22
   },
   {
     "name": "Liam Dawson",
@@ -8033,7 +9179,9 @@
     "ave": 22,
     "stdDev": "-",
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 22,
+    "min": 22
   },
   {
     "name": "Jeremy Finlayson",
@@ -8047,7 +9195,9 @@
     "ave": 19,
     "stdDev": "-",
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": 19,
+    "min": 19
   },
   {
     "name": "Nick Larkey",
@@ -8061,7 +9211,9 @@
     "ave": 10,
     "stdDev": 9,
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": 19,
+    "min": 1
   },
   {
     "name": "Josh Battle",
@@ -8075,7 +9227,9 @@
     "ave": 8,
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": 8,
+    "min": 8
   },
   {
     "name": "Sam Docherty",
@@ -8089,7 +9243,9 @@
     "ave": 115,
     "stdDev": 21,
     "age": 24,
-    "bye": 12
+    "bye": 12,
+    "max": 153,
+    "min": 75
   },
   {
     "name": "Zac Williams",
@@ -8103,7 +9259,9 @@
     "ave": 94,
     "stdDev": 23,
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": 145,
+    "min": 49
   },
   {
     "name": "Brodie Smith",
@@ -8117,7 +9275,9 @@
     "ave": 82,
     "stdDev": 22,
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": 127,
+    "min": 35
   },
   {
     "name": "Tyson Goldsack",
@@ -8131,7 +9291,9 @@
     "ave": 68,
     "stdDev": 15,
     "age": 30,
-    "bye": 13
+    "bye": 13,
+    "max": 106,
+    "min": 42
   },
   {
     "name": "Sam Naismith",
@@ -8145,7 +9307,9 @@
     "ave": 66,
     "stdDev": 13,
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": 87,
+    "min": 46
   },
   {
     "name": "Aaron Naughton",
@@ -8159,7 +9323,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 17,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Aaron Vandenberg",
@@ -8173,7 +9339,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Adam Cerra",
@@ -8187,7 +9355,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Adam Oxley",
@@ -8201,7 +9371,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 25,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Aiden Bonar",
@@ -8215,7 +9387,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Alex Johnson",
@@ -8229,7 +9403,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Alex Morgan",
@@ -8243,7 +9419,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Alex Pearce",
@@ -8257,7 +9435,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Allen Christensen",
@@ -8271,7 +9451,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Andrew Brayshaw",
@@ -8285,7 +9467,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 17,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Andrew McPherson",
@@ -8299,7 +9483,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Angus Schumacher",
@@ -8313,7 +9499,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Angus Styles",
@@ -8327,7 +9515,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Bailey Banfield",
@@ -8341,7 +9531,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Bailey Rice",
@@ -8355,7 +9547,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Bayley Fritsch",
@@ -8369,7 +9563,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Ben Davis",
@@ -8383,7 +9579,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Ben Jacobs",
@@ -8397,7 +9595,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 26,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Ben Jarman",
@@ -8411,7 +9611,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Ben Miller",
@@ -8425,7 +9627,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Ben Paton",
@@ -8439,7 +9643,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Ben Ronke",
@@ -8453,7 +9659,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Billy Frampton",
@@ -8467,7 +9675,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Billy Gowers",
@@ -8481,7 +9691,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Brad Lynch",
@@ -8495,7 +9707,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Brandon Starcevich",
@@ -8509,7 +9723,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Brandon Zerk-Thatcher",
@@ -8523,7 +9739,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Brayden Ainsworth",
@@ -8537,7 +9755,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Brayden Crossley",
@@ -8551,7 +9771,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Brayden Sier",
@@ -8565,7 +9787,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Brent Daniels",
@@ -8579,7 +9803,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Brody Mihocek",
@@ -8593,7 +9819,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Callan England",
@@ -8607,7 +9835,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Callum Coleman-Jones",
@@ -8621,7 +9851,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Callum Moore",
@@ -8635,7 +9867,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Callum Porter",
@@ -8649,7 +9883,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Cam Ellis-Yolmen",
@@ -8663,7 +9899,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Cam O'Shea",
@@ -8677,7 +9915,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 25,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Cameron Hewett",
@@ -8691,7 +9931,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Cameron Rayner",
@@ -8705,7 +9947,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Changkuoth Jiath",
@@ -8719,7 +9963,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Charlie Ballard",
@@ -8733,7 +9979,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Charlie Constable",
@@ -8747,7 +9995,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Charlie Spargo",
@@ -8761,7 +10011,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 17,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Cian Hanley",
@@ -8775,7 +10027,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Cillian McDaid",
@@ -8789,7 +10043,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Colin O'Riordan",
@@ -8803,7 +10059,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Connor Ballenden",
@@ -8817,7 +10075,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Connor Nash",
@@ -8831,7 +10091,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Connor Nutting",
@@ -8845,7 +10107,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Corey Lyons",
@@ -8859,7 +10123,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Cory Gregson",
@@ -8873,7 +10139,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Daniel Venables",
@@ -8887,7 +10155,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Darcy Cameron",
@@ -8901,7 +10171,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Darcy Fogarty",
@@ -8915,7 +10187,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Darragh Joyce",
@@ -8929,7 +10203,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "David Mirra",
@@ -8943,7 +10219,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 26,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Declan Keilty",
@@ -8957,7 +10235,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Declan Watson",
@@ -8971,7 +10251,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Derek Smith",
@@ -8985,7 +10267,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Dion Johnstone",
@@ -8999,7 +10283,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Dom Barry",
@@ -9013,7 +10299,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 23,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Doulton Langlands",
@@ -9027,7 +10315,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Dylan Clarke",
@@ -9041,7 +10331,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Dylan Moore",
@@ -9055,7 +10347,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Ed Phillips",
@@ -9069,7 +10363,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Ed Richards",
@@ -9083,7 +10379,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Elliott Himmelberg",
@@ -9097,7 +10395,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Emmanuel Irra",
@@ -9111,7 +10411,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 23,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Esava Ratugolea",
@@ -9125,7 +10427,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Fergus Greene",
@@ -9139,7 +10443,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Flynn Appleby",
@@ -9153,7 +10459,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Francis Watson",
@@ -9167,7 +10475,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 22,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Gordon Narrier",
@@ -9181,7 +10491,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Gryan Miers",
@@ -9195,7 +10507,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Hamish Brayshaw",
@@ -9209,7 +10523,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Harrison Petty",
@@ -9223,7 +10539,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 17,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Harrison Wigg",
@@ -9237,7 +10555,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Harry Dear",
@@ -9251,7 +10571,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Harry Jones",
@@ -9265,7 +10587,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Hugh Dixon",
@@ -9279,7 +10603,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Hugh Goddard",
@@ -9293,7 +10619,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Hunter Clark",
@@ -9307,7 +10635,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Isaac Cumming",
@@ -9321,7 +10651,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jack Buckley",
@@ -9335,7 +10667,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jack Henry",
@@ -9349,7 +10683,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jack Higgins",
@@ -9363,7 +10699,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jack Madgen",
@@ -9377,7 +10715,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jack Maibaum",
@@ -9391,7 +10731,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jack Payne",
@@ -9405,7 +10747,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jack Petruccelle",
@@ -9419,7 +10763,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jackson Edwards",
@@ -9433,7 +10779,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jackson Merrett",
@@ -9447,7 +10795,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jackson Ross",
@@ -9461,7 +10811,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jacob Dawson",
@@ -9475,7 +10827,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jacob Heron",
@@ -9489,7 +10843,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jaidyn Stephenson",
@@ -9503,7 +10859,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jake Brown",
@@ -9517,7 +10875,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jake Long",
@@ -9531,7 +10891,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 22,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jake Patmore",
@@ -9545,7 +10907,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jake Stein",
@@ -9559,7 +10923,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 24,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jake Waterman",
@@ -9573,7 +10939,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jamaine Jones",
@@ -9587,7 +10955,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "James Bell",
@@ -9601,7 +10971,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "James Worpel",
@@ -9615,7 +10987,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jarrod Brander",
@@ -9629,7 +11003,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jarrod Garlett",
@@ -9643,7 +11019,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jarrod Lienert",
@@ -9657,7 +11035,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 23,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jesse Glass-McCasker",
@@ -9671,7 +11051,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Joel Amartey",
@@ -9685,7 +11067,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Joel Garner",
@@ -9699,7 +11083,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jonathan O'Rourke",
@@ -9713,7 +11099,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 23,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jonathon Ceglar",
@@ -9727,7 +11115,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 26,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jordan Houlahan",
@@ -9741,7 +11131,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Jordan Ridley",
@@ -9755,7 +11147,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Josh Rotham",
@@ -9769,7 +11163,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Joshua Jaska",
@@ -9783,7 +11179,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Kane Farrell",
@@ -9797,7 +11195,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Kieran Collins",
@@ -9811,7 +11211,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Kieran Lovell",
@@ -9825,7 +11227,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Kobe Mutch",
@@ -9839,7 +11243,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Kyle Cheney",
@@ -9853,7 +11259,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 28,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Kym Lebois",
@@ -9867,7 +11275,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Kyron Hayden",
@@ -9881,7 +11291,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Lachlan Filipovic",
@@ -9895,7 +11307,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Lachlan Fogarty",
@@ -9909,7 +11323,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Lachlan Keeffe",
@@ -9923,7 +11339,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 27,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Lachlan Murphy",
@@ -9937,7 +11355,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Lachlan Tiziani",
@@ -9951,7 +11371,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Lewis Pierce",
@@ -9965,7 +11387,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Liam Baker",
@@ -9979,7 +11403,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Liam Ryan",
@@ -9993,7 +11419,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Lloyd Meek",
@@ -10007,7 +11435,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Lochie O'Brien",
@@ -10021,7 +11451,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Luke Davies-Uniacke",
@@ -10035,7 +11467,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Luke Lavender",
@@ -10049,7 +11483,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Luke Strnadica",
@@ -10063,7 +11499,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Mabior Chol",
@@ -10077,7 +11515,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Marc Pittonet",
@@ -10091,7 +11531,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Mason Redman",
@@ -10105,7 +11547,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Matt Guelfi",
@@ -10119,7 +11563,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Matthew Allen",
@@ -10133,7 +11579,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Matthew Eagles",
@@ -10147,7 +11595,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 28,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Matthew Flynn",
@@ -10161,7 +11611,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Matthew Hayball",
@@ -10175,7 +11627,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Matthew Ling",
@@ -10189,7 +11643,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Matthew Lobbe",
@@ -10203,7 +11659,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 28,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Matthew Signorello",
@@ -10217,7 +11675,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Max Lynch",
@@ -10231,7 +11691,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Michael Apeness",
@@ -10245,7 +11707,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Mitch Crowden",
@@ -10259,7 +11723,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Mitch Lewis",
@@ -10273,7 +11739,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Mitchell Hinge",
@@ -10287,7 +11755,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Mitchell King",
@@ -10301,7 +11771,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Myles Poholke",
@@ -10315,7 +11787,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Nathan Drummond",
@@ -10329,7 +11803,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Nathan Freeman",
@@ -10343,7 +11819,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Nathan Mullenger-McHugh",
@@ -10357,7 +11835,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Nathan Murphy",
@@ -10371,7 +11851,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 17,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Nic Naitanui",
@@ -10385,7 +11867,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 27,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Nicholas Coffield",
@@ -10399,7 +11883,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Nicholas Shipley",
@@ -10413,7 +11899,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Nick Holman",
@@ -10427,7 +11915,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 22,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Noah Balta",
@@ -10441,7 +11931,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Oliver Hanrahan",
@@ -10455,7 +11947,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Oscar Allen",
@@ -10469,7 +11963,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Oscar Clavarino",
@@ -10483,7 +11979,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Oscar Junker",
@@ -10497,7 +11995,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Oscar McInerney",
@@ -10511,7 +12011,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 23,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Oskar Baker",
@@ -10525,7 +12027,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Paddy Dow",
@@ -10539,7 +12043,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Pat Kerr",
@@ -10553,7 +12059,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Pat McKenna",
@@ -10567,7 +12075,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Patrick Naish",
@@ -10581,7 +12091,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Patrick Wilson",
@@ -10595,7 +12107,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Paul Ahern",
@@ -10609,7 +12123,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Paul Hunter",
@@ -10623,7 +12139,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 25,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Peter Ladhams",
@@ -10637,7 +12155,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Quinton Narkle",
@@ -10651,7 +12171,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Ray Connellan",
@@ -10665,7 +12187,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 24,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Reilly O'Brien",
@@ -10679,7 +12203,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Roarke Smith",
@@ -10693,7 +12219,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Ryan Abbott",
@@ -10707,7 +12235,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 26,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Ryan Burrows",
@@ -10721,7 +12251,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Ryan Gardner",
@@ -10735,7 +12267,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Ryan Garthwaite",
@@ -10749,7 +12283,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Ryley Stoddart",
@@ -10763,7 +12299,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Sam Day",
@@ -10777,7 +12315,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 25,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Sam Draper",
@@ -10791,7 +12331,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Sam Hayes",
@@ -10805,7 +12347,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Sam McLarty",
@@ -10819,7 +12363,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Sam Murray",
@@ -10833,7 +12379,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Sam Taylor",
@@ -10847,7 +12395,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Sam Wright",
@@ -10861,7 +12411,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 27,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Samuel Switkowski",
@@ -10875,7 +12427,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Scott Jones",
@@ -10889,7 +12443,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Shaun Hampson",
@@ -10903,7 +12459,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 29,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Stefan Giro",
@@ -10917,7 +12475,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Tarir Bayok",
@@ -10931,7 +12491,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Taylin Duman",
@@ -10945,7 +12507,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Thomas North",
@@ -10959,7 +12523,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Timm House",
@@ -10973,7 +12539,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 22,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Timothy Kelly",
@@ -10987,7 +12555,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 23,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Toby Pink",
@@ -11001,7 +12571,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Toby Wooller",
@@ -11015,7 +12587,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Tom De Koning",
@@ -11029,7 +12603,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Tom Doedee",
@@ -11043,7 +12619,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Tom Jeffries",
@@ -11057,7 +12635,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Tom McCartin",
@@ -11071,7 +12651,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 17,
-    "bye": 14
+    "bye": 14,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Tom Murphy",
@@ -11085,7 +12667,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Tom Nicholls",
@@ -11099,7 +12683,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 25,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Tony Olango",
@@ -11113,7 +12699,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Trent Mynott",
@@ -11127,7 +12715,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Tristan Xerri",
@@ -11141,7 +12731,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Tyler Brown",
@@ -11155,7 +12747,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 17,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Wil Powell",
@@ -11169,7 +12763,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Will Snelling",
@@ -11183,7 +12779,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Will Walker",
@@ -11197,7 +12795,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Willem Drew",
@@ -11211,7 +12811,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 20,
-    "bye": 10
+    "bye": 10,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Willie Rioli",
@@ -11225,7 +12827,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 22,
-    "bye": 12
+    "bye": 12,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Zac Giles-Langdon",
@@ -11239,7 +12843,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 21,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Zachary Bailey",
@@ -11253,7 +12859,9 @@
     "ave": "-",
     "stdDev": "-",
     "age": 18,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   },
   {
     "name": "Zachary Sproule",
@@ -11267,6 +12875,8 @@
     "ave": "-",
     "stdDev": "-",
     "age": 19,
-    "bye": 13
+    "bye": 13,
+    "max": "-",
+    "min": "-"
   }
 ]
