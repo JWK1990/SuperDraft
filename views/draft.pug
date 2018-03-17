@@ -145,7 +145,7 @@ html(lang='en')
 							th Team
 							th Watchlist
 
-						tbody
+						tbody#playerSearchBody
 							each result in players
 								tr
 									td= result.rank
@@ -154,7 +154,7 @@ html(lang='en')
 									td= result.ave
 									td= result.team
 									td
-										input#watchlistCheckbox(type='checkbox')
+										input.watchlistCheckbox(type='checkbox' id=result.rank)
 
 		.rightColumn
 

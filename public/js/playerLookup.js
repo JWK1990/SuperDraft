@@ -27,11 +27,6 @@ print(message);
 console.log(players.length);
 */
 
-
-
-
-
-
 // Set the myApp.playerData variable with the player data from the scPlayerData.json file if the leagueType is "Supercoach" or the dtPlayerData.json file if it isn't.
 if(document.getElementById("leagueType").innerHTML == "Supercoach"){
   $.getJSON('./js/scPlayerData.json')
@@ -87,6 +82,18 @@ $(document).ready(function() {
         }
   }) // Close #myTeamTable DataTable function.
 */
+
+
+  // The below code is used to track changes to watchlist checkboxes and repopulate any chcked watchlist checkboxes on a page reload.
+  // Add event listeners to all of the watchlist checkboxes to update the local storage every time one is changed.
+  myApp.$checkboxes.on("change", function(){
+    myApp.updateStorage();
+  }); // Close #checkboxes.on("change") function.
+  // On page load we recheck any checkboxes that were previously checked according to the JSON array in local storage.
+  $.each(myApp.formValues, function(key, value) {
+    $("#" + key).prop('checked', value);
+  }); // Close $.each(myApp.formValues) function.
+
 
 }); // Close $(document).ready() function.
 setTimeout(function(){
@@ -197,6 +204,11 @@ var myApp = {
   // There are 12 unique colours. The last 8 double up. We use these to colour the message in the broadcastChat() function based on the index of the coach in coaches array.
   //#FF6EFF = Shocking Pink (pink), #66FF66 = Screaming Green (green) , #FDFF00 = Lemon Glacier (yellow), #50BFE6 = Blizzard Blue (blue), #FD5B78 = Wild Watermelon (red), #FF6037 = Outragous Orange (orange), #FFD3F8 = Bubblegum (light pink), #4F86F7 = Blueberry (medium blue), #44D7A8 = Eucalyptus (aqua), #FFFF31 = Daffodil (yellow), #FFFFFF = white, #AAF0D1 = Magic Mint (light green).
   chatColours: ['#FF6EFF', '#66FF66', '#FDFF00',  '#50BFE6', '#FD5B78', '#FF6037', '#FFD3F8', '#4F86F7', '#44D7A8', '#FFFF31', '#FFFFFF', '#AAF0D1', '#FF6EFF', '#66FF66', '#FDFF00',  '#50BFE6', '#FD5B78', '#FF6037', '#FFD3F8', '#4F86F7'],
+  // Define the formValues variable to hold our persistent list of checked watchlist checkboxes.
+  formValues: JSON.parse(localStorage.getItem('formValues')) || {},
+  // Define the $checkboxes variable to hold a list of all of the watchlist checkboxes.
+  $checkboxes: $("#playerSearchBody :checkbox"),
+
 
   //!!!!!!!!!!!!!!DEFINE FUNCTIONS!!!!!!!!!!!!!!!
     updateSearch: function(){
@@ -983,7 +995,14 @@ var myApp = {
             myApp.chatButton.click();
         }
       }); // Close addEventListener("keyup") function.
-    }
+    }, // Close the addChatEventListener() function.
+
+      updateStorage: function(){
+      myApp.$checkboxes.each(function(){
+        myApp.formValues[this.id] = this.checked;
+      });
+      localStorage.setItem("formValues", JSON.stringify(myApp.formValues));
+    } // Close updateStorage() function.
 
 }; // Close NS Namespace.
 
@@ -1219,7 +1238,7 @@ socket.on("successfullyJoined", function(data){
   console.log("successfullyJoined Started!");
   // If bidding is currently underway then we clear any existing intervals, update the otb text and hide and reshow the draftBody.
   // If the draft isn't already underway then we don't need to do anything here and we will leave the data as it was after the pageLoad() function.
-  if(myApp.numOfPlayersDrafted > 0 && myApp.numOfPlayersDrafted < myApp.totalRosterSpots){
+  if(myApp.numOfPlayersDrafted > 0){
     // Clear any existing countdown timer intervals.
     clearInterval(myApp.counter);
     clearInterval(myApp.sppCounter);
