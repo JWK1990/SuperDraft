@@ -1,8 +1,6 @@
 # Created by https://www.gitignore.io/api/node,osx
 
-./config/credentials.js
-credentials.js
-/config/credentials.js
+./credentials.js
 
 ### Node ###
 # Logs
