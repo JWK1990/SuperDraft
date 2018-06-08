@@ -18,7 +18,7 @@ var fs = require('fs');
 var User = require("./models/user");
 var Draft = require("./models/draftData");
 var path = require("path");
-var configAuth = require('./credentials');
+var configAuth = require('/credentials/credentials.js');
 
 
 // mongodb connection. Update the "connectionString" or "localMongoString" parameter below to use the Dev or Prod DB.
