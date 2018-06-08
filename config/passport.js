@@ -251,15 +251,6 @@ module.exports = function(passport) {
         });
     })); // Close passport.use(GoogleStrategy) function.
 
-
-
-
-
-
-
-
-
-
 }; // Close module.exports(passport) function.
 
 

@@ -353,7 +353,6 @@ var myApp = {
               }
             } // Close if() statement.
         } // Close for() loop.
-        console.log("TOP PLAYER(): " + myApp.topPlayer[1].innerHTML)
       } catch(err){
           for (var i = 1; i < searchTableRows.length; i++) {
             if(Boolean(searchTableRows[i].style.textDecoration === "")){
@@ -361,7 +360,6 @@ var myApp = {
               break;
             }
           }
-          console.log("Team is full. Top Player: " + myApp.topPlayer + ".");
       } // Close catch() statement.
     }, // Close getTopPlayer() function.
 
@@ -666,7 +664,6 @@ var myApp = {
         return b.average - a.average;
       });
       */
-      console.log(selectedCoachesPlayers);
       // Define the selectedCoaches position variables to hold the coaches players from each position.
       var selectedCoachesDef = [];
       var selectedCoachesFwd = [];
@@ -967,7 +964,6 @@ var myApp = {
     sendChat: function(currentUser){
       // Get the vaue of the chat input.
       var text = myApp.chatInput.value;
-      console.log("CHAT TEXT: " + text);
       // Clear the chatInput.
       myApp.chatInput.value = "";
       // Send the chat input to the back end to be broadcast to all clients in the current room.
@@ -1066,16 +1062,13 @@ var socket = io.connect('/');
 
 
 socket.on('connect', function(){
-  console.log("connect Started!");
   // Connected, let's sign up to receive messages for this room.
   socket.emit('pageLoad', myApp.draftID);
-  console.log("connect Finished!");
 }); // Close socket.on('connect').
 
 
 socket.on("pageLoaded", function(data){
   setTimeout(function(){
-    console.log("pageLoaded Started");
     var watchlistFilter = document.getElementById("watchlistSearch");
     var watchlistCheckboxes = searchTable.getElementsByTagName("input");
     var hideDrafted = document.getElementById("hideDrafted");
@@ -1103,7 +1096,6 @@ socket.on("pageLoaded", function(data){
     // Add the coaches array to the roster filter drop down list.
     // Set the default filter value to the current user.
     myApp.addRosterFilterOption(updatedTeamNames);
-    console.log(myApp.currentUser);
     // Update the draftedPlayers list with the updated results list from the DB.
     // We used ‘JSON.parse(JSON.stringify(data.loadData.results))’ to convert the data.loadData.resutls data into a string and then re-convert it into an object.
     // We do this because if we just assigned data.loadData.results directly to the draftedPlayersList variable then we are passing the value by reference and anything we do to the draftedPlayersList also updates the data.loadData.results variable.
@@ -1158,14 +1150,12 @@ socket.on("pageLoaded", function(data){
     myApp.addChatEventListener();
     // Run socket.emit("joinRoom") to add the current coach to the draft room on the back end.
     socket.emit('joinRoom', {draftID: myApp.draftID, currentUser: myApp.currentUser});
-    console.log("pageLoad Complete!");
   }, 1000);
 }); // Close socket.on("pageLoaded") function.
 
 
 // The socket.on("joinedCoach") function updates the Team Names in the budgets pane for all users connected to the room every time a new coach joins the room.
 socket.on("joinedCoach", function(data){
-  console.log("joinedCoach Started!");
   var budgetsTable = document.getElementById("budgetsTable");
   var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
   var budgetsNeedUpdating;
@@ -1228,14 +1218,10 @@ socket.on("joinedCoach", function(data){
   // Add a new line to the chat pane to show that the coach has joined.
   myApp.addChat("has joined the draft!", data.newCoach, data.color, "#2CFC0E")
 
-
-
-  console.log("joinedCoach Finished!");
 }); // Close the socket.on("joinedCoach") function.
 
 
 socket.on("successfullyJoined", function(data){
-  console.log("successfullyJoined Started!");
   // If bidding is currently underway then we clear any existing intervals, update the otb text and hide and reshow the draftBody.
   // If the draft isn't already underway then we don't need to do anything here and we will leave the data as it was after the pageLoad() function.
   if(myApp.numOfPlayersDrafted > 0){
@@ -1267,7 +1253,6 @@ socket.on("successfullyJoined", function(data){
     document.getElementById("draftBody").style.display = "none";
     document.getElementById("draftBody").style.display = "";
   }
-  console.log("successfullyJoined Finished!");
 }); // Close the socket.on("successfullyJoined").
 
 
@@ -1280,7 +1265,6 @@ socket.on("draftPaused", function(){
 
 
 socket.on('disconnectedCoach', function(data){
-  console.log("Disconnection!");
   var budgetsTable = document.getElementById("budgetsTable");
   var budgetsTableRows = budgetsTable.getElementsByTagName("tr");
   // Updates all of the team names in the budgets pane.
