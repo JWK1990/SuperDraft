@@ -18,9 +18,9 @@ var fs = require('fs');
 var User = require("./models/user");
 var Draft = require("./models/draftData");
 var path = require("path");
-// For Dev.
+// Load the configAuth for Dev.
 // var configAuth = require('../credentials/credentials');
-// For Prod.
+// Load the configAuth for Prod.
 var configAuth = require('../../../../home/bitnami/credentials/credentials');
 
 
