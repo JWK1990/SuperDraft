@@ -1,2 +1,4 @@
-# User Authentication With Express and Mongo
-Project code to support the [Treehouse](https://teamtreehouse.com) course [User Authentication With Express and Mongo](https://teamtreehouse.com/library/user-authentication-with-express-and-mongo)
+# SuperDraft
+The Only Auction Draft Software For AFL Fantasy Football!
+The web application is built in JavaScript on the MEAN Stack (MongoDB, Express, Angular, Node.js).
+http://superdraftfantasy.com
