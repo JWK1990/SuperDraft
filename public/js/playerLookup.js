@@ -1,32 +1,3 @@
-/* Player lookup.
-var message = '';
-var player;
-var search = "";
-
-function print(message) {
-  var outputDiv = document.getElementById("output");
-  outputDiv.innerHTML = message;
-}
-while (search === ""){
-	search = prompt("Please enter a player name: ").toUpperCase();
-}
-for (var i = 0; i < players.length; i += 1) {
-  player = players[i];
-
-  if (player.name === search) {
-  message += '<h2>Player: ' + player.name + '</h2>';
-  message += '<p>Position: ' + player.position + '</p>';
-  message += '<p>Average: ' + player.average + '</p>';
-  message += '<p>Games (2016): ' + player.games2016 + '</p>';
-  message += '<p>Team: ' + player.team + '</p>';
-}
-}
-
-print(message);
-
-console.log(players.length);
-*/
-
 // Set the myApp.playerData variable with the player data from the scPlayerData.json file if the leagueType is "Supercoach" or the dtPlayerData.json file if it isn't.
 if(document.getElementById("leagueType").innerHTML == "Supercoach"){
   $.getJSON('./js/scPlayerData.json')
@@ -48,10 +19,6 @@ $("#bidForm").submit(function(e){
 
 $(document).ready(function() {
   $('#searchTable').DataTable({
-      // ScrollY effectively sets the height of the table. 72vh represents 72% of the height of the browser window.
-      // Not sure why this isn't 70vh as the pane is 70% of the browser window, just used trial and error to get 72vh.
-      // The rough guide for the vh seems to be 4% less than the height of the pane.
-      // We need to update this if we're updating the height of the table.
       scrollY: '72vh',
       scrollCollapse: true,
       paging: false,
@@ -63,26 +30,6 @@ $(document).ready(function() {
         {orderable: false, targets: '_all'}
       ]
   })  // Close #searchTable DataTable function.
-
-/*
-  myApp.myTeamDT = $('#myTeamTable').DataTable( {
-        // ScrollY effectively sets the height of the table. 14vh represents 14% of the height of the browser window.
-        // The rough guide for the vh seems to be 4% less than the height of the pane.
-        // We need to update this if we're updating the height of the table.
-        scrollY: '14vh',
-        scrollCollapse: true,
-        order: [[ 0, "desc" ]],
-        paging: false,
-        searching: false,
-        aaSorting: [],
-        bInfo: false,
-        autoWidth: true,
-        oLanguage: {
-          sZeroRecords: "-"
-        }
-  }) // Close #myTeamTable DataTable function.
-*/
-
 
   // The below code is used to track changes to watchlist checkboxes and repopulate any chcked watchlist checkboxes on a page reload.
   // Add event listeners to all of the watchlist checkboxes to update the local storage every time one is changed.
@@ -381,12 +328,7 @@ var myApp = {
       myApp.sppGames.innerHTML = selectedPlayerData.games;
       myApp.sppAge.innerHTML = selectedPlayerData.age;
       myApp.sppBye.innerHTML = selectedPlayerData.bye;
-      // Update the OTB player details.
-      /*
-      myApp.otbPlayerID = data[1].innerHTML;
-      myApp.otbPos = data[2].innerHTML;
-      myApp.otbAverage = selectedPlayerData.ave16;
-      */
+
     }, // Close updateSPP() function.
 
     sppStartCountdown: function(sppEndTime){
@@ -395,7 +337,6 @@ var myApp = {
       // Clear any current bid counters as well.
       // This line may not be required but it is in as an extra safeguard.
       clearInterval(myApp.counter);
-
       // Set the demo pane at the start of the countdown.
       // Set the serverTime variable using the ServerDate object created by our ServerDate script on page load.
       var serverTime = ServerDate;
@@ -406,11 +347,9 @@ var myApp = {
       var timeLeft = sppEndTime - serverTime;
       var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
       myApp.demo.innerHTML = "OTB: " + myApp.otbCoach + " <br>(" + seconds + " secs)";
-
       // After initially updating the demo pane, we then run a setInterval to update it every 1 second.
       // The code to update the demo pane is the same as above, except now we update the variable instead of creating it.
       myApp.sppCounter = setInterval(function() {
-
         // Update the serverTime by getting an updated ServerDate.
         serverTime = ServerDate;
         // Update the client time by getting an updated time.
@@ -419,7 +358,6 @@ var myApp = {
         // Update the time left and the seconds left.
         timeLeft = sppEndTime - serverTime;
         seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
         // If timeLeft is less than 0 then stop the countdown and clear the text in the demo pane.
         // Also if the currentUser is the currentOtbCoach then update the selected player pane with the topPlayer (who will have been automatically put on the block for them by the back end).
         if (timeLeft < 0) {
@@ -530,16 +468,6 @@ var myApp = {
       }
     }, // Close lockBid() function.
 
-/*
-    setDraftedPlayers: function(data){
-      // Clear the current myTeam table.
-      myApp.myTeamDT.clear();
-      // Populate the myTeam table with the drafted players details.
-      for(var i=0; i < data.length; i++){
-        myApp.myTeamDT.row.add([i+1, data[i].name, data[i].position, data[i].team, "$" + data[i].price]).draw(false);
-      } // Close for() loop.
-    }, // Close setDraftedPlayers() function.
-*/
 
     updateBudgets: function(data, teams, budgets, playerCount){
       var budgetsTable = document.getElementById("budgetsTable");
@@ -576,7 +504,6 @@ var myApp = {
             }
           } // Close for() loop.
       }
-
 
     }, // Close updateBudgets() function.
 
@@ -658,12 +585,6 @@ var myApp = {
       selectedCoachesPlayers.sort(function (a, b) {
         return b.position < a.position;
       });
-      /* Have commented out this second sort as we now sort the position arrays by average once all players have been assigned to an array.
-      // Then we sort the selectedCoachesPlayers array from highest average to lowest average.
-      selectedCoachesPlayers.sort(function (a, b) {
-        return b.average - a.average;
-      });
-      */
       // Define the selectedCoaches position variables to hold the coaches players from each position.
       var selectedCoachesDef = [];
       var selectedCoachesFwd = [];
@@ -1002,64 +923,10 @@ var myApp = {
 
 }; // Close NS Namespace.
 
-// COMMENTING OUT OTB POSITION VALIDATIONS AS THESE ARE NOW HANDLED ON THE BACKEND
-/*
-//OTB POSITION VALIDATIONS FOR OTB COACH.
-
-// Define the setBenchCount() function to set the benchCount variable to the number of bench players for the current user from the database.
-function otbSetBenchCount(data){
-  otbBenchCount = data.coaches.filter(function(e){
-                    return (e.teamName2==currentOtbCoach);
-                  })[0].benchCount;
-
-}; // Close setBenchCount() function.
-
-
-// Define the setRosterArray() function to set the rosterSpotsArray variable to the rosterSpots array variable from the database.
-function otbSetRosterArray(data){
-  otbRosterSpotsArray = data.coaches.filter(function(e){
-                    return (e.teamName2==currentOtbCoach);
-                  })[0].rosterSpots;
-
-}; // Close setRosterArray() function.
-
-// Checks if there is a spot on the current users field for the position that is currently on the block.
-// data[0]=D, 1=F, 2=R, 3=M, 4=DF, 5=DR, 6=DM, 7=FR, 8=FM, 9=RM.
-function otbBenchCheck(position){
-  otbAddToBench = 0;
-
-  if (position === "DEF" && otbRosterSpotsArray[0] === false){
-    otbAddToBench = 1;
-  } else if (position === "FWD" && otbRosterSpotsArray[1] === false){
-    otbAddToBench = 1;
-  } else if (position === "RUC" && otbRosterSpotsArray[2] === false){
-    otbAddToBench = 1;
-  } else if (position === "MID" && otbRosterSpotsArray[3] === false){
-    otbAddToBench = 1;
-  } else if (position === "DEF-FWD" && otbRosterSpotsArray[4] === false){
-    otbAddToBench = 1;
-  } else if (position === "DEF-RUC" && otbRosterSpotsArray[5] === false){
-    otbAddToBench = 1;
-  } else if (position === "DEF-MID" && otbRosterSpotsArray[6] === false){
-    otbAddToBench = 1;
-  } else if (position === "FWD-RUC" && otbRosterSpotsArray[7] === false){
-    otbAddToBench = 1;
-  } else if (position === "FWD-MID" && otbRosterSpotsArray[8] === false){
-    otbAddToBench = 1;
-  } else if (position === "RUC-MID" && otbRosterSpotsArray[9] === false){
-    otbAddToBench = 1;
-  };
-
-}; // Close benchCheck() function.
-
-*/
-
-
 
 //!!!!!!!!!!!!!!DEFINE WEBSOCKETS FUNCTIONS!!!!!!!!!!!!!!!
 // May need to move the below variable out of the global scope.
 var socket = io.connect('/');
-
 
 socket.on('connect', function(){
   // Connected, let's sign up to receive messages for this room.
@@ -1214,7 +1081,6 @@ socket.on("joinedCoach", function(data){
   // If the filter roster options are less than the total number of coaches we will update the roster options to include the joined coach.
   // If the filter roster options are already complete, then we will leave them as is.
   myApp.addRosterFilterOption(data.joinedCoaches);
-
   // Add a new line to the chat pane to show that the coach has joined.
   myApp.addChat("has joined the draft!", data.newCoach, data.color, "#2CFC0E")
 
@@ -1282,28 +1148,21 @@ socket.on('disconnectedCoach', function(data){
   // Add a new line to the chat pane to show that the coach has joined.
   myApp.addChat(" has left the draft!", disconnectedTeamName, "pink", "pink");
 
-
-
 }); // Close socket.on('disconnectedCoach').
 
 
 socket.on('broadcastChat', function(data){
-
   myApp.addChat(data.text, data.user, data.color);
-
 }); // Close socket.on('broadcastChat') function.
 
 
 socket.on('broadcastFunFact', function(data){
-
   // Add a new chat line to the chatPane showing the fun fact text.
   var newRow = myApp.chatTableBody.insertRow(0);
   var newData = document.createElement("td");
   newData.innerHTML = data;
   newRow.appendChild(newData);
-
   newRow.style.color = "yellow";
-
 }); // Close socket.on('broadcastChat') function.
 
 
@@ -1327,7 +1186,6 @@ socket.on('playerDrafted', function(data) {
         budgetsTableRows[i].style.color = "white";
     } // Close else{} statement.
   } // Close for() loop.
-
   // Highlight the player search pane with the completed results.
   myApp.highlightSearch(data.dbData.results);
   // Call updateBudgets() to update the Budgets pane.
@@ -1408,7 +1266,6 @@ socket.on('playerDrafted', function(data) {
   newRow.appendChild(newData);
   newRow.style.color = "white";
 
-
 }); // Close socket.on('playerDrafted') function.
 
 
@@ -1462,7 +1319,6 @@ socket.on('bidUpdate', function(data) {
 socket.on("waitingOnCoaches", function(data){
   alert(data.message);
 }); // Close socket.on("waitingOnCoaches");
-
 
 
 socket.on('otbUpdate', function(data) {
@@ -1530,7 +1386,6 @@ socket.on('otbUpdate', function(data) {
     myApp.pauseDraftButton.style.backgroundColor = "#DCDCDC";
   };
 }); // Close socket.on("otbUpdate") function.
-
 
 
 

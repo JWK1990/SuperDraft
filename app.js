@@ -1,15 +1,11 @@
 var express = require('express');
 var app = express();
 var appPort = (process.env.PORT || 8080);
-
 var mongoose = require("mongoose");
 var passport = require('passport');
 var flash = require('connect-flash');
-
 var bodyParser = require('body-parser');
 var session = require("express-session");
-
-// Other requires.
 var MongoStore = require("connect-mongo")(session);
 var assert = require("assert");
 var http = require("http");
@@ -18,11 +14,11 @@ var fs = require('fs');
 var User = require("./models/user");
 var Draft = require("./models/draftData");
 var path = require("path");
+
 // Load the configAuth for Dev.
 // var configAuth = require('../credentials/credentials');
 // Load the configAuth for Prod.
 var configAuth = require('../../../../home/bitnami/credentials/credentials');
-
 
 // mongodb connection. Update the "connectionString" or "localMongoString" parameter below to use the Dev or Prod DB.
 mongoose.connect(configAuth.connectionString);
@@ -38,13 +34,10 @@ require('./config/passport')(passport);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
 // view engine setup
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
-
-
 
 //use sessions for tracking logins
 app.use(session({
@@ -71,35 +64,6 @@ app.use(function(req, res, next){
 
 
 require('./routes/index.js')(app, passport);
-
-/*
-// Make user name available in templates if a user is logged in.
-app.use(function(req, res, next){
-  if(req.user){
-    res.locals.currentUser = req.user.name;
-  } else if(req.session.name){
-    res.locals.currentUser = req.session.name;
-  }
-  next();
-});
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('File Not Found');
-  err.status = 404;
-  next(err);
-});
-
-// error handler
-// define as the last app.use callback
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
-});
-*/
 
 // Testing WebSocket Connection.
 var server = http.createServer(app);
@@ -447,29 +411,6 @@ io.on('connection', function(socket) {
     console.log(mySrv.clientList);
   }); // Close socket.on('joinRoom') function.
 
-  /*
-  socket.on("latencyResponse", function(data){
-    // Calculate the latency.
-    var receiveTime = new Date().getTime();
-    var latency = (receiveTime - data.sendTime)/2;
-    console.log("LATENCY CALCULATIONS!");
-    console.log(receiveTime);
-    console.log(data.sendTime);
-    console.log(latency);
-    console.log(data.currentUser);
-
-    // If a latency array already exists for the current room then update it.
-    // If a latency array doesn't already exist for the current room then we create one and update it.
-    if(mySrv.latencyArray[currentRoom]){
-      mySrv.latencyArray[currentRoom][data.currentUser] = latency;
-    } else {  
-      mySrv.latencyArray[currentRoom] = {};
-      mySrv.latencyArray[currentRoom][data.currentUser] = latency;
-    }
-
-  }); // Close socket.on("latencyResponse").
-  */
-
 
   socket.on('pauseDraft', function(draftID){
     clearTimeout(mySrv.absentOtbOverrideTimeout[currentRoom]);
@@ -640,14 +581,8 @@ io.on('connection', function(socket) {
                       } catch(err){
                           console.log("Stats pending! No players drafted yet!");
                         }
-                        // Was working but removed to try and send simultaneously to all and replaced with the below code.
-                        // Emits to the sender current client only in the window/draft that they sent the request from.
-                        // socket.emit('playerDrafted', { dbData: data });
-                        // Emits to all of the other clients within the senders room not including the sender as defined by the currentRoom variable defined upon the connection by the current Draft ID.
-                        // socket.broadcast.to(currentRoom).emit('playerDrafted', { dbData: data });
                       // We emit the "playerDrafted" event to all connected clients in the current room.
-                      // We also send mySrv.latencyArray as part of this event, which should have been updated after the most recent addPlayerToBlock() function was run.
-                      io.in(currentRoom).emit('playerDrafted', { dbData: data, rosterSpotsData: mySrv.rosterSpotsArray[currentRoom], sppEndTime: endTimeSPP/*, latencyArray: mySrv.latencyArray[currentRoom]*/});
+                      io.in(currentRoom).emit('playerDrafted', { dbData: data, rosterSpotsData: mySrv.rosterSpotsArray[currentRoom], sppEndTime: endTimeSPP});
                     }) // Close Draft.findById(socketData) function.
                 }) // Close Draft.Update() - rosterSpots.
             }) // Close Draft.findByID() - positionCount. 
@@ -739,9 +674,6 @@ io.on('connection', function(socket) {
         nowBid.setSeconds(nowBid.getSeconds() + mySrv.bidCountdown[currentRoom]);
         var endTimeBid = nowBid.getTime();
 
-        // Was working but removed to try and send simultaneously to all and replaced with the below code.
-        // socket.emit('bidUpdate', { bidData: data });
-        // socket.broadcast.to(currentRoom).emit('bidUpdate', { bidData: data });
         io.in(currentRoom).emit('bidUpdate', {bidData: data, otbEndTime: endTimeBid});
       }) // Close Draft.findById() function.
     };
@@ -788,14 +720,10 @@ io.on('connection', function(socket) {
         // Update the biddingUnderway variable to true for the current room.
         mySrv.biddingUnderway[currentRoom] = true;
 
-        // Was working but removed to try and send simultaneously to all and replaced with the below code.
-        // socket.emit('otbUpdate', { updatedOtbData: data });
-        // socket.broadcast.to(currentRoom).emit('otbUpdate', { updatedOtbData: data });
         io.in(currentRoom).emit('otbUpdate', {updatedOtbData: data, otbEndTime: endTimeAdd/*, sendTime: sendTime*/});
         // Run the draftPlayer() function after the countdown timer expires plus 5 seconds.
         mySrv.draftPlayerTimeout[currentRoom] = setTimeout(draftPlayer, mySrv.bidCountdown[currentRoom] * 1000 + 5000);
     }
-
 
     }) // Close Draft.findById() function.
   }; // Close addPlayerToBlock() function.
@@ -872,7 +800,6 @@ io.on('connection', function(socket) {
           console.log("AVERAGE!!!!!!!");
           console.log(averaged);
 
-
           // Check what the defined field is and update the relevant variables for that field.
           // If the value is greater than the max then we update the max, or if it is lesser than the minimum then we update the minimum.
           if(field == "age"){
@@ -887,8 +814,6 @@ io.on('connection', function(socket) {
             }
           } // Close if(field == "age") statement.
 
-
-
           if(field == "stdDev"){
           // Update the maximum and minimum values if required.
             if(averaged > valueStdDevMax || valueStdDevMax == null){
@@ -900,8 +825,6 @@ io.on('connection', function(socket) {
               coachStdDevMin = currentCoach;
             }
           } // Close if(field == "stdDev") statement.
-
-
 
           if(field == "games"){
           // Update the maximum and minimum values if required.
@@ -915,8 +838,6 @@ io.on('connection', function(socket) {
             }
           } // Close if(field == "games") statement.
 
-
-
           if(field == "ave"){
           // Update the maximum and minimum values if required.
             if(averaged > valueMaxAve || valueMaxAve == null){
@@ -929,8 +850,6 @@ io.on('connection', function(socket) {
             }
           } // Close if(field == "ave") statement.
 
-
-
           if(field == "max"){
           // Update the maximum and minimum values if required.
             if(averaged > valueScoresMax || valueScoresMax == null){
@@ -942,8 +861,6 @@ io.on('connection', function(socket) {
               coachScoresMin = currentCoach;
             }
           } // Close if(field == "max") statement.
-
-
 
           if(field == "min"){
           // Update the maximum and minimum values if required.
@@ -988,19 +905,6 @@ io.on('connection', function(socket) {
     var maxWorstMessage = "If every player scored their min, " + coachWorstMax +  " would average a league-high " + valueWorstMax + "!";
     var minWorstMessage = "If every player scored their min, " + coachWorstMin +  " would average a league-low " + valueWorstMin + "!";
 
-    console.log(oldestMessage);
-    console.log(youngestMessage);
-    console.log(maxSdMessage);
-    console.log(minSdMessage);
-    console.log(maxGamesMessage);
-    console.log(minGamesMessage);
-    console.log(maxAveMessage);
-    console.log(minAveMessage);
-    console.log(maxScoresMessage);
-    console.log(minScoresMessage);
-    console.log(maxWorstMessage);
-    console.log(minWorstMessage);
-
     var text = "Stats pending!";
 
     // Determine which message to send based on the funFactCounter.
@@ -1032,55 +936,9 @@ io.on('connection', function(socket) {
       text = maxAveMessage;
     }
 
-
     io.in(currentRoom).emit("broadcastFunFact", text);
 
   };
-
-/*
-  function getPlayersArrays(results, coaches){
-      // Get a list of coach names.
-      var coachList = _.pluck(coaches, "teamName2");
-      // Loop through each coach in the coachList.
-      for(var i=0; i < coachList.length; i++){
-        console.log("CURRENT LOOP COACH: " + coachList[i]);
-        // For each coach in the coachList, loop through the results and extract the players on their team.
-        var playerList = results.filter(function(e){
-          return e.team == coachList[i];
-        });
-        // Pluck the playersList to return a list of just player names.
-        var playerNames = _.pluck(playerList, "name");
-        console.log("PLAYER NAMES!");
-        console.log(playerNames);
-        // If the current league is a Supercoach league.
-        if(mySrv.leagueType[currentRoom] == "Supercoach"){
-          // If the current coach has players on their team.
-          if(playerNames.length > 0){
-            // Loop through the list of the current coaches players that we defined above.            
-            for (var j=0; j < playerNames.length; j++){
-              // For each player, filter teh scPlayerList by their name and return the full set of data for that player.
-              var playerData = mySrv.scPlayerList.filter(function(e){
-                return e.name == playerNames[j];
-              })[0];
-              // Check if there is an existing playersArray for the current coach in the current room.
-              // If so, push the full set of player data to it.
-              // If not, create one and push the full set of player data to it.
-              if(mySrv.playersArray[currentRoom][coachList[i]]){
-                mySrv.playersArray[currentRoom][coachList[i]].push(playerData);
-              } else {
-                mySrv.playersArray[currentRoom][coachList[i]] = [];
-                mySrv.playersArray[currentRoom][coachList[i]].push(playerData);
-              } // Close else{} statement.
-            } // Close for(var j=0) loop.
-          } // Close if(playerNames.length) statement.
-        } // Close if(mySrv.leagueType[currentRoom] statement).
-      }; // Close for(var i=0) loop.
-      console.log(mySrv.playersArray[currentRoom]);
-  }; // Close getPlayersArrays() function.
-*/
-
-
-
 
 }); //Close io.on() connection function.
 
