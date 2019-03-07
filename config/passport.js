@@ -9,6 +9,7 @@ var User = require('../models/user');
 
 // load the auth variables for Dev.
 // var configAuth = require('../../credentials/credentials');
+
 // load the auth variables for Prod.
 var configAuth = require('../../../../../home/bitnami/credentials/credentials');
 

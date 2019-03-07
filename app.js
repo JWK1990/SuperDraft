@@ -17,6 +17,7 @@ var path = require("path");
 
 // Load the configAuth for Dev.
 // var configAuth = require('../credentials/credentials');
+
 // Load the configAuth for Prod.
 var configAuth = require('../../../../home/bitnami/credentials/credentials');
 
