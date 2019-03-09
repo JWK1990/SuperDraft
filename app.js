@@ -603,6 +603,7 @@ io.on('connection', function(socket) {
         if(mySrv.leagueType[currentRoom] == "Supercoach"){
           // Loop through the playerList and try and find them in the resultsList.
           for(var i=0; i < mySrv.scPlayerList.length; i++){
+            console.log(mySrv.scPlayerList[i]);
             // If we find a player that isn't in the results list, then we perform a bench check for their position.
             if(resultsList.indexOf(mySrv.scPlayerList[i].name) < 0){
               mySrv.benchCheck(mySrv.scPlayerList[i].position, currentRoom);
