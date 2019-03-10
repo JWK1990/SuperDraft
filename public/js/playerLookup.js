@@ -894,7 +894,8 @@ var myApp = {
 
     addChat: function(text, user, color, secondaryColor){
       // Add a new chat line to the chatPane showing the broadcast text.
-      var newRow = myApp.chatTableBody.insertRow(0);
+      if(myApp.chatTableBody)
+      var newRow = myApp.chatTableBody.insertRow(myApp.chatTableBody.length);
       var newData = document.createElement("td");
       newData.innerHTML = "<strong style='color: " + color + "'>" + user + ": </strong>" + text;
       newRow.appendChild(newData);
@@ -1158,7 +1159,7 @@ socket.on('broadcastChat', function(data){
 
 socket.on('broadcastFunFact', function(data){
   // Add a new chat line to the chatPane showing the fun fact text.
-  var newRow = myApp.chatTableBody.insertRow(0);
+  var newRow = myApp.chatTableBody.insertRow(myApp.chatTableBody.length);
   var newData = document.createElement("td");
   newData.innerHTML = data;
   newRow.appendChild(newData);
@@ -1260,9 +1261,9 @@ socket.on('playerDrafted', function(data) {
   // myApp.myTeamDT.row.add([data.dbData.results.length, concatName, data.dbData.results[index].team, "$" + data.dbData.results[index].price]).draw(false);
 
   // Add a new chat line to the chatPane showing the broadcast text.
-  var newRow = myApp.chatTableBody.insertRow(0);
+  var newRow = myApp.chatTableBody.insertRow(myApp.chatTableBody.length);
   var newData = document.createElement("td");
-  newData.innerHTML = "<strong style='color: #2CFC0E'>" + concatName + ": </strong>" + "Sold to " + data.dbData.results[index].team + " for $" + data.dbData.results[index].price;
+  newData.innerHTML = "<strong style='color: white'>" + concatName + ": </strong>" + "Sold to " + data.dbData.results[index].team + " for $" + data.dbData.results[index].price;
   newRow.appendChild(newData);
   newRow.style.color = "white";
 
