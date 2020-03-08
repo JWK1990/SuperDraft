@@ -481,7 +481,7 @@ io.on('connection', function(socket) {
       console.log(mySrv.playersArray[currentRoom]);
       // Try and get fun facts. If this doesn't work then console.log() a message.
       try{
-        getFunFacts(mySrv.playersArray[currentRoom][mySrv.playersArray[currentRoom].length - 1], data.otbBid);
+        getFunFacts(mySrv.playersArray[currentRoom][data.otbBidder][mySrv.playersArray[currentRoom][data.otbBidder].length - 1], data.otbBid);
       } catch(err){
         getFunFacts(player, price);
         }
