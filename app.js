@@ -578,7 +578,7 @@ io.on('connection', function(socket) {
                       mySrv.biddingUnderway[currentRoom] = false;
                       // Try and get fun facts. If this doesn't work then console.log() a message.
                       try{
-                        getFunFacts(data.coaches);
+                        getFunFacts(newPlayer.price);
                       } catch(err){
                           console.log("Stats pending! No players drafted yet!");
                         }
@@ -737,205 +737,20 @@ io.on('connection', function(socket) {
   }); // Close socket.on("addToBlock") function.
 
 
-  function getFunFacts(coaches){
-    // Define the variables to hold the maximum and minimum values and the corresponding coaches.
-    // Oldest.
-    var valueOldest;
-    var coachOldest;
-    // Youngest.
-    var valueYoungest;
-    var coachYoungest;
-    // StdDev Max.
-    var valueStdDevMax;
-    var coachStdDevMax;
-    // StdDev Min.
-    var valueStdDevMin;
-    var coachStdDevMin;  
-    // Max Games.
-    var valueMaxGames;
-    var coachMaxGames;
-    // Min Games.
-    var valueMinGames;
-    var coachMinGames;  
-    //Max Ave.
-    var valueMaxAve;
-    var coachMaxAve;
-    //Min Ave.
-    var valueMinAve;
-    var coachMinAve;
-    //Max Scores.
-    var valueScoresMax;
-    var coachScoresMax;
-    //Min Scores.
-    var valueScoresMin;
-    var coachScoresMin;
-    //Max Scores.
-    var valueWorstMax;
-    var coachWorstMax;
-    //Min Scores.
-    var valueWorstMin;
-    var coachWorstMin;
+  function getFunFacts(price){
+    var vwaPlayerList = mySrv.playersArray[currentRoom][currentCoach];
+    var vwaPlayer = vwaPlayerList[vwaPlayerList.length - 1];
+    var vwaEstimatedPrice = vwaPlayer.vwa;
+    var vwaActualPrice = price;
+    var oversUnders = vwaActualPrice - vwaEstimatedPrice;
 
-    // Define the coach list.
-    var coachList = _.pluck(coaches, "teamName2");
-    // Define the add() function.
-    function add(a, b) {
-      return a + b;
-    };
-    // Loop through the mySrv.playersArray[currentRoom] and do the required maths.
-    for(var i=0; i < coachList.length; i++){
-      var currentCoach = coachList[i];
-
-      // If a player array exists for the current coach, we perform our calculations.
-      if(mySrv.playersArray[currentRoom][currentCoach]){
-
-
-        // Define the getAverage() function to get the average value of the current field.
-        function getAverage(field){
-          // Get a list of all of the current coaches values for the defined field.
-          var listWithHyphens = _.pluck(mySrv.playersArray[currentRoom][currentCoach], field);
-          // Filter that list so that we remove any values that are hyphens.
-          var list = listWithHyphens.filter(function(e){return e !== "-"});
-          // Get the sum and average of those values.
-          var sum = list.reduce(add, 0);
-          var averaged = Math.round(Number(sum)/Number(list.length));
-          console.log("AVERAGE!!!!!!!");
-          console.log(averaged);
-
-          // Check what the defined field is and update the relevant variables for that field.
-          // If the value is greater than the max then we update the max, or if it is lesser than the minimum then we update the minimum.
-          if(field == "age"){
-          // Update the maximum and minimum values if required.
-            if(averaged > valueOldest || valueOldest == null){
-              valueOldest = averaged;
-              coachOldest = currentCoach;
-            } // Close if(averaged) statement.
-            if(averaged < valueYoungest || valueYoungest == null){
-              valueYoungest = averaged;
-              coachYoungest = currentCoach;
-            }
-          } // Close if(field == "age") statement.
-
-          if(field == "stdDev"){
-          // Update the maximum and minimum values if required.
-            if(averaged > valueStdDevMax || valueStdDevMax == null){
-              valueStdDevMax = averaged;
-              coachStdDevMax = currentCoach;
-            } // Close if(averaged) statement.
-            if(averaged < valueStdDevMin || valueStdDevMin == null){
-              valueStdDevMin = averaged;
-              coachStdDevMin = currentCoach;
-            }
-          } // Close if(field == "stdDev") statement.
-
-          if(field == "games"){
-          // Update the maximum and minimum values if required.
-            if(averaged > valueMaxGames || valueMaxGames == null){
-              valueMaxGames = averaged;
-              coachMaxGames = currentCoach;
-            } // Close if(averaged) statement.
-            if(averaged < valueMinGames || valueMinGames == null){
-              valueMinGames = averaged;
-              coachMinGames = currentCoach;
-            }
-          } // Close if(field == "games") statement.
-
-          if(field == "ave"){
-          // Update the maximum and minimum values if required.
-            if(averaged > valueMaxAve || valueMaxAve == null){
-              valueMaxAve = averaged;
-              coachMaxAve = currentCoach;
-            } // Close if(averaged) statement.
-            if(averaged < valueMinAve || valueMinAve == null){
-              valueMinAve = averaged;
-              coachMinAve = currentCoach;
-            }
-          } // Close if(field == "ave") statement.
-
-          if(field == "max"){
-          // Update the maximum and minimum values if required.
-            if(averaged > valueScoresMax || valueScoresMax == null){
-              valueScoresMax = averaged;
-              coachScoresMax = currentCoach;
-            } // Close if(averaged) statement.
-            if(averaged < valueScoresMin || valueScoresMin == null){
-              valueScoresMin = averaged;
-              coachScoresMin = currentCoach;
-            }
-          } // Close if(field == "max") statement.
-
-          if(field == "min"){
-          // Update the maximum and minimum values if required.
-            if(averaged > valueWorstMax || valueWorstMax == null){
-              valueWorstMax = averaged;
-              coachWorstMax = currentCoach;
-            } // Close if(averaged) statement.
-            if(averaged < valueWorstMin || valueWorstMin == null){
-              valueWorstMin = averaged;
-              coachWorstMin = currentCoach;
-            }
-          } // Close if(field == "min") statement.
-
-        }; // close getAverage() function.
-
-        // Run the getAverage function for each field.
-        getAverage("age");
-        getAverage("stdDev");
-        getAverage("games");
-        getAverage("ave");
-        getAverage("max");
-        getAverage("min");
-
-      } // Close if(mySrv.playersArray[currentRoom][i]) statement.
-    }; // Close for() loop.
-
-    var oldestMessage = coachOldest + " are borderline senile! Their average age is " + valueOldest + "!";
-    var youngestMessage = coachYoungest + " are babies! Their average age is only " + valueYoungest + "!";
-
-    var maxSdMessage = "Talk about irratic! " + coachStdDevMax +  " have the highest average StdDev at " + valueStdDevMax + "!";
-    var minSdMessage = "Steady as a surgeons hand! " + coachStdDevMin + " have an average StdDev of only " + valueStdDevMin + "!";
-
-    var maxGamesMessage = "Durability is key at " + coachMaxGames +  "! They played the most games, averaging " + valueMaxGames + "!";
-    var minGamesMessage = "There's more injuries than the Frankston Clubbies at " + coachMinGames +  "! They averaged only " + valueMaxGames + " games!";
-
-    var maxAveMessage = coachMaxAve + " are the one to beat! They average the most points at " + valueMaxAve + " per player!";
-    var minAveMessage = "The coach could be under some heat at " + coachMinAve +  "! They average a league-low " + valueMinAve + " per player!";
-
-    var maxScoresMessage = "If every player scored their max, " + coachScoresMax + " would average a league-high " + valueScoresMax + "!";
-    var minScoresMessage = "If every player scored their max, " + coachScoresMin +  " would average a league-low " + valueScoresMin + "!";
-
-    var maxWorstMessage = "If every player scored their min, " + coachWorstMax +  " would average a league-high " + valueWorstMax + "!";
-    var minWorstMessage = "If every player scored their min, " + coachWorstMin +  " would average a league-low " + valueWorstMin + "!";
-
-    var text = "Stats pending!";
-
-    // Determine which message to send based on the funFactCounter.
-    if(mySrv.funFactCounter === 0){
-      text = oldestMessage;
-    } else if(mySrv.funFactCounter === 1){
-      text = youngestMessage;
-    } else if(mySrv.funFactCounter === 2){
-      text = maxSdMessage;
-    } else if(mySrv.funFactCounter === 3){
-      text = minSdMessage;
-    } else if(mySrv.funFactCounter === 4){
-      text = maxGamesMessage;
-    } else if(mySrv.funFactCounter === 5){
-      text = minGamesMessage;
-    } else if(mySrv.funFactCounter === 6){
-      text = maxAveMessage;
-    } else if(mySrv.funFactCounter === 7){
-      text = minAveMessage;
-    } else if(mySrv.funFactCounter === 8){
-      text = maxScoresMessage;
-    } else if(mySrv.funFactCounter === 9){
-      text = minScoresMessage;
-    } else if(mySrv.funFactCounter === 10){
-      text = maxWorstMessage;
-    } else if(mySrv.funFactCounter === 11){
-      text = minWorstMessage;
+    var text = "Cost Analysis Generation Underway!"
+    if(oversUnders < 0) {
+      text = "Uuunders! " = vwaPlayer + " has been heisted at " + Math.round((((oversUnders * -1)/vwaEstimatedPrice)*100)) + "% unders!";
+    } else if(oversUnders > 0) {
+      text = "Oooovers! " = vwaPlayer + " is on an inflated pay packet at " + Math.round((((oversUnders)/vwaEstimatedPrice)*100)) + "% overs!";
     } else {
-      text = maxAveMessage;
+      text = "Spot On! " = vwaPlayer + " has gone for exactly what he's worth!";
     }
 
     io.in(currentRoom).emit("broadcastFunFact", text);
