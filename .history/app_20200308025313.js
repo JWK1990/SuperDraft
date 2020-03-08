@@ -479,12 +479,6 @@ io.on('connection', function(socket) {
         mySrv.playersArray[currentRoom][data.otbBidder].push(fullPlayerData);
       } // Close else{} statement.
       console.log(mySrv.playersArray[currentRoom]);
-      // Try and get fun facts. If this doesn't work then console.log() a message.
-      try{
-        getFunFacts(mySrv.playersArray[currentRoom][data.otbBidder][mySrv.playersArray[currentRoom][data.otbBidder].length - 1], data.otbBid);
-      } catch(err){
-        console.log("No Price Analysis Was Generated.");
-        }
       // If a funFactCounter exists for the current room then update it.
       // If not, create one and then update it.
 
@@ -582,6 +576,12 @@ io.on('connection', function(socket) {
                       mySrv.positionCount(data, "otbCoach", currentRoom);
                       // Update the biddingUnderway variable to true for the current room.
                       mySrv.biddingUnderway[currentRoom] = false;
+                      // Try and get fun facts. If this doesn't work then console.log() a message.
+                      try{
+                        getFunFacts(newPlayer.price);
+                      } catch(err){
+                          console.log("Stats pending! No players drafted yet!");
+                        }
                       // We emit the "playerDrafted" event to all connected clients in the current room.
                       io.in(currentRoom).emit('playerDrafted', { dbData: data, rosterSpotsData: mySrv.rosterSpotsArray[currentRoom], sppEndTime: endTimeSPP});
                     }) // Close Draft.findById(socketData) function.
@@ -737,19 +737,17 @@ io.on('connection', function(socket) {
   }); // Close socket.on("addToBlock") function.
 
 
-  function getFunFacts(player, price){
-    console.log("Player", player);
-    console.log("Price: ", price);
-    var vwaEstimatedPrice = player.vwa;
-    var oversUnders = price - vwaEstimatedPrice;
-    console.log("oversUnders", oversUnders);
+  function getFunFacts(price){
+    var vwaPlayerList = mySrv.playersArray[currentRoom][currentCoach];
+    var vwaPlayer = vwaPlayerList[vwaPlayerList.length - 1];
+    var vwaEstimatedPrice = vwaPlayer.vwa;
+    var vwaActualPrice = price;
+    var oversUnders = vwaActualPrice - vwaEstimatedPrice;
 
     var text = "Cost Analysis Generation Underway!"
     if(oversUnders < 0) {
-      console.log("Unders", oversUnders);
       text = "Uuunders! " + vwaPlayer + " has been heisted at " + Math.round((((oversUnders * -1)/vwaEstimatedPrice)*100)) + "% unders!";
     } else if(oversUnders > 0) {
-      console.log("Overs", oversUnders);
       text = "Oooovers! " + vwaPlayer + " is on an inflated pay packet at " + Math.round((((oversUnders)/vwaEstimatedPrice)*100)) + "% overs!";
     } else {
       text = "Spot On! " + vwaPlayer + " has gone for exactly what he's worth!";

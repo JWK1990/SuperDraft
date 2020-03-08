@@ -479,12 +479,6 @@ io.on('connection', function(socket) {
         mySrv.playersArray[currentRoom][data.otbBidder].push(fullPlayerData);
       } // Close else{} statement.
       console.log(mySrv.playersArray[currentRoom]);
-      // Try and get fun facts. If this doesn't work then console.log() a message.
-      try{
-        getFunFacts(mySrv.playersArray[currentRoom][data.otbBidder][mySrv.playersArray[currentRoom][data.otbBidder].length - 1], data.otbBid);
-      } catch(err){
-        console.log("No Price Analysis Was Generated.");
-        }
       // If a funFactCounter exists for the current room then update it.
       // If not, create one and then update it.
 
@@ -582,6 +576,33 @@ io.on('connection', function(socket) {
                       mySrv.positionCount(data, "otbCoach", currentRoom);
                       // Update the biddingUnderway variable to true for the current room.
                       mySrv.biddingUnderway[currentRoom] = false;
+                      // Try and get fun facts. If this doesn't work then console.log() a message.
+                      try{
+                        getFunFacts(price);
+                      } catch(err){
+  
+                        var vwaPlayer = mySrv.playersArray[currentRoom][mySrv.playersArray[currentRoom].length -1];
+                        console.log("vwaPlayer", vwaPlayer);
+                        var vwaEstimatedPrice = vwaPlayer.vwa;
+                        console.log("vwaEstimatedPrice", vwaEstimatedPrice);
+                        var vwaActualPrice = bidData.price;
+                        console.log("vwaActualPrice", vwaActualPrice);
+                        var oversUnders = vwaActualPrice - vwaEstimatedPrice;
+                        console.log("oversUnders", oversUnders);
+                    
+                        var text = "Cost Analysis Generation Underway!"
+                        if(oversUnders < 0) {
+                          console.log("Unders", oversUnders);
+                          text = "Uuunders! " + vwaPlayer + " has been heisted at " + Math.round((((oversUnders * -1)/vwaEstimatedPrice)*100)) + "% unders!";
+                        } else if(oversUnders > 0) {
+                          console.log("Overs", oversUnders);
+                          text = "Oooovers! " + vwaPlayer + " is on an inflated pay packet at " + Math.round((((oversUnders)/vwaEstimatedPrice)*100)) + "% overs!";
+                        } else {
+                          console.log("Spot On", oversUnders);
+                          text = "Spot On! " + vwaPlayer + " has gone for exactly what he's worth!";
+                        }
+                          console.log("Stats pending! No players drafted yet!");
+                        }
                       // We emit the "playerDrafted" event to all connected clients in the current room.
                       io.in(currentRoom).emit('playerDrafted', { dbData: data, rosterSpotsData: mySrv.rosterSpotsArray[currentRoom], sppEndTime: endTimeSPP});
                     }) // Close Draft.findById(socketData) function.
@@ -737,11 +758,16 @@ io.on('connection', function(socket) {
   }); // Close socket.on("addToBlock") function.
 
 
-  function getFunFacts(player, price){
-    console.log("Player", player);
-    console.log("Price: ", price);
-    var vwaEstimatedPrice = player.vwa;
-    var oversUnders = price - vwaEstimatedPrice;
+  function getFunFacts(price){
+    var vwaPlayerList = mySrv.playersArray[currentRoom][currentCoach];
+    console.log("VWA Player List", vwaPlayerList);
+    var vwaPlayer = vwaPlayerList[vwaPlayerList.length - 1];
+    console.log("vwaPlayer", vwaPlayer);
+    var vwaEstimatedPrice = vwaPlayer.vwa;
+    console.log("vwaEstimatedPrice", vwaEstimatedPrice);
+    var vwaActualPrice = price;
+    console.log("vwaActualPrice", vwaActualPrice);
+    var oversUnders = vwaActualPrice - vwaEstimatedPrice;
     console.log("oversUnders", oversUnders);
 
     var text = "Cost Analysis Generation Underway!"
@@ -752,6 +778,7 @@ io.on('connection', function(socket) {
       console.log("Overs", oversUnders);
       text = "Oooovers! " + vwaPlayer + " is on an inflated pay packet at " + Math.round((((oversUnders)/vwaEstimatedPrice)*100)) + "% overs!";
     } else {
+      console.log("Spot On", oversUnders);
       text = "Spot On! " + vwaPlayer + " has gone for exactly what he's worth!";
     }
 

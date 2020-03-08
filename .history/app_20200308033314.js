@@ -483,7 +483,7 @@ io.on('connection', function(socket) {
       try{
         getFunFacts(mySrv.playersArray[currentRoom][data.otbBidder][mySrv.playersArray[currentRoom][data.otbBidder].length - 1], data.otbBid);
       } catch(err){
-        console.log("No Price Analysis Was Generated.");
+        getFunFacts(player, price);
         }
       // If a funFactCounter exists for the current room then update it.
       // If not, create one and then update it.
