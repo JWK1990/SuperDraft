@@ -598,10 +598,8 @@ io.on('connection', function(socket) {
                           console.log("Overs", oversUnders);
                           text = "Oooovers! " + vwaPlayer + " is on an inflated pay packet at " + Math.round((((oversUnders)/vwaEstimatedPrice)*100)) + "% overs!";
                         } else {
-                          console.log("Spot On", oversUnders);
                           text = "Spot On! " + vwaPlayer + " has gone for exactly what he's worth!";
                         }
-                          console.log("Stats pending! No players drafted yet!");
                         }
                       // We emit the "playerDrafted" event to all connected clients in the current room.
                       io.in(currentRoom).emit('playerDrafted', { dbData: data, rosterSpotsData: mySrv.rosterSpotsArray[currentRoom], sppEndTime: endTimeSPP});
