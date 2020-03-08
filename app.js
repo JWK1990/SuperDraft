@@ -746,11 +746,11 @@ io.on('connection', function(socket) {
 
     var text = "Cost Analysis Generation Underway!"
     if(oversUnders < 0) {
-      text = "Uuunders! " = vwaPlayer + " has been heisted at " + Math.round((((oversUnders * -1)/vwaEstimatedPrice)*100)) + "% unders!";
+      text = "Uuunders! " + vwaPlayer + " has been heisted at " + Math.round((((oversUnders * -1)/vwaEstimatedPrice)*100)) + "% unders!";
     } else if(oversUnders > 0) {
-      text = "Oooovers! " = vwaPlayer + " is on an inflated pay packet at " + Math.round((((oversUnders)/vwaEstimatedPrice)*100)) + "% overs!";
+      text = "Oooovers! " + vwaPlayer + " is on an inflated pay packet at " + Math.round((((oversUnders)/vwaEstimatedPrice)*100)) + "% overs!";
     } else {
-      text = "Spot On! " = vwaPlayer + " has gone for exactly what he's worth!";
+      text = "Spot On! " + vwaPlayer + " has gone for exactly what he's worth!";
     }
 
     io.in(currentRoom).emit("broadcastFunFact", text);
