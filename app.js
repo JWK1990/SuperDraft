@@ -739,17 +739,25 @@ io.on('connection', function(socket) {
 
   function getFunFacts(price){
     var vwaPlayerList = mySrv.playersArray[currentRoom][currentCoach];
+    console.log("VWA Player List", vwaPlayerList);
     var vwaPlayer = vwaPlayerList[vwaPlayerList.length - 1];
+    console.log("vwaPlayer", vwaPlayer);
     var vwaEstimatedPrice = vwaPlayer.vwa;
+    console.log("vwaEstimatedPrice", vwaEstimatedPrice);
     var vwaActualPrice = price;
+    console.log("vwaActualPrice", vwaActualPrice);
     var oversUnders = vwaActualPrice - vwaEstimatedPrice;
+    console.log("oversUnders", oversUnders);
 
     var text = "Cost Analysis Generation Underway!"
     if(oversUnders < 0) {
+      console.log("Unders", oversUnders);
       text = "Uuunders! " + vwaPlayer + " has been heisted at " + Math.round((((oversUnders * -1)/vwaEstimatedPrice)*100)) + "% unders!";
     } else if(oversUnders > 0) {
+      console.log("Overs", oversUnders);
       text = "Oooovers! " + vwaPlayer + " is on an inflated pay packet at " + Math.round((((oversUnders)/vwaEstimatedPrice)*100)) + "% overs!";
     } else {
+      console.log("Spot On", oversUnders);
       text = "Spot On! " + vwaPlayer + " has gone for exactly what he's worth!";
     }
 
