@@ -390,7 +390,6 @@ io.on('connection', function(socket) {
       var joinedCoachRoster = _.pluck(draftData.coaches, "numOfPlayers");
 
       var chatColourIndex = joinedCoaches.indexOf(currentUser);
-      console.log("Chat colour index: " + chatColourIndex);
 
       // If an assignedColours array already exists for the current room then update it.
       // If not, then create one and update it.
@@ -401,15 +400,11 @@ io.on('connection', function(socket) {
         mySrv.assignedColours[currentRoom][data.currentUser] = mySrv.chatColours[chatColourIndex];
       }
 
-      console.log(mySrv.assignedColours[currentRoom]);
-
       // We send the updated data to all clients that are connected to the room.
       io.in(currentRoom).emit("joinedCoach", {joinedCoaches: joinedCoaches, socketList: mySrv.clientList, joinedCoachBudgets: joinedCoachBudget, joinedCoachRosterCounts: joinedCoachRoster, newCoach: data.currentUser, color: mySrv.assignedColours[currentRoom][data.currentUser]});
       // We send a successfullyJoined event to the coach that has joined.
       socket.emit("successfullyJoined", {biddingUnderway: mySrv.biddingUnderway[currentRoom], otbCoach: draftData.otbCoach});
     }); // Close Draft.findById(currentRoom) function.
-    console.log("Sockets List");
-    console.log(mySrv.clientList);
   }); // Close socket.on('joinRoom') function.
 
 
@@ -478,7 +473,6 @@ io.on('connection', function(socket) {
         mySrv.playersArray[currentRoom][data.otbBidder] = [];
         mySrv.playersArray[currentRoom][data.otbBidder].push(fullPlayerData);
       } // Close else{} statement.
-      console.log(mySrv.playersArray[currentRoom]);
       // Try and get fun facts. If this doesn't work then console.log() a message.
       try{
         getFunFacts(mySrv.playersArray[currentRoom][data.otbBidder][mySrv.playersArray[currentRoom][data.otbBidder].length - 1], data.otbBid);
@@ -496,8 +490,6 @@ io.on('connection', function(socket) {
               mySrv.funFactCounter += 1;
           }
 
-      console.log("FUN FACT COUNTER!!!!!!!");
-      console.log(mySrv.funFactCounter);
       // Run the positionCount() function to generate the rosterSpotsArray which is then assigned to the winning coaches rosterSpots variable.
       // This contains an array with 8 true/false values that determine whether the coach can fit a player from each position onto their field.
       // We need to run this in 2 phases. 
@@ -594,8 +586,6 @@ io.on('connection', function(socket) {
 
     // Define the absentOtbOverride() function. We do this inside the draftPlayer() function so that we don't have to make common variables global.
     function absentOtbOverride(){
-      console.log("LEAGUE TYPE");
-      console.log(mySrv.leagueType[currentRoom]);
       // If there are still remaining roster spots across any of the teams then we add the otbTopPlayer to the block.
       if(resultsList.length < mySrv.totalRosterSpots[currentRoom]){
         var otbTopPlayer;
@@ -603,7 +593,6 @@ io.on('connection', function(socket) {
         if(mySrv.leagueType[currentRoom] == "Supercoach"){
           // Loop through the playerList and try and find them in the resultsList.
           for(var i=0; i < mySrv.scPlayerList.length; i++){
-            console.log(mySrv.scPlayerList[i]);
             // If we find a player that isn't in the results list, then we perform a bench check for their position.
             if(resultsList.indexOf(mySrv.scPlayerList[i].name) < 0){
               mySrv.benchCheck(mySrv.scPlayerList[i].position, currentRoom);
@@ -743,9 +732,9 @@ io.on('connection', function(socket) {
 
     var text = "Cost Analysis Generation Underway!"
     if(oversUnders < 0) {
-      text = "Uuunders! " + player.name + " has been heisted " + Math.round((((oversUnders * -1)/vwaEstimatedPrice)*100)) + "% unders!";
+      text = "Uuunders! " + player.name + " has been heisted at " + Math.round((((oversUnders * -1)/vwaEstimatedPrice)*100)) + "% unders!";
     } else if(oversUnders > 0) {
-      text = "Oooovers! " + player.name + " was overinflated at " + Math.round((((oversUnders)/vwaEstimatedPrice)*100)) + "% overs!";
+      text = "Oooovers! " + player.name + " has been overinflated at " + Math.round((((oversUnders)/vwaEstimatedPrice)*100)) + "% overs!";
     } else {
       text = "Spot On! " + player.name + " has gone for exactly what he's worth!";
     }
