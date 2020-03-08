@@ -483,6 +483,7 @@ io.on('connection', function(socket) {
       try{
         getFunFacts(mySrv.playersArray[currentRoom][data.otbBidder][mySrv.playersArray[currentRoom][data.otbBidder].length - 1], data.otbBid);
       } catch(err){
+        getFunFacts(mySrv.playersArray[currentRoom][data.otbBidder][mySrv.playersArray[currentRoom][data.otbBidder].length - 1], data.otbBid);
         console.log("No Price Analysis Was Generated.");
         }
       // If a funFactCounter exists for the current room then update it.
@@ -747,12 +748,12 @@ io.on('connection', function(socket) {
     var text = "Cost Analysis Generation Underway!"
     if(oversUnders < 0) {
       console.log("Unders", oversUnders);
-      text = "Uuunders! " + vwaPlayer + " has been heisted at " + Math.round((((oversUnders * -1)/vwaEstimatedPrice)*100)) + "% unders!";
+      text = "Uuunders! " + player + " has been heisted at " + Math.round((((oversUnders * -1)/vwaEstimatedPrice)*100)) + "% unders!";
     } else if(oversUnders > 0) {
       console.log("Overs", oversUnders);
-      text = "Oooovers! " + vwaPlayer + " is on an inflated pay packet at " + Math.round((((oversUnders)/vwaEstimatedPrice)*100)) + "% overs!";
+      text = "Oooovers! " + player + " is on an inflated pay packet at " + Math.round((((oversUnders)/vwaEstimatedPrice)*100)) + "% overs!";
     } else {
-      text = "Spot On! " + vwaPlayer + " has gone for exactly what he's worth!";
+      text = "Spot On! " + player + " has gone for exactly what he's worth!";
     }
 
     io.in(currentRoom).emit("broadcastFunFact", text);
