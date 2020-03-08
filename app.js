@@ -578,15 +578,14 @@ io.on('connection', function(socket) {
                       mySrv.biddingUnderway[currentRoom] = false;
                       // Try and get fun facts. If this doesn't work then console.log() a message.
                       try{
-                        getFunFacts(newPlayer.price);
+                        getFunFacts(price);
                       } catch(err){
-                        var vwaPlayerList = mySrv.playersArray[currentRoom][currentCoach];
-                        console.log("VWA Player List", vwaPlayerList);
-                        var vwaPlayer = vwaPlayerList[vwaPlayerList.length - 1];
+  
+                        var vwaPlayer = mySrv.playersArray[currentRoom][mySrv.playersArray[currentRoom].length -1];
                         console.log("vwaPlayer", vwaPlayer);
                         var vwaEstimatedPrice = vwaPlayer.vwa;
                         console.log("vwaEstimatedPrice", vwaEstimatedPrice);
-                        var vwaActualPrice = price;
+                        var vwaActualPrice = bidData.price;
                         console.log("vwaActualPrice", vwaActualPrice);
                         var oversUnders = vwaActualPrice - vwaEstimatedPrice;
                         console.log("oversUnders", oversUnders);
